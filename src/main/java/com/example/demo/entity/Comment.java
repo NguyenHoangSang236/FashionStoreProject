@@ -22,8 +22,8 @@ public class Comment {
 	
 	@ManyToOne
 	@JoinColumn(name = "productId")
-	@JoinColumn(name = "color")
 	@JoinColumn(name = "size")
+	@JoinColumn(name = "color")
 	Product product;
 	
 	@ManyToOne
