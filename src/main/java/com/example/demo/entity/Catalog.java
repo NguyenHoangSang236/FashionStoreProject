@@ -1,43 +1,41 @@
 package com.example.demo.entity;
 
-import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import lombok.Data;
+
+@Data
+@Entity
+@Table(name = "catalog")
 public class Catalog {
-	int code;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID", unique = true)
+	int id;
+	
+	@Column(name = "Name")
 	String name;
-	ArrayList<Product> productsList;
 	
-	
-	public Catalog(int code, String name, ArrayList<Product> productsList) {
-		this.code = code;
-		this.name = name;
-		this.productsList = productsList;
-	}
-
-	public ArrayList<Product> getProductsList() {
-		return productsList;
-	}
-
-	public void setProductsList(ArrayList<Product> productsList) {
-		this.productsList = productsList;
-	}
-
-	public Catalog() {}
-
-	public int getCode() {
-		return code;
-	}
-	
-
-	public void setCode(int code) {
-		this.code = code;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
+	@ManyToMany
+	@JoinTable(
+			name = "catalog_with_products", 
+			joinColumns = @JoinColumn(name = "Catalog_ID"), 
+			inverseJoinColumns = {
+				@JoinColumn(name = "Product_ID"),
+				@JoinColumn(name = "Color"),
+				@JoinColumn(name = "Size")
+			})
+	List<Product> products;
 }

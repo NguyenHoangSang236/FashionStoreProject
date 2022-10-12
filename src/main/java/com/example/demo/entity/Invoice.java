@@ -1,87 +1,52 @@
 package com.example.demo.entity;
 
 import java.sql.Date;
+import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import lombok.Data;
+
+@Entity
+@Data
+@Table(name = "invoice")
 public class Invoice {
-	String invoiceCode;
-	String customerId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID", unique = true)
+	int id;
+	
+	@Column(name = "Invoice_Date")
 	Date invoiceDate;
-	String productCode;
+	
+	@Column(name = "Quantity")
 	int quantity;
+	
+	@Column(name = "Size")
 	String size;
-	String consultantId;
 	
+	@Column(name = "Payment_Status")
+	int paymentStatus;
 	
-	public Invoice(String invoiceCode, String customerId, Date invoiceDate, String productCode, int quantity,
-			String size, String consultantId) {
-		super();
-		this.invoiceCode = invoiceCode;
-		this.customerId = customerId;
-		this.invoiceDate = invoiceDate;
-		this.productCode = productCode;
-		this.quantity = quantity;
-		this.size = size;
-		this.consultantId = consultantId;
-	}
+	@OneToOne(mappedBy = "invoice")
+	private Delivery delivery;
+	
+	@OneToMany(mappedBy = "invoice")
+	private List<Product> products;
+	
+	@ManyToOne()
+	@MapsId("Customer_ID")
+	private Customer customer;
+	
 
 	public Invoice() {}
-	
-
-	public String getInvoiceCode() {
-		return invoiceCode;
-	}
-
-	public void setInvoiceCode(String invoiceCode) {
-		this.invoiceCode = invoiceCode;
-	}
-
-	public String getCustomerId() {
-		return customerId;
-	}
-
-	public void setCustomerId(String customerId) {
-		this.customerId = customerId;
-	}
-
-	public Date getInvoiceDate() {
-		return invoiceDate;
-	}
-
-	public void setInvoiceDate(Date invoiceDate) {
-		this.invoiceDate = invoiceDate;
-	}
-
-	public String getProductCode() {
-		return productCode;
-	}
-
-	public void setProductCode(String productCode) {
-		this.productCode = productCode;
-	}
-
-	public int getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-
-	public String getSize() {
-		return size;
-	}
-
-	public void setSize(String size) {
-		this.size = size;
-	}
-
-	public String getConsultantId() {
-		return consultantId;
-	}
-
-	public void setConsultantId(String consultantId) {
-		this.consultantId = consultantId;
-	}
-	
-	
 }

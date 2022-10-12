@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.example.demo.entity.Account;
-import com.example.demo.respository.AccountRespository;
+import com.example.demo.respository.AccountRepository;
 
 
 @org.springframework.web.bind.annotation.RestController
-public class AccountApiController {
+public class AccountController {
 	@Autowired
-	AccountRespository accRepo;
+	AccountRepository accRepo;
 	Account account = new Account();
 
 	@PostMapping("/account")

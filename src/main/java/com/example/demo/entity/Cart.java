@@ -1,51 +1,44 @@
 package com.example.demo.entity;
 
-import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import lombok.Data;
+
+@Entity
+@Data
+@Table(name = "cart")
 public class Cart {
-	String customerId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID", unique = true)
+	String id;
+	
+	@Column(name = "Quantity")
 	int quantity;
-	ArrayList<Product> productsList;
 	
-
-	public ArrayList<Product> getProductsList() {
-		return productsList;
-	}
-
-
-	public void setProductsList(ArrayList<Product> productsList) {
-		this.productsList = productsList;
-	}
-
-
-	public Cart(String customerId, int quantity, ArrayList<Product> productsList) {
-		super();
-		this.customerId = customerId;
-		this.quantity = quantity;
-		this.productsList = productsList;
-	}
-
-
-	public Cart() {	}
-
-
+	@Column(name = "Buying_Status")
+	int buyingStatus;
 	
-	public String getCustomerId() {
-		return customerId;
-	}
+	@ManyToOne
+    @JoinColumn(name = "customerId")
+    Customer customer;
 
-
-	public void setCustomerId(String customerId) {
-		this.customerId = customerId;
-	}
-
-
-	public int getQuantity() {
-		return quantity;
-	}
-
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
+    @ManyToOne
+    @JoinColumn(name = "productId")
+    @JoinColumn(name = "color")
+    @JoinColumn(name = "size")
+    Product product;
 }

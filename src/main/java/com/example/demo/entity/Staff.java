@@ -1,16 +1,62 @@
 package com.example.demo.entity;
 
-import java.sql.Date;
+import java.util.Date;
+import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import lombok.Data;
+
+@Data
+@Entity
+@Table(name = "staffs")
 public class Staff {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID", unique = true)
 	String id;
+	
+	@Column(name = "Name")
 	String name;
+	
+	@Column(name = "Birth_Date")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
 	Date birthDate;
+	
+	@Column(name = "Hometown")
 	String hometown;
+	
+	@Column(name = "Position")
 	String position;
+	
+	@Column(name = "Email")
 	String email;
+	
+	@Column(name = "Phone_Number")
 	String phoneNumber;
+	
+	@Column(name = "Avatar", columnDefinition = "text")
 	String image;
+	
+	@OneToOne
+    @JoinColumn(name = "Account_ID", referencedColumnName = "id")
+    private Account account;
+	
+	@OneToMany(mappedBy = "staff")
+	private List<Delivery> deliveries;
 	
 	
 	public Staff(String id, String name, Date birthDate, String hometown, String position, String email, String phoneNumber, String image) {

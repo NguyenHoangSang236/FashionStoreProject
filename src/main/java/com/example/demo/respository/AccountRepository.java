@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.entity.Account;
 
 @Repository
-public interface AccountRespository extends JpaRepository<Account, Integer> {
+public interface AccountRepository extends JpaRepository<Account, Integer> {
 	@Query("select a from Account a where a.userName = :userNameVal and a.password = :passwordVal")
 	List<Account> findByUserNameAndPassword(@Param("userNameVal") String userName, @Param("passwordVal") String password);
 }

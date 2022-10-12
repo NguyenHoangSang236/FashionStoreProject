@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.entity.Account;
-import com.example.demo.respository.AccountRespository;
+import com.example.demo.respository.AccountRepository;
 
 @Controller
 public class LoginPageController {
 	@Autowired
-	AccountRespository accRepo;
+	AccountRepository accRepo;
 	Account account = new Account();
 	
 //	@GetMapping("/loginpage")
