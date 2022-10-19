@@ -33,9 +33,6 @@ public class Catalog {
 			name = "catalog_with_products", 
 			joinColumns = @JoinColumn(name = "Catalog_ID"), 
 			inverseJoinColumns = {
-				@JoinColumn(name = "Product_ID"),
-				@JoinColumn(name = "Color"),
-				@JoinColumn(name = "Size")
-			})
+				@JoinColumn(name = "Product_Name")})
 	List<Product> products;
 }

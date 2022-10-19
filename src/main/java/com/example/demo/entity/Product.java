@@ -1,6 +1,5 @@
 package com.example.demo.entity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -9,13 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.example.demo.entity.keyClasses.ProductPk;
 
 import lombok.Data;
 
@@ -23,8 +21,16 @@ import lombok.Data;
 @Entity
 @Table(name = "products")
 public class Product {
-	@EmbeddedId
-	private ProductPk productPk;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", nullable = false)
+    private int id;
+
+    @Column(name = "Color", nullable = false)
+    private String color;
+    
+    @Column(name = "Size", nullable = false)
+    private String size;
 	
 	@Column(name = "Name")
 	String name;
@@ -36,22 +42,22 @@ public class Product {
 	int available_quantity;
 	
 	@Column(name = "Sold_Quantity")
-	int sold_quantity;
+	int soldQuantity;
 	
 	@Column(name = "One_star_quantity")
-	int one_star_quantity;
+	int oneStarQuantity;
 	
 	@Column(name = "Two_star_quantity")
-	int two_star_quantity;
+	int twoStarQuantity;
 	
 	@Column(name = "Three_star_quantity")
-	int three_star_quantity;
+	int threeStarQuantity;
 	
 	@Column(name = "Four_star_quantity")
-	int four_star_quantity;
+	int fourStarQuantity;
 	
 	@Column(name = "Five_star_quantity")
-	int five_star_quantity;
+	int fiveStarQuantity;
 	
 	@Column(name = "Discount")
 	double discount;
@@ -60,153 +66,214 @@ public class Product {
 	String brand;
 
 	@ManyToOne
-	@MapsId("productId")
 	Invoice invoice;
 	
 	@ManyToMany(mappedBy = "products")
-	@MapsId("productId")
 	private List<Catalog> catalogs;
 	
 	@OneToMany(mappedBy = "product")
-	@MapsId("productId")
 	private List<Cart> carts;
 	
 	@OneToMany(mappedBy = "product")
-	@MapsId("productId")
 	private List<Comment> comments;
+	
+	@ManyToOne
+	@JoinColumn(name = "Name", referencedColumnName = "Product_Name", insertable = false, updatable = false)
+	Product_Different_Images productDifferentImages;
 	
 
 	public Product() {}
 
 
-	public ProductPk getProductPk() {
-		return productPk;
-	}
+    public int getId() {
+        return id;
+    }
 
 
-	public void setProductPk(ProductPk productPk) {
-		this.productPk = productPk;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
 
-	public double getPrice() {
-		return price;
-	}
+    public String getColor() {
+        return color;
+    }
 
 
-	public void setPrice(double price) {
-		this.price = price;
-	}
+    public void setColor(String color) {
+        this.color = color;
+    }
 
 
-	public int getAvailable_quantity() {
-		return available_quantity;
-	}
+    public String getSize() {
+        return size;
+    }
 
 
-	public void setAvailable_quantity(int available_quantity) {
-		this.available_quantity = available_quantity;
-	}
+    public void setSize(String size) {
+        this.size = size;
+    }
 
 
-	public int getSold_quantity() {
-		return sold_quantity;
-	}
+    public String getName() {
+        return name;
+    }
 
 
-	public void setSold_quantity(int sold_quantity) {
-		this.sold_quantity = sold_quantity;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
 
-	public int getOne_star_quantity() {
-		return one_star_quantity;
-	}
+    public double getPrice() {
+        return price;
+    }
 
 
-	public void setOne_star_quantity(int one_star_quantity) {
-		this.one_star_quantity = one_star_quantity;
-	}
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
 
-	public int getTwo_star_quantity() {
-		return two_star_quantity;
-	}
+    public int getAvailable_quantity() {
+        return available_quantity;
+    }
 
 
-	public void setTwo_star_quantity(int two_star_quantity) {
-		this.two_star_quantity = two_star_quantity;
-	}
+    public void setAvailable_quantity(int available_quantity) {
+        this.available_quantity = available_quantity;
+    }
 
 
-	public int getThree_star_quantity() {
-		return three_star_quantity;
-	}
+    public int getSoldQuantity() {
+        return soldQuantity;
+    }
 
 
-	public void setThree_star_quantity(int three_star_quantity) {
-		this.three_star_quantity = three_star_quantity;
-	}
+    public void setSoldQuantity(int soldQuantity) {
+        this.soldQuantity = soldQuantity;
+    }
 
 
-	public int getFour_star_quantity() {
-		return four_star_quantity;
-	}
+    public int getOneStarQuantity() {
+        return oneStarQuantity;
+    }
 
 
-	public void setFour_star_quantity(int four_star_quantity) {
-		this.four_star_quantity = four_star_quantity;
-	}
+    public void setOneStarQuantity(int oneStarQuantity) {
+        this.oneStarQuantity = oneStarQuantity;
+    }
 
 
-	public int getFive_star_quantity() {
-		return five_star_quantity;
-	}
+    public int getTwoStarQuantity() {
+        return twoStarQuantity;
+    }
 
 
-	public void setFive_star_quantity(int five_star_quantity) {
-		this.five_star_quantity = five_star_quantity;
-	}
+    public void setTwoStarQuantity(int twoStarQuantity) {
+        this.twoStarQuantity = twoStarQuantity;
+    }
 
 
-	public double getDiscount() {
-		return discount;
-	}
+    public int getThreeStarQuantity() {
+        return threeStarQuantity;
+    }
 
 
-	public void setDiscount(double discount) {
-		this.discount = discount;
-	}
+    public void setThreeStarQuantity(int threeStarQuantity) {
+        this.threeStarQuantity = threeStarQuantity;
+    }
 
 
-	public String getBrand() {
-		return brand;
-	}
+    public int getFourStarQuantity() {
+        return fourStarQuantity;
+    }
 
 
-	public void setBrand(String brand) {
-		this.brand = brand;
-	}
+    public void setFourStarQuantity(int fourStarQuantity) {
+        this.fourStarQuantity = fourStarQuantity;
+    }
 
 
-	public Invoice getInvoice() {
-		return invoice;
-	}
+    public int getFiveStarQuantity() {
+        return fiveStarQuantity;
+    }
 
 
-	public void setInvoice(Invoice invoice) {
-		this.invoice = invoice;
-	}
+    public void setFiveStarQuantity(int fiveStarQuantity) {
+        this.fiveStarQuantity = fiveStarQuantity;
+    }
 
 
-	public String getName() {
-		return name;
-	}
+    public double getDiscount() {
+        return discount;
+    }
 
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+
+    public String getBrand() {
+        return brand;
+    }
+
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
+    }
+
+
+    public List<Catalog> getCatalogs() {
+        return catalogs;
+    }
+
+
+    public void setCatalogs(List<Catalog> catalogs) {
+        this.catalogs = catalogs;
+    }
+
+
+    public List<Cart> getCarts() {
+        return carts;
+    }
+
+
+    public void setCarts(List<Cart> carts) {
+        this.carts = carts;
+    }
+
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+
+    public Product_Different_Images getProductDifferentImages() {
+        return productDifferentImages;
+    }
+
+
+    public void setProductDifferentImages(Product_Different_Images productDifferentImages) {
+        this.productDifferentImages = productDifferentImages;
+    }
+	
 	
 	
 }

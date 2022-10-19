@@ -38,7 +38,5 @@ public class Cart {
 
     @ManyToOne
     @JoinColumn(name = "productId")
-    @JoinColumn(name = "color")
-    @JoinColumn(name = "size")
     Product product;
 }

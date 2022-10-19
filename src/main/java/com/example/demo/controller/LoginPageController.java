@@ -41,7 +41,7 @@ public class LoginPageController {
 		List<Account> accList = accRepo.findByUserNameAndPassword(account.getUserName(), account.getPassword());
 		
 		if(accList.size() > 0) {
-			return "newspaperHTML";
+			return "redirect:/home";
 		}
 		else {
 			return "login";
