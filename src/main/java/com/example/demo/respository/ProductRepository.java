@@ -10,13 +10,16 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.entity.Product;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Integer> {
+public interface ProductRepository extends JpaRepository<Product, Integer> { 
 	@Query(value = "select p from Product p ")
 	List<Product> getAllProducts();
 	
 	@Query(value = "select p from Product p where p.name like %:nameVal%")
 	List<Product> getProductsByName(@Param("nameVal") String productName);
 	
-	@Query(value = "select p from Product p order by p.soldQuantity desc limit 8", nativeQuery = true)
+	@Query(value = "select * "
+    	         + "from products p "
+    	         + "order by p.sold_quantity "
+    	         + "desc limit 8", nativeQuery = true)
 	List<Product> get8BestSellerProducts();
 }

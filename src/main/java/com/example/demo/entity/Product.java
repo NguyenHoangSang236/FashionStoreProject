@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -16,28 +17,28 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "products")
-public class Product {
+public class Product implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false)
+    @Column(name = "id", nullable = false)
     private int id;
 
-    @Column(name = "Color", nullable = false)
+    @Column(name = "color", nullable = false)
     private String color;
     
-    @Column(name = "Size", nullable = false)
+    @Column(name = "size", nullable = false)
     private String size;
 	
-	@Column(name = "Name")
+	@Column(name = "name")
 	String name;
 	
-	@Column(name = "Price")
+	@Column(name = "price")
 	double price;
 	
-	@Column(name = "Available_Quantity")
+	@Column(name = "available_quantity")
 	int available_quantity;
 	
-	@Column(name = "Sold_Quantity")
+	@Column(name = "sold_quantity")
 	int soldQuantity;
 	
 	@Column(name = "One_star_quantity")
