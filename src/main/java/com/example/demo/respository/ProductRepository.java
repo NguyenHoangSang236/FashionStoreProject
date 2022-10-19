@@ -20,4 +20,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	
 	@Query(value = "select p from Product p order by p.soldQuantity desc limit 6", nativeQuery = true)
 	List<Product> get6BestSellerProducts();
+	
+	
 }
