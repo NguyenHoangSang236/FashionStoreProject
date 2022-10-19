@@ -22,20 +22,26 @@ import com.example.demo.respository.ProductRepository;
 
 @Controller
 public class IndexPageController {
+    @Autowired
     ProductRepository productRepo;
     Product product = new Product();
-    List<Product> top6estSelllerProducts;
     
 	@GetMapping("/home")
 	public String showHomePage(Model model) {
-	    model.addAttribute("Product", product);
+	    
+	    List<Product> top8estSelllerProducts = productRepo.get8BestSellerProducts();
+	    
+	    System.out.println(top8estSelllerProducts);
+                
+        model.addAttribute("top8BestSellers", top8estSelllerProducts);
+	    
 		return "index";
 	}
 	
-	@PostMapping("/home")
-	public String renderDataToHome(@ModelAttribute("Product") Product product) {
-	    top6estSelllerProducts = productRepo.get6BestSellerProducts();
-	    
-        return "home";
-	}
+//	@PostMapping("/home")
+//	public String renderDataToHome(@ModelAttribute("Product") Product product) {
+//	    top6estSelllerProducts = productRepo.get6BestSellerProducts();
+//	    
+//        return "index";
+//	}
 }

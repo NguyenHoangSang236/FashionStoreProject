@@ -41,6 +41,7 @@ public class LoginPageController {
 		List<Account> accList = accRepo.findByUserNameAndPassword(account.getUserName(), account.getPassword());
 		
 		if(accList.size() > 0) {
+//		    System.out.println("logged in");
 			return "redirect:/home";
 		}
 		else {

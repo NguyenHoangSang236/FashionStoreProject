@@ -3,15 +3,11 @@ package com.example.demo.entity;
 import java.util.List;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -64,9 +60,21 @@ public class Product {
 	
 	@Column(name = "Brand")
 	String brand;
+	
+	@Column(name = "Image_1")
+	String image1;
+	
+	@Column(name = "Image_2")
+    String image2;
+	
+	@Column(name = "Image_3")
+    String image3;
+	
+	@Column(name = "Image_4")
+    String image4;
 
-	@ManyToOne
-	Invoice invoice;
+	@ManyToMany(mappedBy = "products")
+	private List<Invoice> invoice;
 	
 	@ManyToMany(mappedBy = "products")
 	private List<Catalog> catalogs;
@@ -76,10 +84,7 @@ public class Product {
 	
 	@OneToMany(mappedBy = "product")
 	private List<Comment> comments;
-	
-	@ManyToOne
-	@JoinColumn(name = "Name", referencedColumnName = "Product_Name", insertable = false, updatable = false)
-	Product_Different_Images productDifferentImages;
+
 	
 
 	public Product() {}
@@ -102,6 +107,46 @@ public class Product {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+
+    public String getImage1() {
+        return image1;
+    }
+
+
+    public void setImage1(String image1) {
+        this.image1 = image1;
+    }
+
+
+    public String getImage2() {
+        return image2;
+    }
+
+
+    public void setImage2(String image2) {
+        this.image2 = image2;
+    }
+
+
+    public String getImage3() {
+        return image3;
+    }
+
+
+    public void setImage3(String image3) {
+        this.image3 = image3;
+    }
+
+
+    public String getImage4() {
+        return image4;
+    }
+
+
+    public void setImage4(String image4) {
+        this.image4 = image4;
     }
 
 
@@ -225,12 +270,12 @@ public class Product {
     }
 
 
-    public Invoice getInvoice() {
+    public List<Invoice> getInvoice() {
         return invoice;
     }
 
 
-    public void setInvoice(Invoice invoice) {
+    public void setInvoice(List<Invoice> invoice) {
         this.invoice = invoice;
     }
 
@@ -265,14 +310,7 @@ public class Product {
     }
 
 
-    public Product_Different_Images getProductDifferentImages() {
-        return productDifferentImages;
-    }
 
-
-    public void setProductDifferentImages(Product_Different_Images productDifferentImages) {
-        this.productDifferentImages = productDifferentImages;
-    }
 	
 	
 	

@@ -8,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
@@ -40,7 +43,12 @@ public class Invoice {
 	@OneToOne(mappedBy = "invoice")
 	private Delivery delivery;
 	
-	@OneToMany(mappedBy = "invoice")
+	@ManyToMany
+	@JoinTable(
+            name = "invoices_with_products", 
+            joinColumns = @JoinColumn(name = "Invoice_ID"), 
+            inverseJoinColumns = {
+                @JoinColumn(name = "Product_ID")})
 	private List<Product> products;
 	
 	@ManyToOne()
