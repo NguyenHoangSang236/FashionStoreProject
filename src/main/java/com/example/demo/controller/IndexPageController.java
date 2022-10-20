@@ -29,11 +29,9 @@ public class IndexPageController {
 	@GetMapping("/home")
 	public String showHomePage(Model model) {
 	    
-	    List<Product> top8estSelllerProducts = productRepo.get8BestSellerProducts();
-	    
-	    System.out.println(top8estSelllerProducts);
-                
+	    List<Product> top8estSelllerProducts = productRepo.get8BestSellerProducts();               
         model.addAttribute("top8BestSellers", top8estSelllerProducts);
+        System.out.println(top8estSelllerProducts.get(0).getImage2());
 	    
 		return "index";
 	}
