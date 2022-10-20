@@ -62,7 +62,7 @@ public class Product implements Serializable{
 	@Column(name = "Brand")
 	String brand;
 	
-	@Column(name = "image_1")
+	@Column(name = "Image_1")
 	String image1;
 	
 	@Column(name = "Image_2")
