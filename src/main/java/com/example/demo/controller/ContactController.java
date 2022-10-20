@@ -15,12 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-
 @Controller
-public class DetailsController {
-    @GetMapping("/details")
-    public String showProductDetails() {
-        
-        return "shopdetails";
-    }
+public class ContactController {
+    @GetMapping("/contact")
+    public String showContact() {
+        return "contact";
+}
 }
