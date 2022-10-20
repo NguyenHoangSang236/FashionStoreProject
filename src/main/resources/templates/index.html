@@ -35,7 +35,7 @@
     <div class="offcanvas-menu-wrapper">
         <div class="offcanvas__option">
             <div class="offcanvas__links">
-                <a href="#">Sign in</a>
+                <a th:href="@{loginpage}">Sign in</a>
                 <a href="#">FAQs</a>
             </div>
             <div class="offcanvas__top__hover">
@@ -73,7 +73,7 @@
                     <div class="col-lg-6 col-md-5">
                         <div class="header__top__right">
                             <div class="header__top__links">
-                                <a href="#">Sign in</a>
+                                <a th:href="@{loginpage}">Sign in</a>
                                 <a href="#">FAQs</a>
                             </div>
                             <div class="header__top__hover">
@@ -93,7 +93,7 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo">
-                        <a href="./index.html"><img src="img/logo.png" alt=""></a>
+                        <a th:href="${home}"><img src="img/logo.png" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
@@ -232,10 +232,10 @@
                     </ul>
                 </div>
             </div>
-            <div class="row product__filter">
+            <div class="row product__filter" >
                 <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
                     <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="img/product/product-1.jpg">
+                        <div class="product__item__pic set-bg" data-setbg="${top8BestSellers.get(3).image2}">
                             <span class="label">New</span>
                             <ul class="product__hover">
                                 <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
@@ -244,7 +244,7 @@
                             </ul>
                         </div>
                         <div class="product__item__text">
-                            <h6>Piqué Biker Jacket</h6>
+                            <h6 th:text="${top8BestSellers.get(0).name}"></h6>
                             <a href="#" class="add-cart">+ Add To Cart</a>
                             <div class="rating">
                                 <i class="fa fa-star-o"></i>
@@ -253,7 +253,7 @@
                                 <i class="fa fa-star-o"></i>
                                 <i class="fa fa-star-o"></i>
                             </div>
-                            <h5>$67.24</h5>
+                            <h5 th:text="${top8BestSellers.get(0).price}" ></h5>
                             <div class="product__color__select">
                                 <label for="pc-1">
                                     <input type="radio" id="pc-1">
@@ -270,7 +270,7 @@
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
                     <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="img/product/product-2.jpg">
+                        <div class="product__item__pic set-bg" data-setbg="https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/9bdbce0b-8cbd-4f24-b815-2b05667e409a/air-force-1-high-se-shoes-6b703K.png">
                             <ul class="product__hover">
                                 <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
                                 <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a></li>
@@ -278,7 +278,7 @@
                             </ul>
                         </div>
                         <div class="product__item__text">
-                            <h6>Piqué Biker Jacket</h6>
+                            <h6 th:text="${top8BestSellers.get(1).name}"></h6>
                             <a href="#" class="add-cart">+ Add To Cart</a>
                             <div class="rating">
                                 <i class="fa fa-star-o"></i>
@@ -287,7 +287,7 @@
                                 <i class="fa fa-star-o"></i>
                                 <i class="fa fa-star-o"></i>
                             </div>
-                            <h5>$67.24</h5>
+                            <h5 th:text="${top8BestSellers.get(1).price}"></h5>
                             <div class="product__color__select">
                                 <label for="pc-4">
                                     <input type="radio" id="pc-4">
@@ -313,7 +313,7 @@
                             </ul>
                         </div>
                         <div class="product__item__text">
-                            <h6>Multi-pocket Chest Bag</h6>
+                            <h6 th:text="${top8BestSellers.get(2).name}"></h6>
                             <a href="#" class="add-cart">+ Add To Cart</a>
                             <div class="rating">
                                 <i class="fa fa-star"></i>
@@ -322,7 +322,7 @@
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star-o"></i>
                             </div>
-                            <h5>$43.48</h5>
+                            <h5 th:text="${top8BestSellers.get(2).price}"></h5>
                             <div class="product__color__select">
                                 <label for="pc-7">
                                     <input type="radio" id="pc-7">
@@ -347,7 +347,7 @@
                             </ul>
                         </div>
                         <div class="product__item__text">
-                            <h6>Diagonal Textured Cap</h6>
+                            <h6 th:text="${top8BestSellers.get(3).name}">Diagonal Textured Cap</h6>
                             <a href="#" class="add-cart">+ Add To Cart</a>
                             <div class="rating">
                                 <i class="fa fa-star-o"></i>
@@ -356,7 +356,7 @@
                                 <i class="fa fa-star-o"></i>
                                 <i class="fa fa-star-o"></i>
                             </div>
-                            <h5>$60.9</h5>
+                            <h5 th:text="${top8BestSellers.get(3).price}"></h5>
                             <div class="product__color__select">
                                 <label for="pc-10">
                                     <input type="radio" id="pc-10">
@@ -381,7 +381,7 @@
                             </ul>
                         </div>
                         <div class="product__item__text">
-                            <h6>Lether Backpack</h6>
+                            <h6 th:text="${top8BestSellers.get(4).name}"></h6>
                             <a href="#" class="add-cart">+ Add To Cart</a>
                             <div class="rating">
                                 <i class="fa fa-star-o"></i>
@@ -390,7 +390,7 @@
                                 <i class="fa fa-star-o"></i>
                                 <i class="fa fa-star-o"></i>
                             </div>
-                            <h5>$31.37</h5>
+                            <h5 th:text="${top8BestSellers.get(4).price}"></h5>
                             <div class="product__color__select">
                                 <label for="pc-13">
                                     <input type="radio" id="pc-13">
@@ -416,7 +416,7 @@
                             </ul>
                         </div>
                         <div class="product__item__text">
-                            <h6>Ankle Boots</h6>
+                            <h6 th:text="${top8BestSellers.get(5).name}"></h6>
                             <a href="#" class="add-cart">+ Add To Cart</a>
                             <div class="rating">
                                 <i class="fa fa-star"></i>
@@ -425,7 +425,7 @@
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star-o"></i>
                             </div>
-                            <h5>$98.49</h5>
+                            <h5 th:text="${top8BestSellers.get(5).price}"></h5>
                             <div class="product__color__select">
                                 <label for="pc-16">
                                     <input type="radio" id="pc-16">
@@ -450,7 +450,7 @@
                             </ul>
                         </div>
                         <div class="product__item__text">
-                            <h6>T-shirt Contrast Pocket</h6>
+                            <h6 th:text="${top8BestSellers.get(6).name}"></h6>
                             <a href="#" class="add-cart">+ Add To Cart</a>
                             <div class="rating">
                                 <i class="fa fa-star-o"></i>
@@ -459,7 +459,7 @@
                                 <i class="fa fa-star-o"></i>
                                 <i class="fa fa-star-o"></i>
                             </div>
-                            <h5>$49.66</h5>
+                            <h5 th:text="${top8BestSellers.get(6).price}"></h5>
                             <div class="product__color__select">
                                 <label for="pc-19">
                                     <input type="radio" id="pc-19">
@@ -484,7 +484,7 @@
                             </ul>
                         </div>
                         <div class="product__item__text">
-                            <h6>Basic Flowing Scarf</h6>
+                            <h6 th:text="${top8BestSellers.get(7).name}"></h6>
                             <a href="#" class="add-cart">+ Add To Cart</a>
                             <div class="rating">
                                 <i class="fa fa-star-o"></i>
@@ -493,7 +493,7 @@
                                 <i class="fa fa-star-o"></i>
                                 <i class="fa fa-star-o"></i>
                             </div>
-                            <h5>$26.28</h5>
+                            <h5 th:text="${top8BestSellers.get(7).price}"></h5>
                             <div class="product__color__select">
                                 <label for="pc-22">
                                     <input type="radio" id="pc-22">
