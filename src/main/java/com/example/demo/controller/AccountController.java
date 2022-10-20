@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.example.demo.entity.Account;
-import com.example.demo.respository.AccountRepository;
+import com.example.demo.respository.Account.AccountRepository;
 
 
 @org.springframework.web.bind.annotation.RestController

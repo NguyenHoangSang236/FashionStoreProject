@@ -1,4 +1,4 @@
-package com.example.demo.respository;
+package com.example.demo.respository.Product;
 
 import java.util.List;
 
@@ -22,4 +22,10 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     	         + "order by p.sold_quantity "
     	         + "desc limit 8", nativeQuery = true)
 	List<Product> get8BestSellerProducts();
+	
+	@Query(value = "select p.* "
+    	         + "from products p join catalog_with_products cwp on p.name = cwp.product_name "
+    	         + "                join catalog c on c.id = cwp.catalog_id "
+    	         + "where c.name = :catalogName", nativeQuery = true)
+	List<Product> getProductsUsingCatalogName(@Param("catalogName") String catalogName);
 }

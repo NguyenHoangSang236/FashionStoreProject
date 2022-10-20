@@ -17,8 +17,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.entity.Account;
 import com.example.demo.entity.Product;
-import com.example.demo.respository.AccountRepository;
-import com.example.demo.respository.ProductRepository;
+import com.example.demo.respository.Account.AccountRepository;
+import com.example.demo.respository.Product.ProductRepository;
+import com.example.demo.util.ValueRender;
 
 @Controller
 public class IndexPageController {
@@ -31,7 +32,9 @@ public class IndexPageController {
 	    
 	    List<Product> top8estSelllerProducts = productRepo.get8BestSellerProducts();               
         model.addAttribute("top8BestSellers", top8estSelllerProducts);
+        
         System.out.println(top8estSelllerProducts.get(0).getImage2());
+        System.out.println(ValueRender.formatDoubleNumber(top8estSelllerProducts.get(0).getPrice()));
 	    
 		return "index";
 	}
