@@ -33,8 +33,8 @@ public class IndexPageController {
 	    List<Product> top8estSelllerProducts = productRepo.get8BestSellerProducts();               
         model.addAttribute("top8BestSellers", top8estSelllerProducts);
         
-        System.out.println(top8estSelllerProducts.get(0).getImage2());
-        System.out.println(ValueRender.formatDoubleNumber(top8estSelllerProducts.get(0).getPrice()));
+//        System.out.println(top8estSelllerProducts.get(0).getImage2());
+//        System.out.println(ValueRender.formatDoubleNumber(top8estSelllerProducts.get(0).getPrice()));
 	    
 		return "index";
 	}

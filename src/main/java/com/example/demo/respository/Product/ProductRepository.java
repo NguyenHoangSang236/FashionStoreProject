@@ -14,8 +14,14 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	@Query(value = "select p from Product p ")
 	List<Product> getAllProducts();
 	
+	
 	@Query(value = "select p from Product p where p.name like %:nameVal%")
 	List<Product> getProductsByName(@Param("nameVal") String productName);
+	
+	
+//	@Query(value = "select * from products where brand = :brandVal")
+//	List<Product> getProductsByBrand(@Param("brandVal") String brandName);
+	
 	
 	@Query(value = "select * "
     	         + "from products p "
@@ -23,9 +29,16 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     	         + "desc limit 8", nativeQuery = true)
 	List<Product> get8BestSellerProducts();
 	
+	
 	@Query(value = "select p.* "
     	         + "from products p join catalog_with_products cwp on p.name = cwp.product_name "
     	         + "                join catalog c on c.id = cwp.catalog_id "
     	         + "where c.name = :catalogName", nativeQuery = true)
 	List<Product> getProductsUsingCatalogName(@Param("catalogName") String catalogName);
+	
+	
+	@Query(value = "select * from products where price >= :moneyVal1 and price <= :moneyVal2", nativeQuery = true)
+	List<Product> getProductsUsingPriceFilter(@Param("moneyVal1") double price1, @Param("moneyVal2") double price2);
+	
+	
 }
