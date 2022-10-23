@@ -32,49 +32,49 @@ public class Product implements Serializable {
     private String size;
 
     @Column(name = "name")
-    String name;
+    private String name;
 
     @Column(name = "price")
-    double price;
+    private double price;
 
     @Column(name = "available_quantity")
-    int available_quantity;
+    private int available_quantity;
 
     @Column(name = "sold_quantity")
-    int soldQuantity;
+    private int soldQuantity;
 
     @Column(name = "One_star_quantity")
-    int oneStarQuantity;
+    private int oneStarQuantity;
 
     @Column(name = "Two_star_quantity")
-    int twoStarQuantity;
+    private int twoStarQuantity;
 
     @Column(name = "Three_star_quantity")
-    int threeStarQuantity;
+    private int threeStarQuantity;
 
     @Column(name = "Four_star_quantity")
-    int fourStarQuantity;
+    private int fourStarQuantity;
 
     @Column(name = "Five_star_quantity")
-    int fiveStarQuantity;
+    private int fiveStarQuantity;
 
     @Column(name = "Discount")
-    double discount;
+    private double discount;
 
     @Column(name = "Brand")
-    String brand;
+    private String brand;
 
     @Column(name = "Image_1")
-    String image1;
+    private String image1;
 
     @Column(name = "Image_2")
-    String image2;
+    private String image2;
 
     @Column(name = "Image_3")
-    String image3;
+    private String image3;
 
     @Column(name = "Image_4")
-    String image4;
+    private String image4;
 
     @ManyToMany(mappedBy = "products")
     private List<Invoice> invoice;
