@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="CSS/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="CSS/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="CSS/style.css" type="text/css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 </head>
 
 <body>
@@ -64,7 +65,7 @@
         </div>
         <div id="mobile-menu-wrap"></div>
         <div class="offcanvas__text">
-            <p>Free shipping, 30-day return or refund guarantee.</p>
+            <p></p>
         </div>
     </div>
     <!-- Offcanvas Menu End -->
@@ -76,7 +77,7 @@
                 <div class="row">
                     <div class="col-lg-6 col-md-7">
                         <div class="header__top__left">
-                            <p>Free shipping, 30-day return or refund guarantee.</p>
+                            <p></p>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-5">
@@ -111,7 +112,9 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo">
-                        <a th:href="@{home}"><img src="img/logo.png" alt=""></a>
+                        <a th:href="@{home}">                            <div class="logo-shop">
+                                Fool!st.
+                            </div></a>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
@@ -272,7 +275,7 @@
                                 <i class="fa fa-star-o"></i>
                             </div>
                             <h5 th:text="${top8BestSellers.get(0).formattedPrice()}" ></h5>
-                            <div class="product__color__select">
+                            <div class="product__color__select is-hidden">
                                 <label for="pc-1">
                                     <input type="radio" id="pc-1">
                                 </label>
@@ -306,7 +309,7 @@
                                 <i class="fa fa-star-o"></i>
                             </div>
                             <h5 th:text="${top8BestSellers.get(1).formattedPrice()}"></h5>
-                            <div class="product__color__select">
+                            <div class="product__color__select is-hidden">
                                 <label for="pc-4">
                                     <input type="radio" id="pc-4">
                                 </label>
@@ -341,7 +344,7 @@
                                 <i class="fa fa-star-o"></i>
                             </div>
                             <h5 th:text="${top8BestSellers.get(2).formattedPrice()}"></h5>
-                            <div class="product__color__select">
+                            <div class="product__color__select is-hidden">
                                 <label for="pc-7">
                                     <input type="radio" id="pc-7">
                                 </label>
@@ -375,7 +378,7 @@
                                 <i class="fa fa-star-o"></i>
                             </div>
                             <h5 th:text="${top8BestSellers.get(3).formattedPrice()}"></h5>
-                            <div class="product__color__select">
+                            <div class="product__color__select is-hidden">
                                 <label for="pc-10">
                                     <input type="radio" id="pc-10">
                                 </label>
@@ -409,7 +412,7 @@
                                 <i class="fa fa-star-o"></i>
                             </div>
                             <h5 th:text="${top8BestSellers.get(4).formattedPrice()}"></h5>
-                            <div class="product__color__select">
+                            <div class="product__color__select is-hidden">
                                 <label for="pc-13">
                                     <input type="radio" id="pc-13">
                                 </label>
@@ -444,7 +447,7 @@
                                 <i class="fa fa-star-o"></i>
                             </div>
                             <h5 th:text="${top8BestSellers.get(5).formattedPrice()}"></h5>
-                            <div class="product__color__select">
+                            <div class="product__color__select is-hidden">
                                 <label for="pc-16">
                                     <input type="radio" id="pc-16">
                                 </label>
@@ -478,7 +481,7 @@
                                 <i class="fa fa-star-o"></i>
                             </div>
                             <h5 th:text="${top8BestSellers.get(6).formattedPrice()}"></h5>
-                            <div class="product__color__select">
+                            <div class="product__color__select is-hidden">
                                 <label for="pc-19">
                                     <input type="radio" id="pc-19">
                                 </label>
@@ -512,7 +515,7 @@
                                 <i class="fa fa-star-o"></i>
                             </div>
                             <h5 th:text="${top8BestSellers.get(7).formattedPrice()}"></h5>
-                            <div class="product__color__select">
+                            <div class="product__color__select is-hidden">
                                 <label for="pc-22">
                                     <input type="radio" id="pc-22">
                                 </label>
