@@ -5,24 +5,48 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">    
     <link rel="stylesheet" href="CSS/stylelogin.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 </head>
-<body>
-    <br>
-<br>
-    <div class="cont">
+<body class="has-background-transparent">
+    <img src="https://c8.alamy.com/comp/KRC3CA/women-clothes-in-front-with-store-background-in-paris-KRC3CA.jpg" alt=""
+                    style="position: fixed;
+                            z-index: -100;
+                            top: 0;
+                            width:100%;
+                            filter: blur(8px);
+                            -webkit-filter: blur(4px);">
+    <div class="cont mt-6">
         <form class="form sign-in" action = "#" th:action = "@{/loginpage}" method="post" th:object = "${Account}">
-            <h2>Welcome</h2>
-            <label>
-                <span>User Name</span>
-                <input type="text" th:field = "*{userName}" />
-            </label>
-            <label>
-                <span>Password</span>
-                <input type="password" th:field = "*{password}" />
-            </label>
-            <p class="forgot-pass">Forgot password?</p>
-            <button type="submit" class="submit">Sign In</button>
-         
+            <div class="m-6">
+                <div class="has-text-centered pb-6" style="position:relative;">
+                    <div class="logo-shop">
+                        Fool!st.
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="">
+                        <div class="m-4">
+                            <div class="title is-6 mb-3 has-text-left">
+                                Username
+                            </div>
+                            <input type="text" class="input has-text-left" th:field="*{userName}">
+                        </div>
+                        <div class="m-4">
+                            <div class="title is-6 mb-3 has-text-left">
+                                Password
+                            </div>
+                            <input type="password" class="input has-text-left" th:field="*{password}">
+                        </div>
+                        <div class="has-text-right">
+                            <a href="#" class="forgot-pass">Forgot your password?</a>
+                        </div>
+                    </div>
+                    <div class="has-text-centered mt-5 mb-5 has-text-weight-bold is-flex is-justify-content-center">
+                        <div type="submit" class="has-width-20rem button has-text-white is-rounded is-fullwidth" 
+                            style="background-color: #d4af7a; width: 20rem;">Shopping NOW</div>
+                    </div>
+                </div>
+            </div>
         </form>
         <div class="sub-cont">
             <div class="img">
@@ -39,30 +63,33 @@
                     <span class="m--in">Sign In</span>
                 </div>
             </div>
-            <div class="form sign-up">
-                <h2>Create your Account</h2>
+            <div class="form sign-up has-text-centered m-3">
+                <div class="title is-4 mb-6">Create your Account</div>
                 <label>
-                    <span>Name</span>
+                    <span class="is-capitalized">Username</span>
                     <input type="text" />
                 </label>
                 <label>
-                    <span>Email</span>
+                    <span class="is-capitalized">Email</span>
                     <input type="email" />
                 </label>
                 <label>
-                    <span>Password</span>
+                    <span class="is-capitalized">Password</span>
                     <input type="password" />
                 </label>
-                <button type="button" class="submit">Sign Up</button> 
-                
+                <div class="has-text-centered mb-5 has-text-weight-bold is-flex is-justify-content-center">
+                    <div type="button" class="has-width-20rem submit button has-text-white is-rounded is-fullwidth" 
+                        style="background-color: #d4af7a; width: 20rem;">Register</div> 
+                </div>
             </div>
         </div>
     </div>
-
-    <script>
-        document.querySelector('.img__btn').addEventListener('click', function() {
-            document.querySelector('.cont').classList.toggle('s--signup');
-        });
-    </script>
 </body>
 </html>
+
+
+<script>
+    document.querySelector('.img__btn').addEventListener('click', function() {
+        document.querySelector('.cont').classList.toggle('s--signup');
+    });
+</script>
