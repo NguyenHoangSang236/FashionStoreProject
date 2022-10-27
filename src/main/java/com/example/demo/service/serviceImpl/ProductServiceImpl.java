@@ -41,4 +41,23 @@ public class ProductServiceImpl implements ProductService{
         
         return new PageImpl<Product>(list, PageRequest.of(currentPage, pageSize), products.size());
     }
+    
+    
+    public Page<Product> findByPriceFilter(Pageable pageable, double price1, double price2 ) {
+        products = productRepository.getProductsUsingPriceFilter(price1, price2);
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startProduct = pageSize * currentPage;
+        List<Product> list;
+        
+        if(products.size() < startProduct) {
+            list = Collections.emptyList();
+        }
+        else {
+            int toIndex = Math.min(startProduct + pageSize, products.size());
+            list = products.subList(startProduct, toIndex);
+        }
+        
+        return new PageImpl<Product>(list, PageRequest.of(currentPage, pageSize), products.size());
+    }
 }
