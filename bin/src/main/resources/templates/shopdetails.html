@@ -36,7 +36,7 @@
     <div class="offcanvas-menu-wrapper">
         <div class="offcanvas__option">
             <div class="offcanvas__links">
-                <a href="#">Sign in</a>
+                <a th:href="@{loginpage}">Sign in</a>
                 <a href="#">FAQs</a>
             </div>
             <div class="offcanvas__top__hover">
@@ -74,7 +74,7 @@
                     <div class="col-lg-6 col-md-5">
                         <div class="header__top__right">
                             <div class="header__top__links">
-                                <a href="#">Sign in</a>
+                                <a th:href="@{loginpage}">Sign in</a>
                                 <a href="#">FAQs</a>
                             </div>
                             <div class="header__top__hover">
@@ -94,7 +94,7 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo">
-                        <a href="./inex.html">                            <div class="logo-shop">
+                        <a th:href="@{home}">                            <div class="logo-shop">
                                 Fool!st.
                             </div></a>
                     </div>
@@ -102,19 +102,19 @@
                 <div class="col-lg-6 col-md-6">
                     <nav class="header__menu mobile-menu">
                         <ul>
-                            <li><a href="./inex.html">Home</a></li>
-                            <li class="active"><a href="./shop.html">Shop</a></li>
+                            <li class="active"><a th:href="@{home}">Home</a></li>
+                            <li><a th:href="@{shopproduct}">Shop</a></li>
                             <li><a href="#">Pages</a>
                                 <ul class="dropdown">
-                                    <li><a href="./about.html">About Us</a></li>
-                                    <li><a href="./shop-details.html">Shop Details</a></li>
-                                    <li><a href="./shopping-cart.html">Shopping Cart</a></li>
-                                    <li><a href="./checkout.html">Check Out</a></li>
+                                    <li><a th:href="@{about}">About Us</a></li>
+                                    <li><a th:href="@{details}">Shop Details</a></li>
+                                    <li><a th:href="@{cart}">Shopping Cart</a></li>
+                                    <li><a th:href="@{checkout}">Check Out</a></li>
                                     <li><a href="./blog-details.html">Blog Details</a></li>
                                 </ul>
                             </li>
                             <li><a href="./blog.html">Blog</a></li>
-                            <li><a href="./contact.html">Contacts</a></li>
+                            <li><a th:href="@{contact}">Contacts</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -435,7 +435,7 @@
                                 <i class="fa fa-star-o"></i>
                             </div>
                             <h5>$67.24</h5>
-                            <div class="product__color__select">
+                            <div class="product__color__select is-hidden">
                                 <label for="pc-1">
                                     <input type="radio" id="pc-1">
                                 </label>
@@ -469,7 +469,7 @@
                                 <i class="fa fa-star-o"></i>
                             </div>
                             <h5>$67.24</h5>
-                            <div class="product__color__select">
+                            <div class="product__color__select is-hidden">
                                 <label for="pc-4">
                                     <input type="radio" id="pc-4">
                                 </label>
@@ -504,7 +504,7 @@
                                 <i class="fa fa-star-o"></i>
                             </div>
                             <h5>$43.48</h5>
-                            <div class="product__color__select">
+                            <div class="product__color__select is-hidden">
                                 <label for="pc-7">
                                     <input type="radio" id="pc-7">
                                 </label>
@@ -538,7 +538,7 @@
                                 <i class="fa fa-star-o"></i>
                             </div>
                             <h5>$60.9</h5>
-                            <div class="product__color__select">
+                            <div class="product__color__select is-hidden">
                                 <label for="pc-10">
                                     <input type="radio" id="pc-10">
                                 </label>

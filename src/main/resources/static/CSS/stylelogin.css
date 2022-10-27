@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,900&display=swap');
+
 *,
 *:before,
 *:after {
@@ -293,4 +295,72 @@ input {
 .cont.s--signup .sign-up {
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
+}
+
+.is-hidden {
+    display: none;
+}
+
+.has-background-transparent {
+    background-color: transparent !important;
+}
+
+
+.logo-shop {
+    font-family: 'Poppins', sans-serif;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    color: #000;
+    font-size: 2.5rem;
+    font-weight: bold;
+    letter-spacing: 8px;
+    cursor: pointer;
+}
+
+.logo-shop::before {
+    content: "Fool!st.";
+    position: absolute;
+    color: transparent;
+    background-image: repeating-linear-gradient(45deg,
+            transparent 0,
+            transparent 1px,
+            #e53637a1 2px,
+            #e53637a1 4px);
+    -webkit-background-clip: text;
+    top: 0px;
+    left: 0;
+    z-index: -1;
+    transition: 1s;
+}
+
+.logo-shop::after {
+    content: "Fool!st.";
+    position: absolute;
+    color: transparent;
+    background-image: repeating-linear-gradient(135deg,
+            transparent 0,
+            transparent 2px,
+            transparent 1px,
+            transparent 4px);
+    -webkit-background-clip: text;
+    top: 0px;
+    left: 0px;
+    transition: 1s;
+}
+
+.logo-shop:hover:before {
+    top: 10px;
+    left: 10px;
+}
+
+.logo-shop:hover:after {
+    top: -10px;
+    left: -10px;
+}
+
+.has-width-20rem {
+    width: 20rem;
 }
