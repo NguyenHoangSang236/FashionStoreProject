@@ -2,6 +2,9 @@ package com.example.demo.controller;
 
 import java.util.List;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,12 +19,22 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.entity.Account;
 import com.example.demo.respository.AccountRepository;
+import com.example.demo.respository.CustomerRepository;
+import com.example.demo.respository.StaffRepository;
+import com.example.demo.util.LoginState;
+import com.example.demo.util.ValueRender;
 
 @Controller
 public class LoginPageController {
 	@Autowired
 	AccountRepository accRepo;
 	Account account = new Account();
+	
+	@Autowired
+	CustomerRepository cusRepo;
+	
+	@Autowired
+	StaffRepository staffRepo;
 	
 //	@GetMapping("/loginpage")
 //	public ModelAndView loginPage() {
@@ -37,11 +50,22 @@ public class LoginPageController {
 	 
 	
 	@PostMapping("/loginpage")
-	public String submitForm(@ModelAttribute("Account") Account account) { 
-		List<Account> accList = accRepo.findByUserNameAndPassword(account.getUserName(), account.getPassword());
+	public String submitForm(@ModelAttribute("Account") Account account, HttpServletResponse response) { 
+		Account acc = accRepo.findByUserNameAndPassword(account.getUserName(), account.getPassword());
 		
-		if(accList.size() > 0) {
-//		    System.out.println("logged in");
+		if(acc.getUserName().equals(null) == false) {
+		    Cookie cookie = new Cookie(acc.getUserName(), ValueRender.encodePassword(acc.getPassword()));
+		    cookie.setMaxAge(7 * 24 * 60 * 60);
+		    response.addCookie(cookie);
+		    
+		    LoginState.currentAccount = acc;
+		    if(acc.getRole() == "admin") {
+		        LoginState.currentStaff = staffRepo.getCurrentLoggedInStaff(acc.getUserName());
+		    }
+		    else {
+	            LoginState.currentCustomer = cusRepo.getCurrentLoggedInCustomer(acc.getUserName());
+		    }
+		    
 			return "redirect:/home";
 		}
 		else {

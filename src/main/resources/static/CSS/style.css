@@ -1487,6 +1487,7 @@ ol {
 
 .product__pagination a.active {
 	border-color: #111111;
+	margin: 0px 10px;
 }
 
 .product__pagination a:hover {
@@ -4019,4 +4020,9 @@ ol {
 
 .has-width-20rem {
 	width: 20rem;
+}
+
+.product__pagination-centered {
+	display: flex;
+	justify-content: center;
 }

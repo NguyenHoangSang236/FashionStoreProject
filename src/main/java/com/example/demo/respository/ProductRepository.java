@@ -11,7 +11,7 @@ import com.example.demo.entity.Product;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> { 
-	@Query(value = "select * from products p group by p.name", nativeQuery = true)
+	@Query(value = "select * from products p group by p.color", nativeQuery = true)
 	List<Product> getAllProducts();
 	
 	
@@ -37,8 +37,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	List<Product> getProductsUsingCatalogName(@Param("catalogName") String catalogName);
 	
 	
-	@Query(value = "select * from products where price >= :moneyVal1 and price <= :moneyVal2", nativeQuery = true)
+	@Query(value = "select * from products where price >= :moneyVal1 and price <= :moneyVal2 group by color", nativeQuery = true)
 	List<Product> getProductsUsingPriceFilter(@Param("moneyVal1") double price1, @Param("moneyVal2") double price2);
-	
-	
 }

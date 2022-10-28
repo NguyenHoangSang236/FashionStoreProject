@@ -18,4 +18,32 @@ public class ValueRender {
     public static int ratingStarsTotalNumber(int oneStar, int twoStar, int threeStar, int fourStar, int fiveStar) {
         return (oneStar + twoStar + threeStar + fourStar + fiveStar) / 5;
     }
+    
+    //encode the password
+    public static String encodePassword(String pass) {
+        char[] charArr = pass.toCharArray();
+        String result;
+        
+        for(int i = 0; i < charArr.length; i++) {
+            charArr[i] = (char) (charArr[i] + 5);
+        }
+        
+        result = charArr.toString();
+        
+        return result;
+    }
+    
+  //decode the password
+    public static String decodePassword(String pass) {
+        char[] charArr = pass.toCharArray();
+        String result;
+        
+        for(int i = 0; i < charArr.length; i++) {
+            charArr[i] = (char) (charArr[i] - 5);
+        }
+        
+        result = charArr.toString();
+        
+        return result;
+    }
 }
