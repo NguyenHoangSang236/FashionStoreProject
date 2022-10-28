@@ -378,7 +378,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="product__pagination" th:if="${productPage.totalPages > 0}" th:each="pageNumber : ${pageNumbers}">
-                                <a th:href="@{/showShop(size = ${productPage.size}, page = ${pageNumber})}" th:text="${pageNumber}" th:class="${pageNumber==productPage.number + 1} ? active">1</a>
+                                <a th:href="@{/shopproduct(size = ${productPage.size}, page = ${pageNumber})}" th:text="${pageNumber}" th:class="${pageNumber==productPage.number + 1} ? active">1</a>
                             </div>
                         </div>
                     </div>

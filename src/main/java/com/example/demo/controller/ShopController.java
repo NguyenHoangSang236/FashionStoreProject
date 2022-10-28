@@ -38,7 +38,7 @@ public class ShopController {
     @GetMapping("/shopproduct")
     public String showShop(Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
         int currentPage = page.orElse(1);
-        int pageSize = page.orElse(5);
+        int pageSize = size.orElse(6);
         
         Page<Product> productPage = productService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
         
@@ -55,4 +55,7 @@ public class ShopController {
         
         return "shop";
     }
+    
+    
+//    @GetMapping("/shopproduct/")
 }

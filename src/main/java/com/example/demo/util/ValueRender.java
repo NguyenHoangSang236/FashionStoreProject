@@ -10,9 +10,7 @@ public class ValueRender {
         DecimalFormat dfGerman = new DecimalFormat("#,###", new DecimalFormatSymbols(Locale.GERMAN));
         
         String result = dfGerman.format(number);
-        
-        System.out.println(result);
-        
+                
         return result;
     }
     
