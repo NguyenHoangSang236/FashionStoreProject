@@ -18,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class DetailsController {
-    @GetMapping("/details")
+    @GetMapping("/shop-details")
     public String showProductDetails() {
         
         return "shopdetails";

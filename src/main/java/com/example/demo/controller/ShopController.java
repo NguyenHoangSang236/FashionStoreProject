@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.entity.Product;
+import com.example.demo.respository.CatalogRepository;
 import com.example.demo.respository.ProductRepository;
 import com.example.demo.service.ProductService;
 
@@ -34,11 +35,15 @@ public class ShopController {
 
     @Autowired
     ProductService productService;
+    
+    @Autowired
+    CatalogRepository catalogRepo;
 
+    
     @GetMapping("/shopproduct")
     public String showShop(Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
+        //pagination
         int currentPage = page.orElse(1);
-
         int pageSize = size.orElse(12);
         
         Page<Product> productPage = productService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
@@ -51,8 +56,13 @@ public class ShopController {
             model.addAttribute("pageNumbers", pageNumbers);
         }
         
-//      List<Product> productsList = productRepo.getAllProducts();
-//        model.addAttribute("productsList", productsList);
+        //branding
+        List<String> brandingList = productRepo.getAllProductBrands();
+        model.addAttribute("brandingList", brandingList);
+        
+        //categories
+        List<String> categoriesList = catalogRepo.getAllCatalogsName();
+        model.addAttribute("categoriesList", categoriesList);
         
         return "shop";
     }

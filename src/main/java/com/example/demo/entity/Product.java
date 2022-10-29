@@ -75,6 +75,9 @@ public class Product implements Serializable {
 
     @Column(name = "Image_4")
     private String image4;
+    
+    @Column(name = "description")
+    private String description;
 
     @ManyToMany(mappedBy = "products")
     private List<Invoice> invoice;
@@ -278,5 +281,13 @@ public class Product implements Serializable {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

@@ -19,8 +19,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	List<Product> getProductsByName(@Param("nameVal") String productName);
 	
 	
-//	@Query(value = "select * from products where brand = :brandVal")
-//	List<Product> getProductsByBrand(@Param("brandVal") String brandName);
+	@Query(value = "select * from products where brand = :brandVal", nativeQuery = true)
+	List<Product> getProductsByBrand(@Param("brandVal") String brandName);
 	
 	
 	@Query(value = "select * "
@@ -39,4 +39,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	
 	@Query(value = "select * from products where price >= :moneyVal1 and price <= :moneyVal2 group by color", nativeQuery = true)
 	List<Product> getProductsUsingPriceFilter(@Param("moneyVal1") double price1, @Param("moneyVal2") double price2);
+	
+	
+	@Query(value = "select brand from products group by brand", nativeQuery = true)
+	List<String> getAllProductBrands();
 }
