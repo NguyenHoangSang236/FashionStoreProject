@@ -100,6 +100,10 @@ public class Product implements Serializable {
         int priceAfterDiscount = (int) (this.price * ((100 - this.discount) / 100));
         return ValueRender.formatDoubleNumber(priceAfterDiscount);
     }
+    
+    public String fomattedOriginalPrice() {
+        return ValueRender.formatDoubleNumber(this.price);
+    }
 
     public int totalRatingStarPoint() {
         return ValueRender.ratingStarsTotalNumber(this.getOneStarQuantity(), this.getTwoStarQuantity(), this.getThreeStarQuantity(),
@@ -110,6 +114,27 @@ public class Product implements Serializable {
         return ValueRender.stringToLink(this.name);
     }
     
+    public int getTotalRatingNumber() {
+        int total = 0;
+        
+        if(this.oneStarQuantity != 0) {
+            total += 1;
+        }
+        if(this.twoStarQuantity != 0) {
+            total += 1;
+        }
+        if(this.threeStarQuantity != 0) {
+            total += 1;
+        }
+        if(this.fourStarQuantity != 0) {
+            total += 1;
+        }
+        if(this.fiveStarQuantity != 0) {
+            total += 1;
+        }
+        
+        return total;
+    }
     
     
 

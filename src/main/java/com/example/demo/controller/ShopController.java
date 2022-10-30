@@ -44,7 +44,7 @@ public class ShopController {
 
     
     //render form's data 
-    //purpose: avoide repeating codes
+    //purpose: avoid repeating codes
     void renderToShop(Model model, Page<Product> pageination, Optional<Integer> page, Optional<Integer> size) {
         //pagination
         Page<Product> productPage = pageination;
