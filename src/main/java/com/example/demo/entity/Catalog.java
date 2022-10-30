@@ -14,6 +14,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.example.demo.util.ValueRender;
+
 import lombok.Data;
 
 @Data
@@ -35,4 +37,8 @@ public class Catalog {
 			inverseJoinColumns = {
 				@JoinColumn(name = "Product_Name")})
 	List<Product> products;
+	
+	public String catalogNameToString() {
+	    return ValueRender.linkToString(this.name);
+	}
 }

@@ -19,6 +19,14 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	List<Product> getProductsByName(@Param("nameVal") String productName);
 	
 	
+	@Query(value = "select * from products where name = :nameVal group by name", nativeQuery = true)
+    Product getDefaultProductDetailsByName(@Param("nameVal") String productName);
+	
+	
+	@Query(value = "select * from products where name = :nameVal and color = :colorVal and size = :sizeVal", nativeQuery = true)
+	List<Product> getProductDetailsByNameAndColorAndSize(@Param("nameVal") String productName, @Param("colorVal") String color, @Param("sizeVal") String size);
+	
+	
 	@Query(value = "select * from products where brand = :brandVal", nativeQuery = true)
 	List<Product> getProductsByBrand(@Param("brandVal") String brandName);
 	

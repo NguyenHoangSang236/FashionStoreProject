@@ -27,6 +27,7 @@ import com.example.demo.entity.Product;
 import com.example.demo.respository.CatalogRepository;
 import com.example.demo.respository.ProductRepository;
 import com.example.demo.service.ProductService;
+import com.example.demo.util.ValueRender;
 
 @Controller
 public class ShopController {
@@ -38,23 +39,25 @@ public class ShopController {
     
     @Autowired
     CatalogRepository catalogRepo;
+    
+    Integer[] ratingStarArr = {1,2,3,4,5};
 
     
-    @GetMapping("/shopproduct")
-    public String showShop(Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
+    //render form's data 
+    //purpose: avoide repeating codes
+    void renderToShop(Model model, Page<Product> pageination, Optional<Integer> page, Optional<Integer> size) {
         //pagination
-        int currentPage = page.orElse(1);
-        int pageSize = size.orElse(12);
-        
-        Page<Product> productPage = productService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
-        
+        Page<Product> productPage = pageination;
+                        
         model.addAttribute("productPage", productPage);
+        model.addAttribute("ratingStarArr", ratingStarArr);
         
         int totalPages = productPage.getTotalPages();
         if(totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
         }
+        
         
         //branding
         List<String> brandingList = productRepo.getAllProductBrands();
@@ -63,6 +66,17 @@ public class ShopController {
         //categories
         List<String> categoriesList = catalogRepo.getAllCatalogsName();
         model.addAttribute("categoriesList", categoriesList);
+    }
+    
+    
+    @GetMapping("/shopproduct")
+    public String showShop(Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(12);
+        
+        Page<Product> productPage = productService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
+
+        renderToShop(model, productPage, page, size);
         
         return "shop";
     }
@@ -70,18 +84,12 @@ public class ShopController {
 
     @GetMapping("/shopproduct{price1}and{price2}")
     public String showShopbyPrice(Model model, @PathVariable("price1") double price1, @PathVariable("price2") double price2, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size ) {
-    	int currentPage = page.orElse(1);
-        int pageSize = size.orElse(12); 
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(12);
         
         Page<Product> productPage = productService.findByPriceFilter(PageRequest.of(currentPage - 1, pageSize),price1,price2);
         
-        model.addAttribute("productPage", productPage);
-        
-        int totalPages = productPage.getTotalPages();
-        if(totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
-            model.addAttribute("pageNumbers", pageNumbers);
-        }
+        renderToShop(model, productPage, page, size);
         
         return "shop";
     }

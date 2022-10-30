@@ -14,10 +14,32 @@ public class ValueRender {
         return result;
     }
     
+    
     //get the total amount of rating stars of product
     public static int ratingStarsTotalNumber(int oneStar, int twoStar, int threeStar, int fourStar, int fiveStar) {
-        return (oneStar + twoStar + threeStar + fourStar + fiveStar) / 5;
+        int zeroRatedNum = 0;
+                
+        if(oneStar != 0) {
+            zeroRatedNum += 1;
+        }
+        if(twoStar != 0) {
+            zeroRatedNum += 1;
+        }
+        if(threeStar != 0) {
+            zeroRatedNum += 1;
+        }
+        if(fourStar != 0) {
+            zeroRatedNum += 1;
+        }
+        if(fiveStar != 0) {
+            zeroRatedNum += 1;
+        }
+        if(zeroRatedNum == 0) {
+            zeroRatedNum = 1;
+        }
+        return (oneStar + twoStar + threeStar + fourStar + fiveStar) / zeroRatedNum;
     }
+    
     
     //encode the password
     public static String encodePassword(String pass) {
@@ -33,7 +55,8 @@ public class ValueRender {
         return result;
     }
     
-  //decode the password
+    
+    //decode the password
     public static String decodePassword(String pass) {
         char[] charArr = pass.toCharArray();
         String result;
@@ -42,7 +65,41 @@ public class ValueRender {
             charArr[i] = (char) (charArr[i] - 5);
         }
         
-        result = charArr.toString();
+        result = String.valueOf(charArr);
+        
+        return result;
+    }
+    
+    
+    //format string to link
+    public static String stringToLink(String link) {
+        String result = " ";
+        char[] linkCharrArr = link.toCharArray();
+        
+        for(int i = 0; i < linkCharrArr.length; i++) {
+            if(linkCharrArr[i] == ' ') {
+                linkCharrArr[i] = '_';
+            }
+        }
+        
+        result = String.valueOf(linkCharrArr);
+        
+        return result;
+    }
+    
+    
+    //format link to string
+    public static String linkToString(String link) {
+        String result = " ";
+        char[] linkCharrArr = link.toCharArray();
+        
+        for(int i = 0; i < linkCharrArr.length; i++) {
+            if(linkCharrArr[i] == '_') {
+                linkCharrArr[i] = ' ';
+            }
+        }
+        
+        result = String.valueOf(linkCharrArr);
         
         return result;
     }

@@ -91,17 +91,23 @@ public class Product implements Serializable {
     @OneToMany(mappedBy = "product")
     private List<Comment> comments;
 
+    
     public Product() { }
     
     
 
     public String formattedPrice() {
-        return ValueRender.formatDoubleNumber(this.price);
+        int priceAfterDiscount = (int) (this.price * ((100 - this.discount) / 100));
+        return ValueRender.formatDoubleNumber(priceAfterDiscount);
     }
 
     public int totalRatingStarPoint() {
-        return ValueRender.ratingStarsTotalNumber(this.oneStarQuantity, this.twoStarQuantity, this.threeStarQuantity,
-                this.fourStarQuantity, this.fiveStarQuantity);
+        return ValueRender.ratingStarsTotalNumber(this.getOneStarQuantity(), this.getTwoStarQuantity(), this.getThreeStarQuantity(),
+                this.getFourStarQuantity(), this.getFiveStarQuantity());
+    }
+    
+    public String formatProductNameToLink() {
+        return ValueRender.stringToLink(this.name);
     }
     
     
