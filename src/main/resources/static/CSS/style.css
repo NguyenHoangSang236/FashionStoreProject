@@ -1592,6 +1592,7 @@ ol {
 
 .product__details__pic__item {
 	position: relative;
+	height: fit-content;
 }
 
 .product__details__pic__item a {
