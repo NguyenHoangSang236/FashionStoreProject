@@ -60,4 +60,40 @@ public class ProductServiceImpl implements ProductService{
         
         return new PageImpl<Product>(list, PageRequest.of(currentPage, pageSize), products.size());
     }
+    
+    public Page<Product> findByCate(Pageable pageable, String cate ) {
+        products = productRepository.getProductsUsingCatalogName(cate);
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startProduct = pageSize * currentPage;
+        List<Product> list;
+        
+        if(products.size() < startProduct) {
+            list = Collections.emptyList();
+        }
+        else {
+            int toIndex = Math.min(startProduct + pageSize, products.size());
+            list = products.subList(startProduct, toIndex);
+        }
+        
+        return new PageImpl<Product>(list, PageRequest.of(currentPage, pageSize), products.size());
+    }
+    
+    public Page<Product> findByBrand(Pageable pageable, String Brand ) {
+        products = productRepository.getProductsByBrand(Brand);
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startProduct = pageSize * currentPage;
+        List<Product> list;
+        
+        if(products.size() < startProduct) {
+            list = Collections.emptyList();
+        }
+        else {
+            int toIndex = Math.min(startProduct + pageSize, products.size());
+            list = products.subList(startProduct, toIndex);
+        }
+        
+        return new PageImpl<Product>(list, PageRequest.of(currentPage, pageSize), products.size());
+    }
 }

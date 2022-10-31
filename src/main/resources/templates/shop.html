@@ -172,7 +172,7 @@
                                         <div class="card-body">
                                             <div class="shop__sidebar__categories">
                                                 <ul class="nice-scroll">
-                                                    <li th:each="category: ${categoriesList}"><a href="#" th:text="${category}"></a></li>
+                                                    <li th:each="category: ${categoriesList}"><a th:href="@{/shopproductcate={cate} (cate = ${category} )}" th:text="${category}"></a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -186,7 +186,7 @@
                                         <div class="card-body">
                                             <div class="shop__sidebar__brand">
                                                 <ul>
-                                                    <li th:each="branding: ${brandingList}"><a href="#" th:text="${branding}"></a></li>
+                                                    <li th:each="branding: ${brandingList}"><a th:href="@{/shopproductbrand={brand} (brand = ${branding} )}" th:text="${branding}"></a></li>
                                                 </ul>
                                             </div>
                                         </div>

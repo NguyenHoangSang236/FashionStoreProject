@@ -19,4 +19,6 @@ import com.example.demo.respository.ProductRepository;
 public interface ProductService {  
     Page<Product> findPaginated(Pageable pageable);
     Page<Product> findByPriceFilter(Pageable pageable, double price1, double price2);
+    Page<Product> findByCate(Pageable pageable, String cate );
+    Page<Product> findByBrand(Pageable pageable, String Brand );
 }

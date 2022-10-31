@@ -91,6 +91,55 @@ public class ShopController {
         
         renderToShop(model, productPage, page, size);
         
+      //branding
+        List<String> brandingList = productRepo.getAllProductBrands();
+        model.addAttribute("brandingList", brandingList);
+        
+        //categories
+        List<String> categoriesList = catalogRepo.getAllCatalogsName();
+        model.addAttribute("categoriesList", categoriesList);
+        
         return "shop";
     }
+    
+    @GetMapping("/shopproductcate={cate}")
+    public String showShopbyCate(Model model, @PathVariable("cate") String cate, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size ) {
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(12);
+        
+        Page<Product> productPage = productService.findByCate(PageRequest.of(currentPage - 1, pageSize),cate);
+        
+        renderToShop(model, productPage, page, size);
+        
+      //branding
+        List<String> brandingList = productRepo.getAllProductBrands();
+        model.addAttribute("brandingList", brandingList);
+        
+        //categories
+        List<String> categoriesList = catalogRepo.getAllCatalogsName();
+        model.addAttribute("categoriesList", categoriesList);
+        
+        return "shop";
+    }
+    
+    @GetMapping("/shopproductbrand={brand}")
+    public String showShopbyBrand(Model model, @PathVariable("brand") String brand, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size ) {
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(12);
+        
+        Page<Product> productPage = productService.findByBrand(PageRequest.of(currentPage - 1, pageSize),brand);
+        
+        renderToShop(model, productPage, page, size);
+        
+      //branding
+        List<String> brandingList = productRepo.getAllProductBrands();
+        model.addAttribute("brandingList", brandingList);
+        
+        //categories
+        List<String> categoriesList = catalogRepo.getAllCatalogsName();
+        model.addAttribute("categoriesList", categoriesList);
+        
+        return "shop";
+    }
+    
 }
