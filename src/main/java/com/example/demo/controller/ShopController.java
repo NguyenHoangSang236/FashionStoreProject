@@ -73,6 +73,7 @@ public class ShopController {
     public String showShop(Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(12);
+        model.addAttribute("pName", new Product());
         
         Page<Product> productPage = productService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
 
@@ -119,5 +120,34 @@ public class ShopController {
         
         return "shop";
     }
+    
+//    @GetMapping("/shopproductsearch")
+//    public String showShopbyName(Model model ) {
+//    	model.addAttribute("Name", new Product());
+//        return "shop";
+//    }
+    
+    @GetMapping("/shopproductsearch")
+    public String showShopbyName(Model model, @ModelAttribute("pName") Product name, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size ) {
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(12);
+        
+        
+        
+        Page<Product> productPage = productService.SearchProduct(PageRequest.of(currentPage - 1, pageSize),name.getName());
+        
+        renderToShop(model, productPage, page, size);
+        
+      //branding
+        List<String> brandingList = productRepo.getAllProductBrands();
+        model.addAttribute("brandingList", brandingList);
+        
+        //categories
+        List<String> categoriesList = catalogRepo.getAllCatalogsName();
+        model.addAttribute("categoriesList", categoriesList);
+        
+        return "shop";
+    }
+    
     
 }
