@@ -28,4 +28,11 @@ public class AccountController {
 	public List<Account> allAccount() {
 		return accRepo.findAll();
 	}
+	
+	@GetMapping("/showaccount")
+    public String showAbout() {
+        
+        return "accounts";
+    }
+	
 }
