@@ -217,45 +217,37 @@
                         <div class="product__details__text">
                             <p style="font-size: 30px; font-weight: 600;" th:text="*{name}"></p>
                             <div class="rating" style="display: flex; justify-content: center;">
-                                <div class="rating" style="margin-left: 16px;">
+                                <div class="rating">
                                     <i class="fa fa-star" style="margin-left: 5px" th:each="ratingStar, ratingState: ${ratingStarArr}" th:if="${ratingState.index} < *{totalRatingStarPoint()}"></i>
                                 </div>
                                 <div class="rating">
                                     <i class="fa fa-star-o" style="margin-left: 5px" th:each="ratingStar, ratingState: ${ratingStarArr}" th:if="${ratingState.index} < 5 - *{totalRatingStarPoint()}"></i>
                                 </div>
-                                <span th:text="'- ' + *{getTotalRatingNumber()} + ' Reviews'"></span>
+                                <span style="margin-right: 14px;" th:text="'- ' + *{getTotalRatingNumber()} + ' Reviews'"></span>
                             </div>
                             <h3 class = "row" style="justify-content: center">
-                                <p th:text="*{formattedPrice() + ' vnd'}"></p>
-                                <span th:text="*{fomattedOriginalPrice() + ' vnd'}"></span>
+                                <p style="font-size: 20px; font-weight: 600;" th:text="*{formattedPrice() + ' vnd'}"></p>
+                                <span th:text="*{discount} > 0 ? *{fomattedOriginalPrice() + ' vnd'} : ''"></span>
                             </h3>
-                            <p style="text-align: justify;">
-                                Coat with quilted lining and an adjustable hood. Featuring long sleeves with adjustable
-                                cuff tabs, adjustable asymmetric hem with elastic side tabs and a front zip fastening
-                                with placket.
-                            </p>
+                            <p style="text-align: justify;" th:text="*{description}"></p>
                             <div class="product__details__option">
                                 <div class="product__details__option__size">
                                     <span>Size:</span>
-                                    <label for="xxl">xxl
-                                        <input type="radio" id="xxl">
-                                    </label>
-                                    <label class="active" for="xl">xl
-                                        <input type="radio" id="xl">
-                                    </label>
-                                    <label for="l">l
-                                        <input type="radio" id="l">
-                                    </label>
-                                    <label for="sm">s
-                                        <input type="radio" id="sm">
+                                    <label th:each="size, sizeState: ${sizeList}" th:for="${size}" th:text="${size}">
+                                        <input type="radio" th:id="${size}">
                                     </label>
                                 </div>
                                 <div class="product__details__option__color">
                                     <span>Color:</span>
-                                    <label class="c-1" for="sp-1">
-                                        <input type="radio" id="sp-1">
-                                    </label>
-                                    <label class="c-2" for="sp-2">
+                                    <!--<label th:each="color, colorState: ${colorList}" th:class="${color}" th:for="${color}">
+                                        <input type="button" th:id="${color}" href = "/shopproduct">
+                                    </label>-->
+                                    <div th:each="color, colorState: ${colorList}" class="round-button">
+                                        <div class="round-button-circle" th:classappend="${color}">
+                                            <a th:href="@{/shop-details-by-color_name={productName}__color={color} (productName = *{formatProductNameToLink()}, color = ${color})}" class="round-button"></a>
+                                        </div>
+                                    </div>
+                                    <!--<label class="c-2" for="sp-2">
                                         <input type="radio" id="sp-2">
                                     </label>
                                     <label class="c-3" for="sp-3">
@@ -266,7 +258,7 @@
                                     </label>
                                     <label class="c-9" for="sp-9">
                                         <input type="radio" id="sp-9">
-                                    </label>
+                                    </label>-->
                                 </div>
                             </div>
                             <div class="product__details__cart__option">
@@ -277,17 +269,16 @@
                                 </div>
                                 <a href="#" class="primary-btn">add to cart</a>
                             </div>
-                            <div class="product__details__btns__option">
+                            <!--<div class="product__details__btns__option">
                                 <a href="#"><i class="fa fa-heart"></i> add to wishlist</a>
                                 <a href="#"><i class="fa fa-exchange"></i> Add To Compare</a>
-                            </div>
+                            </div>-->
                             <div class="product__details__last__option">
                                 <h5><span>Guaranteed Safe Checkout</span></h5>
                                 <img src="img/shop-details/details-payment.png" alt="">
                                 <ul>
-                                    <li><span>SKU:</span> 3812912</li>
-                                    <li><span>Categories:</span> Clothes</li>
-                                    <li><span>Tag:</span> Clothes, Skin, Body</li>
+                                    <li th:text="*{'Product ID:  ' + id}"><span>ID:</span></li>
+                                    <li th:each="category, cateState: ${cateList}" th:text="${category}"></li>
                                 </ul>
                             </div>
                         </div>

@@ -1325,27 +1325,27 @@ ol {
 }
 
 .shop__sidebar__color label.c-2 {
-	background: #20315f;
+	background: #2151d6;
 }
 
 .shop__sidebar__color label.c-3 {
-	background: #f1af4d;
+	background: #eedd45;
 }
 
 .shop__sidebar__color label.c-4 {
-	background: #636068;
+	background: #6f25e6;
 }
 
 .shop__sidebar__color label.c-5 {
-	background: #57594d;
+	background: #858484;
 }
 
 .shop__sidebar__color label.c-6 {
-	background: #e8bac4;
+	background: #0fc22d;
 }
 
 .shop__sidebar__color label.c-7 {
-	background: #d6c1d7;
+	background: #699e13;
 }
 
 .shop__sidebar__color label.c-8 {
@@ -1355,6 +1355,7 @@ ol {
 .shop__sidebar__color label.c-9 {
 	background: #ffffff;
 }
+
 
 .shop__sidebar__color label:after {
 	position: absolute;
@@ -1654,11 +1655,13 @@ ol {
 }
 
 .product__details__text p {
+	display: inline-block;
 	margin-bottom: 35px;
 }
 
 .product__details__option {
 	margin-bottom: 30px;
+	position: relative;
 }
 
 .product__details__option__size {
@@ -1944,7 +1947,7 @@ ol {
 -----------------------*/
 
 .footer {
-	background: #111111;
+	background: #111111 !important; 
 	padding-top: 70px;
 }
 
@@ -4026,4 +4029,71 @@ ol {
 .product__pagination-centered {
 	display: flex;
 	justify-content: center;
+}
+
+
+.black{
+	background-color: black;
+}
+.white{
+	background-color: white;
+}
+.fuchsia{
+	background-color: fuchsia;
+}
+.brown{
+	background-color: brown;
+}
+.red{
+	background-color: red;
+}
+.blue{
+	background-color: blue;
+}
+.green{
+	background-color: green;
+}
+.yellow{
+	background-color: yellow;
+}
+.grey{
+	background-color: grey;
+}
+.pink{
+	background-color: pink;
+}
+.purple{
+	background-color: purple;
+}
+.camo{
+	background-color: #5F5F38;
+}
+.gold{
+	background-color: rgb(168, 145, 12);
+}
+
+
+.round-button {
+	width:36px;
+	height: 36px;
+}
+.round-button-circle {
+	width: 36px;
+	height:36px;
+	border-radius: 50%;
+	border:3px solid #ffffff;
+	overflow:hidden;
+			
+	/* background: #ca2b2b;  */
+	box-shadow: 0 0 3px gray;
+}
+.round-button a {
+	display:block;
+	float:left;
+	width:36px;
+	height: 36px;
+	padding-top:50%;
+	padding-bottom:50%;
+	line-height:1em;
+	margin-top:-0.5em;
 }

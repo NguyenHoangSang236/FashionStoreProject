@@ -30,12 +30,41 @@ public class DetailsController {
     
     
     @GetMapping("/shop-details_name={productName}")
-    public String showProductDetails(Model model, @PathVariable("productName") String productName) {
-        String realName = ValueRender.linkToString(productName);
-        Product productDetail = productRepo.getDefaultProductDetailsByName(realName);
+    public String showDefaultProductDetails(Model model, @PathVariable("productName") String productName) {
+        String realProductName = ValueRender.linkToString(productName);
+        Product productDetail = productRepo.getDefaultProductDetailsByName(realProductName);
+        
+        List<String> sizeList = productRepo.getAllSizesOfProductByName(realProductName);
+        List<String> colorList = productRepo.getAllColorsOfProductByName(realProductName);
+        List<String> cateList = productRepo.getAllCatalogsByProductName(realProductName);
+
+//        System.out.println(productName);
+                
+        model.addAttribute("productDetail", productDetail);
+        model.addAttribute("ratingStarArr", ratingStarArr);
+        model.addAttribute("sizeList", sizeList);
+        model.addAttribute("colorList", colorList);
+        model.addAttribute("cateList", cateList);
+
+        
+        return "shopdetails";
+    }
+    
+    
+    @GetMapping("/shop-details-by-color_name={productName}__color={color}")
+    public String showProductDetails(Model model, @PathVariable("productName") String productName, @PathVariable("color") String color) {
+        String realProductName = ValueRender.linkToString(productName);
+        Product productDetail = productRepo.getProductByNameAndColor(realProductName, color);
+        
+        List<String> sizeList = productRepo.getAllSizesOfProductByName(realProductName);
+        List<String> colorList = productRepo.getAllColorsOfProductByName(realProductName);
+        List<String> cateList = productRepo.getAllCatalogsByProductName(realProductName);
         
         model.addAttribute("productDetail", productDetail);
         model.addAttribute("ratingStarArr", ratingStarArr);
+        model.addAttribute("sizeList", sizeList);
+        model.addAttribute("colorList", colorList);
+        model.addAttribute("cateList", cateList);
         
         return "shopdetails";
     }

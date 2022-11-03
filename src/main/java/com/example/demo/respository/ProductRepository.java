@@ -11,12 +11,23 @@ import com.example.demo.entity.Product;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> { 
-	@Query(value = "select * from products p group by p.color", nativeQuery = true)
+	@Query(value = "select * from products p group by p.name", nativeQuery = true)
 	List<Product> getAllProducts();
 	
 	
 	@Query(value = "select p from Product p where p.name like %:nameVal%")
 	List<Product> getProductsByName(@Param("nameVal") String productName);
+	
+	
+	@Query(value = "select size from products where name = :nameVal group by size;", nativeQuery = true)
+	List<String> getAllSizesOfProductByName(@Param("nameVal") String productName);
+	
+	@Query(value = "select color from products where name = :nameVal group by color;", nativeQuery = true)
+    List<String> getAllColorsOfProductByName(@Param("nameVal") String productName);
+	
+	
+	@Query(value = "select * from products where name = :nameVal and color = :colorVal group by name", nativeQuery = true)
+	Product getProductByNameAndColor(@Param("nameVal") String productName, @Param("colorVal") String color);
 	
 	
 	@Query(value = "select * from products where name = :nameVal group by name", nativeQuery = true)
@@ -25,6 +36,13 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	
 	@Query(value = "select * from products where name = :nameVal and color = :colorVal and size = :sizeVal", nativeQuery = true)
 	List<Product> getProductDetailsByNameAndColorAndSize(@Param("nameVal") String productName, @Param("colorVal") String color, @Param("sizeVal") String size);
+	
+    
+    @Query(value = "select c.name from products p join catalog_with_products cwp on p.name = cwp.product_name "
+            + "join catalog c on c.id = cwp.catalog_id "
+            + "where p.name = :nameVal "
+            + "group by c.name", nativeQuery = true)
+    List<String> getAllCatalogsByProductName(@Param("nameVal") String productName);
 	
 	
 	@Query(value = "select * from products where brand = :brandVal", nativeQuery = true)
