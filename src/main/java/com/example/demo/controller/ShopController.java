@@ -44,7 +44,6 @@ public class ShopController {
 
     
     //render form's data 
-    //purpose: avoid repeating codes
     void renderToShop(Model model, Page<Product> pageination, Optional<Integer> page, Optional<Integer> size) {
         //pagination
         Page<Product> productPage = pageination;
@@ -133,18 +132,9 @@ public class ShopController {
         int pageSize = size.orElse(12);
         
         
-        
         Page<Product> productPage = productService.SearchProduct(PageRequest.of(currentPage - 1, pageSize),name.getName());
         
         renderToShop(model, productPage, page, size);
-        
-      //branding
-        List<String> brandingList = productRepo.getAllProductBrands();
-        model.addAttribute("brandingList", brandingList);
-        
-        //categories
-        List<String> categoriesList = catalogRepo.getAllCatalogsName();
-        model.addAttribute("categoriesList", categoriesList);
         
         return "shop";
     }

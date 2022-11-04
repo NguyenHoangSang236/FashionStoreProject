@@ -13,4 +13,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer>{
     Customer getCurrentLoggedInCustomer(@Param("userName") String userName);
     
     
+    @Query(value = "select * from customers where id = :idVal", nativeQuery = true)
+    Customer getCustomerById(@Param("idVal") int id);
 }

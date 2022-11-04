@@ -12,6 +12,4 @@ import com.example.demo.entity.Staff;
 public interface StaffRepository extends JpaRepository<Customer, Integer>{
     @Query(value = "select stf.* from staffs stf join login_accounts la on stf.account_id = la.id where user_name = :userName", nativeQuery = true)
     Staff getCurrentLoggedInStaff(@Param("userName") String userName);
-    
-    
 }

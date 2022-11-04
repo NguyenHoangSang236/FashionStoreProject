@@ -1898,6 +1898,9 @@ ol {
 
 .product__details__tab__content {
 	padding-top: 35px;
+	min-height: 50vh;
+	max-height: 85vh;
+	overflow: auto;
 }
 
 .note {
@@ -4042,7 +4045,7 @@ ol {
 	background-color: fuchsia;
 }
 .brown{
-	background-color: brown;
+	background-color: rgb(156, 26, 26);
 }
 .red{
 	background-color: red;
