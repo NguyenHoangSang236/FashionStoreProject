@@ -339,7 +339,10 @@
                                 <div class="tab-pane" id="tabs-6" role="tabpanel">
                                     <div class="product__details__tab__content">
                                         <div class="product__details__tab__content__item" th:each="comment, commentState: ${commentList}">
-                                            <h5 th:text="${comment.getCustomerName()}"></h5>
+                                            <div class="customer-comment">
+                                                <div class="set-bg" th:data-setbg="${comment.getImageUrl()}" style="height:35px; width:35px"></div>
+                                                <h5 th:text="${comment.getCustomerName()}"></h5>
+                                            </div>    
                                             <p th:text="${comment.getContent()}"></p>
                                             <p th:text="${comment.getImageUrl()}"></p>
                                         </div>
