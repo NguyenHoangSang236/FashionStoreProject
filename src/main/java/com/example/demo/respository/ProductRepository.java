@@ -49,10 +49,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	List<Product> getProductsByBrand(@Param("brandVal") String brandName);
 	
 	
-	@Query(value = "select * "
-    	         + "from products p "
-    	         + "order by p.sold_quantity "
-    	         + "desc limit 8", nativeQuery = true)
+	@Query(value = "select * from products p group by name order by (select sum(sold_quantity) from products where name = p.name) desc limit 8", nativeQuery = true)
 	List<Product> get8BestSellerProducts();
 	
 	
@@ -69,4 +66,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	
 	@Query(value = "select brand from products group by brand", nativeQuery = true)
 	List<String> getAllProductBrands();
+	
+	
+	@Query(value = "select sum(sold_quantity) from products where name = :nameVal", nativeQuery = true)
+	int getTotalSoldQuantityByProductName(@Param("nameVal") String productName);
 }

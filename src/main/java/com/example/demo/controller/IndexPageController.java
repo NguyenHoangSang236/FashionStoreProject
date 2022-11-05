@@ -17,11 +17,15 @@ public class IndexPageController {
     ProductRepository productRepo;
     Product product = new Product();
     
+    Integer[] ratingStarArr = {1,2,3,4,5};
+    
+    
 	@GetMapping("/home")
 	public String showHomePage(Model model) {
 	    
 	    List<Product> top8estSelllerProducts = productRepo.get8BestSellerProducts();               
         model.addAttribute("top8BestSellers", top8estSelllerProducts);
+        model.addAttribute("ratingStarArr", ratingStarArr);
         
 //        System.out.println(top8estSelllerProducts.get(0).getImage2());
 //        System.out.println(ValueRender.formatDoubleNumber(top8estSelllerProducts.get(0).getPrice()));
