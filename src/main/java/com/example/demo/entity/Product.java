@@ -90,6 +90,9 @@ public class Product implements Serializable {
 
     @OneToMany(mappedBy = "product")
     private List<Comment> comments;
+    
+    @OneToMany(mappedBy = "product")
+    private List<ProductManagement> productManagements;
 
     
     public Product() { }

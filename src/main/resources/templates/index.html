@@ -247,17 +247,17 @@
             <div class="row">
                 <div class="col-lg-12">
                     <ul class="filter__controls">
-                        <li class="active" data-filter="*">Best Sellers</li>
+                        <li class="active" data-filter=".best-seller">Best Sellers</li>
                         <li data-filter=".new-arrivals">New Arrivals</li>
                         <li data-filter=".hot-sales">Hot Sales</li>
                     </ul>
                 </div>
             </div>
             <div class="row product__filter" >
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix" th:each="top8BestSeller, top8BestSellerState: ${top8BestSellers}" th:classappend="(${top8BestSeller.discount} > 0) ? hot-sales">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix best-seller" th:each="top8BestSeller, top8BestSellerState: ${top8BestSellers}">
                     <div class="product__item">
                         <div class="product__item__pic set-bg" th:data-setbg="${top8BestSeller.image1}">
-                            <span class="label">New</span>
+                            <span class="label">Best</span>
                             <ul class="product__hover">
                                 <li><a th:href="@{/shop-details_name={productName} (productName = ${top8BestSeller.formatProductNameToLink()})}"><img src="img/icon/search.png" alt=""></a></li>
                             </ul>
@@ -288,7 +288,74 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals" th:each="top8NewArrival, top8NewArrivalState: ${top8NewArrivals}">
+                    <div class="product__item">
+                        <div class="product__item__pic set-bg" th:data-setbg="${top8NewArrival.image1}">
+                            <span class="label">New</span>
+                            <ul class="product__hover">
+                                <li><a th:href="@{/shop-details_name={productName} (productName = ${top8NewArrival.formatProductNameToLink()})}"><img src="img/icon/search.png" alt=""></a></li>
+                            </ul>
+                        </div>
+                        <div class="product__item__text">
+                            <h6 th:text="${top8NewArrival.name}"></h6>
+                            <a href="#" class="add-cart">+ Add To Cart</a>
+                            <div class="row">
+                                <div class="rating" style="margin-left: 16px">
+                                    <i class="fa fa-star" style="margin-left: 5px" th:each="ratingStar, ratingState: ${ratingStarArr}" th:if="${ratingState.index} < ${top8NewArrival.totalRatingStarPoint()}"></i>
+                                </div>
+                                <div class="rating">
+                                    <i class="fa fa-star-o" style="margin-left: 5px" th:each="ratingStar, ratingState: ${ratingStarArr}" th:if="${ratingState.index} < 5 - ${top8NewArrival.totalRatingStarPoint()}"></i>
+                                </div>
+                            </div>
+                            <h5 th:text="${top8NewArrival.formattedPrice()}" ></h5>
+                            <div class="product__color__select is-hidden">
+                                <label for="pc-1">
+                                    <input type="radio" id="pc-1">
+                                </label>
+                                <label class="active black" for="pc-2">
+                                    <input type="radio" id="pc-2">
+                                </label>
+                                <label class="grey" for="pc-3">
+                                    <input type="radio" id="pc-3">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales" th:each="top8HotSaleProduct, top8HotSaleProductState: ${top8HotSaleProducts}">
+                    <div class="product__item">
+                        <div class="product__item__pic set-bg" th:data-setbg="${top8HotSaleProduct.image1}">
+                            <span class="label">Sales</span>
+                            <ul class="product__hover">
+                                <li><a th:href="@{/shop-details_name={productName} (productName = ${top8HotSaleProduct.formatProductNameToLink()})}"><img src="img/icon/search.png" alt=""></a></li>
+                            </ul>
+                        </div>
+                        <div class="product__item__text">
+                            <h6 th:text="${top8HotSaleProduct.name}"></h6>
+                            <a href="#" class="add-cart">+ Add To Cart</a>
+                            <div class="row">
+                                <div class="rating" style="margin-left: 16px">
+                                    <i class="fa fa-star" style="margin-left: 5px" th:each="ratingStar, ratingState: ${ratingStarArr}" th:if="${ratingState.index} < ${top8HotSaleProduct.totalRatingStarPoint()}"></i>
+                                </div>
+                                <div class="rating">
+                                    <i class="fa fa-star-o" style="margin-left: 5px" th:each="ratingStar, ratingState: ${ratingStarArr}" th:if="${ratingState.index} < 5 - ${top8HotSaleProduct.totalRatingStarPoint()}"></i>
+                                </div>
+                            </div>
+                            <h5 th:text="${top8HotSaleProduct.formattedPrice()}" ></h5>
+                            <div class="product__color__select is-hidden">
+                                <label for="pc-1">
+                                    <input type="radio" id="pc-1">
+                                </label>
+                                <label class="active black" for="pc-2">
+                                    <input type="radio" id="pc-2">
+                                </label>
+                                <label class="grey" for="pc-3">
+                                    <input type="radio" id="pc-3">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

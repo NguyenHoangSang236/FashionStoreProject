@@ -70,4 +70,13 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	
 	@Query(value = "select sum(sold_quantity) from products where name = :nameVal", nativeQuery = true)
 	int getTotalSoldQuantityByProductName(@Param("nameVal") String productName);
+	
+	
+	@Query(value = "select * from products group by name order by id desc limit 8", nativeQuery = true)
+	List<Product> get8NewArrivalProducts();
+	
+	
+	@Query(value = "select * from products where discount > 0 group by name order by discount desc limit 8", nativeQuery = true)
+	List<Product> get8HotSaleProducts();
+	
 }

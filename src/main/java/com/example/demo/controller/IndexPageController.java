@@ -23,9 +23,16 @@ public class IndexPageController {
 	@GetMapping("/home")
 	public String showHomePage(Model model) {
 	    
-	    List<Product> top8estSelllerProducts = productRepo.get8BestSellerProducts();               
+	    List<Product> top8estSelllerProducts = productRepo.get8BestSellerProducts();  
+	    List<Product> top8NewArrivalProducts = productRepo.get8NewArrivalProducts();
+	    List<Product> top8HotSaleProducts = productRepo.get8HotSaleProducts();
+
+	    
+	    model.addAttribute("ratingStarArr", ratingStarArr);
         model.addAttribute("top8BestSellers", top8estSelllerProducts);
-        model.addAttribute("ratingStarArr", ratingStarArr);
+        model.addAttribute("top8NewArrivals", top8NewArrivalProducts);
+        model.addAttribute("top8HotSaleProducts", top8HotSaleProducts);
+
         
 //        System.out.println(top8estSelllerProducts.get(0).getImage2());
 //        System.out.println(ValueRender.formatDoubleNumber(top8estSelllerProducts.get(0).getPrice()));
