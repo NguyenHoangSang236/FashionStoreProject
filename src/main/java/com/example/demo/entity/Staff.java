@@ -26,7 +26,7 @@ public class Staff {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID", unique = true)
-	String id;
+	int id;
 	
 	@Column(name = "Name")
 	String name;
@@ -59,7 +59,7 @@ public class Staff {
 	private List<Delivery> deliveries;
 	
 	
-	public Staff(String id, String name, Date birthDate, String hometown, String position, String email, String phoneNumber, String image) {
+	public Staff(int id, String name, Date birthDate, String hometown, String position, String email, String phoneNumber, String image) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -81,10 +81,10 @@ public class Staff {
 	public void setImageBase64(String image) {
 		this.image = image;
 	}	
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getName() {

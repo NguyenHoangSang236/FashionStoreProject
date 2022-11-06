@@ -80,6 +80,22 @@ public class Account {
 	public void setRole(String role) {
 		this.role = role;
 	}
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Staff getStaff() {
+        return staff;
+    }
+
+    public void setStaff(Staff staff) {
+        this.staff = staff;
+    }
 	
 	
 	

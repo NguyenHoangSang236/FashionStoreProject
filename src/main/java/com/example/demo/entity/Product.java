@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import com.example.demo.util.ValueRender;
 
 import lombok.Data;
+import net.bytebuddy.asm.Advice.This;
 
 @Data
 @Entity
@@ -38,7 +39,7 @@ public class Product implements Serializable {
     private double price;
 
     @Column(name = "available_quantity")
-    private int available_quantity;
+    private int availableQuantity;
 
     @Column(name = "sold_quantity")
     private int soldQuantity;
@@ -98,7 +99,32 @@ public class Product implements Serializable {
     public Product() { }
     
     
-
+    public String formattedImportedDate() {
+        int recentIndex = this.productManagements.size() - 1;
+        
+        if(recentIndex >= 0) {            
+            return ValueRender.formatDateDMY(this.productManagements.get(recentIndex).getImportDate());
+        }
+        
+        else {
+            return "empty!!";
+        }
+    }
+    
+    public int getInStockQuantity() {
+        int recentIndex = this.productManagements.size() - 1;
+        int total = 0;
+        
+        if(recentIndex >= 0) {      
+            total = this.productManagements.get(recentIndex).getImportQuantity() + this.availableQuantity;
+        }
+        else {
+            total = this.availableQuantity;
+        }
+        
+        return total;
+    }
+    
     public String formattedPrice() {
         int priceAfterDiscount = (int) (this.price * ((100 - this.discount) / 100));
         return ValueRender.formatDoubleNumber(priceAfterDiscount);
@@ -213,12 +239,12 @@ public class Product implements Serializable {
         this.price = price;
     }
 
-    public int getAvailable_quantity() {
-        return available_quantity;
+    public int getAvailableQuantity() {
+        return availableQuantity;
     }
 
-    public void setAvailable_quantity(int available_quantity) {
-        this.available_quantity = available_quantity;
+    public void setAvailableQuantity(int availableQuantity) {
+        this.availableQuantity = availableQuantity;
     }
 
     public int getSoldQuantity() {

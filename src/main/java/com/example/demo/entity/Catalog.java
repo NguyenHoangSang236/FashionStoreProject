@@ -25,10 +25,10 @@ public class Catalog {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID", unique = true)
-	int id;
+	private int id;
 	
 	@Column(name = "Name")
-	String name;
+	private String name;
 	
 	@ManyToMany
 	@JoinTable(
@@ -36,9 +36,52 @@ public class Catalog {
 			joinColumns = @JoinColumn(name = "Catalog_ID"), 
 			inverseJoinColumns = {
 				@JoinColumn(name = "Product_Name")})
-	List<Product> products;
+	private List<Product> products;
 	
 	public String catalogNameToString() {
 	    return ValueRender.linkToString(this.name);
 	}
+
+	
+	public Catalog() {}
+	
+    public Catalog(int id, String name, List<Product> products) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.products = products;
+    }
+
+
+    public int getId() {
+        return id;
+    }
+
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
+    public String getName() {
+        return name;
+    }
+
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+	
+	
+	
 }

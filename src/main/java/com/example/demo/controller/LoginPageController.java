@@ -59,14 +59,15 @@ public class LoginPageController {
 		    response.addCookie(cookie);
 		    
 		    LoginState.currentAccount = acc;
-		    if(acc.getRole() == "admin") {
-		        LoginState.currentStaff = staffRepo.getCurrentLoggedInStaff(acc.getUserName());
+		    		    
+		    if(acc.getRole().equals("admin")) {
+		        LoginState.currentStaff = acc.getStaff();
+		        return "redirect:/allproduct";
 		    }
 		    else {
-	            LoginState.currentCustomer = cusRepo.getCurrentLoggedInCustomer(acc.getUserName());
+	            LoginState.currentCustomer = acc.getCustomer();
+	            return "redirect:/home";
 		    }
-		    
-			return "redirect:/home";
 		}
 		else {
 			return "login";

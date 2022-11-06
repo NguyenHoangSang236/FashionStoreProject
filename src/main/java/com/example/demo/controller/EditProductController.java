@@ -24,16 +24,6 @@ import com.example.demo.util.ValueRender;
 @Controller
 public class EditProductController {
 	
-	@GetMapping("/allproduct")
-	public String AllProduct(Model model) {
-		return "products";
-	}
-	
-	@GetMapping("/addproduct")
-	public String addproduct(Model model) {
-		return "add-product";
-	}
-	
 	@GetMapping("/editproduct")
     public String editproduct(Model model ) {
 		

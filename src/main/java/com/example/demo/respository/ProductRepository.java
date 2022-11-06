@@ -15,6 +15,10 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	List<Product> getAllProducts();
 	
 	
+	@Query(value = "select * from products", nativeQuery = true)
+    List<Product> getAllProductsWithColorsAndSizes();
+	
+	
 	@Query(value = "select p from Product p where p.name like %:nameVal% group by name")
 	List<Product> getProductsByName(@Param("nameVal") String productName);
 	

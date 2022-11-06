@@ -2,6 +2,8 @@ package com.example.demo.util;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 public class ValueRender {
@@ -102,5 +104,12 @@ public class ValueRender {
         result = String.valueOf(linkCharrArr);
         
         return result;
+    }
+    
+    
+    //format DateTime
+    public static String formatDateDMY(Date date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        return simpleDateFormat.format(date);
     }
 }

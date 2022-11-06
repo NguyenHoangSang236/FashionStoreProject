@@ -8,11 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.entity.Customer;
 
 @Repository
-public interface CustomerRepository extends JpaRepository<Customer, Integer>{
-    @Query(value = "select cus.* from customers cus join login_accounts la on cus.account_id = la.id where user_name = :userName", nativeQuery = true)
-    Customer getCurrentLoggedInCustomer(@Param("userName") String userName);
-    
-    
+public interface CustomerRepository extends JpaRepository<Customer, Integer>{    
     @Query(value = "select * from customers where id = :idVal", nativeQuery = true)
     Customer getCustomerById(@Param("idVal") int id);
 }
