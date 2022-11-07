@@ -81,27 +81,34 @@
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-5">
-                        <div class="header__top__right">
-                            <div class="header__top__links">
+                        <div class="header__top__right is-flex is-justify-content-right">
+                            <div class="header__top__links " style="margin-block: auto;">
                                 <a th:href="@{loginpage}">Sign in</a>
                                 <a href="#">FAQs</a>
                             </div>
-                            <div class="header__top__hover">
-                                <span>
-				                    <img src="img/user.png" alt=""> 
-				                    <i class="arrow_carrot-down"></i>
-				                </span>
-				                <ul>
-				                    <li>
-				                        <a th:href="@{showaccount}">My Profile</a>
-				                    </li>
-				                    <li>
-				                        <a href="#">Edit Account</a>
-				                    </li>
-				                    <li>
-				                        <a href="#">Wallet</a>
-				                    </li>
-				                </ul>
+                            <div class="dropdown is-right is-hoverable">
+                                <div class="dropdown-trigger">
+                                  <div class="button dropdown-profile" aria-haspopup="true" aria-controls="dropdown-menu">
+                                    <span>  
+                                        <img height="30" width="30"  class="has-img-is-rouned"
+                                        src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png">
+                                        <span class="has-text-white">Username</span>    
+                                    </span>
+                                    <span class="icon is-small has-text-white">
+                                        <i class="arrow_carrot-down"></i>
+                                    </span>
+                                  </div>
+                                </div>
+                                <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                  <div class="dropdown-content">
+                                    <a class="dropdown-item" th:href="@{showaccount}">
+                                      My Profile
+                                    </a>
+                                    <a class="dropdown-item">
+                                        Logout
+                                      </a>
+                                  </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -572,6 +579,12 @@
     <script src="JS/mixitup.min.js"></script>
     <script src="JS/owl.carousel.min.js"></script>
     <script src="JS/main.js"></script>
+    <script type="text/javascript">
+        window.scroll({top: 0, behavior: 'smooth'});
+        setTimeout(function() {
+            document.querySelector(`[data-filter=".best-seller"]`).click();
+        },500)
+    </script>
 </body>
 
 </html>

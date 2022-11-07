@@ -72,18 +72,34 @@
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-5">
-                        <div class="header__top__right">
-                            <div class="header__top__links">
+                        <div class="header__top__right is-flex is-justify-content-right">
+                            <div class="header__top__links " style="margin-block: auto;">
                                 <a th:href="@{loginpage}">Sign in</a>
                                 <a href="#">FAQs</a>
                             </div>
-                            <div class="header__top__hover">
-                                <span>Usd <i class="arrow_carrot-down"></i></span>
-                                <ul>
-                                    <li>USD</li>
-                                    <li>EUR</li>
-                                    <li>USD</li>
-                                </ul>
+                            <div class="dropdown is-right is-hoverable">
+                                <div class="dropdown-trigger">
+                                  <div class="button dropdown-profile" aria-haspopup="true" aria-controls="dropdown-menu">
+                                    <span>  
+                                        <img height="30" width="30"  class="has-img-is-rouned"
+                                        src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png">
+                                        <span class="has-text-white">Username</span>    
+                                    </span>
+                                    <span class="icon is-small has-text-white">
+                                        <i class="arrow_carrot-down"></i>
+                                    </span>
+                                  </div>
+                                </div>
+                                <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                  <div class="dropdown-content">
+                                    <a class="dropdown-item" th:href="@{showaccount}">
+                                      My Profile
+                                    </a>
+                                    <a class="dropdown-item">
+                                        Logout
+                                      </a>
+                                  </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -230,21 +246,29 @@
                                 <span th:text="*{discount} > 0 ? *{fomattedOriginalPrice() + ' vnd'} : ''"></span>
                             </h3>
                             <p style="text-align: justify;" th:text="*{description}"></p>
-                            <div class="product__details__option">
-                                <div class="product__details__option__size">
-                                    <span>Size:</span>
-                                    <label th:each="size, sizeState: ${sizeList}" th:for="${size}" th:text="${size}">
-                                        <input type="radio" th:id="${size}">
-                                    </label>
+                            <div class="columns product__details__option">
+                                <div class="column product__details__option__size">
+                                    <div class="columns">
+                                        <span class="column is-4 has-text-right mr-0">Size:</span>
+                                        <div class="column has-text-left">
+                                            <label class="has-text-centered has-width-4rem" th:each="size, sizeState: ${sizeList}" th:for="${size}" th:text="${size}">
+                                                <input type="radio" th:id="${size}">
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="product__details__option__color">
-                                    <span>Color:</span>
-                                    <!--<label th:each="color, colorState: ${colorList}" th:class="${color}" th:for="${color}">
-                                        <input type="button" th:id="${color}" href = "/shopproduct">
-                                    </label>-->
-                                    <div th:each="color, colorState: ${colorList}" class="round-button">
-                                        <div class="round-button-circle" th:classappend="${color}">
-                                            <a th:href="@{/shop-details-by-color_name={productName}__color={color} (productName = *{formatProductNameToLink()}, color = ${color})}" class="round-button"></a>
+                                <div class="column is-5 product__details__option__color is-flex">
+                                    <div class="is-flex" style="height: fit-content;">
+                                        <span>Color:</span>
+                                        <!--<label th:each="color, colorState: ${colorList}" th:class="${color}" th:for="${color}">
+                                            <input type="button" th:id="${color}" href = "/shopproduct">
+                                        </label>-->
+                                        <div class=" button-color-formated is-flex">
+                                            <div th:each="color, colorState: ${colorList}" class="round-button mr-2">
+                                                <div class="round-button-circle" th:classappend="${color}">
+                                                    <a th:href="@{/shop-details-by-color_name={productName}__color={color} (productName = *{formatProductNameToLink()}, color = ${color})}" class="round-button"></a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <!--<label class="c-2" for="sp-2">
@@ -337,14 +361,19 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="tabs-6" role="tabpanel">
-                                    <div class="product__details__tab__content">
+                                    <div class="product__details__tab__content" style="width: 50rem; margin-left: auto; margin-right: auto;">
                                         <div class="product__details__tab__content__item" th:each="comment, commentState: ${commentList}">
-                                            <div class="customer-comment">
-                                                <div class="set-bg" th:data-setbg="${comment.getImageUrl()}" style="height:35px; width:35px"></div>
-                                                <h5 th:text="${comment.getCustomerName()}"></h5>
-                                            </div>    
-                                            <p th:text="${comment.getContent()}"></p>
-                                            <p th:text="${comment.getImageUrl()}"></p>
+                                            <div class="columns">
+                                                <div class="column is-2">
+                                                    <div class="set-bg has-border-10px" th:data-setbg="${comment.getImageUrl()}" style="height:80px; width:80px"></div>
+                                                </div>
+                                                <div class="column">
+                                                    <h5 class="mt-2" th:text="${comment.getCustomerName()}"></h5>
+                                                    <p class="mr-4" th:text="${comment.getContent()}"></p>
+
+                                                </div>
+                                            </div>
+                                            <!-- <p th:text="${comment.getImageUrl()}"></p> -->
                                         </div>
                                     </div>
                                 </div>

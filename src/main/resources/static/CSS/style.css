@@ -334,12 +334,11 @@ ol {
 	margin-bottom: 0;
 }
 
-.header__top__right {
+.header__top__right is-flex is-justify-content-right {
 	text-align: right;
 }
 
 .header__top__links {
-	display: inline-block;
 	margin-right: 25px;
 }
 
@@ -1950,7 +1949,7 @@ ol {
 -----------------------*/
 
 .footer {
-	background: #111111 !important; 
+	background: #111111 !important;
 	padding-top: 70px;
 }
 
@@ -4035,70 +4034,84 @@ ol {
 }
 
 
-.black{
+.black {
 	background-color: black;
 }
-.white{
+
+.white {
 	background-color: white;
 }
-.fuchsia{
+
+.fuchsia {
 	background-color: fuchsia;
 }
-.brown{
+
+.brown {
 	background-color: rgb(156, 26, 26);
 }
-.red{
+
+.red {
 	background-color: red;
 }
-.blue{
+
+.blue {
 	background-color: blue;
 }
-.green{
+
+.green {
 	background-color: green;
 }
-.yellow{
+
+.yellow {
 	background-color: yellow;
 }
-.grey{
+
+.grey {
 	background-color: grey;
 }
-.pink{
+
+.pink {
 	background-color: pink;
 }
-.purple{
+
+.purple {
 	background-color: purple;
 }
-.camo{
+
+.camo {
 	background-color: #5F5F38;
 }
-.gold{
+
+.gold {
 	background-color: rgb(168, 145, 12);
 }
 
 
 .round-button {
-	width:36px;
+	width: 36px;
 	height: 36px;
 }
+
 .round-button-circle {
 	width: 36px;
-	height:36px;
+	height: 36px;
 	border-radius: 50%;
-	border:3px solid #ffffff;
-	overflow:hidden;
-			
+	border: 3px solid #ffffff;
+	overflow: hidden;
+
 	/* background: #ca2b2b;  */
 	box-shadow: 0 0 3px gray;
 }
+
 .round-button a {
-	display:block;
-	float:left;
-	width:36px;
+	display: block;
+	float: left;
+	width: 36px;
 	height: 36px;
-	padding-top:50%;
-	padding-bottom:50%;
-	line-height:1em;
-	margin-top:-0.5em;
+	padding-top: 50%;
+	padding-bottom: 50%;
+	line-height: 1em;
+	margin-top: -0.5em;
 }
 
 .customer-comment {
@@ -4107,5 +4120,32 @@ ol {
 
 .comment-avatar {
 	height: 30px;
-    width: 30px;
+	width: 30px;
+}
+
+.has-width-4rem {
+	width: 4rem;
+}
+
+.button-color-formated {
+	position: absolute;
+	left: 4rem;
+	top: 0rem;
+}
+
+.has-border-10px {
+	border-radius: 10px;
+}
+
+.dropdown-profile {
+	background-color: transparent !important;
+	border: none !important;
+}
+
+.has-img-is-rouned {
+	border-radius: 100px;
+}
+
+.is-borderless {
+	border: none;
 }

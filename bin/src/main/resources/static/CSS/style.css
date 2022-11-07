@@ -329,7 +329,7 @@ ol {
 	margin-bottom: 0;
 }
 
-.header__top__right {
+.header__top__right is-flex is-justify-content-right {
 	text-align: right;
 }
 
