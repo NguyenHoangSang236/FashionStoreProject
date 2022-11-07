@@ -41,9 +41,7 @@ public class DetailsController {
     Integer[] ratingStarArr = {1,2,3,4,5};
     
     
-    public void renderToProductDetails(Model model, String productName) {
-        String realProductName = ValueRender.linkToString(productName);
-        Product productDetail = productRepo.getDefaultProductDetailsByName(realProductName);
+    public void renderToProductDetails(Model model, String realProductName, Product productDetail) {
         List<Comment> comments = commentRepo.getCommentByProductName(realProductName);
         
         List<String> sizeList = productRepo.getAllSizesOfProductByName(realProductName);
@@ -81,7 +79,10 @@ public class DetailsController {
     
     @GetMapping("/shop-details_name={productName}")
     public String showDefaultProductDetails(Model model, @PathVariable("productName") String productName) {
-        renderToProductDetails(model, productName);
+        String realProductName = ValueRender.linkToString(productName);
+        Product productDetail = productRepo.getDefaultProductDetailsByName(realProductName);
+
+        renderToProductDetails(model, realProductName, productDetail);
 
         return "shopdetails";
     }
@@ -89,7 +90,10 @@ public class DetailsController {
     
     @GetMapping("/shop-details-by-color_name={productName}__color={color}")
     public String showProductDetails(Model model, @PathVariable("productName") String productName, @PathVariable("color") String color) {
-        renderToProductDetails(model, productName);
+        String realProductName = ValueRender.linkToString(productName);
+        Product productDetail = productRepo.getProductByNameAndColor(realProductName, color);
+
+        renderToProductDetails(model, realProductName, productDetail);
         
         return "shopdetails";
     }
