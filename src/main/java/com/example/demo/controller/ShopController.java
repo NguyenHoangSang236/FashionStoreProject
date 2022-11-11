@@ -87,6 +87,8 @@ public class ShopController {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(12);
         
+        model.addAttribute("pName", new Product());
+        
         Page<Product> productPage = productService.findByPriceFilter(PageRequest.of(currentPage - 1, pageSize),price1,price2);
         
         renderToShop(model, productPage, page, size);
@@ -100,6 +102,8 @@ public class ShopController {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(12);
         
+        model.addAttribute("pName", new Product());
+        
         Page<Product> productPage = productService.findByCate(PageRequest.of(currentPage - 1, pageSize),cate);
         
         renderToShop(model, productPage, page, size);
@@ -112,6 +116,8 @@ public class ShopController {
     public String showShopbyBrand(Model model, @PathVariable("brand") String brand, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size ) {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(12);
+        
+        model.addAttribute("pName", new Product());
         
         Page<Product> productPage = productService.findByBrand(PageRequest.of(currentPage - 1, pageSize),brand);
         

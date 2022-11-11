@@ -73,17 +73,33 @@
                     </div>
                     <div class="col-lg-6 col-md-5">
                         <div class="header__top__right is-flex is-justify-content-right">
-                            <div class="header__top__links">
+                            <div class="header__top__links " style="margin-block: auto;">
                                 <a th:href="@{loginpage}">Sign in</a>
                                 <a href="#">FAQs</a>
                             </div>
-                            <div class="header__top__hover">
-                                <span>Usd <i class="arrow_carrot-down"></i></span>
-                                <ul>
-                                    <li>USD</li>
-                                    <li>EUR</li>
-                                    <li>USD</li>
-                                </ul>
+                            <div class="dropdown is-right is-hoverable">
+                                <div class="dropdown-trigger">
+                                  <div class="button dropdown-profile" aria-haspopup="true" aria-controls="dropdown-menu">
+                                    <span>  
+                                        <img height="30" width="30"  class="has-img-is-rouned"
+                                        src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png">
+                                        <span class="has-text-white">Username</span>    
+                                    </span>
+                                    <span class="icon is-small has-text-white">
+                                        <i class="arrow_carrot-down"></i>
+                                    </span>
+                                  </div>
+                                </div>
+                                <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                  <div class="dropdown-content">
+                                    <a class="dropdown-item" th:href="@{showaccount}">
+                                      My Profile
+                                    </a>
+                                    <a class="dropdown-item">
+                                        Logout
+                                      </a>
+                                  </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -102,8 +118,8 @@
                 <div class="col-lg-6 col-md-6">
                     <nav class="header__menu mobile-menu">
                         <ul>
-                            <li class="active"><a th:href="@{home}">Home</a></li>
-                            <li><a th:href="@{shopproduct}">Shop</a></li>
+                            <li><a th:href="@{home}">Home</a></li>
+                            <li class="active"><a th:href="@{shopproduct}">Shop</a></li>
                             <li><a href="#">Pages</a>
                                 <ul class="dropdown">
                                     <li><a th:href="@{about}">About Us</a></li>
@@ -157,8 +173,8 @@
                 <div class="col-lg-3">
                     <div class="shop__sidebar">
                         <div class="shop__sidebar__search">
-                            <form action="#">
-                                <input type="text" placeholder="Search...">
+                            <form th:action="@{/shopproductsearch}" method="get" th:object = "${pName}">
+                                <input type="text" th:field="*{name}" placeholder="Search...">
                                 <button type="submit"><span class="icon_search"></span></button>
                             </form>
                         </div>
@@ -172,15 +188,7 @@
                                         <div class="card-body">
                                             <div class="shop__sidebar__categories">
                                                 <ul class="nice-scroll">
-                                                    <li><a href="#">Men (20)</a></li>
-                                                    <li><a href="#">Women (20)</a></li>
-                                                    <li><a href="#">Bags (20)</a></li>
-                                                    <li><a href="#">Clothing (20)</a></li>
-                                                    <li><a href="#">Shoes (20)</a></li>
-                                                    <li><a href="#">Accessories (20)</a></li>
-                                                    <li><a href="#">Kids (20)</a></li>
-                                                    <li><a href="#">Kids (20)</a></li>
-                                                    <li><a href="#">Kids (20)</a></li>
+                                                    <li th:each="category: ${categoriesList}"><a th:href="@{/shopproductcate={cate} (cate = ${category} )}" th:text="${category}"></a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -194,10 +202,7 @@
                                         <div class="card-body">
                                             <div class="shop__sidebar__brand">
                                                 <ul>
-                                                    <li><a href="#">Louis Vuitton</a></li>
-                                                    <li><a href="#">Chanel</a></li>
-                                                    <li><a href="#">Hermes</a></li>
-                                                    <li><a href="#">Gucci</a></li>
+                                                    <li th:each="branding: ${brandingList}"><a th:href="@{/shopproductbrand={brand} (brand = ${branding} )}" th:text="${branding}"></a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -211,12 +216,12 @@
                                         <div class="card-body">
                                             <div class="shop__sidebar__price">
                                                 <ul>
-                                                    <li><a href="#">$0.00 - $50.00</a></li>
-                                                    <li><a href="#">$50.00 - $100.00</a></li>
-                                                    <li><a href="#">$100.00 - $150.00</a></li>
-                                                    <li><a href="#">$150.00 - $200.00</a></li>
-                                                    <li><a href="#">$200.00 - $250.00</a></li>
-                                                    <li><a href="#">250.00+</a></li>
+                                                    <li><a th:href="@{/shopproduct{price1}and{price2} (price1 = 0 , price2 = 500000)}">0 - 500.000 vnd</a></li>
+                                                    <li><a th:href="@{/shopproduct{price1}and{price2} (price1 = 500000 , price2 = 1000000)}">500.000 - 1.000.000 vnd</a></li>
+                                                    <li><a th:href="@{/shopproduct{price1}and{price2} (price1 = 1000000 , price2 = 2000000)}">1.000.000 - 2.000.000 vnd</a></li>
+                                                    <li><a th:href="@{/shopproduct{price1}and{price2} (price1 = 2000000 , price2 = 5000000)}">2.000.000 - 5.000.000 vnd</a></li>
+                                                    <li><a th:href="@{/shopproduct{price1}and{price2} (price1 = 5000000 , price2 = 10000000)}">5.000.000 - 10.000.000 vnd</a></li>
+                                                    <li><a th:href="@{/shopproduct{price1}and{price2} (price1 = 10000000 , price2 = 9999999999)}">10.000.000 vnd ++</a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -257,62 +262,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card">
-                                    <div class="card-heading">
-                                        <a data-toggle="collapse" data-target="#collapseFive">Colors</a>
-                                    </div>
-                                    <div id="collapseFive" class="collapse show" data-parent="#accordionExample">
-                                        <div class="card-body">
-                                            <div class="shop__sidebar__color">
-                                                <label class="c-1" for="sp-1">
-                                                    <input type="radio" id="sp-1">
-                                                </label>
-                                                <label class="c-2" for="sp-2">
-                                                    <input type="radio" id="sp-2">
-                                                </label>
-                                                <label class="c-3" for="sp-3">
-                                                    <input type="radio" id="sp-3">
-                                                </label>
-                                                <label class="c-4" for="sp-4">
-                                                    <input type="radio" id="sp-4">
-                                                </label>
-                                                <label class="c-5" for="sp-5">
-                                                    <input type="radio" id="sp-5">
-                                                </label>
-                                                <label class="c-6" for="sp-6">
-                                                    <input type="radio" id="sp-6">
-                                                </label>
-                                                <label class="c-7" for="sp-7">
-                                                    <input type="radio" id="sp-7">
-                                                </label>
-                                                <label class="c-8" for="sp-8">
-                                                    <input type="radio" id="sp-8">
-                                                </label>
-                                                <label class="c-9" for="sp-9">
-                                                    <input type="radio" id="sp-9">
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="card-heading">
-                                        <a data-toggle="collapse" data-target="#collapseSix">Tags</a>
-                                    </div>
-                                    <div id="collapseSix" class="collapse show" data-parent="#accordionExample">
-                                        <div class="card-body">
-                                            <div class="shop__sidebar__tags">
-                                                <a href="#">Product</a>
-                                                <a href="#">Bags</a>
-                                                <a href="#">Shoes</a>
-                                                <a href="#">Fashio</a>
-                                                <a href="#">Clothing</a>
-                                                <a href="#">Hats</a>
-                                                <a href="#">Accessories</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -330,8 +279,7 @@
                                     <p>Sort by Price:</p>
                                     <select>
                                         <option value="">Low To High</option>
-                                        <option value="">$0 - $55</option>
-                                        <option value="">$55 - $100</option>
+                                        <option value="">High To Low</option>
                                     </select>
                                 </div>
                             </div>
@@ -342,23 +290,22 @@
                             <div class="product__item" >
                                 <div class="product__item__pic set-bg" th:data-setbg="${product.image1}">
                                     <ul class="product__hover">
-                                        <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
-                                        <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a>
                                         </li>
-                                        <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
+                                        <li><a th:href="@{/shop-details_name={productName} (productName = ${product.formatProductNameToLink()})}"><img src="img/icon/search.png" alt=""></a></li>
                                     </ul>
                                 </div>
                                 <div class="product__item__text">
                                     <h6 th:text="${product.name}"></h6>
                                     <a href="./shop-details.html" class="add-cart">+ Add To Cart</a>
-                                    <div class="rating">
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
+                                    <div class="row">
+                                        <div class="rating" style="margin-left: 16px">
+                                            <i class="fa fa-star" style="margin-left: 5px" th:each="ratingStar, ratingState: ${ratingStarArr}" th:if="${ratingState.index} < ${product.totalRatingStarPoint()}"></i>
+                                        </div>
+                                        <div class="rating">
+                                            <i class="fa fa-star-o" style="margin-left: 5px" th:each="ratingStar, ratingState: ${ratingStarArr}" th:if="${ratingState.index} < 5 - ${product.totalRatingStarPoint()}"></i>
+                                        </div>
                                     </div>
-                                    <h5 th:text="${product.formattedPrice()}"></h5>
+                                    <h5 th:text="${product.formattedPrice() + ' vnd'}"></h5>
                                     <div class="product__color__select is-hidden">
                                         <label for="pc-4">
                                             <input type="radio" id="pc-4">
@@ -376,9 +323,9 @@
                         
                     </div>
                     <div class="row">
-                        <div class="col-lg-12">
+                        <div class="col-lg-12 product__pagination-centered">
                             <div class="product__pagination" th:if="${productPage.totalPages > 0}" th:each="pageNumber : ${pageNumbers}">
-                                <a th:href="@{/showShop(size = ${productPage.size}, page = ${pageNumber})}" th:text="${pageNumber}" th:class="${pageNumber==productPage.number + 1} ? active">1</a>
+                                <a th:href="@{/shopproduct(size = ${productPage.size}, page = ${pageNumber})}" th:text="${pageNumber}" th:class="${pageNumber==productPage.number + 1} ? active">1</a>
                             </div>
                         </div>
                     </div>
