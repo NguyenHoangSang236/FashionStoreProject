@@ -54,11 +54,13 @@ public class LoginPageController {
 		Account acc = accRepo.findByUserNameAndPassword(account.getUserName(), account.getPassword());
 		
 		if(acc.getUserName().equals(null) == false) {
-		    Cookie cookie = new Cookie(acc.getUserName(), ValueRender.encodePassword(acc.getPassword()));
+//		    Cookie cookie = new Cookie(acc.getUserName(), ValueRender.encodePassword(acc.getPassword()));
+			Cookie cookie = new Cookie(acc.getUserName(),  Integer.toString(acc.getId()));
 		    cookie.setMaxAge(7 * 24 * 60 * 60);
 		    response.addCookie(cookie);
 		    
 		    LoginState.currentAccount = acc;
+		    
 		    		    
 		    if(acc.getRole().equals("admin")) {
 		        LoginState.currentStaff = acc.getStaff();

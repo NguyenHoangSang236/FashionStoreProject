@@ -131,7 +131,7 @@
               <h2 class="tm-block-title">Change Avatar</h2>
               <div class="tm-avatar-container">
                 <img
-                  src="img/avatar.png"
+                  th:src="${userpic}"
                   alt="Avatar"
                   class="tm-avatar img-fluid mb-4"
                 />
@@ -155,6 +155,7 @@
                     name="name"
                     type="text"
                     class="form-control validate"
+                    th:value="${username}"
                   />
                 </div>
                 <div class="form-group col-lg-6">
@@ -164,6 +165,7 @@
                     name="email"
                     type="email"
                     class="form-control validate"
+                    th:value="${useremail}"
                   />
                 </div>
                 <div class="form-group col-lg-6">
@@ -191,6 +193,7 @@
                     name="phone"
                     type="tel"
                     class="form-control validate"
+                    th:value="${userphonenumber}"
                   />
                 </div>
                 <div class="form-group col-lg-6">
