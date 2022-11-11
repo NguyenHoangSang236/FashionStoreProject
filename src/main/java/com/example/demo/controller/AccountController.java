@@ -37,8 +37,8 @@ public class AccountController {
 	@GetMapping("/showaccount")
     public String showAbout(Model model ) {
         
-//		Customer accountDetail = cusRepo.getCurrentLoggedInCustomer("phuc");
-//		System.out.println(accountDetail);
+		Customer accountDetail = cusRepo.getCustomerById(1);
+		System.out.println(accountDetail.getImage());
 		
         return "accounts";
     }

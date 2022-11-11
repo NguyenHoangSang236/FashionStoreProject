@@ -132,7 +132,7 @@ public class ShopController {
         int pageSize = size.orElse(12);
         
         
-        Page<Product> productPage = productService.SearchProduct(PageRequest.of(currentPage - 1, pageSize),name.getName());
+        Page<Product> productPage = productService.searchProduct(PageRequest.of(currentPage - 1, pageSize),name.getName());
         
         renderToShop(model, productPage, page, size);
         

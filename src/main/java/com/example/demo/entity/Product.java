@@ -3,6 +3,7 @@ package com.example.demo.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.example.demo.util.ValueRender;
 
 import lombok.Data;
@@ -20,6 +26,8 @@ import net.bytebuddy.asm.Advice.This;
 @Data
 @Entity
 @Table(name = "products")
+@DynamicInsert
+@DynamicUpdate
 public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,6 +45,9 @@ public class Product implements Serializable {
 
     @Column(name = "price")
     private double price;
+    
+    @Column(name = "original_price")
+    private double originalPrice;
 
     @Column(name = "available_quantity")
     private int availableQuantity;
@@ -83,22 +94,59 @@ public class Product implements Serializable {
     @ManyToMany(mappedBy = "products")
     private List<Invoice> invoice;
 
-    @ManyToMany(mappedBy = "products")
+    @ManyToMany(mappedBy = "products", cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Catalog> catalogs;
 
     @OneToMany(mappedBy = "product")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Cart> carts;
 
     @OneToMany(mappedBy = "product")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Comment> comments;
     
     @OneToMany(mappedBy = "product")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<ProductManagement> productManagements;
 
     
     public Product() { }
-    
-    
+   
+    public Product(String color, String size, String name, double price, double originalPrice,
+            int availableQuantity, int soldQuantity, int oneStarQuantity, int twoStarQuantity, int threeStarQuantity,
+            int fourStarQuantity, int fiveStarQuantity, double discount, String brand, String image1, String image2,
+            String image3, String image4, String description, List<Invoice> invoice, List<Catalog> catalogs,
+            List<Cart> carts, List<Comment> comments, List<ProductManagement> productManagements) {
+        super();
+        this.color = color;
+        this.size = size;
+        this.name = name;
+        this.price = price;
+        this.originalPrice = originalPrice;
+        this.availableQuantity = availableQuantity;
+        this.soldQuantity = soldQuantity;
+        this.oneStarQuantity = oneStarQuantity;
+        this.twoStarQuantity = twoStarQuantity;
+        this.threeStarQuantity = threeStarQuantity;
+        this.fourStarQuantity = fourStarQuantity;
+        this.fiveStarQuantity = fiveStarQuantity;
+        this.discount = discount;
+        this.brand = brand;
+        this.image1 = image1;
+        this.image2 = image2;
+        this.image3 = image3;
+        this.image4 = image4;
+        this.description = description;
+        this.invoice = invoice;
+        this.catalogs = catalogs;
+        this.carts = carts;
+        this.comments = comments;
+        this.productManagements = productManagements;
+    }
+
+
+
     public String formattedImportedDate() {
         int recentIndex = this.productManagements.size() - 1;
         
@@ -349,5 +397,21 @@ public class Product implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public double getOriginalPrice() {
+        return originalPrice;
+    }
+
+    public void setOriginalPrice(double originalPrice) {
+        this.originalPrice = originalPrice;
+    }
+
+    public List<ProductManagement> getProductManagements() {
+        return productManagements;
+    }
+
+    public void setProductManagements(List<ProductManagement> productManagements) {
+        this.productManagements = productManagements;
     }
 }
