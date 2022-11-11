@@ -15,11 +15,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+
 import lombok.Data;
 
 @Entity
 @Data
 @Table(name = "cart")
+@DynamicInsert
+@DynamicUpdate
 public class Cart {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

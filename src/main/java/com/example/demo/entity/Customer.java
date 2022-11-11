@@ -12,11 +12,16 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+
 import lombok.Data;
 
 @Entity
 @Data
 @Table(name = "customers")
+@DynamicInsert
+@DynamicUpdate
 public class Customer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
