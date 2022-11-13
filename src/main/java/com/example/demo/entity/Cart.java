@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import com.example.demo.util.ValueRender;
+
 import lombok.Data;
 
 @Entity
@@ -38,10 +40,85 @@ public class Cart {
 	int buyingStatus;
 	
 	@ManyToOne
-    @JoinColumn(name = "customerId")
+    @JoinColumn(name = "customer_id")
     Customer customer;
 
     @ManyToOne
-    @JoinColumn(name = "productId")
+    @JoinColumn(name = "product_id")
     Product product;
+
+    
+    public Cart() {}
+    
+    public Cart(String id, int quantity, int buyingStatus, Customer customer, Product product) {
+        super();
+        this.id = id;
+        this.quantity = quantity;
+        this.buyingStatus = buyingStatus;
+        this.customer = customer;
+        this.product = product;
+    }
+    
+    
+    public double totalPrice() {
+        double result = 0;
+        
+        int quantity = this.quantity;
+        double productPrice = this.product.getPrice();
+        result += quantity * productPrice;
+        
+        return result;
+    }
+    
+    public String formatedTotalPrice() {
+        return ValueRender.formatDoubleNumber(this.totalPrice());
+    }
+    
+    public String formatedPrice() {
+        return ValueRender.formatDoubleNumber(this.product.getPrice());
+    }
+    
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public int getBuyingStatus() {
+        return buyingStatus;
+    }
+
+    public void setBuyingStatus(int buyingStatus) {
+        this.buyingStatus = buyingStatus;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+    
+    
+    
 }

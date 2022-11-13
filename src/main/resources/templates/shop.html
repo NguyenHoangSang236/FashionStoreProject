@@ -296,7 +296,7 @@
                                 </div>
                                 <div class="product__item__text">
                                     <h6 th:text="${product.name}"></h6>
-                                    <a href="./shop-details.html" class="add-cart">+ Add To Cart</a>
+                                    <a th:href="@{/shop-details_name={productName} (productName = ${product.formatProductNameToLink()})}" class="add-cart">+ Add To Cart</a>
                                     <div class="row">
                                         <div class="rating" style="margin-left: 16px">
                                             <i class="fa fa-star" style="margin-left: 5px" th:each="ratingStar, ratingState: ${ratingStarArr}" th:if="${ratingState.index} < ${product.totalRatingStarPoint()}"></i>

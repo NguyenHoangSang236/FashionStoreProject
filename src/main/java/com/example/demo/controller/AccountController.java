@@ -26,12 +26,15 @@ import com.example.demo.util.LoginState;
 public class AccountController {
 	@Autowired
 	AccountRepository accRepo;
-	Account account = new Account();
+	
 	@Autowired
 	CustomerRepository cusRepo;
-	Customer customer = new Customer();
+	
 	@Autowired
 	LoginPageController currentUser;
+	
+	Account account = new Account();
+	Customer customer = new Customer();
 	
 
 	@PostMapping("/account")
@@ -47,18 +50,12 @@ public class AccountController {
 	@GetMapping("/showaccount")
     public String showAbout(Model model, HttpServletRequest request ) {
 		
-		Cookie[] cookies = request.getCookies();
-	    if (cookies != null) {
-	        
-	        Customer accountDetail = cusRepo.getCustomerById(Integer.valueOf(cookies[0].getValue()));
-	 		model.addAttribute("userpic", accountDetail.getImage());
-	 		model.addAttribute("username", accountDetail.getName());
-	 		model.addAttribute("useremail", accountDetail.getEmail());
-	 		model.addAttribute("userphonenumber", accountDetail.getPhoneNumber());
-	    }
-	    else {System.out.println("nulllll");}
-		
-        return "accounts";
+		if(LoginState.isLoggedIn(model, request, cusRepo) == true) {
+		    return "accounts";
+		}
+		else {
+            return "redirect:/loginpage";
+        }
     }
 	
 }

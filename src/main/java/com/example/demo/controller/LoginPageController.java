@@ -36,11 +36,6 @@ public class LoginPageController {
 	@Autowired
 	StaffRepository staffRepo;
 	
-//	@GetMapping("/loginpage")
-//	public ModelAndView loginPage() {
-//		return new ModelAndView("login");
-//	}
-	
 	
 	@GetMapping("/loginpage")
 	public String showLoginPage(Model model) {

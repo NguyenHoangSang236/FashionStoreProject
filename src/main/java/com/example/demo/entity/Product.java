@@ -18,6 +18,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.example.demo.entity.dto.InvoicesWithProducts;
 import com.example.demo.util.ValueRender;
 
 import lombok.Data;
@@ -91,8 +92,12 @@ public class Product implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @ManyToMany(mappedBy = "products")
-    private List<Invoice> invoice;
+//    @ManyToMany(mappedBy = "products")
+//    private List<Invoice> invoice;
+    
+    @OneToMany(mappedBy = "product")
+    List<InvoicesWithProducts> invoicesWithProducts;
+    
 
     @ManyToMany(mappedBy = "products", cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -113,12 +118,15 @@ public class Product implements Serializable {
     
     public Product() { }
    
-    public Product(String color, String size, String name, double price, double originalPrice,
+   
+    public Product(int id, String color, String size, String name, double price, double originalPrice,
             int availableQuantity, int soldQuantity, int oneStarQuantity, int twoStarQuantity, int threeStarQuantity,
             int fourStarQuantity, int fiveStarQuantity, double discount, String brand, String image1, String image2,
-            String image3, String image4, String description, List<Invoice> invoice, List<Catalog> catalogs,
-            List<Cart> carts, List<Comment> comments, List<ProductManagement> productManagements) {
+            String image3, String image4, String description, List<InvoicesWithProducts> invoicesWithProducts,
+            List<Catalog> catalogs, List<Cart> carts, List<Comment> comments,
+            List<ProductManagement> productManagements) {
         super();
+        this.id = id;
         this.color = color;
         this.size = size;
         this.name = name;
@@ -138,12 +146,13 @@ public class Product implements Serializable {
         this.image3 = image3;
         this.image4 = image4;
         this.description = description;
-        this.invoice = invoice;
+        this.invoicesWithProducts = invoicesWithProducts;
         this.catalogs = catalogs;
         this.carts = carts;
         this.comments = comments;
         this.productManagements = productManagements;
     }
+
 
 
 
@@ -359,13 +368,15 @@ public class Product implements Serializable {
         this.brand = brand;
     }
 
-    public List<Invoice> getInvoice() {
-        return invoice;
+    public List<InvoicesWithProducts> getInvoicesWithProducts() {
+        return invoicesWithProducts;
     }
 
-    public void setInvoice(List<Invoice> invoice) {
-        this.invoice = invoice;
+
+    public void setInvoicesWithProducts(List<InvoicesWithProducts> invoicesWithProducts) {
+        this.invoicesWithProducts = invoicesWithProducts;
     }
+
 
     public List<Catalog> getCatalogs() {
         return catalogs;

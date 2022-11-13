@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,15 +38,19 @@ public class Comment {
 	@Column(name = "Comment_Content", columnDefinition = "text")
 	String content;
 	
+	@Column(name = "Comment_Date")
+	Date commentDate;
+	
 	
 	public Comment() {}
 
-    public Comment(int id, Product product, Customer customer, String content) {
+    public Comment(int id, Product product, Customer customer, String content, Date commentDate) {
         super();
         this.id = id;
         this.product = product;
         this.customer = customer;
         this.content = content;
+        this.commentDate = commentDate;
     }
 
     public int getId() {
@@ -78,4 +84,14 @@ public class Comment {
     public void setContent(String content) {
         this.content = content;
     }
+
+    public Date getCommentDate() {
+        return commentDate;
+    }
+
+    public void setCommentDate(Date commentDate) {
+        this.commentDate = commentDate;
+    }
+    
+    
 }
