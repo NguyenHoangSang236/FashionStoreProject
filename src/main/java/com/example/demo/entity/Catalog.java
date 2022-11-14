@@ -2,10 +2,8 @@ package com.example.demo.entity;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,9 +14,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-
 import com.example.demo.util.ValueRender;
 
 import lombok.Data;
@@ -26,8 +21,6 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "catalog")
-@DynamicInsert
-@DynamicUpdate
 public class Catalog {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,7 +30,7 @@ public class Catalog {
 	@Column(name = "Name")
 	private String name;
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToMany
 	@JoinTable(
 			name = "catalog_with_products", 
 			joinColumns = @JoinColumn(name = "Catalog_ID"), 

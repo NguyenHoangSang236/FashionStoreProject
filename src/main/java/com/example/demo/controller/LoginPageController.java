@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,12 +51,14 @@ public class LoginPageController {
 	 
 	
 	@PostMapping("/loginpage")
-	public String submitForm(@ModelAttribute("Account") Account account, HttpServletResponse response) { 
+	public String submitForm(HttpSession session,@ModelAttribute("Account") Account account, HttpServletResponse response) { 
 		Account acc = accRepo.findByUserNameAndPassword(account.getUserName(), account.getPassword());
 		
 		if(acc.getUserName().equals(null) == false) {
 //		    Cookie cookie = new Cookie(acc.getUserName(), ValueRender.encodePassword(acc.getPassword()));
 			Cookie cookie = new Cookie(acc.getUserName(),  Integer.toString(acc.getId()));
+			session.setAttribute("currentuser", acc);
+			
 		    cookie.setMaxAge(7 * 24 * 60 * 60);
 		    response.addCookie(cookie);
 		    
@@ -75,4 +78,11 @@ public class LoginPageController {
 			return "login";
 		}
 	}
+	
+	@GetMapping("/logout")
+	public String logout(HttpSession session ) {
+	    session.invalidate();
+	    return "redirect:/loginpage";
+	} 
+	
 }

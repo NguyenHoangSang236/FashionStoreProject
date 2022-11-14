@@ -21,6 +21,5 @@ public interface ProductService {
     Page<Product> findByPriceFilter(Pageable pageable, double price1, double price2);
     Page<Product> findByCate(Pageable pageable, String cate );
     Page<Product> findByBrand(Pageable pageable, String Brand );
-    Page<Product> searchProduct(Pageable pageable, String Name );
-    void deleteProduct(int productId);
+    Page<Product> SearchProduct(Pageable pageable, String Name );
 }
