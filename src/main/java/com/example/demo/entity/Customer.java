@@ -70,6 +70,8 @@ public class Customer {
         this.carts = carts;
         this.comments = comments;
     }
+    
+    
 
     public int getId() {
         return id;

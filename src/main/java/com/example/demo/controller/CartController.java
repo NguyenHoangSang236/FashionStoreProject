@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.example.demo.entity.Cart;
+import com.example.demo.entity.dto.CustomerCart;
 import com.example.demo.respository.CartRepository;
 import com.example.demo.respository.CustomerRepository;
 import com.example.demo.util.LoginState;
@@ -27,10 +28,15 @@ public class CartController {
     @GetMapping("/cart-of-customer-id={id}")
     public String showCart(Model model, @PathVariable("id") int id, HttpServletRequest request) {
         List<Cart> cartList = cartRepo.getCurrentCartByCustomerId(id);
+        CustomerCart customerCart = new CustomerCart();
         
         if(LoginState.isLoggedIn(model, request, customerRepo) == true)
         {            
+            customerCart.setFullCartList(cartList);
+            
+            model.addAttribute("customerCart", customerCart);
             model.addAttribute("cartList", cartList);
+            
             return "shopping-cart";
         }
         else {
