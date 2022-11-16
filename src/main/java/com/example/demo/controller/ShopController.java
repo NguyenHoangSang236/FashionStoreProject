@@ -136,7 +136,7 @@ public class ShopController {
     public String showShopbyName(Model model, @ModelAttribute("pName") Product name, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size ) {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(12);
-        
+        System.out.println(name.getBrand());
         
         Page<Product> productPage = productService.searchProduct(PageRequest.of(currentPage - 1, pageSize),name.getName());
         
