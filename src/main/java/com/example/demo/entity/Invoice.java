@@ -30,6 +30,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "invoice")
+@DynamicInsert
+@DynamicUpdate
 public class Invoice {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -3,6 +3,7 @@ package com.example.demo.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,6 +30,8 @@ import net.bytebuddy.asm.Advice.This;
 @Setter
 @Entity
 @Table(name = "products")
+@DynamicInsert
+@DynamicUpdate
 public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,6 +49,9 @@ public class Product implements Serializable {
 
     @Column(name = "price")
     private double price;
+    
+    @Column(name = "original_price")
+    private double originalPrice;
 
     @Column(name = "available_quantity")
     private int availableQuantity;
@@ -96,16 +102,20 @@ public class Product implements Serializable {
     List<InvoicesWithProducts> invoicesWithProducts;
     
 
-    @ManyToMany(mappedBy = "products")
+    @ManyToMany(mappedBy = "products", cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Catalog> catalogs;
 
     @OneToMany(mappedBy = "product")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Cart> carts;
 
     @OneToMany(mappedBy = "product")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Comment> comments;
     
     @OneToMany(mappedBy = "product")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<ProductManagement> productManagements;
 
     
@@ -401,5 +411,21 @@ public class Product implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public double getOriginalPrice() {
+        return originalPrice;
+    }
+
+    public void setOriginalPrice(double originalPrice) {
+        this.originalPrice = originalPrice;
+    }
+
+    public List<ProductManagement> getProductManagements() {
+        return productManagements;
+    }
+
+    public void setProductManagements(List<ProductManagement> productManagements) {
+        this.productManagements = productManagements;
     }
 }

@@ -6,14 +6,17 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import com.example.demo.entity.Account;
+import com.example.demo.util.LoginState;
+
 @ComponentScan
 // @EnableJpaRepositories(basePackages = "com.example.demo.repository")
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class} )
 public class DemoSpringBootApplication {
-	
-
 	public static void main(String[] args) {
 		SpringApplication.run(DemoSpringBootApplication.class, args);
+
+		LoginState.currentAccount = new Account();
 	}
 
 	
