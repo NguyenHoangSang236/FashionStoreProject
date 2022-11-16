@@ -171,25 +171,25 @@
     <!-- Shopping Cart Section Begin -->
     <section class="shopping-cart spad">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="shopping__cart__table">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th class="has-width-4rem"></th>
-                                    <th>Product</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <form th:object="${customerCart}" method="post">
+            <form th:object="${customerCart}" method="post">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="shopping__cart__table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="has-width-4rem"></th>
+                                        <th>Product</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
                                     <tr th:each="cartProduct, cartProductState: ${cartList}">
                                         <!--<th scope="row"><input type="checkbox" th:field="*{fullCartList}" th:value="${cartProduct}" /></th>-->
                                         <th scope="row">
                                             <div class="">
-                                                <input type="checkbox" class="item-selected-shopping-cart" th:field="*{selectedCartList[__${cartProductState.index}__]}" th:value="${cartList[__${cartProductState.index}__]}">
+                                                <input type="checkbox" class="item-selected-shopping-cart" th:field="*{fullCartList[__${cartProductState.index}__]}" th:value="${cartList[__${cartProductState.index}__]}">
                                             </div>
                                         </th>
                                         <td class="product__cart__item">
@@ -208,44 +208,44 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="cart__price" th:text="${cartProduct.formatedTotalPrice()} + ' VND'"></td>
+                                        <td class="cart__price" th:text="${cartProduct.formatedTotalPrice()} + ' vnd'"></td>
                                         <td class="cart__close"><i class="fa fa-close"></i></td>
                                     </tr>
-                                </form>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="continue__btn">
-                                <a th:href="@{/shopproduct}">Continue Shopping</a>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="continue__btn">
+                                    <a th:href="@{/shopproduct}">Continue Shopping</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="continue__btn update__btn">
+                                    <a type="submit"><i class="fa fa-spinner"></i> Update cart</a>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="continue__btn update__btn">
-                                <a href="#"><i class="fa fa-spinner"></i> Update cart</a>
-                            </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <!--<div class="cart__discount">
+                            <h6>Discount codes</h6>
+                            <form action="#">
+                                <input type="text" placeholder="Coupon code">
+                                <button type="submit">Apply</button>
+                            </form>
+                        </div>-->
+                        <div class="cart__total">
+                            <h6>Cart total</h6>
+                            <ul>
+                                <li>Subtotal <span th:text="*{formatedCartSubtotal()} + ' VND'"></span></li>
+                                <li>Total <span  th:text="*{formatedCartTotal} + ' VND'"></span></li>
+                            </ul>
+                            <a href="#" class="primary-btn" type="submit">Proceed to checkout</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <!--<div class="cart__discount">
-                        <h6>Discount codes</h6>
-                        <form action="#">
-                            <input type="text" placeholder="Coupon code">
-                            <button type="submit">Apply</button>
-                        </form>
-                    </div>-->
-                    <div class="cart__total">
-                        <h6>Cart total</h6>
-                        <ul>
-                            <li>Subtotal <span>$ 169.50</span></li>
-                            <li>Total <span>$ 169.50</span></li>
-                        </ul>
-                        <a href="#" class="primary-btn">Proceed to checkout</a>
-                    </div>
-                </div>
-            </div>
+            </form>
         </div>
     </section>
     <!-- Shopping Cart Section End -->
@@ -339,6 +339,12 @@
     <script src="js/mixitup.min.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
+    <script>
+        let checkboxItemList = document.querySelectorAll(".item-selected-shopping-cart");
+        checkboxItemList.forEach(checkbox => {
+            checkbox.checked = false;
+        })
+    </script>
 </body>
 
 </html>
