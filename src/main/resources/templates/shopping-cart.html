@@ -189,7 +189,7 @@
                                         <!--<th scope="row"><input type="checkbox" th:field="*{fullCartList}" th:value="${cartProduct}" /></th>-->
                                         <th scope="row">
                                             <div class="">
-                                                <input type="checkbox" class="item-selected-shopping-cart">
+                                                <input type="checkbox" class="item-selected-shopping-cart" th:field="*{selectedCartList[__${cartProductState.index}__]}" th:value="${cartList[__${cartProductState.index}__]}">
                                             </div>
                                         </th>
                                         <td class="product__cart__item">

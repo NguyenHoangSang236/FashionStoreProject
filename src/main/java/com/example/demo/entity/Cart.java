@@ -21,17 +21,20 @@ import org.hibernate.annotations.DynamicUpdate;
 import com.example.demo.util.ValueRender;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "cart")
-@DynamicInsert
-@DynamicUpdate
+//@DynamicInsert
+//@DynamicUpdate
 public class Cart {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID", unique = true)
-	String id;
+	int id;
 	
 	@Column(name = "Quantity")
 	int quantity;
@@ -50,7 +53,7 @@ public class Cart {
     
     public Cart() {}
     
-    public Cart(String id, int quantity, int buyingStatus, Customer customer, Product product) {
+    public Cart(int id, int quantity, int buyingStatus, Customer customer, Product product) {
         super();
         this.id = id;
         this.quantity = quantity;
@@ -79,11 +82,11 @@ public class Cart {
     }
     
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

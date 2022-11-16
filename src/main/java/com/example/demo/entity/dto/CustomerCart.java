@@ -15,7 +15,6 @@ public class CustomerCart {
     public CustomerCart() {}
     
     public CustomerCart(List<Cart> fullCartList, List<Cart> selectedCartList, double subtotal, double total) {
-        super();
         this.fullCartList = fullCartList;
         this.selectedCartList = selectedCartList;
         this.subtotal = subtotal;

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Add Product - Dashboard HTML Template</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Roboto:400,700"
@@ -17,6 +18,7 @@
     <link rel="stylesheet" href="CSS/bootstrap.min.css" />
     <!-- https://getbootstrap.com/ -->
     <link rel="stylesheet" href="CSS/templatemo-style.css">
+    <link rel="stylesheet" href="CSS/style.css">
     <!--
 	Product Admin CSS Template
 	https://templatemo.com/tm-524-product-admin
@@ -202,25 +204,30 @@
                       <option value="3">Trending</option>
                     </select>
                   </div>
-                  <div class="row">
-                    <div class="form-group mb-3 col-xs-12 col-sm-6">
-                      <label
-                        for="import_date"
-                        >Import Date
-                      </label>
-                      <input
-                        id="import_date"
-                        name="import_date"
-                        type="text"
-                        class="form-control validate"
-                        data-large-mode="true"
-                      />
-                    </div>
-                    <div class="form-group mb-3 col-xs-12 col-sm-6">
-                      <label
-                        for="stock"
-                        >Size
-                      </label>
+                  <div class="form-group mb-3">
+                    <label
+                      for="import_date"
+                      >Import Date
+                    </label>
+                    <input
+                      id="import_date"
+                      name="import_date"
+                      type="text"
+                      class="form-control validate"
+                      data-large-mode="true"
+                    />
+                  </div>
+                  <div class="form-group mb-3" id="detailProductModifier">
+                    <div class="title-detail mb-3 is-flex is-justify-content-space-between">
+                      <div class="is-flex">
+                        <label style="display: none" for="stock"></label>
+                        <div class="has-text-white has-margin-block-auto">
+                          Detail item
+                        </div>
+                        <div class="button ml-1 is-small is-rounded" id="getDetailProduct">Get Data</div>
+                      </div>
+                      <div class="button is-small is-rounded" id="addDetailProduct">Add</div>
+                      <!--
                       <input
                         id="stock"
                         name="stock"
@@ -228,8 +235,22 @@
                         class="form-control validate"
                         required
                       />
+                      <select
+                        class="custom-select tm-select-accounts"
+                        id="category"
+                      >
+                        <option value="1">S</option>
+                        <option value="2">M</option>
+                        <option value="3">L</option>
+                        <option value="3">XL</option>
+                        <option value="3">XXL</option>
+                        <option value="3">XXXL</option>
+                        <option value="3">Other</option>
+                      </select>
+                    -->
                     </div>
-                  </div> 
+                    <div class="data-detail"></div>
+                  </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
                 <div class="tm-product-img-dummy mx-auto">
@@ -322,6 +343,64 @@
       $(function() {
         $("#expire_date").datepicker();
       });
+    </script>
+
+    <script>
+      let dataSize1 = ["S", "M", "L", "XL"];
+      let dataSize2 = ["33", "34", "35", "40"];
+      let data = dataSize1;
+
+      // Khai bao
+      let detailProductModifier = document.getElementById("detailProductModifier");
+      let button = detailProductModifier.querySelector("#addDetailProduct");
+      let getDataButton = detailProductModifier.querySelector("#getDetailProduct");
+      let detail = detailProductModifier.querySelector(".data-detail");
+
+
+      getDataButton.onclick = function() {
+        let returnJson = {};
+        let productList = document.querySelectorAll(".detail-products");
+        productList.forEach(product => {
+          let size = product.querySelector(".product-size");
+          let quantity = product.querySelector(".product-quantity");
+
+          returnJson[`${size.value}`] = quantity.value;
+        });
+        console.log(returnJson);
+      };
+
+      // Create Select
+      let container = document.createElement("div");
+      let selectSection = document.createElement("select");
+      selectSection.classList.add("product-size");
+      selectSection.style.width = "6rem";
+      for (let index = 0 ; index < data.length; index ++) {
+        selectSection.innerHTML += `
+          <option value="${data[index]}">${data[index]}</option>
+        `;
+      }
+      container.appendChild(selectSection);
+
+      // Build add button
+      button.onclick = function() {
+        let div = document.createElement("div");
+        div.classList.add("is-flex", "mb-2", "detail-products");
+        div.innerHTML = `
+          <input class="input product-quantity mr-2" type="number" placeholder="Quantity">
+          <div class="select mr-2">
+            ${container.innerHTML}
+          </div>
+          <div class="button button-delete is-small is-rounded has-text-danger has-text-weight-bold" 
+            style="height:auto; width:3rem;">X</div>
+        `;
+        
+        let deleteButton = div.querySelector(".button-delete");
+        deleteButton.onclick = function () {
+          div.remove();
+        }
+
+        detail.appendChild(div);
+      };
     </script>
   </body>
 </html>

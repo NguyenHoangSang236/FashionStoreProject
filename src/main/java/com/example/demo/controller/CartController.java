@@ -32,7 +32,7 @@ public class CartController {
         
         if(LoginState.isLoggedIn(model, request, customerRepo) == true)
         {            
-            customerCart.setFullCartList(cartList);
+            customerCart.setSelectedCartList(cartList);
             
             model.addAttribute("customerCart", customerCart);
             model.addAttribute("cartList", cartList);

@@ -22,9 +22,12 @@ import com.example.demo.entity.dto.InvoicesWithProducts;
 import com.example.demo.util.ValueRender;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import net.bytebuddy.asm.Advice.This;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "products")
 @DynamicInsert

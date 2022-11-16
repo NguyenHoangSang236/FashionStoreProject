@@ -22,8 +22,11 @@ import org.hibernate.annotations.DynamicUpdate;
 import com.example.demo.util.ValueRender;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "catalog")
 @DynamicInsert

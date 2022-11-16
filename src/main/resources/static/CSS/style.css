@@ -4160,3 +4160,7 @@ ol {
 .button-hover-blue-default:hover {
 	background-color: #4e657a !important;
 }
+
+.has-margin-block-auto {
+	margin-block: auto;
+}
