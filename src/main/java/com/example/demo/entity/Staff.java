@@ -15,8 +15,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
@@ -27,8 +25,6 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "staffs")
-@DynamicInsert
-@DynamicUpdate
 public class Staff {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

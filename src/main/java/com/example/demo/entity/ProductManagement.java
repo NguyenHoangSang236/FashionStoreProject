@@ -11,9 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,8 +19,6 @@ import lombok.Setter;
 @Setter
 @Table(name = "products_management")
 @Entity
-@DynamicInsert
-@DynamicUpdate
 public class ProductManagement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

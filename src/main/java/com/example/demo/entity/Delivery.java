@@ -12,9 +12,6 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,8 +20,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "delivery")
-@DynamicInsert
-@DynamicUpdate
 public class Delivery implements Serializable{
 	@Column(name = "Invoice_ID")
 	int invoiceId;

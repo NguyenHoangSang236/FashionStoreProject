@@ -9,10 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,8 +17,6 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "login_accounts")
-@DynamicInsert
-@DynamicUpdate
 public class Account {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
