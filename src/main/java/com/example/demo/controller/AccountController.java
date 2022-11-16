@@ -29,12 +29,15 @@ import com.example.demo.util.LoginState;
 public class AccountController {
 	@Autowired
 	AccountRepository accRepo;
-	Account account = new Account();
+	
 	@Autowired
 	CustomerRepository cusRepo;
-	Customer customer = new Customer();
+	
 	@Autowired
 	LoginPageController currentUser;
+	
+	Account account = new Account();
+	Customer customer = new Customer();
 	
 
 	@PostMapping("/account")

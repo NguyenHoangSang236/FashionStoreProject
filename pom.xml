@@ -79,7 +79,12 @@
 		    <groupId>org.springframework.data</groupId>
 		    <artifactId>spring-data-commons</artifactId>
 		</dependency>
-
+		<!-- https://mvnrepository.com/artifact/com.paypal.sdk/paypal-android-sdk -->
+		<dependency>
+		    <groupId>com.paypal.sdk</groupId>
+		    <artifactId>rest-api-sdk</artifactId>
+		    <version>1.14.0</version>
+		</dependency>
 
 	</dependencies>
 

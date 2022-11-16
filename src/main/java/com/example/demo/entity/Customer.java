@@ -13,9 +13,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "customers")
 public class Customer {
 	@Id
@@ -65,6 +68,8 @@ public class Customer {
         this.carts = carts;
         this.comments = comments;
     }
+    
+    
 
     public int getId() {
         return id;

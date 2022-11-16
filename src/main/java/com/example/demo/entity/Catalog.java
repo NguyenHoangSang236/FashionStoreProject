@@ -17,8 +17,11 @@ import javax.persistence.Table;
 import com.example.demo.util.ValueRender;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "catalog")
 public class Catalog {

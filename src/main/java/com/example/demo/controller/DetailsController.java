@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.QPageRequest;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,7 @@ import com.example.demo.entity.dto.ProductComment;
 import com.example.demo.respository.CommentRepository;
 import com.example.demo.respository.CustomerRepository;
 import com.example.demo.respository.ProductRepository;
+import com.example.demo.util.LoginState;
 import com.example.demo.util.ValueRender;
 
 
@@ -41,7 +44,7 @@ public class DetailsController {
     Integer[] ratingStarArr = {1,2,3,4,5};
     
     
-    public void renderToProductDetails(Model model, String realProductName, Product productDetail) {
+    public void renderToProductDetails(Model model, String realProductName, Product productDetail, HttpServletRequest request) {
         List<Comment> comments = commentRepo.getCommentByProductName(realProductName);
         
         List<String> sizeList = productRepo.getAllSizesOfProductByName(realProductName);
@@ -67,6 +70,7 @@ public class DetailsController {
                 }
             }
         }
+        LoginState.isLoggedIn(model, request, customerRepo);
         
         model.addAttribute("productDetail", productDetail);
         model.addAttribute("ratingStarArr", ratingStarArr);
@@ -78,22 +82,22 @@ public class DetailsController {
     
     
     @GetMapping("/shop-details_name={productName}")
-    public String showDefaultProductDetails(Model model, @PathVariable("productName") String productName) {
+    public String showDefaultProductDetails(Model model, @PathVariable("productName") String productName, HttpServletRequest request) {
         String realProductName = ValueRender.linkToString(productName);
         Product productDetail = productRepo.getDefaultProductDetailsByName(realProductName);
 
-        renderToProductDetails(model, realProductName, productDetail);
+        renderToProductDetails(model, realProductName, productDetail, request);
 
         return "shopdetails";
     }
     
     
     @GetMapping("/shop-details-by-color_name={productName}__color={color}")
-    public String showProductDetails(Model model, @PathVariable("productName") String productName, @PathVariable("color") String color) {
+    public String showProductDetails(Model model, @PathVariable("productName") String productName, @PathVariable("color") String color, HttpServletRequest request) {
         String realProductName = ValueRender.linkToString(productName);
         Product productDetail = productRepo.getProductByNameAndColor(realProductName, color);
 
-        renderToProductDetails(model, realProductName, productDetail);
+        renderToProductDetails(model, realProductName, productDetail, request);
         
         return "shopdetails";
     }
