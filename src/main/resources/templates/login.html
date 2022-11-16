@@ -15,8 +15,8 @@
                             width:100%;
                             filter: blur(8px);
                             -webkit-filter: blur(4px);">
-    <div class="cont mt-6">
-        <form class="form sign-in" th:action = "@{/loginpage}" method="post" th:object = "${Account}">
+    <form class="form sign-in" th:action = "@{/loginpage}" method="post" th:object = "${loginPage}">
+        <div class="cont mt-6">
             <div class="m-6">
                 <div class="has-text-centered pb-6" style="position:relative;">
                     <div class="logo-shop">
@@ -29,61 +29,71 @@
                             <div class="title is-6 mb-3 has-text-left">
                                 Username
                             </div>
-                            <input type="text" class="input has-text-left" th:field="*{userName}">
+                            <input type="text" class="input has-text-left" th:field="*{loginUserName}">
                         </div>
                         <div class="m-4">
                             <div class="title is-6 mb-3 has-text-left">
                                 Password
                             </div>
-                            <input type="password" class="input has-text-left" th:field="*{password}">
+                            <input type="password" class="input has-text-left" th:field="*{loginPassword}">
                         </div>
                         <div class="has-text-right">
                             <a href="#" class="forgot-pass">Forgot your password?</a>
                         </div>
                     </div>
                     <div class="has-text-centered mt-5 mb-5 has-text-weight-bold is-flex is-justify-content-center">
-                        <button type="submit" class="has-width-20rem button has-text-white is-rounded is-fullwidth" 
+                        <button type="submit" name="action" value="login" class="has-width-20rem button has-text-white is-rounded is-fullwidth" 
                             style="background-color: #d4af7a; width: 20rem;">Login NOW</button>
                     </div>
                 </div>
             </div>
-        </form>
-        <div class="sub-cont">
-            <div class="img">
-                <div class="img__text m--up">
-                 
-                    <h3>Don't have an account? Please Sign up!<h3>
+            <div class="sub-cont">
+                <div class="img">
+                    <div class="img__text m--up">
+                    
+                        <h3>Don't have an account? Please Sign up!<h3>
+                    </div>
+                    <div class="img__text m--in">
+                    
+                        <h3>If you already has an account, just sign in.<h3>
+                    </div>
+                    <div class="img__btn">
+                        <span class="m--up">Sign Up</span>
+                        <span class="m--in">Sign In</span>
+                    </div>
                 </div>
-                <div class="img__text m--in">
                 
-                    <h3>If you already has an account, just sign in.<h3>
+                <div class="form sign-up has-text-centered m-3" style = "overflow: auto;">
+                    <div class="title is-4 mb-6">Create your Account</div>
+                    <label>
+                        <span class="is-capitalized">Username</span>
+                        <input type="text" th:field="*{registerUserName}" />
+                    </label>
+                    <label>
+                        <span class="is-capitalized">Password</span>
+                        <input type="password" th:field="*{registerPassword}" />
+                    </label>
+                    <label>
+                        <span class="is-capitalized">Full Name</span>
+                        <input type="text" th:field="*{fullName}" />
+                    </label>
+                    <label>
+                        <span class="is-capitalized">Phone Number</span>
+                        <input type="text" th:field="*{phoneNumber}" />
+                    </label>
+                    <label>
+                        <span class="is-capitalized">Email</span>
+                        <input type="email" th:field="*{email}" />
+                    </label>
+                    <div class="has-text-centered mb-5 has-text-weight-bold is-flex is-justify-content-center">
+                        <button type="submit" name="action" value="register" class="has-width-20rem submit button has-text-white is-rounded is-fullwidth" 
+                            style="background-color: #d4af7a; width: 20rem;">Register</button> 
+                    </div>
                 </div>
-                <div class="img__btn">
-                    <span class="m--up">Sign Up</span>
-                    <span class="m--in">Sign In</span>
-                </div>
-            </div>
-            <div class="form sign-up has-text-centered m-3">
-                <div class="title is-4 mb-6">Create your Account</div>
-                <label>
-                    <span class="is-capitalized">Username</span>
-                    <input type="text" />
-                </label>
-                <label>
-                    <span class="is-capitalized">Email</span>
-                    <input type="email" />
-                </label>
-                <label>
-                    <span class="is-capitalized">Password</span>
-                    <input type="password" />
-                </label>
-                <div class="has-text-centered mb-5 has-text-weight-bold is-flex is-justify-content-center">
-                    <div type="button" class="has-width-20rem submit button has-text-white is-rounded is-fullwidth" 
-                        style="background-color: #d4af7a; width: 20rem;">Register</div> 
-                </div>
+
             </div>
         </div>
-    </div>
+    </form>
 </body>
 </html>
 
