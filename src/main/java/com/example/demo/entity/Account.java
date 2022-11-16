@@ -53,9 +53,10 @@ public class Account {
 		this.role = role;
 	}
 	
-	public Account(String name, String pass) {
+	public Account(String name, String pass, String role) {
 		this.userName = name;
 		this.password = pass;
+		this.role = role;
 	}
 
 	public int getId() {

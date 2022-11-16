@@ -45,6 +45,5 @@ public class CartController {
         else {
             return "redirect:/loginpage";
         }
-        
     }
 }

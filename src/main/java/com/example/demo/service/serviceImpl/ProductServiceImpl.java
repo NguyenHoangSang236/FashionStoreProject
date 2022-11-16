@@ -52,6 +52,7 @@ public class ProductServiceImpl implements ProductService{
     }
     
     
+    @Override
     public Page<Product> findByPriceFilter(Pageable pageable, double price1, double price2 ) {
         products = productRepo.getProductsUsingPriceFilter(price1, price2);
         int pageSize = pageable.getPageSize();
@@ -70,6 +71,8 @@ public class ProductServiceImpl implements ProductService{
         return new PageImpl<Product>(list, PageRequest.of(currentPage, pageSize), products.size());
     }
     
+    
+    @Override
     public Page<Product> findByCate(Pageable pageable, String cate ) {
         products = productRepo.getProductsUsingCatalogName(cate);
         int pageSize = pageable.getPageSize();
@@ -88,6 +91,8 @@ public class ProductServiceImpl implements ProductService{
         return new PageImpl<Product>(list, PageRequest.of(currentPage, pageSize), products.size());
     }
     
+    
+    @Override
     public Page<Product> findByBrand(Pageable pageable, String Brand ) {
         products = productRepo.getProductsByBrand(Brand);
         int pageSize = pageable.getPageSize();
@@ -106,6 +111,8 @@ public class ProductServiceImpl implements ProductService{
         return new PageImpl<Product>(list, PageRequest.of(currentPage, pageSize), products.size());
     }
     
+    
+    @Override
     public Page<Product> searchProduct(Pageable pageable, String Name ) {
         products = productRepo.getProductsByName(Name);
         int pageSize = pageable.getPageSize();

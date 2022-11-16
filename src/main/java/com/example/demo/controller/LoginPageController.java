@@ -14,10 +14,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.entity.Account;
+import com.example.demo.entity.Customer;
+import com.example.demo.entity.dto.LoginPage;
 import com.example.demo.respository.AccountRepository;
 import com.example.demo.respository.CustomerRepository;
 import com.example.demo.respository.StaffRepository;
@@ -28,7 +32,6 @@ import com.example.demo.util.ValueRender;
 public class LoginPageController {
 	@Autowired
 	AccountRepository accRepo;
-	Account account = new Account();
 	
 	@Autowired
 	CustomerRepository cusRepo;
@@ -36,38 +39,65 @@ public class LoginPageController {
 	@Autowired
 	StaffRepository staffRepo;
 	
+	LoginPage loginPage = new LoginPage();
+	
+	
 	
 	@GetMapping("/loginpage")
 	public String showLoginPage(Model model) {
-		model.addAttribute("Account", account);
+		model.addAttribute("loginPage", loginPage);
 		return "login";
 	}
 	 
 	
-	@PostMapping("/loginpage")
-	public String submitForm(@ModelAttribute("Account") Account account, HttpServletResponse response) { 
-		Account acc = accRepo.findByUserNameAndPassword(account.getUserName(), account.getPassword());
+	@RequestMapping(value = "/loginpage", method = RequestMethod.POST)
+	public String submitForm(@ModelAttribute("loginPage") LoginPage loginPage, @RequestParam(value="action") String action,  HttpServletResponse response) { 
+		if(action.equals("login")) {
+		    Account acc = accRepo.findByUserNameAndPassword(loginPage.getLoginUserName(), loginPage.getLoginPassword());
+		    	        
+		    //account existed --> proceed login
+	        if(acc != null) {
+	            Cookie cookie = new Cookie(acc.getUserName(), Integer.toString(acc.getId()));
+	            cookie.setMaxAge(7 * 24 * 60 * 60);
+	            response.addCookie(cookie);
+	            
+	            LoginState.currentAccount = acc;
+	            
+	            if(acc.getRole().equals("admin")) {
+	                LoginState.currentStaff = acc.getStaff();
+	                return "redirect:/allproduct";
+	            }
+	            else {
+	                LoginState.currentCustomer = acc.getCustomer();
+	                return "redirect:/home";
+	            }
+	        }
+	        //account not existed --> notice 'Invalid user name or password !!'
+	        else {
+	            return "login";
+	        }
+		}
 		
-		if(acc.getUserName().equals(null) == false) {
-//		    Cookie cookie = new Cookie(acc.getUserName(), ValueRender.encodePassword(acc.getPassword()));
-			Cookie cookie = new Cookie(acc.getUserName(),  Integer.toString(acc.getId()));
-		    cookie.setMaxAge(7 * 24 * 60 * 60);
-		    response.addCookie(cookie);
-		    
-		    LoginState.currentAccount = acc;
-		    
-		    		    
-		    if(acc.getRole().equals("admin")) {
-		        LoginState.currentStaff = acc.getStaff();
-		        return "redirect:/allproduct";
-		    }
-		    else {
-	            LoginState.currentCustomer = acc.getCustomer();
+		if(action.equals("register")) {
+		    Account acc = accRepo.findByUserNameAndPassword(loginPage.getRegisterUserName(), loginPage.getRegisterPassword());
+
+		    //account not existed --> create a new account and new customer
+	        if(acc == null) {
+	            Account newAcc = new Account(loginPage.getRegisterUserName(), loginPage.getRegisterPassword(), "user");
+	            accRepo.save(newAcc);
+	            
+	            Customer newCus = new Customer(loginPage.getFullName(), loginPage.getEmail(), loginPage.getPhoneNumber(), "", newAcc);
+	            cusRepo.save(newCus);
+
+	            
 	            return "redirect:/home";
-		    }
+	        }
+	        //account existed --> notice 'This user name has already existed !!'
+	        else {
+	            return "login";
+	        }
 		}
-		else {
-			return "login";
-		}
+		
+		return "";
 	}
 }

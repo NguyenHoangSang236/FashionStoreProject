@@ -47,8 +47,6 @@ public class AllProductsController {
                 
 //        Product testProduct = new Product("color", "size", "name", 10, 8, 10, 10, 0, 0, 0, 0, 0, 0, "brand", null, null, null, null, null, null, null, null, null, null);
 //        productRepo.save(testProduct);
-       
-        
         
         return "products";
     }

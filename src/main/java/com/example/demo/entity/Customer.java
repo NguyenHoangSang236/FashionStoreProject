@@ -74,6 +74,15 @@ public class Customer {
         this.comments = comments;
     }
     
+    public Customer(String name, String email, String phoneNumber, String image, Account account) {
+        super();
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.image = image;
+        this.account = account;
+    }
+    
     
 
     public int getId() {
