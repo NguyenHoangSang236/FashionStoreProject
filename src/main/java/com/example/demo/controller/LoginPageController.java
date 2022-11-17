@@ -90,9 +90,8 @@ public class LoginPageController {
 	            Account newAcc = new Account(loginPage.getRegisterUserName(), loginPage.getRegisterPassword(), "user");
 	            accRepo.save(newAcc);
 	            
-	            Customer newCus = new Customer(loginPage.getFullName(), loginPage.getEmail(), loginPage.getPhoneNumber(), "", newAcc);
+	            Customer newCus = new Customer(loginPage.getFullName(), loginPage.getEmail(), loginPage.getPhoneNumber(), "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQnfcK8aWadEUBLCnstq0gd7sBmsB33Tvcng&usqp=CAU", newAcc);
 	            cusRepo.save(newCus);
-
 	            
 	            return "redirect:/home";
 	        }
@@ -111,4 +110,5 @@ public class LoginPageController {
 	    return "redirect:/loginpage";
 	} 
 
+	
 }
