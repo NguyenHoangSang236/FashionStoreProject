@@ -1,6 +1,8 @@
 package com.example.demo.util;
 
 public class Network {
+	public static String currentTemporaryPassword;
+	
 	public static String randomTemporaryPassword() {
 		String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789" + "abcdefghijklmnopqrstuvxyz";
 		 
@@ -11,6 +13,8 @@ public class Network {
 		 
 			sb.append(AlphaNumericString.charAt(index));
 		}
+		
+		currentTemporaryPassword = sb.toString();
 		 
 		return sb.toString();
 	}
