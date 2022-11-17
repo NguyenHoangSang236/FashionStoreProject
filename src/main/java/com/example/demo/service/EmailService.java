@@ -4,5 +4,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface EmailService {
-	public void forgotPassword(String user);
+	public void forgotPassword(String userName);
 }

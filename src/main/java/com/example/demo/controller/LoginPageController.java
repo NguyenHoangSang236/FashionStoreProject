@@ -26,6 +26,7 @@ import com.example.demo.entity.dto.LoginPage;
 import com.example.demo.respository.AccountRepository;
 import com.example.demo.respository.CustomerRepository;
 import com.example.demo.respository.StaffRepository;
+import com.example.demo.service.EmailService;
 import com.example.demo.util.LoginState;
 import com.example.demo.util.ValueRender;
 
@@ -39,6 +40,9 @@ public class LoginPageController {
 	
 	@Autowired
 	StaffRepository staffRepo;
+	
+	@Autowired 
+	EmailService emailService;
 	
 	LoginPage loginPage = new LoginPage();
 	
@@ -104,11 +108,10 @@ public class LoginPageController {
 		return "";
 	}
 	
+	
 	@GetMapping("/logout")
 	public String logout(HttpSession session ) {
 	    session.invalidate();
 	    return "redirect:/loginpage";
 	} 
-
-	
 }
