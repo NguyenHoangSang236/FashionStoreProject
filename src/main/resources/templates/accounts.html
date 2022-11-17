@@ -100,10 +100,12 @@
             </ul>
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link d-block" href="login.html">
-                  Admin, <b>Logout</b>
-                </a>
+                <p class="nav-link d-block" th:if= "${session.currentuser != null}" th:text="${#session.getAttribute('currentuser').getUserName()}">
+                </p>
               </li>
+      		<li class="nav-item">
+      		<a class="nav-link d-block" th:href="@{logout}">logout</a>
+      		</li>
             </ul>
           </div>
         </div>
