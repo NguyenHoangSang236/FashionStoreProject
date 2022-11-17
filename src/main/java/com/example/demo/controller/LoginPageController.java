@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,7 +52,7 @@ public class LoginPageController {
 	 
 	
 	@RequestMapping(value = "/loginpage", method = RequestMethod.POST)
-	public String submitForm(@ModelAttribute("loginPage") LoginPage loginPage, @RequestParam(value="action") String action,  HttpServletResponse response) { 
+	public String submitForm(HttpSession session, @ModelAttribute("loginPage") LoginPage loginPage, @RequestParam(value="action") String action,  HttpServletResponse response) { 
 		if(action.equals("login")) {
 		    Account acc = accRepo.findByUserNameAndPassword(loginPage.getLoginUserName(), loginPage.getLoginPassword());
 		    	        
@@ -60,6 +61,8 @@ public class LoginPageController {
 	            Cookie cookie = new Cookie(acc.getUserName(), Integer.toString(acc.getId()));
 	            cookie.setMaxAge(7 * 24 * 60 * 60);
 	            response.addCookie(cookie);
+	            session.setAttribute("currentuser", acc);
+	            
 	            
 	            LoginState.currentAccount = acc;
 	            
@@ -77,6 +80,7 @@ public class LoginPageController {
 	            return "login";
 	        }
 		}
+		
 		
 		if(action.equals("register")) {
 		    Account acc = accRepo.findByUserNameAndPassword(loginPage.getRegisterUserName(), loginPage.getRegisterPassword());
@@ -100,4 +104,11 @@ public class LoginPageController {
 		
 		return "";
 	}
+	
+	@GetMapping("/logout")
+	public String logout(HttpSession session ) {
+	    session.invalidate();
+	    return "redirect:/loginpage";
+	} 
+
 }

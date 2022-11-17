@@ -83,7 +83,7 @@
                                     <span>  
                                         <img height="30" width="30"  class="has-img-is-rouned"
                                         src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png">
-                                        <span class="has-text-white">Username</span>    
+                                        <span th:if= "${session.currentuser != null}" class="has-text-white" th:text="${#session.getAttribute('currentuser').getUserName()}"></span>    
                                     </span>
                                     <span class="icon is-small has-text-white">
                                         <i class="arrow_carrot-down"></i>
@@ -95,7 +95,7 @@
                                     <a class="dropdown-item" th:href="@{showaccount}">
                                       My Profile
                                     </a>
-                                    <a class="dropdown-item">
+                                    <a class="dropdown-item" th:href="@{logout}">
                                         Logout
                                       </a>
                                   </div>
