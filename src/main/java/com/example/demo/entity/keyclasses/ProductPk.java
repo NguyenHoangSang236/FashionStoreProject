@@ -1,4 +1,4 @@
-package com.example.demo.entity.keyClasses;
+package com.example.demo.entity.keyclasses;
 
 import java.io.Serializable;
 

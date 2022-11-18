@@ -3,14 +3,11 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.querydsl.QPageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.example.demo.entity.Account;
 import com.example.demo.entity.Product;
 import com.example.demo.respository.ProductRepository;
 
@@ -30,7 +27,6 @@ public class IndexPageController {
 //    }
 	@GetMapping("/home")
 	public String showHomePage( Model model) {
-	    
 	    List<Product> top8estSelllerProducts = productRepo.get8BestSellerProducts();  
 	    List<Product> top8NewArrivalProducts = productRepo.get8NewArrivalProducts();
 	    List<Product> top8HotSaleProducts = productRepo.get8HotSaleProducts();

@@ -15,7 +15,7 @@ public class Network {
 		}
 		
 		currentTemporaryPassword = sb.toString();
-		 
+		
 		return sb.toString();
 	}
 }
