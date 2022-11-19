@@ -8,9 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.entity.Account;
 import com.example.demo.entity.Cart;
+import com.example.demo.entity.Product;
 import com.example.demo.entity.dto.CustomerCart;
 import com.example.demo.respository.CartRepository;
 import com.example.demo.respository.CustomerRepository;
@@ -42,6 +46,13 @@ public class CartController {
             
             return "shopping-cart";
         }
+//        if(action.equals("update")) {
+//        	for(Cart cartname : fullCartList) {
+//                System.out.println(cartname.getQuantity());
+//            }
+//	                        
+//	            return "shopping-cart";
+//	        }
         else {
             return "redirect:/loginpage";
         }

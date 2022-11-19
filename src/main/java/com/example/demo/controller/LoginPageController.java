@@ -104,6 +104,39 @@ public class LoginPageController {
 	            return "login";
 	        }
 		}
+		if(action.equals("register")) {
+		    Account acc = accRepo.findByUserNameAndPassword(loginPage.getRegisterUserName(), loginPage.getRegisterPassword());
+
+		    //account not existed --> create a new account and new customer
+	        if(acc == null) {
+	            Account newAcc = new Account(loginPage.getRegisterUserName(), loginPage.getRegisterPassword(), "user");
+	            accRepo.save(newAcc);
+	            
+	            Customer newCus = new Customer(loginPage.getFullName(), loginPage.getEmail(), loginPage.getPhoneNumber(), "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQnfcK8aWadEUBLCnstq0gd7sBmsB33Tvcng&usqp=CAU", newAcc);
+	            cusRepo.save(newCus);
+	            
+	            return "redirect:/home";
+	        }
+	        //account existed --> notice 'This user name has already existed !!'
+	        else {
+	            return "login";
+	        }
+		}
+		
+		if(action.equals("forgot")) {
+			Account acc = accRepo.findByUserNameAndPassword(loginPage.getLoginUserName(), "123");
+
+		    //account  existed --> create a new account and new customer
+	        if(acc != null) {
+	        	emailService.forgotPassword(loginPage.getLoginUserName());
+	                        
+	            return "redirect:/login";
+	        }
+	        //account existed --> notice 'This user not existed !!'
+	        else {
+	            return "login";
+	        }
+		}
 		
 		return "";
 	}
@@ -114,4 +147,6 @@ public class LoginPageController {
 	    session.invalidate();
 	    return "redirect:/loginpage";
 	} 
+	
+	
 }
