@@ -33,7 +33,12 @@ import net.bytebuddy.asm.Advice.This;
 @DynamicInsert
 @DynamicUpdate
 public class Product implements Serializable {
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private int id;

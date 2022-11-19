@@ -1,4 +1,4 @@
-package com.example.demo.entity.keyclasses;
+package com.example.demo.entity.embededkey;
 
 import java.io.Serializable;
 
@@ -6,7 +6,12 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class ProductPk implements Serializable{
+public class ProductPrimaryKey implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Column(name = "ID", nullable = false)
     private int id;
 
@@ -16,5 +21,5 @@ public class ProductPk implements Serializable{
 	@Column(name = "Size", nullable = false)
     private String size;
     
-    public ProductPk() {}	
+    public ProductPrimaryKey() {}	
 }

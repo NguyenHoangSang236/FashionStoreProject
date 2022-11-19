@@ -7,7 +7,12 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class InvoicesWithProductsPrimaryKeys implements Serializable {
-    @Column(name = "product_id")
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Column(name = "product_id")
     int productId;
 
     @Column(name = "invoice_id")

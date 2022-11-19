@@ -33,8 +33,8 @@ public class EmailServiceImpl implements EmailService{
 	    String senderName = "Fool!sh Fashion Store";
 	    String subject = "Your new temporary password";
 	    String content = "Dear [[name]],<br>"
-	            + "Your new password is " + Network.randomTemporaryPassword() + "<br>"
-	            + "Please rememder to change a new password for your new account !!<br>"
+	            + "Your new temporary password is " + Network.randomTemporaryPassword() + "<br>"
+	            + "Please rememder to change a new password for your new account because this temporary password will be changed after you close the website !!<br><br>"
 	            + "Thank you,<br>"
 	            + "Fool!sh Fashion Store";
 	     
