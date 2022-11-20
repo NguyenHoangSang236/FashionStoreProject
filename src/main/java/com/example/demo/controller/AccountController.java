@@ -44,11 +44,13 @@ public class AccountController {
 		return accRepo.save(account);
 	}
 	
+	
 	@GetMapping("/account")
 	public List<Account> allAccount() {
 		return accRepo.findAll();
 	}
 
+	
 	@GetMapping("/showaccount")
     public String showAbout(@ModelAttribute("currentuser") Account Cuser, Model model, HttpServletRequest request ) {
 		
@@ -57,6 +59,7 @@ public class AccountController {
 	        
 //	        Customer accountDetail = cusRepo.getCustomerById(Integer.valueOf(cookies[0].getValue()));
 	    	Customer accountDetail = cusRepo.getCustomerById(Cuser.getId());
+	    	
 	 		model.addAttribute("userpic", accountDetail.getImage());
 	 		model.addAttribute("username", accountDetail.getName());
 	 		model.addAttribute("useremail", accountDetail.getEmail());

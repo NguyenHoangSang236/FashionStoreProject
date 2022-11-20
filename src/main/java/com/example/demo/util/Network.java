@@ -1,9 +1,11 @@
 package com.example.demo.util;
 
+import com.example.demo.entity.Account;
+
 public class Network {
-	public static String currentTemporaryPassword;
+	public static Account temporaryAccount;
 	
-	public static String randomTemporaryPassword() {
+	public static String randomTemporaryPassword(String userName) {
 		String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789" + "abcdefghijklmnopqrstuvxyz";
 		 
 		StringBuilder sb = new StringBuilder(10);
@@ -14,7 +16,7 @@ public class Network {
 			sb.append(AlphaNumericString.charAt(index));
 		}
 		
-		currentTemporaryPassword = sb.toString();
+		temporaryAccount = new Account(userName, sb.toString(), "user");
 		
 		return sb.toString();
 	}

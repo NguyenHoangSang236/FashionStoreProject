@@ -28,6 +28,7 @@ import com.example.demo.respository.CustomerRepository;
 import com.example.demo.respository.StaffRepository;
 import com.example.demo.service.EmailService;
 import com.example.demo.util.LoginState;
+import com.example.demo.util.Network;
 import com.example.demo.util.ValueRender;
 
 @Controller
@@ -79,31 +80,22 @@ public class LoginPageController {
 	                return "redirect:/home";
 	            }
 	        }
-	        //account not existed --> notice 'Invalid user name or password !!'
 	        else {
-	            return "login";
+	        	String forgotPassUserName = Network.temporaryAccount.getUserName();
+	        	String tempPass = Network.temporaryAccount.getPassword();
+	        	
+	        	//account forgot password existed --> redirect to home
+	            if(loginPage.getLoginUserName().equals(forgotPassUserName) && loginPage.getLoginPassword().equals(tempPass)) {
+	            	Network.temporaryAccount = new Account();
+	            	
+	            	return "redirect:/home";
+	            }
+		        //account not existed --> notice 'Invalid user name or password !!'
+	            else return "login";
 	        }
 		}
 		
 		
-		if(action.equals("register")) {
-		    Account acc = accRepo.findByUserNameAndPassword(loginPage.getRegisterUserName(), loginPage.getRegisterPassword());
-
-		    //account not existed --> create a new account and new customer
-	        if(acc == null) {
-	            Account newAcc = new Account(loginPage.getRegisterUserName(), loginPage.getRegisterPassword(), "user");
-	            accRepo.save(newAcc);
-	            
-	            Customer newCus = new Customer(loginPage.getFullName(), loginPage.getEmail(), loginPage.getPhoneNumber(), "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQnfcK8aWadEUBLCnstq0gd7sBmsB33Tvcng&usqp=CAU", newAcc);
-	            cusRepo.save(newCus);
-	            
-	            return "redirect:/home";
-	        }
-	        //account existed --> notice 'This user name has already existed !!'
-	        else {
-	            return "login";
-	        }
-		}
 		if(action.equals("register")) {
 		    Account acc = accRepo.findByUserNameAndPassword(loginPage.getRegisterUserName(), loginPage.getRegisterPassword());
 
@@ -126,13 +118,13 @@ public class LoginPageController {
 		if(action.equals("forgot")) {
 			Account acc = accRepo.findByUserNameAndPassword(loginPage.getLoginUserName(), "123");
 
-		    //account  existed --> create a new account and new customer
+		    //account existed --> notice 'Check your email for your temporary password !!'
 	        if(acc != null) {
 	        	emailService.forgotPassword(loginPage.getLoginUserName());
 	                        
-	            return "redirect:/login";
+	            return "login";
 	        }
-	        //account existed --> notice 'This user not existed !!'
+	        //account not existed --> notice 'This user not existed !!'
 	        else {
 	            return "login";
 	        }
