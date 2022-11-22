@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.QPageRequest;
@@ -74,7 +75,7 @@ public class DetailsController {
         }
 //        LoginState.isLoggedIn(model, request, customerRepo);
         
-        System.out.println(Cuser.getId());
+        
     	Customer user = customerRepo.getCustomerByAccountId(Cuser.getId());
     	model.addAttribute("userid", user.getId());
         
@@ -88,8 +89,9 @@ public class DetailsController {
     
     
     @GetMapping("/shop-details_name={productName}")
-    public String showDefaultProductDetails(@ModelAttribute("currentuser") Account Cuser,Model model, @PathVariable("productName") String productName, HttpServletRequest request) {
-        if(Cuser != null) {
+    public String showDefaultProductDetails(HttpSession session, Model model, @PathVariable("productName") String productName, HttpServletRequest request) {
+        Account Cuser = (Account)session.getAttribute("currentuser");
+    	if(Cuser != null) {
         	String realProductName = ValueRender.linkToString(productName);
             Product productDetail = productRepo.getDefaultProductDetailsByName(realProductName);
 
@@ -97,14 +99,16 @@ public class DetailsController {
 
             return "shopdetails";
         }
-        else return "redirect/loginpage";
+        else return "redirect:/loginpage";
     }
     
     
     @GetMapping("/shop-details-by-color_name={productName}__color={color}")
-    public String showProductDetails(@ModelAttribute("currentuser") Account Cuser,Model model, @PathVariable("productName") String productName, @PathVariable("color") String color, HttpServletRequest request) {
+    public String showProductDetails(HttpSession session,Model model, @PathVariable("productName") String productName, @PathVariable("color") String color, HttpServletRequest request) {
     	String realProductName = ValueRender.linkToString(productName);
         Product productDetail = productRepo.getProductByNameAndColor(realProductName, color);
+        
+        Account Cuser = (Account)session.getAttribute("currentuser");
 
         renderToProductDetails(Cuser, model, realProductName, productDetail, request);
         

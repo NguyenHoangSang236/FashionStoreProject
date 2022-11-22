@@ -2,13 +2,18 @@ package com.example.demo.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.example.demo.entity.Account;
+import com.example.demo.entity.Customer;
 import com.example.demo.entity.Product;
+import com.example.demo.respository.CustomerRepository;
 import com.example.demo.respository.ProductRepository;
 
 @SessionAttributes("currentuser")
@@ -18,6 +23,10 @@ public class IndexPageController {
     ProductRepository productRepo;
     Product product = new Product();
     
+    @Autowired
+	CustomerRepository cusRepo;
+    Customer customer = new Customer();
+    
     Integer[] ratingStarArr = {1,2,3,4,5};
     
 //    @ModelAttribute("currentuser")
@@ -26,10 +35,20 @@ public class IndexPageController {
 //
 //    }
 	@GetMapping("/home")
-	public String showHomePage( Model model) {
+	public String showHomePage(HttpSession session, Model model) {
 	    List<Product> top8estSelllerProducts = productRepo.get8BestSellerProducts();  
 	    List<Product> top8NewArrivalProducts = productRepo.get8NewArrivalProducts();
 	    List<Product> top8HotSaleProducts = productRepo.get8HotSaleProducts();
+	    
+	    Account Cuser = (Account)session.getAttribute("currentuser");
+	    
+	    if(Cuser != null) {
+	    Customer Ccustomer = cusRepo.getCustomerByAccountId(Cuser.getId());
+	    
+	    model.addAttribute("curentcusImage",Ccustomer.getImage());
+	    model.addAttribute("curentcusName",Ccustomer.getName());
+	    
+	    }
 //	    Account Cuser = getUserObject();
 //	     
 //	    System.out.println(Cuser.getUserName());
