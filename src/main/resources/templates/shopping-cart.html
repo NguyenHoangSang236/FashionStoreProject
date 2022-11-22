@@ -204,7 +204,7 @@
                                         <td class="quantity__item">
                                             <div class="quantity">
                                                 <div class="pro-qty-2">
-                                                    <input type="text" th:value="${cartProduct.quantity}">
+                                                    <input type="text" th:field="*{fullCartQuantityList[__${cartProductState.index}__]}" th:value="${cartProduct.quantity}">
                                                 </div>
                                             </div>
                                         </td>
