@@ -185,11 +185,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="cartProduct, cartProductState: ${cartList}">
+                                    <tr th:each="cartProduct, cartProductState: ${fullCartList}">
                                         <!--<th scope="row"><input type="checkbox" th:field="*{fullCartList}" th:value="${cartProduct}" /></th>-->
                                         <th scope="row">
                                             <div class="">
-                                                <input type="checkbox" class="item-selected-shopping-cart" th:field="*{fullCartList[__${cartProductState.index}__]}" th:value="${cartList[__${cartProductState.index}__]}">
+                                                <input type="checkbox" class="item-selected-shopping-cart" th:field="*{selectedCartIdList}" th:value="${cartProduct.id}" th:checked="${checkedCartList[__${cartProductState.index}__]}"/>
                                             </div>
                                         </th>
                                         <td class="product__cart__item">
@@ -222,7 +222,7 @@
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="continue__btn update__btn">
-                                    <button type="submit" name="action" value="update"><i class="fa fa-spinner"></i> Update cart</button>
+                                    <button class="primary-btn" type="submit" name="action" value="update"><i class="fa fa-spinner"></i> Update cart</button>
                                 </div>
                             </div>
                         </div>
@@ -339,12 +339,6 @@
     <script src="js/mixitup.min.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
-    <script>
-        let checkboxItemList = document.querySelectorAll(".item-selected-shopping-cart");
-        checkboxItemList.forEach(checkbox => {
-            checkbox.checked = false;
-        })
-    </script>
 </body>
 
 </html>

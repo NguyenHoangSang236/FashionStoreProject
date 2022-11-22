@@ -1,48 +1,102 @@
 package com.example.demo.entity.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.example.demo.entity.Cart;
+import com.example.demo.respository.CartRepository;
 import com.example.demo.util.ValueRender;
 
+@Component
 public class CustomerCart {
-    List<Cart> fullCartList;
-    List<Cart> selectedCartList;
+    int[] fullCartIdList;
+    int[] selectedCartIdList;
+    boolean[] checkedList;
     double subtotal;
     double total;
+    
+    @Autowired
+    CartRepository cartRepo;
     
     
     public CustomerCart() {}
     
-    public CustomerCart(List<Cart> fullCartList, List<Cart> selectedCartList, double subtotal, double total ) {
-        this.fullCartList = fullCartList;
-        this.selectedCartList = selectedCartList;
-        this.subtotal = subtotal;
-        this.total = total;
-    }
+    public CustomerCart(int[] fullCartIdList, int[] selectedCartIdList, boolean[] checkedList, double subtotal,
+			double total) {
+		super();
+		this.fullCartIdList = fullCartIdList;
+		this.selectedCartIdList = selectedCartIdList;
+		this.checkedList = checkedList;
+		this.subtotal = subtotal;
+		this.total = total;
+	}
+
+
+
+
+
+//    public List<Cart> getFullCartList() {
+//    	List<Cart> list = new ArrayList<Cart>();
+//    	
+//    	for(int i = 0; i < this.fullCartIdList.length; i++) {
+//    		Cart cart = this.cartRepo.getCartById(this.fullCartIdList[i]);
+//    		list.add(cart);
+//    	}
+//    	
+//    	return list;
+//    }
+//    
+//    public List<Cart> getSelectedCartList() {
+//    	List<Cart> list = new ArrayList<Cart>();
+//    	
+//    	for(int i = 0; i < this.selectedCartIdList.length; i++) {
+//    		list.add(this.cartRepo.getCartById(this.selectedCartIdList[i]));
+//    	}
+//    	
+//    	return list;
+//    }
     
-    
-    public double cartSubtotal() {
-        double result = 0;
+    public CustomerCart(int[] fullCartIdList, int[] selectedCartIdList, boolean[] checkedList, double subtotal,
+			double total, CartRepository cartRepo) {
+		super();
+		this.fullCartIdList = fullCartIdList;
+		this.selectedCartIdList = selectedCartIdList;
+		this.checkedList = checkedList;
+		this.subtotal = subtotal;
+		this.total = total;
+		this.cartRepo = cartRepo;
+	}
+
+
+
+
+
+	public double cartSubtotal() {
+        this.subtotal = 0;
         
-        for(int i = 0; i < this.selectedCartList.size(); i++) {
-            result += this.selectedCartList.get(i).totalPrice();
+        for(int i = 0; i < this.selectedCartIdList.length; i++) {
+        	Cart cart = cartRepo.getCartById(this.selectedCartIdList[i]);
+        	double price = cart.getProduct().getPrice();
+        	int quant = cart.getQuantity();
+        	this.subtotal += price * quant;
         }
-        
-        this.subtotal = result;
         
         return this.subtotal;
     }
     
     public double cartTotal() {
-        double result = 0;
+    	this.subtotal = 0;
         
-        for(int i = 0; i < this.fullCartList.size(); i++) {
-            result += this.fullCartList.get(i).totalPrice();
+        for(int i = 0; i < this.fullCartIdList.length; i++) {
+        	Cart cart = cartRepo.getCartById(this.fullCartIdList[i]);
+        	double price = cart.getProduct().getPrice();
+        	int quant = cart.getQuantity();
+        	this.subtotal += price * quant;
         }
-        
-        this.total = result;
-        
+ 
         return this.total;
     }
     
@@ -54,37 +108,54 @@ public class CustomerCart {
         return ValueRender.formatDoubleNumber(this.total);
     }
     
-
     
-    public List<Cart> getFullCartList() {
-        return fullCartList;
-    }
 
-    public void setFullCartList(List<Cart> fullCartList) {
-        this.fullCartList = fullCartList;
-    }
+	public int[] getFullCartIdList() {
+		return fullCartIdList;
+	}
 
-    public List<Cart> getSelectedCartList() {
-        return selectedCartList;
-    }
+	public void setFullCartIdList(int[] fullCartIdList) {
+		this.fullCartIdList = fullCartIdList;
+	}
 
-    public void setSelectedCartList(List<Cart> selectedCartList) {
-        this.selectedCartList = selectedCartList;
-    }
+	public int[] getSelectedCartIdList() {
+		return selectedCartIdList;
+	}
 
-    public double getSubtotal() {
-        return subtotal;
-    }
+	public void setSelectedCartIdList(int[] selectedCartIdList) {
+		this.selectedCartIdList = selectedCartIdList;
+	}
 
-    public void setSubtotal(double subtotal) {
-        this.subtotal = subtotal;
-    }
+	public double getSubtotal() {
+		return subtotal;
+	}
 
-    public double getTotal() {
-        return total;
-    }
+	public void setSubtotal(double subtotal) {
+		this.subtotal = subtotal;
+	}
 
-    public void setTotal(double total) {
-        this.total = total;
-    }
+	public double getTotal() {
+		return total;
+	}
+
+	public void setTotal(double total) {
+		this.total = total;
+	}
+
+	public CartRepository getCartRepo() {
+		return cartRepo;
+	}
+
+	public void setCartRepo(CartRepository cartRepo) {
+		this.cartRepo = cartRepo;
+	}
+
+	public boolean[] getCheckedList() {
+		return checkedList;
+	}
+
+	public void setCheckedList(boolean[] checkedList) {
+		this.checkedList = checkedList;
+	}
+	
 }

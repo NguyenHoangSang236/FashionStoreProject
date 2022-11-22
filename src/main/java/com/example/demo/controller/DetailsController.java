@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.entity.Account;
 import com.example.demo.entity.Comment;
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.Product;
@@ -29,7 +31,7 @@ import com.example.demo.respository.ProductRepository;
 import com.example.demo.util.LoginState;
 import com.example.demo.util.ValueRender;
 
-
+@SessionAttributes("currentuser")
 @Controller
 public class DetailsController {
     @Autowired
@@ -44,7 +46,7 @@ public class DetailsController {
     Integer[] ratingStarArr = {1,2,3,4,5};
     
     
-    public void renderToProductDetails(Model model, String realProductName, Product productDetail, HttpServletRequest request) {
+    public void renderToProductDetails(Account Cuser, Model model, String realProductName, Product productDetail, HttpServletRequest request) {
         List<Comment> comments = commentRepo.getCommentByProductName(realProductName);
         
         List<String> sizeList = productRepo.getAllSizesOfProductByName(realProductName);
@@ -70,7 +72,11 @@ public class DetailsController {
                 }
             }
         }
-        LoginState.isLoggedIn(model, request, customerRepo);
+//        LoginState.isLoggedIn(model, request, customerRepo);
+        
+        System.out.println(Cuser.getId());
+    	Customer user = customerRepo.getCustomerByAccountId(Cuser.getId());
+    	model.addAttribute("userid", user.getId());
         
         model.addAttribute("productDetail", productDetail);
         model.addAttribute("ratingStarArr", ratingStarArr);
@@ -82,22 +88,25 @@ public class DetailsController {
     
     
     @GetMapping("/shop-details_name={productName}")
-    public String showDefaultProductDetails(Model model, @PathVariable("productName") String productName, HttpServletRequest request) {
-        String realProductName = ValueRender.linkToString(productName);
-        Product productDetail = productRepo.getDefaultProductDetailsByName(realProductName);
+    public String showDefaultProductDetails(@ModelAttribute("currentuser") Account Cuser,Model model, @PathVariable("productName") String productName, HttpServletRequest request) {
+        if(Cuser != null) {
+        	String realProductName = ValueRender.linkToString(productName);
+            Product productDetail = productRepo.getDefaultProductDetailsByName(realProductName);
 
-        renderToProductDetails(model, realProductName, productDetail, request);
+            renderToProductDetails(Cuser, model, realProductName, productDetail, request);
 
-        return "shopdetails";
+            return "shopdetails";
+        }
+        else return "redirect/loginpage";
     }
     
     
     @GetMapping("/shop-details-by-color_name={productName}__color={color}")
-    public String showProductDetails(Model model, @PathVariable("productName") String productName, @PathVariable("color") String color, HttpServletRequest request) {
-        String realProductName = ValueRender.linkToString(productName);
+    public String showProductDetails(@ModelAttribute("currentuser") Account Cuser,Model model, @PathVariable("productName") String productName, @PathVariable("color") String color, HttpServletRequest request) {
+    	String realProductName = ValueRender.linkToString(productName);
         Product productDetail = productRepo.getProductByNameAndColor(realProductName, color);
 
-        renderToProductDetails(model, realProductName, productDetail, request);
+        renderToProductDetails(Cuser, model, realProductName, productDetail, request);
         
         return "shopdetails";
     }
