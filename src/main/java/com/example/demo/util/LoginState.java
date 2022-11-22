@@ -17,19 +17,4 @@ public class LoginState {
     
     public static Customer currentCustomer = new Customer();
     
-//    public static boolean isLoggedIn(Model model, HttpServletRequest request, CustomerRepository cusRepo) {
-//        Cookie[] cookies = request.getCookies();
-//        if (cookies != null) {
-//            Customer accountDetail = cusRepo.getCustomerById(Integer.valueOf(cookies[0].getValue()));
-//            model.addAttribute("userpic", accountDetail.getImage());
-//            model.addAttribute("username", accountDetail.getName());
-//            model.addAttribute("useremail", accountDetail.getEmail());
-//            model.addAttribute("userphonenumber", accountDetail.getPhoneNumber());
-//            model.addAttribute("userid", accountDetail.getId());
-//            return true;
-//        }
-//        else {
-//            return false;
-//        }
-//    }
 }

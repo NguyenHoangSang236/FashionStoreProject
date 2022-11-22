@@ -1,5 +1,6 @@
 package com.example.demo.util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.demo.entity.Cart;
@@ -10,6 +11,10 @@ public class GlobalStaticValues {
 	public static int[] customerFullCartIdList = {};
 	
 	public static int[] customerSelectedCartIdList = {};
+	
+	public static int[] customerSelectedCartQuantityList = {};
+	
+	public static List<Cart> customerFullCartList = new ArrayList<Cart>();
 	
 	public static boolean[] customerCheckedCartList(int[] fullCartIdArr) {
 		boolean[] tmpArr = new boolean[fullCartIdArr.length];

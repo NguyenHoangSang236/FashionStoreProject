@@ -14,6 +14,7 @@ import com.example.demo.util.ValueRender;
 public class CustomerCart {
     int[] fullCartIdList;
     int[] selectedCartIdList;
+    int[] fullCartQuantityList;
     boolean[] checkedList;
     double subtotal;
     double total;
@@ -24,50 +25,15 @@ public class CustomerCart {
     
     public CustomerCart() {}
     
-    public CustomerCart(int[] fullCartIdList, int[] selectedCartIdList, boolean[] checkedList, double subtotal,
-			double total) {
+	public CustomerCart(int[] fullCartIdList, int[] selectedCartIdList, int[] fullCartQuantityList,
+			boolean[] checkedList, double subtotal, double total) {
 		super();
 		this.fullCartIdList = fullCartIdList;
 		this.selectedCartIdList = selectedCartIdList;
+		this.fullCartQuantityList = fullCartQuantityList;
 		this.checkedList = checkedList;
 		this.subtotal = subtotal;
 		this.total = total;
-	}
-
-
-
-
-
-//    public List<Cart> getFullCartList() {
-//    	List<Cart> list = new ArrayList<Cart>();
-//    	
-//    	for(int i = 0; i < this.fullCartIdList.length; i++) {
-//    		Cart cart = this.cartRepo.getCartById(this.fullCartIdList[i]);
-//    		list.add(cart);
-//    	}
-//    	
-//    	return list;
-//    }
-//    
-//    public List<Cart> getSelectedCartList() {
-//    	List<Cart> list = new ArrayList<Cart>();
-//    	
-//    	for(int i = 0; i < this.selectedCartIdList.length; i++) {
-//    		list.add(this.cartRepo.getCartById(this.selectedCartIdList[i]));
-//    	}
-//    	
-//    	return list;
-//    }
-    
-    public CustomerCart(int[] fullCartIdList, int[] selectedCartIdList, boolean[] checkedList, double subtotal,
-			double total, CartRepository cartRepo) {
-		super();
-		this.fullCartIdList = fullCartIdList;
-		this.selectedCartIdList = selectedCartIdList;
-		this.checkedList = checkedList;
-		this.subtotal = subtotal;
-		this.total = total;
-		this.cartRepo = cartRepo;
 	}
 
 
@@ -157,5 +123,12 @@ public class CustomerCart {
 	public void setCheckedList(boolean[] checkedList) {
 		this.checkedList = checkedList;
 	}
-	
+
+	public int[] getFullCartQuantityList() {
+		return fullCartQuantityList;
+	}
+
+	public void setFullCartQuantityList(int[] fullCartQuantityList) {
+		this.fullCartQuantityList = fullCartQuantityList;
+	}
 }

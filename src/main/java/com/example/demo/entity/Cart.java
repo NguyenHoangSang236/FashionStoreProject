@@ -42,6 +42,9 @@ public class Cart {
 	@Column(name = "Buying_Status")
 	int buyingStatus;
 	
+	@Column(name = "select_status")
+	int selectStatus;
+	
 	@ManyToOne
     @JoinColumn(name = "customer_id")
     Customer customer;
@@ -53,17 +56,28 @@ public class Cart {
     
     public Cart() {}
     
-    public Cart(int id, int quantity, int buyingStatus, Customer customer, Product product) {
-        super();
-        this.id = id;
-        this.quantity = quantity;
-        this.buyingStatus = buyingStatus;
-        this.customer = customer;
-        this.product = product;
-    }
+    public Cart(int id, int quantity, int buyingStatus, int selectStatus, Customer customer, Product product) {
+		super();
+		this.id = id;
+		this.quantity = quantity;
+		this.buyingStatus = buyingStatus;
+		this.selectStatus = selectStatus;
+		this.customer = customer;
+		this.product = product;
+	}
     
-    
-    public double totalPrice() {
+    public Cart(int id, int quantity, int buyingStatus, int selectStatus) {
+		super();
+		this.id = id;
+		this.quantity = quantity;
+		this.buyingStatus = buyingStatus;
+		this.selectStatus = selectStatus;
+	}
+
+
+
+
+	public double totalPrice() {
         double result = 0;
         
         int quantity = this.quantity;
@@ -121,7 +135,12 @@ public class Cart {
     public void setProduct(Product product) {
         this.product = product;
     }
-    
-    
-    
+
+	public int getSelectStatus() {
+		return selectStatus;
+	}
+
+	public void setSelectStatus(int selectStatus) {
+		this.selectStatus = selectStatus;
+	}
 }

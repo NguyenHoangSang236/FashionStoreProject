@@ -42,6 +42,7 @@ public class CartController {
     
     public String getCartInfo(Account cuser ,Model model, int customerId, HttpServletRequest request, boolean[] globalCheckedCartArr, CustomerCart customerCart) {
     	int[] globalFullCartIdArr = GlobalStaticValues.customerFullCartIdList;
+    	int[] globalFullCartQuantityArr = GlobalStaticValues.customerSelectedCartQuantityList;
         int[] globalSelectedCartIdArr = GlobalStaticValues.customerSelectedCartIdList;
         
         List<Cart> fullCartList = new ArrayList<Cart>();
@@ -59,11 +60,7 @@ public class CartController {
         	customerCart.setFullCartIdList(globalFullCartIdArr);
         	customerCart.setTotal(calculateTotal(globalFullCartIdArr));
         	customerCart.setSubtotal(calculateTotal(globalSelectedCartIdArr));
-        	
-//        	for(int i = 0; i < customerCart.getCheckedList().length; i++) {
-//    			System.out.println("- " + customerCart.getCheckedList()[i]);
-//    		}        	
-        	
+        	customerCart.setFullCartQuantityList(globalFullCartQuantityArr);
         	
             model.addAttribute("customerCart", customerCart);
             model.addAttribute("fullCartList", fullCartList);
@@ -91,16 +88,42 @@ public class CartController {
     }
     
     
+    public List<Cart> getFullCartListFromIdList(int[] idList) {
+    	List<Cart> cartList = new ArrayList<Cart>();
+    	
+    	for(int i = 0; i < idList.length; i++) {
+    		Cart cart = cartRepo.getCartById(idList[i]);
+    		cartList.add(cart);
+    	}
+    	
+    	return cartList;
+    }
+    
+    
+    public void saveUpdatedCart(List<Cart> cartList, int[] quantList, boolean[] checkedList) {
+    	for(int i = 0 ; i < cartList.size(); i++) {
+    		int selectInd;
+    		if(checkedList[i] == true) {
+    			selectInd = 1;
+    		} else selectInd = 0;
+    		
+    		Cart updatedCart = cartRepo.getCartById(cartList.get(i).getId());
+    		updatedCart.setQuantity(quantList[i]);
+    		updatedCart.setSelectStatus(selectInd);
+    		cartRepo.save(updatedCart);
+    	}
+    }
+    
+    
     
     @GetMapping("/cart-of-customer-id={id}")
     public String showCart(@ModelAttribute("currentuser") Account Cuser, Model model, @PathVariable("id") int id, HttpServletRequest request) {
         GlobalStaticValues.customerFullCartIdList = cartRepo.getFullCartIdListByCustomerId(id);
+        GlobalStaticValues.customerSelectedCartQuantityList = cartRepo.getFullCartQuantityListByCustomerId(id);
+        GlobalStaticValues.customerFullCartList = getFullCartListFromIdList(GlobalStaticValues.customerFullCartIdList);
         
+        //init checked list with full of FALSE 
         boolean[] globalCheckedCartArr = GlobalStaticValues.customerCheckedCartList(GlobalStaticValues.customerFullCartIdList);
-        
-//        for(int i = 0; i < globalCheckedCartArr.length; i++) {
-//			System.out.println(globalCheckedCartArr[i]);
-//		}
         
         customerCart.setCheckedList(globalCheckedCartArr);
         
@@ -111,8 +134,10 @@ public class CartController {
    @PostMapping("/cart-of-customer-id={id}")
     public String updateCart(@ModelAttribute("currentuser") Account Cuser, Model model, @PathVariable("id") int id, HttpServletRequest request, @RequestParam(value="action") String action, @ModelAttribute("customerCart") CustomerCart cusCart) {
     	boolean[] globalCheckedCartArr = null;
+    	
     	if(action.equals("update")) {
     		GlobalStaticValues.customerSelectedCartIdList = cusCart.getSelectedCartIdList();
+    		GlobalStaticValues.customerSelectedCartQuantityList = cusCart.getFullCartQuantityList();
     		
     		int[] fullArr = GlobalStaticValues.customerFullCartIdList;
     		int[] selectedArr = cusCart.getSelectedCartIdList(); 
@@ -126,8 +151,14 @@ public class CartController {
     			}
     		}
     		
+//    		for(int i = 0; i < fullCartQuantityArr.length; i++) {
+//    			System.out.println(fullCartQuantityArr[i]);
+//    		}
+    		
     		customerCart = cusCart;
     		customerCart.setCheckedList(checkedArr);
+    		
+    		saveUpdatedCart(GlobalStaticValues.customerFullCartList, GlobalStaticValues.customerSelectedCartQuantityList, checkedArr);
 	    }
     	
     	return getCartInfo(Cuser, model, id, request, globalCheckedCartArr, customerCart);
