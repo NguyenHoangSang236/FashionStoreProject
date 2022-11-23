@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.demo.entity.Cart;
+import com.example.demo.entity.Product;
 
 import ch.qos.logback.core.status.Status;
 
@@ -15,6 +16,8 @@ public class GlobalStaticValues {
 	public static int[] customerSelectedCartQuantityList = {};
 	
 	public static int[] customerFullSelectStatusList = {};
+	
+	public static Product customerSelectedProduct = new Product();
 	
 	public static List<Cart> customerFullCartList = new ArrayList<Cart>();
 	

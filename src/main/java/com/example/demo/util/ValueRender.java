@@ -112,4 +112,20 @@ public class ValueRender {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         return simpleDateFormat.format(date);
     }
+    
+    
+    //remove an element in an Integer array
+    public static int[] newArrayAfterRemove(int[] arr, int element) {
+    	int[] resultArr = new int[arr.length];
+    	int arrInd = 0;
+    	
+    	for(int i = 0; i < arr.length; i++) {
+    		if(arr[i] != element) {
+    			resultArr[arrInd] = arr[i];
+    			arrInd++;
+    		}
+    	}
+    	
+    	return resultArr;
+    }
 }
