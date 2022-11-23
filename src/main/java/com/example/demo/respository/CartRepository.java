@@ -25,4 +25,7 @@ public interface CartRepository extends JpaRepository<Cart, Integer>{
     
     @Query(value = "select quantity from cart where customer_id = :idVal and buying_status = 0", nativeQuery = true)
     int[] getFullCartQuantityListByCustomerId(@Param("idVal") int id);
+    
+    @Query(value = "select select_status from cart where customer_id = :idVal and buying_status = 0", nativeQuery = true)
+    int[] getFullCartSelectStatusListByCustomerId(@Param("idVal") int id);
 }

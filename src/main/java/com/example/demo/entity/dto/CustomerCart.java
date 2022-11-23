@@ -15,6 +15,7 @@ public class CustomerCart {
     int[] fullCartIdList;
     int[] selectedCartIdList;
     int[] fullCartQuantityList;
+    int[] fullCartSelectStatusList;
     boolean[] checkedList;
     double subtotal;
     double total;
@@ -26,17 +27,16 @@ public class CustomerCart {
     public CustomerCart() {}
     
 	public CustomerCart(int[] fullCartIdList, int[] selectedCartIdList, int[] fullCartQuantityList,
-			boolean[] checkedList, double subtotal, double total) {
+			int[] fullCartSelectStatusList, boolean[] checkedList, double subtotal, double total) {
 		super();
 		this.fullCartIdList = fullCartIdList;
 		this.selectedCartIdList = selectedCartIdList;
 		this.fullCartQuantityList = fullCartQuantityList;
+		this.fullCartSelectStatusList = fullCartSelectStatusList;
 		this.checkedList = checkedList;
 		this.subtotal = subtotal;
 		this.total = total;
 	}
-
-
 
 
 
@@ -130,5 +130,13 @@ public class CustomerCart {
 
 	public void setFullCartQuantityList(int[] fullCartQuantityList) {
 		this.fullCartQuantityList = fullCartQuantityList;
+	}
+
+	public int[] getFullCartSelectStatusList() {
+		return fullCartSelectStatusList;
+	}
+
+	public void setFullCartSelectStatusList(int[] fullCartSelectStatusList) {
+		this.fullCartSelectStatusList = fullCartSelectStatusList;
 	}
 }

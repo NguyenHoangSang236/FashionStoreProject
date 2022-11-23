@@ -14,13 +14,19 @@ public class GlobalStaticValues {
 	
 	public static int[] customerSelectedCartQuantityList = {};
 	
+	public static int[] customerFullSelectStatusList = {};
+	
 	public static List<Cart> customerFullCartList = new ArrayList<Cart>();
 	
-	public static boolean[] customerCheckedCartList(int[] fullCartIdArr) {
-		boolean[] tmpArr = new boolean[fullCartIdArr.length];
+	public static boolean[] customerCheckedCartList(int[] selectStatusArr) {
+		boolean[] tmpArr = new boolean[selectStatusArr.length];
 		
 		for(int i = 0; i < tmpArr.length; i++) {
-			tmpArr[i] = false;
+			if(selectStatusArr[i] == 0) {
+				tmpArr[i] = false;
+			} else {
+				tmpArr[i] = true;
+			}
 		}
 		
 		return tmpArr;
