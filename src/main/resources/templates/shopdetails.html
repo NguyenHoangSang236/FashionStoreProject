@@ -292,8 +292,8 @@
                                     </div>
                                 </div>
                                 <button style="background-color: transparent; border: none">
-                                    <a th:href="@{/cart-of-customer-id={id} (id = ${userid})}" class="primary-btn">add to cart</a>
-                                </button>
+                                    <a th:if= "${session.currentuser == null}" th:href="@{loginpage}" class="primary-btn">add to cart</a>
+                                    <a th:if= "${session.currentuser != null}" th:href="@{/cart-of-customer-id={id} (id = ${userid})}" class="primary-btn">add to cart</a>                                </button>
                             </div>
                             <!--<div class="product__details__btns__option">
                                 <a href="#"><i class="fa fa-heart"></i> add to wishlist</a>

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,15 +42,20 @@ public class CartController {
     static CustomerCart customerCart = new CustomerCart();
     
     
-    public String getCartInfo(Account cuser, Model model, int customerId, HttpServletRequest request, boolean[] globalCheckedCartArr, CustomerCart customerCart) {
+    public String getCartInfo(HttpSession session, Model model, int customerId, HttpServletRequest request, boolean[] globalCheckedCartArr, CustomerCart customerCart) {
     	int[] globalFullCartIdArr = GlobalStaticValues.customerFullCartIdList;
     	int[] globalFullCartQuantityArr = GlobalStaticValues.customerSelectedCartQuantityList;
         int[] globalSelectedCartIdArr = GlobalStaticValues.customerSelectedCartIdList;
         List<Cart> fullCartList = GlobalStaticValues.customerFullCartList;
-
+        
+        Account Cuser = (Account)session.getAttribute("currentuser");
         //check customer logged in or not
-        if(cuser != null)
+        if(Cuser != null)
         {   
+        	Customer Ccustomer = customerRepo.getCustomerByAccountId(Cuser.getId());
+    	    
+    	    model.addAttribute("curentcusImage",Ccustomer.getImage());
+    	    model.addAttribute("curentcusName",Ccustomer.getName());
         	customerCart.setFullCartIdList(globalFullCartIdArr);
         	customerCart.setTotal(calculateTotal(fullCartList));
         	customerCart.setSubtotal(calculateTotal(getFullCartListFromIdList(globalSelectedCartIdArr)));
@@ -151,7 +157,7 @@ public class CartController {
     
     
     @GetMapping("/cart-of-customer-id={id}")
-    public String showCart(@ModelAttribute("currentuser") Account Cuser, Model model, @PathVariable("id") int id, HttpServletRequest request) {
+    public String showCart(HttpSession session, Model model, @PathVariable("id") int id, HttpServletRequest request) {
         GlobalStaticValues.customerFullCartIdList = cartRepo.getFullCartIdListByCustomerId(id);
         GlobalStaticValues.customerFullSelectStatusList = cartRepo.getFullCartSelectStatusListByCustomerId(id);    
         GlobalStaticValues.customerSelectedCartQuantityList = cartRepo.getFullCartQuantityListByCustomerId(id);
@@ -162,12 +168,12 @@ public class CartController {
         
         customerCart.setCheckedList(globalCheckedCartArr);
         
-        return getCartInfo(Cuser, model, id, request, globalCheckedCartArr, customerCart);
+        return getCartInfo(session, model, id, request, globalCheckedCartArr, customerCart);
     }
     
     
    @PostMapping("/cart-of-customer-id={id}")
-    public String updateCart(@ModelAttribute("currentuser") Account Cuser, Model model, @PathVariable("id") int id, HttpServletRequest request, @RequestParam(value="action") String action, @ModelAttribute("customerCart") CustomerCart cusCart) {
+    public String updateCart(HttpSession session, Model model, @PathVariable("id") int id, HttpServletRequest request, @RequestParam(value="action") String action, @ModelAttribute("customerCart") CustomerCart cusCart) {
     	boolean[] globalCheckedCartArr = null;
     	
     	if(action.equals("update")) {
@@ -177,6 +183,6 @@ public class CartController {
     		deleteSelectedCart(Integer.parseInt(action), id);
     	}
     	
-    	return getCartInfo(Cuser, model, id, request, globalCheckedCartArr, customerCart);
+    	return getCartInfo(session, model, id, request, globalCheckedCartArr, customerCart);
     }
 }
