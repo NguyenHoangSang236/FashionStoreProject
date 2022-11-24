@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,8 +25,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.entity.Account;
+import com.example.demo.entity.Customer;
 import com.example.demo.entity.Product;
 import com.example.demo.respository.CatalogRepository;
+import com.example.demo.respository.CustomerRepository;
 import com.example.demo.respository.ProductRepository;
 import com.example.demo.service.ProductService;
 import com.example.demo.util.ValueRender;
@@ -40,13 +45,26 @@ public class ShopController {
     @Autowired
     CatalogRepository catalogRepo;
     
+    @Autowired
+	CustomerRepository cusRepo;
+    Customer customer = new Customer();
+    
     Integer[] ratingStarArr = {1,2,3,4,5};
 
     
     //render form's data 
-    void renderToShop(Model model, Page<Product> pageination, Optional<Integer> page, Optional<Integer> size) {
+    void renderToShop(HttpSession session, Model model, Page<Product> pageination, Optional<Integer> page, Optional<Integer> size) {
         //pagination
         Page<Product> productPage = pageination;
+        
+        Account Cuser = (Account)session.getAttribute("currentuser");
+	    
+	    if(Cuser != null) {
+	    Customer Ccustomer = cusRepo.getCustomerByAccountId(Cuser.getId());
+	    
+	    model.addAttribute("curentcusImage",Ccustomer.getImage());
+	    model.addAttribute("curentcusName",Ccustomer.getName());
+	    }
                         
         model.addAttribute("productPage", productPage);
         model.addAttribute("ratingStarArr", ratingStarArr);
@@ -69,21 +87,21 @@ public class ShopController {
     
     
     @GetMapping("/shopproduct")
-    public String showShop(Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
+    public String showShop(HttpSession session,Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(12);
         model.addAttribute("pName", new Product());
         
         Page<Product> productPage = productService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
 
-        renderToShop(model, productPage, page, size);
+        renderToShop(session, model, productPage, page, size);
         
         return "shop";
     }
     
 
     @GetMapping("/shopproduct{price1}and{price2}")
-    public String showShopbyPrice(Model model, @PathVariable("price1") double price1, @PathVariable("price2") double price2, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size ) {
+    public String showShopbyPrice(HttpSession session,Model model, @PathVariable("price1") double price1, @PathVariable("price2") double price2, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size ) {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(12);
         
@@ -91,14 +109,14 @@ public class ShopController {
         
         Page<Product> productPage = productService.findByPriceFilter(PageRequest.of(currentPage - 1, pageSize),price1,price2);
         
-        renderToShop(model, productPage, page, size);
+        renderToShop(session, model, productPage, page, size);
         
         return "shop";
     }
     
     
     @GetMapping("/shopproductcate={cate}")
-    public String showShopbyCate(Model model, @PathVariable("cate") String cate, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size ) {
+    public String showShopbyCate(HttpSession session, Model model, @PathVariable("cate") String cate, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size ) {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(12);
         
@@ -106,14 +124,14 @@ public class ShopController {
         
         Page<Product> productPage = productService.findByCate(PageRequest.of(currentPage - 1, pageSize),cate);
         
-        renderToShop(model, productPage, page, size);
+        renderToShop(session, model, productPage, page, size);
         
         return "shop";
     }
     
     
     @GetMapping("/shopproductbrand={brand}")
-    public String showShopbyBrand(Model model, @PathVariable("brand") String brand, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size ) {
+    public String showShopbyBrand(HttpSession session, Model model, @PathVariable("brand") String brand, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size ) {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(12);
         
@@ -121,7 +139,7 @@ public class ShopController {
         
         Page<Product> productPage = productService.findByBrand(PageRequest.of(currentPage - 1, pageSize),brand);
         
-        renderToShop(model, productPage, page, size);
+        renderToShop(session, model, productPage, page, size);
         
         return "shop";
     }
@@ -133,14 +151,14 @@ public class ShopController {
 //    }
     
     @GetMapping("/shopproductsearch")
-    public String showShopbyName(Model model, @ModelAttribute("pName") Product name, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size ) {
+    public String showShopbyName(HttpSession session, Model model, @ModelAttribute("pName") Product name, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size ) {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(12);
         System.out.println(name.getBrand());
         
         Page<Product> productPage = productService.searchProduct(PageRequest.of(currentPage - 1, pageSize),name.getName());
         
-        renderToShop(model, productPage, page, size);
+        renderToShop(session,model, productPage, page, size);
         
         return "shop";
     }
