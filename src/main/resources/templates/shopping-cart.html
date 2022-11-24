@@ -96,9 +96,9 @@
                                     <a class="dropdown-item" th:href="@{showaccount}">
                                       My Profile
                                     </a>
-                                    <a class="dropdown-item">
+                                    <a class="dropdown-item" th:href="@{logout}">
                                         Logout
-                                      </a>
+                                    </a>
                                   </div>
                                 </div>
                             </div>
@@ -350,7 +350,7 @@
 
         window.scroll({top: valueTop, behavior: 'smooth'});
         setTimeout(function() {
-            document.querySelector([data - filter= ".best-seller"]).click();
+            document.querySelector([data - filter== ".best-seller"]).click();
     },500)
     </script>
     <!--<script>

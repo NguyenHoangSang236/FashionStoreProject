@@ -47,7 +47,7 @@ public class DetailsController {
     Integer[] ratingStarArr = {1,2,3,4,5};
     
     
-    public void renderToProductDetails(Account Cuser, Model model, String realProductName, Product productDetail, HttpServletRequest request) {
+    public void renderToProductDetails(HttpSession session, Model model, String realProductName, Product productDetail, HttpServletRequest request) {
         List<Comment> comments = commentRepo.getCommentByProductName(realProductName);
         
         List<String> sizeList = productRepo.getAllSizesOfProductByName(realProductName);
@@ -75,9 +75,16 @@ public class DetailsController {
         }
 //        LoginState.isLoggedIn(model, request, customerRepo);
         
-        
-    	Customer user = customerRepo.getCustomerByAccountId(Cuser.getId());
-    	model.addAttribute("userid", user.getId());
+        Account Cuser = (Account)session.getAttribute("currentuser");
+	    
+	    if(Cuser != null) {
+	    Customer Ccustomer = customerRepo.getCustomerByAccountId(Cuser.getId());
+	    
+	    model.addAttribute("curentcusImage",Ccustomer.getImage());
+	    model.addAttribute("curentcusName",Ccustomer.getName());
+	    model.addAttribute("userid", Ccustomer.getId());
+	    }
+    	
         
         model.addAttribute("productDetail", productDetail);
         model.addAttribute("ratingStarArr", ratingStarArr);
@@ -90,16 +97,15 @@ public class DetailsController {
     
     @GetMapping("/shop-details_name={productName}")
     public String showDefaultProductDetails(HttpSession session, Model model, @PathVariable("productName") String productName, HttpServletRequest request) {
-        Account Cuser = (Account)session.getAttribute("currentuser");
-    	if(Cuser != null) {
+        
         	String realProductName = ValueRender.linkToString(productName);
             Product productDetail = productRepo.getDefaultProductDetailsByName(realProductName);
 
-            renderToProductDetails(Cuser, model, realProductName, productDetail, request);
+            renderToProductDetails(session, model, realProductName, productDetail, request);
 
             return "shopdetails";
-        }
-        else return "redirect:/loginpage";
+//        }
+//        else return "redirect:/loginpage";
     }
     
     
@@ -108,9 +114,9 @@ public class DetailsController {
     	String realProductName = ValueRender.linkToString(productName);
         Product productDetail = productRepo.getProductByNameAndColor(realProductName, color);
         
-        Account Cuser = (Account)session.getAttribute("currentuser");
+//        Account Cuser = (Account)session.getAttribute("currentuser");
 
-        renderToProductDetails(Cuser, model, realProductName, productDetail, request);
+        renderToProductDetails(session, model, realProductName, productDetail, request);
         
         return "shopdetails";
     }

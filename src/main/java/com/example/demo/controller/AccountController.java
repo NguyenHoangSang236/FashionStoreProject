@@ -58,7 +58,7 @@ public class AccountController {
 	    if (cookies != null) {
 	        
 //	        Customer accountDetail = cusRepo.getCustomerById(Integer.valueOf(cookies[0].getValue()));
-	    	Customer accountDetail = cusRepo.getCustomerById(Cuser.getId());
+	    	Customer accountDetail = cusRepo.getCustomerByAccountId(Cuser.getId());
 	    	
 	 		model.addAttribute("userpic", accountDetail.getImage());
 	 		model.addAttribute("username", accountDetail.getName());
