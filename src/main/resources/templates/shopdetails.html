@@ -291,7 +291,9 @@
                                         <input type="text" value="1">
                                     </div>
                                 </div>
-                                <a th:href="@{/cart-of-customer-id={id} (id = ${userid})}" class="primary-btn">add to cart</a>
+                                <button style="background-color: transparent; border: none">
+                                    <a th:href="@{/cart-of-customer-id={id} (id = ${userid})}" class="primary-btn">add to cart</a>
+                                </button>
                             </div>
                             <!--<div class="product__details__btns__option">
                                 <a href="#"><i class="fa fa-heart"></i> add to wishlist</a>
