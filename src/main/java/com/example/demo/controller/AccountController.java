@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.example.demo.entity.Account;
 import com.example.demo.entity.Customer;
 import com.example.demo.respository.AccountRepository;
+import com.example.demo.respository.CartRepository;
 import com.example.demo.respository.CustomerRepository;
 import com.example.demo.util.LoginState;
 

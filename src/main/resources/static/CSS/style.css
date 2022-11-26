@@ -164,7 +164,7 @@ ol {
 	font-weight: 700;
 	text-transform: uppercase;
 	padding: 14px 30px;
-	color: #ffffff;
+	color: #ffffff !important;
 	background: #000000;
 	letter-spacing: 4px;
 }

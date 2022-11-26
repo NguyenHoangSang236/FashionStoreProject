@@ -24,9 +24,11 @@ import com.example.demo.entity.Account;
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.dto.LoginPage;
 import com.example.demo.respository.AccountRepository;
+import com.example.demo.respository.CartRepository;
 import com.example.demo.respository.CustomerRepository;
 import com.example.demo.respository.StaffRepository;
 import com.example.demo.service.EmailService;
+import com.example.demo.util.GlobalStaticValues;
 import com.example.demo.util.LoginState;
 import com.example.demo.util.Network;
 import com.example.demo.util.ValueRender;
@@ -44,6 +46,9 @@ public class LoginPageController {
 	
 	@Autowired 
 	EmailService emailService;
+	
+	@Autowired
+	CartRepository cartRepo;
 	
 	LoginPage loginPage = new LoginPage();
 	
@@ -73,10 +78,13 @@ public class LoginPageController {
 	            
 	            if(acc.getRole().equals("admin")) {
 	                LoginState.currentStaff = acc.getStaff();
+	                
 	                return "redirect:/allproduct";
 	            }
 	            else {
 	                LoginState.currentCustomer = acc.getCustomer();
+	                GlobalStaticValues.customerFullCartIdList = cartRepo.getFullCartIdListByCustomerId(acc.getCustomer().getId());
+	                
 	                return "redirect:/home";
 	            }
 	        }

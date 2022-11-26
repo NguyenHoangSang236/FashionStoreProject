@@ -39,7 +39,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	
 	
 	@Query(value = "select * from products where name = :nameVal and color = :colorVal and size = :sizeVal", nativeQuery = true)
-	List<Product> getProductDetailsByNameAndColorAndSize(@Param("nameVal") String productName, @Param("colorVal") String color, @Param("sizeVal") String size);
+	Product getProductDetailsByNameAndColorAndSize(@Param("nameVal") String productName, @Param("colorVal") String color, @Param("sizeVal") String size);
 	
     
     @Query(value = "select c.name from products p join catalog_with_products cwp on p.name = cwp.product_name "

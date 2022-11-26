@@ -17,7 +17,7 @@ public class GlobalStaticValues {
 	
 	public static int[] customerFullSelectStatusList = {};
 	
-	public static Product customerSelectedProduct = new Product();
+	public static Product addToCartProduct = new Product();
 	
 	public static List<Cart> customerFullCartList = new ArrayList<Cart>();
 	
