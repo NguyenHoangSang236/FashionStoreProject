@@ -15,4 +15,10 @@ public interface CartRemoveRepository extends JpaRepository<Cart, Integer>{
     @Transactional
     @Query(value = "delete from cart where id = :idVal", nativeQuery = true)
     void deleteProductFromCartById(@Param("idVal") int cartId);
+    
+    
+    @Modifying
+    @Transactional
+    @Query(value = "delete from cart where product_id = :idVal", nativeQuery = true)
+    void deleteProductFromCartByProductId(@Param("idVal") int cartId);
 }

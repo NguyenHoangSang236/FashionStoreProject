@@ -55,11 +55,15 @@ public class Catalog {
 	
 	public Catalog() {}
 	
-    public Catalog(int id, String name, List<Product> products) {
+    public Catalog(String name, List<Product> products) {
         super();
-        this.id = id;
         this.name = name;
         this.products = products;
+    }
+    
+    public Catalog(String name) {
+        super();
+        this.name = name;
     }
 
 

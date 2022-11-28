@@ -23,8 +23,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	List<Product> getProductsByName(@Param("nameVal") String productName);
 	
 	
-	@Query(value = "select size from products where name = :nameVal group by size;", nativeQuery = true)
-	List<String> getAllSizesOfProductByName(@Param("nameVal") String productName);
+	@Query(value = "select size from products where name = :nameVal and color = :colorVal group by size;", nativeQuery = true)
+	List<String> getAllSizesOfProductByNameAndColor(@Param("nameVal") String productName, @Param("colorVal") String color);
 	
 	@Query(value = "select color from products where name = :nameVal group by color;", nativeQuery = true)
     List<String> getAllColorsOfProductByName(@Param("nameVal") String productName);

@@ -61,7 +61,7 @@ public class DetailsController {
     public void renderToProductDetails(HttpSession session, Model model, String realProductName, Product productDetail, HttpServletRequest request) {
         List<Comment> comments = commentRepo.getCommentByProductName(realProductName);
         
-        List<String> sizeList = productRepo.getAllSizesOfProductByName(realProductName);
+        List<String> sizeList = productRepo.getAllSizesOfProductByNameAndColor(realProductName, productDetail.getColor());
         List<String> colorList = productRepo.getAllColorsOfProductByName(realProductName);
         List<String> cateList = productRepo.getAllCatalogsByProductName(realProductName);
         List<ProductComment> commentList = new ArrayList<ProductComment>();

@@ -29,11 +29,6 @@ public class IndexPageController {
     
     Integer[] ratingStarArr = {1,2,3,4,5};
     
-//    @ModelAttribute("currentuser")
-//    public Account getUserObject() {
-//        return new Account();
-//
-//    }
 	@GetMapping("/home")
 	public String showHomePage(HttpSession session, Model model) {
 	    List<Product> top8estSelllerProducts = productRepo.get8BestSellerProducts();  
@@ -49,32 +44,12 @@ public class IndexPageController {
 	    model.addAttribute("curentcusName",Ccustomer.getName());
 	    
 	    }
-//	    Account Cuser = getUserObject();
-//	     
-//	    System.out.println(Cuser.getUserName());
-	    
-//	    if(Cuser.getUserName() == null) {
-//	    model.addAttribute("currentuser", "login");
-//	    }
-//	    else {
-//	    model.addAttribute("currentuser", Cuser.getUserName());
-//	    }
+
 	    model.addAttribute("ratingStarArr", ratingStarArr);
         model.addAttribute("top8BestSellers", top8estSelllerProducts);
         model.addAttribute("top8NewArrivals", top8NewArrivalProducts);
         model.addAttribute("top8HotSaleProducts", top8HotSaleProducts);
-
-        
-//        System.out.println(top8estSelllerProducts.get(0).getImage2());
-//        System.out.println(ValueRender.formatDoubleNumber(top8estSelllerProducts.get(0).getPrice()));
 	    
 		return "index";
 	}
-	
-//	@PostMapping("/home")
-//	public String renderDataToHome(@ModelAttribute("Product") Product product) {
-//	    top6estSelllerProducts = productRepo.get6BestSellerProducts();
-//	    
-//      return "index";
-//	}
 }
