@@ -38,7 +38,7 @@ public class AllProductsController {
    
     
     @GetMapping("/allproduct")
-    public String AllProduct(Model model) {
+    public String allProduct(Model model) {
         List<Product> productsList = productRepo.getAllProductsWithColorsAndSizes();
         List<Catalog> cateList = catalogRepo.getAllCatalogs();
         
@@ -51,15 +51,8 @@ public class AllProductsController {
     
     
     @PostMapping("/allproduct")
-    public String deleteSelectedProducts(Model model, @ModelAttribute("selectedProduct") ProductManagement productMng, @RequestParam(value="action") String action) {     
-        if(action.equals("delete selected products")) {
-        	List<Product> productsList = productRepo.getAllProductsWithColorsAndSizes();
-            List<Catalog> cateList = catalogRepo.getAllCatalogs();
-            
-            model.addAttribute("productsList", productsList);
-            model.addAttribute("cateList", cateList);
-            model.addAttribute("productManagement", productManagement);
-            
+    public String delete(Model model, @ModelAttribute("selectedProduct") ProductManagement productMng, @RequestParam(value="action") String action) {     
+    	if(action.equals("delete selected products")) {
             for(int i = 0; i < productMng.getIdList().length; i++) {
                 productService.deleteProduct(productMng.getIdList()[i]);
             }
@@ -75,14 +68,14 @@ public class AllProductsController {
         	if(catalogRepo.getCatalogByName(newCatalogNameString) == null) {
         		catalogRepo.save(new Catalog(newCatalogNameString));
         	}
-        	
-        	List<Product> productsList = productRepo.getAllProductsWithColorsAndSizes();
-            List<Catalog> cateList = catalogRepo.getAllCatalogs();
-            
-            model.addAttribute("productsList", productsList);
-            model.addAttribute("cateList", cateList);
-            model.addAttribute("productManagement", productManagement);
 		}
+    	
+    	List<Product> productsList = productRepo.getAllProductsWithColorsAndSizes();
+        List<Catalog> cateList = catalogRepo.getAllCatalogs();
+        
+        model.addAttribute("productsList", productsList);
+        model.addAttribute("cateList", cateList);
+        model.addAttribute("productManagement", productManagement);
         
         return "products";
     }
