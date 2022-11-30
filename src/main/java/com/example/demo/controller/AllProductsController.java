@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.Catalog;
 import com.example.demo.entity.Product;
-import com.example.demo.entity.dto.SelectedProductID;
+import com.example.demo.entity.dto.ProductManagement;
 import com.example.demo.respository.CatalogRepository;
 import com.example.demo.respository.ProductRepository;
+import com.example.demo.service.CatalogService;
 import com.example.demo.service.ProductService;
+import com.example.demo.util.ValueRender;
 
 @Controller
 public class AllProductsController {
@@ -25,16 +27,15 @@ public class AllProductsController {
    @Autowired
    CatalogRepository catalogRepo;
    
-//   @Autowired 
-//   ProductRemoveRepository productRemoveRepo;
+   @Autowired
+   CatalogService catalogService;
    
    @Autowired
    ProductService productService;
+
+   ProductManagement productManagement = new ProductManagement();
+   String announcement = "";
    
-   SelectedProductID selectedProductID = new SelectedProductID();
-//   List<Product> selectedProductList;
-   
-    
     
     @GetMapping("/allproduct")
     public String AllProduct(Model model) {
@@ -43,27 +44,45 @@ public class AllProductsController {
         
         model.addAttribute("productsList", productsList);
         model.addAttribute("cateList", cateList);
-        model.addAttribute("selectedProduct", selectedProductID);
+        model.addAttribute("productManagement", productManagement);
                 
-//        Product testProduct = new Product("color", "size", "name", 10, 8, 10, 10, 0, 0, 0, 0, 0, 0, "brand", null, null, null, null, null, null, null, null, null, null);
-//        productRepo.save(testProduct);
-        
         return "products";
     }
     
     
     @PostMapping("/allproduct")
-    public String deleteSelectedProducts(Model model, @ModelAttribute("selectedProduct") SelectedProductID productID) {     
-        List<Product> productsList = productRepo.getAllProductsWithColorsAndSizes();
-        List<Catalog> cateList = catalogRepo.getAllCatalogs();
-        
-        model.addAttribute("productsList", productsList);
-        model.addAttribute("cateList", cateList);
-        model.addAttribute("selectedProduct", selectedProductID);
-        
-        for(int i = 0; i < productID.getIdList().length; i++) {
-            productService.deleteProduct(productID.getIdList()[i]);
+    public String deleteSelectedProducts(Model model, @ModelAttribute("selectedProduct") ProductManagement productMng, @RequestParam(value="action") String action) {     
+        if(action.equals("delete selected products")) {
+        	List<Product> productsList = productRepo.getAllProductsWithColorsAndSizes();
+            List<Catalog> cateList = catalogRepo.getAllCatalogs();
+            
+            model.addAttribute("productsList", productsList);
+            model.addAttribute("cateList", cateList);
+            model.addAttribute("productManagement", productManagement);
+            
+            for(int i = 0; i < productMng.getIdList().length; i++) {
+                productService.deleteProduct(productMng.getIdList()[i]);
+            }
         }
+        else if(action.contains("delete catalog")) {
+        	String catalogName = ValueRender.getSubstring(action, 15, action.length());
+        	
+        	catalogService.deleteCatalog(catalogName);
+        }
+        else if (action.equals("add a new catalog")) {
+        	String newCatalogNameString = productMng.getNewCatalogName();
+        	
+        	if(catalogRepo.getCatalogByName(newCatalogNameString) == null) {
+        		catalogRepo.save(new Catalog(newCatalogNameString));
+        	}
+        	
+        	List<Product> productsList = productRepo.getAllProductsWithColorsAndSizes();
+            List<Catalog> cateList = catalogRepo.getAllCatalogs();
+            
+            model.addAttribute("productsList", productsList);
+            model.addAttribute("cateList", cateList);
+            model.addAttribute("productManagement", productManagement);
+		}
         
         return "products";
     }

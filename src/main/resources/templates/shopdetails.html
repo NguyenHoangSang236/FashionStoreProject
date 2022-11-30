@@ -246,54 +246,57 @@
                                 <span th:text="*{discount} > 0 ? *{fomattedOriginalPrice() + ' vnd'} : ''"></span>
                             </h3>
                             <p style="text-align: justify;" th:text="*{description}"></p>
-                            <div class="columns product__details__option">
-                                <div class="column product__details__option__size">
-                                    <div class="columns">
-                                        <span class="column is-4 has-text-right mr-0">Size:</span>
-                                        <div class="column has-text-left">
-                                            <label class="has-text-centered has-width-4rem" th:each="size, sizeState: ${sizeList}" th:for="${size}" th:text="${size}">
-                                                <input type="radio" th:id="${size}">
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="column is-5 product__details__option__color is-flex">
-                                    <div class="is-flex" style="height: fit-content;">
-                                        <span>Color:</span>
-                                        <!--<label th:each="color, colorState: ${colorList}" th:class="${color}" th:for="${color}">
-                                            <input type="button" th:id="${color}" href = "/shopproduct">
-                                        </label>-->
-                                        <div class=" button-color-formated is-flex">
-                                            <div th:each="color, colorState: ${colorList}" class="round-button mr-2">
-                                                <div class="round-button-circle" th:classappend="${color}">
-                                                    <a th:href="@{/shop-details-by-color_name={productName}__color={color} (productName = *{formatProductNameToLink()}, color = ${color})}" class="round-button"></a>
-                                                </div>
+                            <form method="post" th:object="${addToCartProduct}">
+                                <div class="columns product__details__option">
+                                    <div class="column product__details__option__size">
+                                        <div class="columns">
+                                            <span class="column is-4 has-text-right mr-0">Size:</span>
+                                            <div class="column has-text-left">
+                                                <label class="has-text-centered has-width-4rem" th:each="size, sizeState: ${sizeList}">
+                                                    <input type="radio" th:field="${addToCartProduct.productSize}" th:value="${size}" th:text="${size}">
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
-                                    <!--<label class="c-2" for="sp-2">
-                                        <input type="radio" id="sp-2">
-                                    </label>
-                                    <label class="c-3" for="sp-3">
-                                        <input type="radio" id="sp-3">
-                                    </label>
-                                    <label class="c-4" for="sp-4">
-                                        <input type="radio" id="sp-4">
-                                    </label>
-                                    <label class="c-9" for="sp-9">
-                                        <input type="radio" id="sp-9">
-                                    </label>-->
-                                </div>
-                            </div>
-                            <div class="product__details__cart__option">
-                                <div class="quantity">
-                                    <div class="pro-qty">
-                                        <input type="text" value="1">
+                                    <div class="column is-5 product__details__option__color is-flex">
+                                        <div class="is-flex" style="height: fit-content;">
+                                            <span>Color:</span>
+                                            <!--<label th:each="color, colorState: ${colorList}" th:class="${color}" th:for="${color}">
+                                                <input type="button" th:id="${color}" href = "/shopproduct">
+                                            </label>-->
+                                            <div class=" button-color-formated is-flex">
+                                                <div th:each="color, colorState: ${colorList}" class="round-button mr-2">
+                                                    <div class="round-button-circle" th:classappend="${color}">
+                                                        <a th:href="@{/shop-details-by-color_name={productName}__color={color} (productName = ${productDetail.formatProductNameToLink()}, color = ${color})}" class="round-button"></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--<label class="c-2" for="sp-2">
+                                            <input type="radio" id="sp-2">
+                                        </label>
+                                        <label class="c-3" for="sp-3">
+                                            <input type="radio" id="sp-3">
+                                        </label>
+                                        <label class="c-4" for="sp-4">
+                                            <input type="radio" id="sp-4">
+                                        </label>
+                                        <label class="c-9" for="sp-9">
+                                            <input type="radio" id="sp-9">
+                                        </label>-->
                                     </div>
                                 </div>
-                                <a th:if= "${session.currentuser == null}" th:href="@{loginpage}" class="primary-btn">add to cart</a>
-                                <a th:if= "${session.currentuser != null}" th:href="@{/cart-of-customer-id={id} (id = ${userid})}" class="primary-btn">add to cart</a>
-                            </div>
+                                <div class="product__details__cart__option">
+                                    <div class="quantity">
+                                        <div class="pro-qty">
+                                            <input type="text" th:field="${addToCartProduct.quantity}" >
+                                        </div>
+                                    </div>
+                                    <button type="submit" name="action" th:value="${session.currentuser != null}? 'logged in - add to cart' : 'need to login'" style="background-color: transparent; border: none">
+                                        <a class="primary-btn" style="color: #ffffff !important">add to cart</a>
+                                    </button>
+                                </div>
+                            </form>
                             <!--<div class="product__details__btns__option">
                                 <a href="#"><i class="fa fa-heart"></i> add to wishlist</a>
                                 <a href="#"><i class="fa fa-exchange"></i> Add To Compare</a>
@@ -319,7 +322,7 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" data-toggle="tab" href="#tabs-6" role="tab">Customer
-                                    Previews(5)</a>
+                                    Previews</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" data-toggle="tab" href="#tabs-7" role="tab">Additional

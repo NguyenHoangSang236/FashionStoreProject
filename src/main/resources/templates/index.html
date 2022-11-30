@@ -266,7 +266,7 @@
                         <div class="product__item__pic set-bg" th:data-setbg="${top8BestSeller.image1}">
                             <span class="label">Best</span>
                             <ul class="product__hover">
-                                <li><a th:href="@{/shop-details_name={productName} (productName = ${top8BestSeller.formatProductNameToLink()})}"><img src="img/icon/search.png" alt=""></a></li>
+                                <li><a th:href="@{/shop-details-by-color_name={productName}__color={color} (productName = ${top8BestSeller.formatProductNameToLink()}, color = ${top8BestSeller.color})}"><img src="img/icon/search.png" alt=""></a></li>
                             </ul>
                         </div>
                         <div class="product__item__text">
@@ -300,7 +300,7 @@
                         <div class="product__item__pic set-bg" th:data-setbg="${top8NewArrival.image1}">
                             <span class="label">New</span>
                             <ul class="product__hover">
-                                <li><a th:href="@{/shop-details_name={productName} (productName = ${top8NewArrival.formatProductNameToLink()})}"><img src="img/icon/search.png" alt=""></a></li>
+                                <li><a th:href="@{/shop-details-by-color_name={productName}__color={color} (productName = ${top8NewArrival.formatProductNameToLink()}, color = ${top8NewArrival.color})}"><img src="img/icon/search.png" alt=""></a></li>
                             </ul>
                         </div>
                         <div class="product__item__text">
@@ -334,7 +334,7 @@
                         <div class="product__item__pic set-bg" th:data-setbg="${top8HotSaleProduct.image1}">
                             <span class="label">Sales</span>
                             <ul class="product__hover">
-                                <li><a th:href="@{/shop-details_name={productName} (productName = ${top8HotSaleProduct.formatProductNameToLink()})}"><img src="img/icon/search.png" alt=""></a></li>
+                                <li><a th:href="@{/shop-details-by-color_name={productName}__color={color} (productName = ${top8HotSaleProduct.formatProductNameToLink()}, color = ${top8HotSaleProduct.color})}"><img src="img/icon/search.png" alt=""></a></li>
                             </ul>
                         </div>
                         <div class="product__item__text">

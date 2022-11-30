@@ -25,4 +25,12 @@ public interface CatalogRepository extends JpaRepository<Catalog, Integer>{
     
     @Query(value = "select * from catalog", nativeQuery = true)
     List<Catalog> getAllCatalogs();
+    
+    
+    @Query(value = "select id from catalog where name = :catalogNameVal", nativeQuery = true)
+    int getCatalogIdByName(@Param("catalogNameVal") String catalogName);
+    
+    
+    @Query(value = "select * from catalog where name = :catalogNameVal", nativeQuery = true)
+    Catalog getCatalogByName(@Param("catalogNameVal") String catalogName);
 }

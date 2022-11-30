@@ -364,3 +364,12 @@ input {
 .has-width-20rem {
     width: 20rem;
 }
+
+.form.sign-up::-webkit-scrollbar {
+    width: 0px;
+    display: none;
+}
+
+.form.sign-up {
+    overflow: scroll;
+}

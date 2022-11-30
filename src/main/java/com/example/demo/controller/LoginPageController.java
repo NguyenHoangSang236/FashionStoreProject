@@ -24,9 +24,11 @@ import com.example.demo.entity.Account;
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.dto.LoginPage;
 import com.example.demo.respository.AccountRepository;
+import com.example.demo.respository.CartRepository;
 import com.example.demo.respository.CustomerRepository;
 import com.example.demo.respository.StaffRepository;
 import com.example.demo.service.EmailService;
+import com.example.demo.util.GlobalStaticValues;
 import com.example.demo.util.LoginState;
 import com.example.demo.util.Network;
 import com.example.demo.util.ValueRender;
@@ -45,8 +47,11 @@ public class LoginPageController {
 	@Autowired 
 	EmailService emailService;
 	
-	LoginPage loginPage = new LoginPage();
+	@Autowired
+	CartRepository cartRepo;
 	
+	LoginPage loginPage = new LoginPage();
+	String message = "";
 	
 	
 	@GetMapping("/loginpage")
@@ -56,51 +61,62 @@ public class LoginPageController {
 	}
 	 
 	
-	@RequestMapping(value = "/loginpage", method = RequestMethod.POST)
+	@PostMapping("/loginpage")
 	public String submitForm(HttpSession session, @ModelAttribute("loginPage") LoginPage loginPage, @RequestParam(value="action") String action,  HttpServletResponse response) { 
 		if(action.equals("login")) {
-		    Account acc = accRepo.findByUserNameAndPassword(loginPage.getLoginUserName(), loginPage.getLoginPassword());
-		    	        
-		    //account existed --> proceed login
-	        if(acc != null) {
-	            Cookie cookie = new Cookie(acc.getUserName(), Integer.toString(acc.getId()));
-	            cookie.setMaxAge(7 * 24 * 60 * 60);
-	            response.addCookie(cookie);
-	            session.setAttribute("currentuser", acc);
-	            
-	            
-	            LoginState.currentAccount = acc;
-	            
-	            if(acc.getRole().equals("admin")) {
-	                LoginState.currentStaff = acc.getStaff();
-	                return "redirect:/allproduct";
-	            }
-	            else {
-	                LoginState.currentCustomer = acc.getCustomer();
-	                return "redirect:/home";
-	            }
+		    //username and password are null
+		    if(loginPage.getLoginUserName() == null && loginPage.getLoginPassword() == null) {
+	        	message = "Please input your Account User name and Password !!";
 	        }
+		    //password is null
+	        else if(loginPage.getLoginUserName() != null && loginPage.getLoginPassword() == null) {
+	        	message = "Please input Password !!";
+	        }
+		    //username is null
+	        else if(loginPage.getLoginUserName() == null && loginPage.getLoginPassword() != null) {
+	        	message = "Please input Account User name !!";
+	        }
+		    //account existed --> proceed login
 	        else {
-	        	String forgotPassUserName = Network.temporaryAccount.getUserName();
-	        	String tempPass = Network.temporaryAccount.getPassword();
-	        	
-	        	//account forgot password existed --> redirect to home
-	            if(loginPage.getLoginUserName().equals(forgotPassUserName) && loginPage.getLoginPassword().equals(tempPass)) {
-	            	Network.temporaryAccount = new Account();
-	            	
-	            	return "redirect:/home";
-	            }
-		        //account not existed --> notice 'Invalid user name or password !!'
-	            else return "login";
+			    Account acc = accRepo.findByUserNameAndPassword(loginPage.getLoginUserName(), loginPage.getLoginPassword());
+
+			    if(acc != null) {
+			    	Cookie cookie = new Cookie(acc.getUserName(), Integer.toString(acc.getId()));
+		            cookie.setMaxAge(7 * 24 * 60 * 60);
+		            response.addCookie(cookie);
+		            session.setAttribute("currentuser", acc);
+		            
+		            LoginState.currentAccount = acc;
+		            
+		            if(acc.getRole().equals("admin")) {
+		                LoginState.currentStaff = acc.getStaff();
+		                
+		                return "redirect:/allproduct";
+		            }
+		            else {
+		                LoginState.currentCustomer = acc.getCustomer();
+		                GlobalStaticValues.customerFullCartIdList = cartRepo.getFullCartIdListByCustomerId(acc.getCustomer().getId());
+		                
+		                return "redirect:/home";
+		            }
+			    }
+			    //account is not existed, username is not null
+			    else {
+			    	message = "User name or password is invalid !!";
+			    }
 	        }
 		}
 		
-		
+		//click Register
 		if(action.equals("register")) {
 		    Account acc = accRepo.findByUserNameAndPassword(loginPage.getRegisterUserName(), loginPage.getRegisterPassword());
 
+		    //not all information input
+		    if(loginPage.getFullName() == null || loginPage.getEmail() == null || loginPage.getPhoneNumber() == null || loginPage.getRegisterUserName() == null || loginPage.getRegisterPassword() == null) {
+		    	message = "Please input all information !!";
+		    }
 		    //account not existed --> create a new account and new customer
-	        if(acc == null) {
+		    else if(acc == null) {
 	            Account newAcc = new Account(loginPage.getRegisterUserName(), loginPage.getRegisterPassword(), "user");
 	            accRepo.save(newAcc);
 	            
@@ -115,18 +131,25 @@ public class LoginPageController {
 	        }
 		}
 		
+		//click Forget password
 		if(action.equals("forgot")) {
-			Account acc = accRepo.findByUserNameAndPassword(loginPage.getLoginUserName(), "123");
-
-		    //account existed --> notice 'Check your email for your temporary password !!'
-	        if(acc != null) {
-	        	emailService.forgotPassword(loginPage.getLoginUserName());
-	                        
-	            return "login";
+		    //username is null
+	        if(loginPage.getLoginUserName() == null) {
+	        	message = "Please input Account User name !!";
 	        }
-	        //account not existed --> notice 'This user not existed !!'
+		    //account existed --> notice 'Check your email for your temporary password !!'
 	        else {
-	            return "login";
+				Account acc = accRepo.findByUserName(loginPage.getLoginUserName());
+
+				if(acc != null) {
+					emailService.forgotPassword(loginPage.getLoginUserName());
+					
+					return "login";
+				}
+				//account not existed --> notice 'This user not existed !!'
+				else {
+					return "login";
+				}
 	        }
 		}
 		
@@ -139,6 +162,4 @@ public class LoginPageController {
 	    session.invalidate();
 	    return "redirect:/loginpage";
 	} 
-	
-	
 }
