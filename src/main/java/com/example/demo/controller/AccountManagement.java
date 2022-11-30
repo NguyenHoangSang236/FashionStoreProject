@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.example.demo.entity.Account;
 import com.example.demo.entity.Customer;
-import com.example.demo.entity.dto.SelectedProductID;
+import com.example.demo.entity.dto.SelectedCustomerID;
 import com.example.demo.respository.AccountRepository;
 import com.example.demo.respository.CustomerRepository;
 import com.example.demo.util.LoginState;
@@ -39,7 +39,7 @@ public class AccountManagement {
 	
 	Account account = new Account();
 	Customer customer = new Customer();
-	SelectedProductID selectedCustomerID = new SelectedProductID();
+	SelectedCustomerID selectedCustomerID = new SelectedCustomerID();
 	Account accountEdited;
 
 //	@PostMapping("/account")
@@ -60,7 +60,7 @@ public class AccountManagement {
 	}
 	
 	@PostMapping("/accountmanagement")
-	public String deleteCustomer(Model model, @ModelAttribute("selectedProduct") SelectedProductID productID ) {
+	public String deleteCustomer(Model model, @ModelAttribute("selectedProduct") SelectedCustomerID productID ) {
 		List<Customer> AllCustomers = cusRepo.getCustomerById();
 		List<Account> AllAcount = accRepo.getAllCustomerAccounts();
 		
