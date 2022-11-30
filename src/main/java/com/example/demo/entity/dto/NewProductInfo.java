@@ -6,6 +6,7 @@ public class NewProductInfo {
 	String name;
 	String[] sizeList;
 	String brand;
+	String color;
 	double sellingPrice;
 	double originalPrice;
 	String description;
@@ -20,7 +21,7 @@ public class NewProductInfo {
 	
 	public NewProductInfo() {}
 	
-	public NewProductInfo(String name, String[] sizeList, String brand, double sellingPrice, double originalPrice,
+	public NewProductInfo(String name, String[] sizeList, String brand, String color, double sellingPrice, double originalPrice,
 			String description, String[] catalogList, Date importDate, String image1Url, String image2Url,
 			String image3Url, String image4Url) {
 		super();
@@ -36,6 +37,7 @@ public class NewProductInfo {
 		this.image2Url = image2Url;
 		this.image3Url = image3Url;
 		this.image4Url = image4Url;
+		this.color = color;
 	}
 
 	
@@ -134,5 +136,13 @@ public class NewProductInfo {
 
 	public void setImage4Url(String image4Url) {
 		this.image4Url = image4Url;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
 	}
 }
