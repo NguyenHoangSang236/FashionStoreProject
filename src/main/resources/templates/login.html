@@ -15,9 +15,10 @@
                             width:100%;
                             filter: blur(8px);
                             -webkit-filter: blur(4px);">
-    <form class="form sign-in" th:action = "@{/loginpage}" method="post" th:object = "${loginPage}">
+    <div>
+    <form class="sign-in" th:action = "@{/loginpage}" method="post" th:object = "${loginPage}">
         <div class="cont mt-6">
-            <div class="m-6">
+            <div class="m-6" style="width: 35rem">
                 <div class="has-text-centered pb-6" style="position:relative;">
                     <div class="logo-shop">
                         Fool!st.
@@ -63,7 +64,7 @@
                     </div>
                 </div>
                 
-                <div class="form sign-up has-text-centered m-3" style = "overflow: auto;">
+                <div class="form sign-up has-text-centered m-3" style = "overflow: scroll;">
                     <div class="title is-4 mb-6">Create your Account</div>
                     <label>
                         <span class="is-capitalized">Username</span>
@@ -94,6 +95,7 @@
             </div>
         </div>
     </form>
+</div>
 </body>
 </html>
 

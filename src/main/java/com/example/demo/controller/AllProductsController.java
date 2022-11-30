@@ -34,6 +34,7 @@ public class AllProductsController {
    ProductService productService;
 
    ProductManagement productManagement = new ProductManagement();
+   String announcement = "";
    
     
     @GetMapping("/allproduct")
@@ -81,7 +82,6 @@ public class AllProductsController {
             model.addAttribute("productsList", productsList);
             model.addAttribute("cateList", cateList);
             model.addAttribute("productManagement", productManagement);
-        	
 		}
         
         return "products";
