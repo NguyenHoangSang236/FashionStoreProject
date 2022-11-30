@@ -18,5 +18,12 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
 	@Query("select a from Account a where a.userName = :userNameVal")
 	Account findByUserName(@Param("userNameVal") String userName);
 	
+	@Query(value = "select * from login_accounts ", nativeQuery = true)
+	List<Account> findAllAccount();
 	
+	@Query(value = "select la.* from login_accounts la join customers c on la.id = c.account_id where role = 'user'", nativeQuery = true)
+	List<Account> getAllCustomerAccounts();
+	
+	@Query("select a from Account a where a.id = :idVal")
+	Account findByUserID(@Param("idVal") int id);
 }
