@@ -128,4 +128,14 @@ public class ValueRender {
     	
     	return resultArr;
     }
+    
+    
+    //get a substring of a string
+    public static String getSubstring(String orgString, int startInd, int endInd) {
+    	String result = "";
+    	
+    	result = orgString.substring(startInd, endInd);
+    	
+    	return result;
+    }
 }

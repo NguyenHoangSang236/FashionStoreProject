@@ -1,12 +1,12 @@
 package com.example.demo.entity.dto;
 
-public class SelectedProductID {
+public class SelectedCustomerID {
     private int[] idList;
     
     
-    public SelectedProductID() {}
+    public SelectedCustomerID() {}
 
-    public SelectedProductID(int[] idList) {
+    public SelectedCustomerID(int[] idList) {
         super();
         this.idList = idList;
     }

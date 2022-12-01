@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Comment;
 import com.example.demo.entity.Product;
+import com.example.demo.respository.CartRemoveRepository;
 import com.example.demo.respository.CommentRepository;
 import com.example.demo.respository.ProductRemoveRepository;
 import com.example.demo.respository.ProductRepository;
@@ -29,6 +30,9 @@ public class ProductServiceImpl implements ProductService{
     
     @Autowired
     private CommentRepository commentRepo;
+    
+    @Autowired
+    private CartRemoveRepository cartRemoveRepo;
     
     private List<Product> products;
     
@@ -143,6 +147,7 @@ public class ProductServiceImpl implements ProductService{
             if(optComment.isPresent()) {
                 productId = optComment.get().getProduct().getId();
                 productRemoveRepo.deleteFromProductComments(productId);
+                cartRemoveRepo.deleteProductFromCartByProductId(productId);
             }
             
             productRemoveRepo.deleteProductFromCatalogWithProducts(productName);
