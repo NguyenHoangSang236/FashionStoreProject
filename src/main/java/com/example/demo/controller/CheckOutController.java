@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.example.demo.entity.Account;
 import com.example.demo.entity.Cart;
+import com.example.demo.entity.dto.CheckoutInfo;
 import com.example.demo.respository.CartRepository;
+import com.example.demo.respository.CustomerRepository;
 import com.example.demo.util.GlobalStaticValues;
 import com.example.demo.util.ValueRender;
 
@@ -22,19 +24,29 @@ public class CheckOutController {
 	@Autowired
 	CartRepository cartRepo;
 	
+	@Autowired
+	CustomerRepository customerRepo;
+	
 	List<Cart> cartList;
+	CheckoutInfo checkoutInfo = new CheckoutInfo();
 	
 	
     @GetMapping("/checkout")
-    public String Checkout(HttpSession session, Model model) {
-        
+    public String checkout(HttpSession session, Model model) {
     	Account currentAccount = (Account)session.getAttribute("currentuser");
+    	
         //check customer logged in or not
         if(currentAccount != null)
         {   
             cartList = ValueRender.getCartListFromIdList(GlobalStaticValues.customerSelectedCartIdList, cartRepo);
             
+            for(int i = 0; i < cartList.size(); i++) {
+            	System.out.println(cartList.get(i).formatedTotalPrice());
+            }
             
+            model.addAttribute("invoiceTotal", ValueRender.formatDoubleNumber(GlobalStaticValues.customerInvoiceTotalPrice));
+            model.addAttribute("cartList", cartList);
+            model.addAttribute("checkoutInfo", checkoutInfo);
         	
             return "checkout";
         }

@@ -65,6 +65,8 @@ public class CartController {
             model.addAttribute("fullCartList", fullCartList);
             model.addAttribute("checkedCartList", customerCart.getCheckedList());
             
+    		GlobalStaticValues.customerInvoiceTotalPrice = customerCart.getSubtotal();
+            
             return "shopping-cart";
         }
         else {

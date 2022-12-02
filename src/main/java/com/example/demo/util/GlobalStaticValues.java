@@ -21,6 +21,8 @@ public class GlobalStaticValues {
 	
 	public static int[] customerFullSelectStatusList = {};
 	
+	public static double customerInvoiceTotalPrice;
+	
 	public static Customer currentCustomer = new Customer();
 	
 	public static Staff currentStaff = new Staff();
