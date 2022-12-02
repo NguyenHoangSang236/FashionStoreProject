@@ -26,8 +26,8 @@
 </head>
 
 <body>
-    <!-- Page Preloder -->
-    <div id="preloder">
+     <!-- Page Preloder -->
+     <div id="preloder">
         <div class="loader"></div>
     </div>
 
@@ -40,19 +40,28 @@
                 <a href="#">FAQs</a>
             </div>
             <div class="offcanvas__top__hover">
-                <span>Usd <i class="arrow_carrot-down"></i></span>
+                <span>
+                    <img src="img/user.png" alt=""> 
+                    <i class="arrow_carrot-down"></i>
+                </span>
                 <ul>
-                    <li>USD</li>
-                    <li>EUR</li>
-                    <li>USD</li>
+                    <li>
+                        <a href="#">My Profile</a>
+                    </li>
+                    <li>
+                        <a href="#">Edit Account</a>
+                    </li>
+                    <li>
+                        <a href="#">Wallet</a>
+                    </li>
                 </ul>
             </div>
         </div>
         <div class="offcanvas__nav__option">
             <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
             <a href="#"><img src="img/icon/heart.png" alt=""></a>
-            <a href="#"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
-            <div class="price">$0.00</div>
+            <a th:href="@{/cart-of-customer-account-id={id} (id = session.currentuser.id)}"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
+            <div class="formattedPrice()">$0.00</div>
         </div>
         <div id="mobile-menu-wrap"></div>
         <div class="offcanvas__text">
@@ -97,7 +106,7 @@
                                     </a>
                                     <a class="dropdown-item" th:href="@{logout}">
                                         Logout
-                                    </a>
+                                      </a>
                                   </div>
                                 </div>
                             </div>
@@ -118,12 +127,12 @@
                 <div class="col-lg-6 col-md-6">
                     <nav class="header__menu mobile-menu">
                         <ul>
-                            <li><a th:href="@{home}">Home</a></li>
-                            <li class="active"><a th:href="@{shopproduct}">Shop</a></li>
+                            <li class="active"><a th:href="@{home}">Home</a></li>
+                            <li><a th:href="@{shopproduct}">Shop</a></li>
                             <li><a href="#">Pages</a>
                                 <ul class="dropdown">
                                     <li><a th:href="@{about}">About Us</a></li>
-                                    <li><a th:href="@{details}">Shop Details</a></li>
+                                    <li><a th:href="@{shop-details}">Shop Details</a></li>
                                     <li><a th:href="@{cart}">Shopping Cart</a></li>
                                     <li><a th:href="@{checkout}">Check Out</a></li>
                                     <li><a href="./blog-details.html">Blog Details</a></li>
@@ -138,8 +147,9 @@
                     <div class="header__nav__option">
                         <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
                         <a href="#"><img src="img/icon/heart.png" alt=""></a>
-                        <a href="#"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
-                        <div class="price">$0.00</div>
+                        <a th:if= "${session.currentuser != null}"
+                        th:href="@{/cart-of-customer-account-id={id} (id = ${session.currentuser.id})}"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
+                        <div class="formattedPrice()">$0.00</div>
                     </div>
                 </div>
             </div>
