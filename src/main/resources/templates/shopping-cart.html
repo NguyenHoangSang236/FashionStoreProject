@@ -7,7 +7,7 @@
     <meta name="keywords" content="Male_Fashion, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Male-Fashion | Template</title>
+    <title>My Shopping Cart</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
@@ -199,6 +199,7 @@
                                             <div class="product__cart__item__text" style="margin-right: 5px; padding-top: 0">
                                                 <h6 th:text="${cartProduct.getProduct().getName()}"></h6>
                                                 <h5 th:text="${cartProduct.formatedPrice()} + ' vnd'"></h5>
+                                                <h4 class="mt-4" th:text="${'Size: ' + cartProduct.getProduct().getSize().toUpperCase()}"></h4>
                                             </div>
                                         </td>
                                         <td class="quantity__item">

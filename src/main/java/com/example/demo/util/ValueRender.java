@@ -138,4 +138,7 @@ public class ValueRender {
     	
     	return result;
     }
+    
+    
+    //convert VND to Dollar
 }
