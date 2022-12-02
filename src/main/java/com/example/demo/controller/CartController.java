@@ -58,7 +58,7 @@ public class CartController {
     	    model.addAttribute("curentcusName",currentCustomer.getName());
         	customerCart.setFullCartIdList(globalFullCartIdArr);
         	customerCart.setTotal(calculateTotal(fullCartList));
-        	customerCart.setSubtotal(calculateTotal(getFullCartListFromIdList(globalSelectedCartIdArr)));
+        	customerCart.setSubtotal(calculateTotal(ValueRender.getCartListFromIdList(globalSelectedCartIdArr, cartRepo)));
         	customerCart.setFullCartQuantityList(globalFullCartQuantityArr);
         	
             model.addAttribute("customerCart", customerCart);
@@ -87,18 +87,6 @@ public class CartController {
     }
     
     
-    public List<Cart> getFullCartListFromIdList(int[] idList) {
-    	List<Cart> cartList = new ArrayList<Cart>();
-    	
-    	for(int i = 0; i < idList.length; i++) {
-    		Cart cart = cartRepo.getCartById(idList[i]);
-    		cartList.add(cart);
-    	}
-    	
-    	return cartList;
-    }
-    
-    
     public void saveUpdatedCart(List<Cart> cartList, int[] quantList, boolean[] checkedList) {
     	for(int i = 0 ; i < cartList.size(); i++) {
     		int selectInd;
@@ -121,7 +109,7 @@ public class CartController {
     public void updateCart(CustomerCart cusCart) {
     	GlobalStaticValues.customerSelectedCartIdList = cusCart.getSelectedCartIdList();
 		GlobalStaticValues.customerFullCartQuantityList = cusCart.getFullCartQuantityList();
-		GlobalStaticValues.customerFullCartList = getFullCartListFromIdList(GlobalStaticValues.customerFullCartIdList);
+		GlobalStaticValues.customerFullCartList = ValueRender.getCartListFromIdList(GlobalStaticValues.customerFullCartIdList, cartRepo);
 		
 		int[] fullArr = GlobalStaticValues.customerFullCartIdList;
 		int[] selectedArr = cusCart.getSelectedCartIdList(); 
@@ -155,7 +143,7 @@ public class CartController {
     	GlobalStaticValues.customerFullCartIdList = cartRepo.getFullCartIdListByCustomerId(customerId);
         GlobalStaticValues.customerFullSelectStatusList = cartRepo.getFullCartSelectStatusListByCustomerId(customerId);    
         GlobalStaticValues.customerFullCartQuantityList = cartRepo.getFullCartQuantityListByCustomerId(customerId);
-        GlobalStaticValues.customerFullCartList = getFullCartListFromIdList(GlobalStaticValues.customerFullCartIdList);
+        GlobalStaticValues.customerFullCartList = ValueRender.getCartListFromIdList(GlobalStaticValues.customerFullCartIdList, cartRepo);
     }
     
     
@@ -166,7 +154,7 @@ public class CartController {
         GlobalStaticValues.customerFullCartIdList = cartRepo.getFullCartIdListByCustomerId(GlobalStaticValues.currentCustomer.getId());
         GlobalStaticValues.customerFullSelectStatusList = cartRepo.getFullCartSelectStatusListByCustomerId(GlobalStaticValues.currentCustomer.getId()); 
         GlobalStaticValues.customerFullCartQuantityList = cartRepo.getFullCartQuantityListByCustomerId(GlobalStaticValues.currentCustomer.getId());
-        GlobalStaticValues.customerFullCartList = getFullCartListFromIdList(GlobalStaticValues.customerFullCartIdList);
+        GlobalStaticValues.customerFullCartList = ValueRender.getCartListFromIdList(GlobalStaticValues.customerFullCartIdList, cartRepo);
         
         //init checked list with full of FALSE 
         boolean[] globalCheckedCartArr = GlobalStaticValues.customerCheckedCartList(GlobalStaticValues.customerFullSelectStatusList);

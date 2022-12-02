@@ -3,8 +3,13 @@ package com.example.demo.util;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+
+import com.example.demo.entity.Cart;
+import com.example.demo.respository.CartRepository;
 
 public class ValueRender {
     //format double value
@@ -140,5 +145,15 @@ public class ValueRender {
     }
     
     
-    //convert VND to Dollar
+    //get a Cart list from an ID list
+    public static List<Cart> getCartListFromIdList(int[] idList, CartRepository cartRepo) {
+    	List<Cart> cartList = new ArrayList<Cart>();
+    	
+    	for(int i = 0; i < idList.length; i++) {
+    		Cart cart = cartRepo.getCartById(idList[i]);
+    		cartList.add(cart);
+    	}
+    	
+    	return cartList;
+    }
 }
