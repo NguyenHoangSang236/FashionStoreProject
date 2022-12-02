@@ -208,7 +208,7 @@
                                             <div class="product__cart__item__text" style="margin-right: 5px; padding-top: 0">
                                                 <h6 th:text="${cartProduct.getProduct().getName()}"></h6>
                                                 <h5 th:text="${cartProduct.formatedPrice()} + ' vnd'"></h5>
-                                                <h4 class="mt-4" th:text="${'Size: ' + cartProduct.getProduct().getSize().toUpperCase()}"></h4>
+                                                <h4 th:text="${'Size: ' + cartProduct.getProduct().getSize().toUpperCase()}" class="mt-4" ></h4>
                                             </div>
                                         </td>
                                         <td class="quantity__item">
@@ -255,7 +255,7 @@
                                 <li>Subtotal <span id ="subtotal" th:value="*{formatedCartSubtotal()}" type="text" th:text="*{formatedCartSubtotal()} + ' VND'"></span></li>
                                 <li>Total <span  th:text="*{formatedCartTotal} + ' VND'"></span></li>
                             </ul>
-                            <a href="#" class="primary-btn" type="submit">Proceed to checkout</a>
+                            <a th:href="@{/checkout}" class="primary-btn" type="submit">Proceed to checkout</a>
                             <!-- Include the PayPal JavaScript SDK; replace "test" with your own sandbox Business account app client ID -->
                             <script src="https://www.paypal.com/sdk/js?client-id=AbUOzHdwitRn-mCTn1eSVZITmCGk7A1zclLoIyspZfh1cf4QrfisJY5hsIc3ACd2_RUcJHKcNTsFeWqA&currency=USD"></script>
                             <div id="paypal"> </div>
