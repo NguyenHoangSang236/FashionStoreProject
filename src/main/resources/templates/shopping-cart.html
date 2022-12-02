@@ -242,43 +242,52 @@
                         <div class="cart__total">
                             <h6>Cart total</h6>
                             <ul>
-                                <li>Subtotal <span th:text="*{formatedCartSubtotal()} + ' VND'"></span></li>
-                                <li>Total <span  id="amount" th:text="*{formatedCartTotal} + ' VND'"></span></li>
+                                <li>Subtotal <span id ="subtotal" th:value="*{formatedCartSubtotal()}" type="text" th:text="*{formatedCartSubtotal()} + ' VND'"></span></li>
+                                <li>Total <span  th:text="*{formatedCartTotal} + ' VND'"></span></li>
                             </ul>
                             <a href="#" class="primary-btn" type="submit">Proceed to checkout</a>
+                            <!-- Include the PayPal JavaScript SDK; replace "test" with your own sandbox Business account app client ID -->
+                            <script src="https://www.paypal.com/sdk/js?client-id=AbUOzHdwitRn-mCTn1eSVZITmCGk7A1zclLoIyspZfh1cf4QrfisJY5hsIc3ACd2_RUcJHKcNTsFeWqA&currency=USD"></script>
+                            <div id="paypal"> </div>
+                            <script th:inline="javascript">
+                                let amountMoney = [[*{formatedCartSubtotal()}]]
+                                payMoney = amountMoney.split('.').join('')
+                                //console.log(amountMoney)
+                                
+                                function usdToVND(money){
+                                    let moneyUsd = money/24510
+                                    moneyUsd = Math.round(moneyUsd)
+                                    return moneyUsd
+                                }
+                                
+                    
+                                paypal.Buttons({
+                    
+                                createOrder: function(data, actions) {
+                                return actions.order.create({
+                                purchase_units: [{
+                                    amount: {
+                                    value: usdToVND(payMoney),
+                                    }
+                                }]
+                                });
+                                },
+                    
+                                onApprove: function(data, actions) {
+                                return actions.order.capture().then(function(orderData) {
+                    
+                                    console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                                    var transaction = orderData.purchase_units[0].payments.captures[0];
+                                    alert('Thank you for your payment!');
+                    
+                                });
+                                }
+                                }).render('#paypal');
+                                </script>
                         </div>
                     </div>
                 </div>
             </form>
-            <!-- Include the PayPal JavaScript SDK; replace "test" with your own sandbox Business account app client ID -->
-            <script src="https://www.paypal.com/sdk/js?client-id=AbUOzHdwitRn-mCTn1eSVZITmCGk7A1zclLoIyspZfh1cf4QrfisJY5hsIc3ACd2_RUcJHKcNTsFeWqA&currency=USD"></script>
-
-            <div id="paypal"> </div>
-            <script>
-            var amountMoney = document.getElementById("amount")
-            paypal.Buttons({
-
-            createOrder: function(data, actions) {
-            return actions.order.create({
-            purchase_units: [{
-                amount: {
-                value: "100",
-                }
-            }]
-            });
-            },
-
-            onApprove: function(data, actions) {
-            return actions.order.capture().then(function(orderData) {
-
-                console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-                var transaction = orderData.purchase_units[0].payments.captures[0];
-                alert('Thank you for your payment!');
-
-            });
-            }
-            }).render('#paypal');
-            </script>
         </div>
     </section>
     <!-- Shopping Cart Section End -->
