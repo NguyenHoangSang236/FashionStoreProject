@@ -23,9 +23,15 @@ import com.example.demo.util.ValueRender;
 
 @Controller
 public class EditProductController {
+	@Autowired
+	ProductRepository productRepo;
 	
-	@GetMapping("/editproduct")
+	Product selectedProduct = new Product();
+	
+	
+	@GetMapping("/edit-product")
     public String editproduct(Model model ) {
+		model.addAttribute("selectedProduct", selectedProduct);
 		
         return "edit-product";
     }

@@ -12,9 +12,4 @@ import com.example.demo.respository.CustomerRepository;
 
 public class LoginState {
     public static Account currentAccount;
-    
-    public static Staff currentStaff = new Staff();
-    
-    public static Customer currentCustomer = new Customer();
-    
 }

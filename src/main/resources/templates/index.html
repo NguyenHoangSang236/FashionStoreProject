@@ -60,7 +60,7 @@
         <div class="offcanvas__nav__option">
             <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
             <a href="#"><img src="img/icon/heart.png" alt=""></a>
-            <a th:href="@{/cart-of-customer-id={id} (id = session.currentuser.id)}"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
+            <a th:href="@{/cart-of-customer-account-id={id} (id = session.currentuser.id)}"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
             <div class="formattedPrice()">$0.00</div>
         </div>
         <div id="mobile-menu-wrap"></div>
@@ -148,7 +148,7 @@
                         <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
                         <a href="#"><img src="img/icon/heart.png" alt=""></a>
                         <a th:if= "${session.currentuser != null}"
-                        th:href="@{/cart-of-customer-id={id} (id = ${session.currentuser.id})}"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
+                        th:href="@{/cart-of-customer-account-id={id} (id = ${session.currentuser.id})}"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
                         <div class="formattedPrice()">$0.00</div>
                     </div>
                 </div>

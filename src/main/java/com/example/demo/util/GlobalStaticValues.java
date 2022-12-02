@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.demo.entity.Cart;
+import com.example.demo.entity.Customer;
 import com.example.demo.entity.Product;
+import com.example.demo.entity.Staff;
 
 import ch.qos.logback.core.status.Status;
 
@@ -13,9 +15,15 @@ public class GlobalStaticValues {
 	
 	public static int[] customerSelectedCartIdList = {};
 	
-	public static int[] customerSelectedCartQuantityList = {};
+	public static int[] customerFullCartQuantityList = {};
+	
+	public static String[] customerFullCartSizeList = {};
 	
 	public static int[] customerFullSelectStatusList = {};
+	
+	public static Customer currentCustomer = new Customer();
+	
+	public static Staff currentStaff = new Staff();
 	
 	public static Product addToCartProduct = new Product();
 	

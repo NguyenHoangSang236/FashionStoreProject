@@ -34,6 +34,7 @@ import com.example.demo.respository.CartRepository;
 import com.example.demo.respository.CommentRepository;
 import com.example.demo.respository.CustomerRepository;
 import com.example.demo.respository.ProductRepository;
+import com.example.demo.util.GlobalStaticValues;
 import com.example.demo.util.LoginState;
 import com.example.demo.util.ValueRender;
 
@@ -56,6 +57,7 @@ public class DetailsController {
     Product currentProduct;
     AddToCartProductInfo addToCartProduct = new AddToCartProductInfo();
     int defaultQuantity = 1;
+    String message = "";
     
     
     public void renderToProductDetails(HttpSession session, Model model, String realProductName, Product productDetail, HttpServletRequest request) {
@@ -116,20 +118,33 @@ public class DetailsController {
     public String addToCartFromDefaultDetailPage(@RequestParam(value="action") String action, HttpSession session, Model model, @PathVariable("productName") String productName, HttpServletRequest request, @ModelAttribute("productDetail") Product productDetail, @ModelAttribute("addToCartProduct") AddToCartProductInfo modelAddToCartProductInfo) {
         String realProductName = ValueRender.linkToString(productName);
         
-        if(action.equals("logged in - add to cart")) {        	
+        if(modelAddToCartProductInfo.getProductSize() == null) {
+        	message = "Please choose a size first !!";
+        }
+        else if(action.equals("logged in - add to cart")) {        	
         	int id = cartRepo.getLastestCartId() + 1;
+        	int quantity = 0;
         	
-        	System.out.println(id);
-        	System.out.println(currentProduct.getColor());
-        	System.out.println(modelAddToCartProductInfo.getProductSize());
-
+//        	System.out.println(id);
+//        	System.out.println(currentProduct.getColor());
+//        	System.out.println(modelAddToCartProductInfo.getProductSize());
         	 
         	Account currentAcount = (Account)session.getAttribute("currentuser");
         	Product product = productRepo.getProductDetailsByNameAndColorAndSize(realProductName, currentProduct.getColor(), modelAddToCartProductInfo.getProductSize());
-        	System.out.println(product.getId());
-
-        	Customer customer = customerRepo.getCustomerById(currentAcount.getId());
-        	Cart newCart = new Cart(id, modelAddToCartProductInfo.getQuantity(), 0, 0, customer, product);
+//        	System.out.println(product.getId());
+        	
+        	Cart tmpCart = cartRepo.getCartByProductIdAndCustomerId(product.getId(), GlobalStaticValues.currentCustomer.getId());
+        	System.out.println(currentProduct.getId() + " " + GlobalStaticValues.currentCustomer.getId());
+        	
+        	//if this product has already been in the cart --> quantity = this product's quantity
+        	if(tmpCart != null) {
+        		quantity = tmpCart.getQuantity();
+        		id = tmpCart.getId();
+        		System.out.println(quantity);
+        	}
+        	
+        	Customer customer = customerRepo.getCustomerByAccountId(currentAcount.getId());
+        	Cart newCart = new Cart(id, quantity + modelAddToCartProductInfo.getQuantity(), 0, 0, customer, product);
         	
         	cartRepo.save(newCart);
         }

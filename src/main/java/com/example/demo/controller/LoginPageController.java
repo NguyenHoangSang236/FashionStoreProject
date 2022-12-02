@@ -89,12 +89,12 @@ public class LoginPageController {
 		            LoginState.currentAccount = acc;
 		            
 		            if(acc.getRole().equals("admin")) {
-		                LoginState.currentStaff = acc.getStaff();
+		                GlobalStaticValues.currentStaff = acc.getStaff();
 		                
 		                return "redirect:/allproduct";
 		            }
 		            else {
-		                LoginState.currentCustomer = acc.getCustomer();
+		            	GlobalStaticValues.currentCustomer = acc.getCustomer();
 		                GlobalStaticValues.customerFullCartIdList = cartRepo.getFullCartIdListByCustomerId(acc.getCustomer().getId());
 		                
 		                return "redirect:/home";
