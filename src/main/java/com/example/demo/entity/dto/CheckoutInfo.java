@@ -1,8 +1,7 @@
 package com.example.demo.entity.dto;
 
 public class CheckoutInfo {
-	String firstName;
-	String lastName;
+	String fullName;
 	String country;
 	String address;
 	String city;
@@ -15,11 +14,10 @@ public class CheckoutInfo {
 	
 	public CheckoutInfo() {}
 
-	public CheckoutInfo(String firstName, String lastName, String country, String address, String city, String phone,
+	public CheckoutInfo(String fullName,String country, String address, String city, String phone,
 			String email, String invoiceNote, String paymentIntentNote) {
 		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
+		this.fullName = fullName;
 		this.country = country;
 		this.address = address;
 		this.city = city;
@@ -31,20 +29,12 @@ public class CheckoutInfo {
 
 	
 	
-	public String getFirstName() {
-		return firstName;
+	public String getFullName() {
+		return fullName;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setFullName(String firstName) {
+		this.fullName = firstName;
 	}
 
 	public String getCountry() {

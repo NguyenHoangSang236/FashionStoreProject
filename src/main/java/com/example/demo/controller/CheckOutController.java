@@ -47,6 +47,7 @@ public class CheckOutController {
             model.addAttribute("invoiceTotal", ValueRender.formatDoubleNumber(GlobalStaticValues.customerInvoiceTotalPrice));
             model.addAttribute("cartList", cartList);
             model.addAttribute("checkoutInfo", checkoutInfo);
+            model.addAttribute("currentCustomer", GlobalStaticValues.currentCustomer);
         	
             return "checkout";
         }
