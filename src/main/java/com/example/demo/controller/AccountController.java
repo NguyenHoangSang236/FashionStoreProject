@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,7 +39,7 @@ public class AccountController {
 	
 	Account account = new Account();
 	Customer customer = new Customer();
-	
+	Account accountEdited;
 
 	@PostMapping("/account")
 	public Account saveAccount(@Validated @RequestBody Account account) {
@@ -53,23 +54,41 @@ public class AccountController {
 
 	
 	@GetMapping("/showaccount")
-    public String showAbout(@ModelAttribute("currentuser") Account Cuser, Model model, HttpServletRequest request ) {
+    public String showAbout(HttpSession session,Model model, HttpServletRequest request ) {
 		
+		Account Cuser = (Account)session.getAttribute("currentuser");
+		accountEdited = Cuser;
 		Cookie[] cookies = request.getCookies();
-	    if (cookies != null) {
+	    if (Cuser != null) {
 	        
 //	        Customer accountDetail = cusRepo.getCustomerById(Integer.valueOf(cookies[0].getValue()));
 	    	Customer accountDetail = cusRepo.getCustomerByAccountId(Cuser.getId());
-	    	
-	 		model.addAttribute("userpic", accountDetail.getImage());
-	 		model.addAttribute("username", accountDetail.getName());
-	 		model.addAttribute("useremail", accountDetail.getEmail());
-	 		model.addAttribute("userphonenumber", accountDetail.getPhoneNumber());
+	 		model.addAttribute("Ccustomer", accountDetail);
+	 		model.addAttribute("accObj", Cuser);
 	    }
 	    else {System.out.println("nulllll");}
 		
         return "accounts";
     }
+	
+	@PostMapping("/saveCurrentAccount")
+	public String saveEditAccount(Model model, @ModelAttribute("accObj") Account accountObj ) {
+		Customer customer = cusRepo.getCustomerById(accountEdited.getCustomer().getId());
+		
+		customer.setName(accountObj.getCustomer().getName());
+		customer.setEmail(accountObj.getCustomer().getEmail());
+		customer.setPhoneNumber(accountObj.getCustomer().getPhoneNumber());
+		
+		
+		accountEdited.setUserName(accountObj.getUserName());
+		accountEdited.setPassword(accountObj.getPassword());
+		accountEdited.setCustomer(customer);
+		
+		
+		accRepo.save(accountEdited);
+		
+		return "redirect:/showaccount";
+	}
 
 	
 }
