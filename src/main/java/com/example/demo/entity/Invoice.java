@@ -86,8 +86,14 @@ public class Invoice {
 
 	public Invoice() {}
     
-    
-    public Invoice(int id, Date invoiceDate, int size, int paymentStatus, String paymentMethod, String currency,
+    public Invoice(int id, Customer customer, Date invoiceDate) {
+		super();
+		this.id = id;
+		this.invoiceDate = invoiceDate;
+		this.customer = customer;
+	}
+
+	public Invoice(int id, Date invoiceDate, int size, int paymentStatus, String paymentMethod, String currency,
             String intent, String description, double refundPercentage, String reason, Delivery delivery,
             List<InvoicesWithProducts> invoicesWithProducts, Customer customer) {
         super();
