@@ -10,6 +10,7 @@ import java.util.Locale;
 
 import com.example.demo.entity.Cart;
 import com.example.demo.respository.CartRepository;
+import com.example.demo.respository.ProductRepository;
 
 public class ValueRender {
     //format double value
@@ -155,5 +156,18 @@ public class ValueRender {
     	}
     	
     	return cartList;
+    }
+    
+    
+    //get product available quantity list in cart by selected cart ID list
+    public static int[] getFullCartAvailableQuantityList(int[] fullCartIdList, ProductRepository productRepo) {
+    	int[] result = new int[fullCartIdList.length];
+    	
+    	for(int i = 0; i < fullCartIdList.length; i++)
+    	{
+    		result[i] = productRepo.getAvailableQuantityById(fullCartIdList[i]);
+    	}
+    	
+    	return result;
     }
 }

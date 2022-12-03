@@ -20,6 +20,7 @@ import com.example.demo.entity.Customer;
 import com.example.demo.entity.dto.CustomerCart;
 import com.example.demo.respository.CartRepository;
 import com.example.demo.respository.CustomerRepository;
+import com.example.demo.respository.ProductRepository;
 import com.example.demo.util.GlobalStaticValues;
 import com.example.demo.util.ValueRender;
 
@@ -32,6 +33,10 @@ public class CartController {
     @Autowired
     CustomerRepository customerRepo;
     
+    @Autowired
+    ProductRepository productRepo;
+    
+    String message = "";
     static CustomerCart customerCart = new CustomerCart();
     
     
@@ -82,22 +87,29 @@ public class CartController {
     }
     
     
-    public void saveUpdatedCart(List<Cart> cartList, int[] quantList, boolean[] checkedList) {
+    public void saveUpdatedCart(List<Cart> cartList, int[] quantList, int[] availQuantList, boolean[] checkedList) {
+    	message = "";
     	for(int i = 0 ; i < cartList.size(); i++) {
     		int selectInd;
     		
     		if(checkedList[i] == true) {
     			selectInd = 1;
+    			
+    			//if selected quantity > available quantity -> set quantity = available quantity
+    			if(quantList[i] > availQuantList[i]) {
+    				quantList[i] = availQuantList[i];
+    				message += "Oops! We are having only " + String.valueOf(availQuantList[i]) + " available products for " + String.valueOf(cartList.get(i).getProduct().getName()) + "\n";
+    			}
     		} else selectInd = 0;
     		
     		Cart updatedCart = cartRepo.getCartById(cartList.get(i).getId());
     		updatedCart.setQuantity(quantList[i]);
     		updatedCart.setSelectStatus(selectInd);
     		
-//    		System.out.println(updatedCart.getId() + " " + updatedCart.getQuantity() + " " + updatedCart.getSelectStatus() + " " + updatedCart.getCustomer().getName());
-    		
     		cartRepo.save(updatedCart);
     	}
+    	
+    	System.out.println(message);
     }
     
     
@@ -105,9 +117,11 @@ public class CartController {
     	GlobalStaticValues.customerSelectedCartIdList = cusCart.getSelectedCartIdList();
 		GlobalStaticValues.customerFullCartQuantityList = cusCart.getFullCartQuantityList();
 		GlobalStaticValues.customerFullCartList = ValueRender.getCartListFromIdList(GlobalStaticValues.customerFullCartIdList, cartRepo);
+        GlobalStaticValues.customerFullCartAvailableQuantityList = ValueRender.getFullCartAvailableQuantityList(GlobalStaticValues.customerFullCartIdList, productRepo);
 		
 		int[] fullArr = GlobalStaticValues.customerFullCartIdList;
 		int[] selectedArr = cusCart.getSelectedCartIdList(); 
+		int[] fullCartAvailQuantArr = GlobalStaticValues.customerFullCartAvailableQuantityList;
 		boolean[] checkedArr = GlobalStaticValues.customerCheckedCartList(GlobalStaticValues.customerFullSelectStatusList);
 		int startInd = 0;
 		
@@ -128,7 +142,7 @@ public class CartController {
 		customerCart = cusCart;
 		customerCart.setCheckedList(checkedArr);
 		
-		saveUpdatedCart(GlobalStaticValues.customerFullCartList, GlobalStaticValues.customerFullCartQuantityList, checkedArr);
+		saveUpdatedCart(GlobalStaticValues.customerFullCartList, GlobalStaticValues.customerFullCartQuantityList, fullCartAvailQuantArr, checkedArr);
     }
     
     

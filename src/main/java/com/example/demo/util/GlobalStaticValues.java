@@ -17,9 +17,11 @@ public class GlobalStaticValues {
 	
 	public static int[] customerFullCartQuantityList = {};
 	
-	public static String[] customerFullCartSizeList = {};
-	
 	public static int[] customerFullSelectStatusList = {};
+	
+	public static int[] customerFullCartAvailableQuantityList = {};
+	
+	public static String[] customerFullCartSizeList = {};
 	
 	public static double customerInvoiceTotalPrice;
 	

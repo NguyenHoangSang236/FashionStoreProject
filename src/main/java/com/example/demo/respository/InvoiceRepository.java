@@ -1,12 +1,16 @@
 package com.example.demo.respository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.entity.Invoice;
 
 @Repository
 public interface InvoiceRepository extends JpaRepository<Invoice, Integer> {
-//	@Query(value = "", nativeQuery = true)
+	@Query(value = "select * from invoice where customer_id = :idVal", nativeQuery = true)
+	List<Invoice> getPaymentHistoryByCustomerId(@Param("idVal") int id);
 }

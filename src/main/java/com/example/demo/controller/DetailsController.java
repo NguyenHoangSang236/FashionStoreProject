@@ -125,13 +125,9 @@ public class DetailsController {
         	int id = cartRepo.getLastestCartId() + 1;
         	int quantity = 0;
         	
-//        	System.out.println(id);
-//        	System.out.println(currentProduct.getColor());
-//        	System.out.println(modelAddToCartProductInfo.getProductSize());
-        	 
         	Account currentAcount = (Account)session.getAttribute("currentuser");
         	Product product = productRepo.getProductDetailsByNameAndColorAndSize(realProductName, currentProduct.getColor(), modelAddToCartProductInfo.getProductSize());
-//        	System.out.println(product.getId());
+        	int availableQuantity = productRepo.getAvailableQuantityById(product.getId());
         	
         	Cart tmpCart = cartRepo.getCartByProductIdAndCustomerId(product.getId(), GlobalStaticValues.currentCustomer.getId());
         	System.out.println(currentProduct.getId() + " " + GlobalStaticValues.currentCustomer.getId());
@@ -140,13 +136,18 @@ public class DetailsController {
         	if(tmpCart != null) {
         		quantity = tmpCart.getQuantity();
         		id = tmpCart.getId();
-        		System.out.println(quantity);
+        	} 
+        	
+        	//if available quantity of product > selected product quantity --> save cart
+        	if(availableQuantity > quantity + modelAddToCartProductInfo.getQuantity()) {
+        		Customer customer = customerRepo.getCustomerByAccountId(currentAcount.getId());
+        	
+        		Cart newCart = new Cart(id, quantity + modelAddToCartProductInfo.getQuantity(), 0, 0, customer, product);
+        		cartRepo.save(newCart);
+        	} else {
+        		message = "Oops! We are having only " + String.valueOf(availableQuantity) + " available products";
         	}
         	
-        	Customer customer = customerRepo.getCustomerByAccountId(currentAcount.getId());
-        	Cart newCart = new Cart(id, quantity + modelAddToCartProductInfo.getQuantity(), 0, 0, customer, product);
-        	
-        	cartRepo.save(newCart);
         }
         else if(action.equals("need to login")) {
         	return "redirect:/loginpage";
