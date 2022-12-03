@@ -51,7 +51,6 @@ public class LoginPageController {
 	CartRepository cartRepo;
 	
 	LoginPage loginPage = new LoginPage();
-	String message = "";
 	
 	
 	@GetMapping("/loginpage")
@@ -66,15 +65,15 @@ public class LoginPageController {
 		if(action.equals("login")) {
 		    //username and password are null
 		    if(loginPage.getLoginUserName() == null && loginPage.getLoginPassword() == null) {
-	        	message = "Please input your Account User name and Password !!";
+	        	GlobalStaticValues.message = "Please input your Account User name and Password !!";
 	        }
 		    //password is null
 	        else if(loginPage.getLoginUserName() != null && loginPage.getLoginPassword() == null) {
-	        	message = "Please input Password !!";
+	        	GlobalStaticValues.message = "Please input Password !!";
 	        }
 		    //username is null
 	        else if(loginPage.getLoginUserName() == null && loginPage.getLoginPassword() != null) {
-	        	message = "Please input Account User name !!";
+	        	GlobalStaticValues.message = "Please input Account User name !!";
 	        }
 		    //account existed --> proceed login
 	        else {
@@ -102,7 +101,7 @@ public class LoginPageController {
 			    }
 			    //account is not existed, username is not null
 			    else {
-			    	message = "User name or password is invalid !!";
+			    	GlobalStaticValues.message = "User name or password is invalid !!";
 			    }
 	        }
 		}
@@ -113,7 +112,7 @@ public class LoginPageController {
 
 		    //not all information input
 		    if(loginPage.getFullName() == null || loginPage.getEmail() == null || loginPage.getPhoneNumber() == null || loginPage.getRegisterUserName() == null || loginPage.getRegisterPassword() == null) {
-		    	message = "Please input all information !!";
+		    	GlobalStaticValues.message = "Please input all information !!";
 		    }
 		    //account not existed --> create a new account and new customer
 		    else if(acc == null) {
@@ -135,7 +134,7 @@ public class LoginPageController {
 		if(action.equals("forgot")) {
 		    //username is null
 	        if(loginPage.getLoginUserName() == null) {
-	        	message = "Please input Account User name !!";
+	        	GlobalStaticValues.message = "Please input Account User name !!";
 	        }
 		    //account existed --> notice 'Check your email for your temporary password !!'
 	        else {

@@ -57,7 +57,6 @@ public class DetailsController {
     Product currentProduct;
     AddToCartProductInfo addToCartProduct = new AddToCartProductInfo();
     int defaultQuantity = 1;
-    String message = "";
     
     
     public void renderToProductDetails(HttpSession session, Model model, String realProductName, Product productDetail, HttpServletRequest request) {
@@ -119,7 +118,7 @@ public class DetailsController {
         String realProductName = ValueRender.linkToString(productName);
         
         if(modelAddToCartProductInfo.getProductSize() == null) {
-        	message = "Please choose a size first !!";
+        	GlobalStaticValues.message = "Please choose a size first !!";
         }
         else if(action.equals("logged in - add to cart")) {        	
         	int id = cartRepo.getLastestCartId() + 1;
@@ -145,7 +144,7 @@ public class DetailsController {
         		Cart newCart = new Cart(id, quantity + modelAddToCartProductInfo.getQuantity(), 0, 0, customer, product);
         		cartRepo.save(newCart);
         	} else {
-        		message = "Oops! We are having only " + String.valueOf(availableQuantity) + " available products";
+        		GlobalStaticValues.message = "Oops! We are having only " + String.valueOf(availableQuantity) + " available products";
         	}
         	
         }
@@ -176,7 +175,7 @@ public class DetailsController {
     	String realProductName = ValueRender.linkToString(productName);
         
         if(modelAddToCartProductInfo.getProductSize() == null) {
-        	message = "Please choose a size first !!";
+        	GlobalStaticValues.message = "Please choose a size first !!";
         }
         else if(action.equals("logged in - add to cart")) {        	
         	int id = cartRepo.getLastestCartId() + 1;

@@ -31,6 +31,8 @@ public class GlobalStaticValues {
 	
 	public static Product addToCartProduct = new Product();
 	
+	public static String message = "";
+	
 	public static List<Cart> customerFullCartList = new ArrayList<Cart>();
 	
 	public static boolean[] customerCheckedCartList(int[] selectStatusArr) {

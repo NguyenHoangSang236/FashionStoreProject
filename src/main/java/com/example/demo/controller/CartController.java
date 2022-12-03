@@ -36,7 +36,6 @@ public class CartController {
     @Autowired
     ProductRepository productRepo;
     
-    String message = "";
     static CustomerCart customerCart = new CustomerCart();
     
     
@@ -88,7 +87,7 @@ public class CartController {
     
     
     public void saveUpdatedCart(List<Cart> cartList, int[] quantList, int[] availQuantList, boolean[] checkedList) {
-    	message = "";
+    	GlobalStaticValues.message = "";
     	for(int i = 0 ; i < cartList.size(); i++) {
     		int selectInd;
     		
@@ -98,7 +97,7 @@ public class CartController {
     			//if selected quantity > available quantity -> set quantity = available quantity
     			if(quantList[i] > availQuantList[i]) {
     				quantList[i] = availQuantList[i];
-    				message += "Oops! We are having only " + String.valueOf(availQuantList[i]) + " available products for " + String.valueOf(cartList.get(i).getProduct().getName()) + "\n";
+    				GlobalStaticValues.message += "Oops! We are having only " + String.valueOf(availQuantList[i]) + " available products for " + String.valueOf(cartList.get(i).getProduct().getName()) + "\n";
     			}
     		} else selectInd = 0;
     		
@@ -109,7 +108,7 @@ public class CartController {
     		cartRepo.save(updatedCart);
     	}
     	
-    	System.out.println(message);
+    	System.out.println(GlobalStaticValues.message);
     }
     
     
