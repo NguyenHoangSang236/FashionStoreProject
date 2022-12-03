@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.example.demo.entity.Account;
 import com.example.demo.entity.Cart;
+import com.example.demo.entity.Customer;
 import com.example.demo.entity.dto.CheckoutInfo;
 import com.example.demo.respository.CartRepository;
 import com.example.demo.respository.CustomerRepository;
@@ -34,7 +35,14 @@ public class CheckOutController {
     @GetMapping("/checkout")
     public String checkout(HttpSession session, Model model) {
     	Account currentAccount = (Account)session.getAttribute("currentuser");
-    	
+	    
+	    if(currentAccount != null) {
+	    Customer Ccustomer = customerRepo.getCustomerByAccountId(currentAccount.getId());
+	    
+	    model.addAttribute("curentcusImage",Ccustomer.getImage());
+	    model.addAttribute("curentcusName",Ccustomer.getName());
+	    
+	    }
         //check customer logged in or not
         if(currentAccount != null)
         {   

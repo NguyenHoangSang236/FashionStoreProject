@@ -60,7 +60,7 @@
         <div class="offcanvas__nav__option">
             <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
             <a href="#"><img src="img/icon/heart.png" alt=""></a>
-            <a th:href="@{/cart-of-customer-id={id} (id = session.currentuser.id)}"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
+            <a th:href="@{/cart-of-customer-id={id} (id = session.currentuser.id)}"><img src="img/icon/newcart.png" alt=""> <span>0</span></a>
             <div class="formattedPrice()">$0.00</div>
         </div>
         <div id="mobile-menu-wrap"></div>
@@ -148,7 +148,7 @@
                         <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
                         <a href="#"><img src="img/icon/heart.png" alt=""></a>
                         <a th:if= "${session.currentuser != null}"
-                        th:href="@{/cart-of-customer-id={id} (id = ${session.currentuser.id})}"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
+                        th:href="@{/cart-of-customer-id={id} (id = ${session.currentuser.id})}"><img src="img/icon/newcart.png" alt=""> <span>0</span></a>
                         <div class="formattedPrice()">$0.00</div>
                     </div>
                 </div>
@@ -232,9 +232,10 @@
                             <div class="checkout__order">
                                 <h4 class="order__title">Your invoice</h4>
                                 <div class="checkout__order__products">Product <span>Total</span></div>
-                                <ul class="checkout__total__products">
-                                    <li  th:each="cartItem, cartListState: ${cartList}" th:text="|${cartListState.index + 1}. ${cartItem.getProduct().getName()}|"> 
-                                        <span th:inline="text" th:value="$|{cartItem.formatedTotalPrice()} vnd|"></span>
+                                <ul class="checkout__total__products" th:each="cartItem, cartListState: ${cartList}">
+                                    <li th:inline="text"> 
+                                        [[|${cartListState.index + 1}. ${cartItem.getProduct().getName()}]]
+                                        <span th:text="|${cartItem.formatedTotalPrice()} vnd|"> </span>                          
                                     </li>
                                 </ul>
                                 <ul class="checkout__total__all">
