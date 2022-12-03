@@ -1,6 +1,6 @@
 package com.example.demo.entity;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -8,9 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
@@ -42,7 +39,7 @@ public class Invoice {
 	Date invoiceDate;
 	
 	@Column(name = "Delivery_Status")
-	int size;
+	int deliveryStatus;
 	
 	@Column(name = "Payment_Status")
 	int paymentStatus;
@@ -62,6 +59,9 @@ public class Invoice {
 	@Column(name = "refund_percentage")
 	double refundPercentage;
 	
+	@Column(name = "total_price")
+	double totalPrice;
+	
 	@Column(name = "reason")
 	String reason;
 	
@@ -80,7 +80,7 @@ public class Invoice {
 	List<InvoicesWithProducts> invoicesWithProducts;
 	
 	@ManyToOne()
-	@MapsId("Customer_ID")
+	@MapsId("customer_id")
 	private Customer customer;
 	
 
@@ -93,13 +93,13 @@ public class Invoice {
 		this.customer = customer;
 	}
 
-	public Invoice(int id, Date invoiceDate, int size, int paymentStatus, String paymentMethod, String currency,
+	public Invoice(int id, Date invoiceDate, int deliveryStatus, int paymentStatus, String paymentMethod, String currency,
             String intent, String description, double refundPercentage, String reason, Delivery delivery,
             List<InvoicesWithProducts> invoicesWithProducts, Customer customer) {
         super();
         this.id = id;
         this.invoiceDate = invoiceDate;
-        this.size = size;
+        this.deliveryStatus = deliveryStatus;
         this.paymentStatus = paymentStatus;
         this.paymentMethod = paymentMethod;
         this.currency = currency;
@@ -111,12 +111,25 @@ public class Invoice {
         this.invoicesWithProducts = invoicesWithProducts;
         this.customer = customer;
     }
+	
+    public Invoice(int id,Date invoiceDate, int deliveryStatus, int paymentStatus, String paymentMethod, String currency,
+			String intent, String description, Customer customer, double totalPrice) {
+		super();
+        this.id = id;
+		this.invoiceDate = invoiceDate;
+		this.deliveryStatus = deliveryStatus;
+		this.paymentStatus = paymentStatus;
+		this.paymentMethod = paymentMethod;
+		this.currency = currency;
+		this.intent = intent;
+		this.description = description;
+		this.customer = customer;
+		this.totalPrice = totalPrice;
+	}
+    
+    
 
-
-
-
-
-    public double totalPrice() {
+	public double totalPrice() {
         double result = 0;
         
         for(int i = 0; i < this.invoicesWithProducts.size(); i++) {
@@ -150,13 +163,13 @@ public class Invoice {
     }
 
 
-    public int getSize() {
-        return size;
+    public int getDeliveryStatus() {
+        return deliveryStatus;
     }
 
 
-    public void setSize(int size) {
-        this.size = size;
+    public void setDeliveryStatus(int deliveryStatus) {
+        this.deliveryStatus = deliveryStatus;
     }
 
 
@@ -258,6 +271,14 @@ public class Invoice {
     public void setDescription(String description) {
         this.description = description;
     }
+
+	public double getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(double totalPrice) {
+		this.totalPrice = totalPrice;
+	}
     
     
 }

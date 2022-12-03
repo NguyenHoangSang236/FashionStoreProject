@@ -13,4 +13,8 @@ import com.example.demo.entity.Invoice;
 public interface InvoiceRepository extends JpaRepository<Invoice, Integer> {
 	@Query(value = "select * from invoice where customer_id = :idVal", nativeQuery = true)
 	List<Invoice> getPaymentHistoryByCustomerId(@Param("idVal") int id);
+	
+	
+	@Query(value = "select id from invoice order by id desc limit 1", nativeQuery = true)
+	int getLastestInvoiceId();
 }

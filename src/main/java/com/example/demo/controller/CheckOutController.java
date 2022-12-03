@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,8 +20,10 @@ import com.example.demo.entity.Cart;
 import com.example.demo.entity.Invoice;
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.dto.CheckoutInfo;
+import com.example.demo.entity.dto.InvoicesWithProducts;
 import com.example.demo.respository.CartRepository;
 import com.example.demo.respository.CustomerRepository;
+import com.example.demo.respository.InvoiceRepository;
 import com.example.demo.util.GlobalStaticValues;
 import com.example.demo.util.LoginState;
 import com.example.demo.util.ValueRender;
@@ -34,13 +37,25 @@ public class CheckOutController {
 	@Autowired
 	CustomerRepository customerRepo;
 	
+	@Autowired
+	InvoiceRepository invoiceRepo;
+	
 	List<Cart> cartList;
 	CheckoutInfo checkoutInfo = new CheckoutInfo();
 	Invoice newInvoice = new Invoice();
 	
 
-	public void createNewInvoice(CheckoutInfo checkoutInfo) {
+	public void createNewInvoice(CheckoutInfo checkoutInfo, Customer customer, List<Cart> cartList) {
+		Date currentDate = new Date();
+		int newInvoiceID = invoiceRepo.getLastestInvoiceId() + 1;
+		Invoice newInvoice = new Invoice(newInvoiceID, currentDate, 0, 1, "paypal", "vnd", checkoutInfo.getPaymentIntentNote(), checkoutInfo.getInvoiceNote(), customer, GlobalStaticValues.customerInvoiceTotalPrice);
 		
+		List<InvoicesWithProducts> invoiceProductsList = ValueRender.getInvoiceProductsListByCartIdList(cartList, newInvoice);
+		newInvoice.setInvoicesWithProducts(invoiceProductsList);
+		
+		System.out.println(newInvoice.getCustomer().getId() + " -- " + customer.getId());
+		
+//		invoiceRepo.save(newInvoice);
 	}
 	
 	
@@ -71,7 +86,6 @@ public class CheckOutController {
 	    	}
 	    	else {
 	    		GlobalStaticValues.message = "Please select products from your Cart that you want to buy!!";
-	    		System.out.println(GlobalStaticValues.message);
 	    		return "redirect:/cart-of-customer-account-id=" + currentAccount.getId();
 	    	}
         }
@@ -106,6 +120,8 @@ public class CheckOutController {
                     for(int i = 0; i < cartList.size(); i++) {
                     	System.out.println(cartList.get(i).formatedTotalPrice());
                     }
+                    
+                    createNewInvoice(checkoutInfo, Ccustomer, cartList);
                     
                     model.addAttribute("invoiceTotal", ValueRender.formatDoubleNumber(GlobalStaticValues.customerInvoiceTotalPrice));
                     model.addAttribute("cartList", cartList);

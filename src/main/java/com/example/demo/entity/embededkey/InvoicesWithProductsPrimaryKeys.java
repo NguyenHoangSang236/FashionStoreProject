@@ -18,4 +18,35 @@ public class InvoicesWithProductsPrimaryKeys implements Serializable {
     @Column(name = "invoice_id")
     int invoiceId;
 
+    
+    
+	public InvoicesWithProductsPrimaryKeys(int productId, int invoiceId) {
+		super();
+		this.productId = productId;
+		this.invoiceId = invoiceId;
+	}
+
+
+
+	public int getProductId() {
+		return productId;
+	}
+
+
+
+	public void setProductId(int productId) {
+		this.productId = productId;
+	}
+
+
+
+	public int getInvoiceId() {
+		return invoiceId;
+	}
+
+
+
+	public void setInvoiceId(int invoiceId) {
+		this.invoiceId = invoiceId;
+	}
 }

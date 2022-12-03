@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Locale;
 
 import com.example.demo.entity.Cart;
+import com.example.demo.entity.Invoice;
+import com.example.demo.entity.dto.InvoicesWithProducts;
+import com.example.demo.entity.embededkey.InvoicesWithProductsPrimaryKeys;
 import com.example.demo.respository.CartRepository;
 import com.example.demo.respository.ProductRepository;
 
@@ -166,6 +169,20 @@ public class ValueRender {
     	for(int i = 0; i < fullCartIdList.length; i++)
     	{
     		result[i] = productRepo.getAvailableQuantityById(fullCartIdList[i]);
+    	}
+    	
+    	return result;
+    }
+    
+    
+    
+    //get a products in invoice list by a cart ID list
+    public static List<InvoicesWithProducts> getInvoiceProductsListByCartIdList(List<Cart> cartList, Invoice invoice) {
+    	List<InvoicesWithProducts> result = new ArrayList<InvoicesWithProducts>();
+    	
+    	for(int i = 0; i < cartList.size(); i++) {
+    		InvoicesWithProductsPrimaryKeys id = new InvoicesWithProductsPrimaryKeys(cartList.get(i).getProduct().getId(), invoice.getId());
+    		result.add(new InvoicesWithProducts(id, cartList.get(i).getProduct(), invoice, cartList.get(i).getQuantity()));
     	}
     	
     	return result;
