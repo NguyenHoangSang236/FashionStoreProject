@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.example.demo.entity.Account;
 import com.example.demo.entity.Cart;
+import com.example.demo.entity.Invoice;
 import com.example.demo.entity.dto.CheckoutInfo;
 import com.example.demo.respository.CartRepository;
 import com.example.demo.respository.CustomerRepository;
@@ -29,6 +30,12 @@ public class CheckOutController {
 	
 	List<Cart> cartList;
 	CheckoutInfo checkoutInfo = new CheckoutInfo();
+	Invoice newInvoice = new Invoice();
+	
+
+	public void createNewInvoice(CheckoutInfo checkoutInfo) {
+		
+	}
 	
 	
     @GetMapping("/checkout")
