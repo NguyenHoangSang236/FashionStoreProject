@@ -43,6 +43,15 @@ public class Customer {
 	@Column(name = "Avatar")
 	String image;
 	
+	@Column(name = "Country")
+	String country;
+	
+	@Column(name = "Address")
+	String address;
+	
+	@Column(name = "City")
+	String city;
+	
 	@OneToOne
     @JoinColumn(name = "Account_ID", referencedColumnName = "id")
     private Account account;
