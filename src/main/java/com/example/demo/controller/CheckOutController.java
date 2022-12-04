@@ -54,7 +54,7 @@ public class CheckOutController {
 	Invoice newInvoice = new Invoice();
 	
 	
-
+	//create a new invoice -> insert into invoice and invoices_with_products table -> update sold_quantity and available_quantity of each product in invoice
 	public void createNewInvoice(CheckoutInfo checkoutInfo, Customer customer, List<Cart> cartList) {
 		Date currentDate = new Date();
 		int newInvoiceID = invoiceRepo.getLastestInvoiceId() + 1;
@@ -67,11 +67,14 @@ public class CheckOutController {
 		
 		for(int i = 0; i < invoiceProductsList.size(); i++) {
 			invoiceInsertRepository.insertInvoicesWithProducts(invoiceProductsList.get(i));
+			
 			Product product = productRepo.getProductById(invoiceProductsList.get(i).getId().getProductId());
 			int currentAvaiQuant = product.getAvailableQuantity();
 			int currentSoldQuant = product.getSoldQuantity();
 			product.setAvailableQuantity(currentAvaiQuant - invoiceProductsList.get(i).getQuantity());
 			product.setSoldQuantity(currentSoldQuant + currentSoldQuant);
+			
+			productRepo.save(product);
 		}
 		
 		GlobalStaticValues.message = "Place order successfully !!";
