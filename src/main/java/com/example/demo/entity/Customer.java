@@ -19,12 +19,11 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+@Data
 @Entity
 @Getter
 @Setter
 @Table(name = "customers")
-@DynamicInsert
-@DynamicUpdate
 public class Customer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -16,6 +16,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import com.example.demo.entity.dto.InvoicesWithProducts;
 
@@ -23,12 +25,11 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+@Data
 @Entity
 @Getter
 @Setter
 @Table(name = "invoice")
-@DynamicInsert
-@DynamicUpdate
 public class Invoice {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -65,6 +66,9 @@ public class Invoice {
 	@Column(name = "reason")
 	String reason;
 	
+	@Column(name = "admin_acceptance")
+	String adminAcceptance;
+	
 	@OneToOne(mappedBy = "invoice")
 	private Delivery delivery;
 	
@@ -80,7 +84,7 @@ public class Invoice {
 	List<InvoicesWithProducts> invoicesWithProducts;
 	
 	@ManyToOne()
-	@MapsId("customer_id")
+	@MapsId("Customer_ID")
 	private Customer customer;
 	
 
@@ -95,7 +99,7 @@ public class Invoice {
 
 	public Invoice(int id, Date invoiceDate, int deliveryStatus, int paymentStatus, String paymentMethod, String currency,
             String intent, String description, double refundPercentage, String reason, Delivery delivery,
-            List<InvoicesWithProducts> invoicesWithProducts, Customer customer) {
+            List<InvoicesWithProducts> invoicesWithProducts, Customer customer, String adminAcceptance) {
         super();
         this.id = id;
         this.invoiceDate = invoiceDate;
@@ -110,10 +114,11 @@ public class Invoice {
         this.delivery = delivery;
         this.invoicesWithProducts = invoicesWithProducts;
         this.customer = customer;
+        this.adminAcceptance = adminAcceptance;
     }
 	
     public Invoice(int id,Date invoiceDate, int deliveryStatus, int paymentStatus, String paymentMethod, String currency,
-			String intent, String description, Customer customer, double totalPrice) {
+			String intent, String description, Customer customer, double totalPrice, String adminAcceptance) {
 		super();
         this.id = id;
 		this.invoiceDate = invoiceDate;
@@ -125,6 +130,7 @@ public class Invoice {
 		this.description = description;
 		this.customer = customer;
 		this.totalPrice = totalPrice;
+        this.adminAcceptance = adminAcceptance;
 	}
     
     
@@ -279,6 +285,12 @@ public class Invoice {
 	public void setTotalPrice(double totalPrice) {
 		this.totalPrice = totalPrice;
 	}
-    
-    
+
+	public String getAdminAcceptance() {
+		return adminAcceptance;
+	}
+
+	public void setAdminAcceptance(String adminAcceptance) {
+		this.adminAcceptance = adminAcceptance;
+	}
 }

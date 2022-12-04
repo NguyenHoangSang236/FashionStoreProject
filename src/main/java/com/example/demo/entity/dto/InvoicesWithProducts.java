@@ -8,14 +8,21 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import com.example.demo.entity.Invoice;
 import com.example.demo.entity.Product;
 import com.example.demo.entity.embededkey.InvoicesWithProductsPrimaryKeys;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Data
+@Getter
+@Setter
 @Table(name = "invoices_with_products")
 public class InvoicesWithProducts {
     @EmbeddedId

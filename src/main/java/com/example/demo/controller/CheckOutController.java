@@ -18,12 +18,15 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.example.demo.entity.Account;
 import com.example.demo.entity.Cart;
 import com.example.demo.entity.Invoice;
+import com.example.demo.entity.Product;
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.dto.CheckoutInfo;
 import com.example.demo.entity.dto.InvoicesWithProducts;
 import com.example.demo.respository.CartRepository;
 import com.example.demo.respository.CustomerRepository;
+import com.example.demo.respository.InvoiceInsertRepository;
 import com.example.demo.respository.InvoiceRepository;
+import com.example.demo.respository.ProductRepository;
 import com.example.demo.util.GlobalStaticValues;
 import com.example.demo.util.LoginState;
 import com.example.demo.util.ValueRender;
@@ -34,28 +37,44 @@ public class CheckOutController {
 	@Autowired
 	CartRepository cartRepo;
 	
+	@Autowired 
+	ProductRepository productRepo;
+	
 	@Autowired
 	CustomerRepository customerRepo;
 	
 	@Autowired
 	InvoiceRepository invoiceRepo;
 	
+	@Autowired
+	InvoiceInsertRepository invoiceInsertRepository = new InvoiceInsertRepository();
+	
 	List<Cart> cartList;
 	CheckoutInfo checkoutInfo = new CheckoutInfo();
 	Invoice newInvoice = new Invoice();
+	
 	
 
 	public void createNewInvoice(CheckoutInfo checkoutInfo, Customer customer, List<Cart> cartList) {
 		Date currentDate = new Date();
 		int newInvoiceID = invoiceRepo.getLastestInvoiceId() + 1;
-		Invoice newInvoice = new Invoice(newInvoiceID, currentDate, 0, 1, "paypal", "vnd", checkoutInfo.getPaymentIntentNote(), checkoutInfo.getInvoiceNote(), customer, GlobalStaticValues.customerInvoiceTotalPrice);
+		Invoice newInvoice = new Invoice(newInvoiceID, currentDate, 0, 1, "paypal", "vnd", checkoutInfo.getPaymentIntentNote(), checkoutInfo.getInvoiceNote(), customer, GlobalStaticValues.customerInvoiceTotalPrice, "waiting");
 		
 		List<InvoicesWithProducts> invoiceProductsList = ValueRender.getInvoiceProductsListByCartIdList(cartList, newInvoice);
 		newInvoice.setInvoicesWithProducts(invoiceProductsList);
 		
-		System.out.println(newInvoice.getCustomer().getId() + " -- " + customer.getId());
+		invoiceInsertRepository.insertNewInvoice(newInvoice);
 		
-//		invoiceRepo.save(newInvoice);
+		for(int i = 0; i < invoiceProductsList.size(); i++) {
+			invoiceInsertRepository.insertInvoicesWithProducts(invoiceProductsList.get(i));
+			Product product = productRepo.getProductById(invoiceProductsList.get(i).getId().getProductId());
+			int currentAvaiQuant = product.getAvailableQuantity();
+			int currentSoldQuant = product.getSoldQuantity();
+			product.setAvailableQuantity(currentAvaiQuant - invoiceProductsList.get(i).getQuantity());
+			product.setSoldQuantity(currentSoldQuant + currentSoldQuant);
+		}
+		
+		GlobalStaticValues.message = "Place order successfully !!";
 	}
 	
 	
