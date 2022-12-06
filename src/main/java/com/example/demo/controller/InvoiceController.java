@@ -35,9 +35,22 @@ public class InvoiceController {
 	CustomerRepository cusRepo;
 	
 	@GetMapping("/invoice-control")
-    public String showAbout(HttpSession session,Model model, HttpServletRequest request ) {
+    public String invoiceControl(HttpSession session,Model model, HttpServletRequest request ) {
 		
         return "Invoice";
     }
-
+	
+	@GetMapping("/invoice-history")
+	public String invoiceHistory(HttpSession session,Model model, HttpServletRequest request ) {
+		Account Cuser = (Account)session.getAttribute("currentuser");
+	    
+	    if(Cuser != null) {
+	    Customer Ccustomer = cusRepo.getCustomerByAccountId(Cuser.getId());
+	    
+	    model.addAttribute("curentcusImage",Ccustomer.getImage());
+	    model.addAttribute("curentcusName",Ccustomer.getName());
+	    
+	    }
+        return "blog";
+    }
 }
