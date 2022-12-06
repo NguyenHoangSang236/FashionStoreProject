@@ -63,19 +63,19 @@
                 <span> Reports <i class="fas fa-angle-down"></i> </span>
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" th:href="@{invoice-control}">Invoice management</a>
+                <a class="dropdown-item" href="#">Daily Report</a>
                 <a class="dropdown-item" href="#">Weekly Report</a>
                 <a class="dropdown-item" href="#">Yearly Report</a>
               </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="products.html">
+              <a class="nav-link" href="products.html">
                 <i class="fas fa-shopping-cart"></i> Products
               </a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" th:href="@{accountmanagement}">
+              <a class="nav-link active" th:href="@{accountmanagement}">
                 <i class="far fa-user"></i> Accounts
               </a>
             </li>
@@ -111,103 +111,70 @@
       </div>
     </nav>
     <div class="container mt-5">
-      <form th:object="${productManagement}" method="post">
-        <div class="row tm-content-row">
-          <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 tm-block-col">
-            <div class="tm-bg-primary-dark tm-block tm-block-products">
-              <div class="tm-product-table-container">
-                  <table class="table table-hover tm-table-small tm-product-table m-0">
-                    <thead>
-                      <tr>
-                        <th scope="col">&nbsp;</th>
-                        <th scope="col">PRODUCT NAME</th>
-                        <th scope="col">UNIT SOLD</th>
-                        <th scope="col">IN STOCK</th>
-                        <th scope="col">IMPORT DATE</th>
-                        <th scope="col">&nbsp;</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr th:each="product, productsListState: ${productsList}">
-                        <th scope="row"><input type="checkbox" th:field="*{idList}" th:value="${product.id}"/></th>
-                        <td class="tm-product-name" th:text="${product.name + ' - color: ' + product.color + ' - size: ' + product.size}"></td>
-                        <td th:text="${product.soldQuantity}"></td>
-                        <td th:text="${product.getInStockQuantity()}"></td>
-                        <td th:text="${product.formattedImportedDate()}"></td>
-                        <!--<td>
-                          <a  class="tm-product-delete-link" type="submit" ">
-                            <i class="fa-regular fa-trash-can"></i>
-                          </a>
-                        </td>-->
-                      </tr>
-                    </tbody>
-                  </table>
-                  <button type="submit" name="action" value="delete selected products" class="btn btn-primary btn-block text-uppercase button-hover-blue-default" style="position: sticky; bottom: 53px">
-                    Delete selected products
-                  </button>
-                  <div style="position: sticky; 
-                              bottom: 50px;
-                              height:3px;
-                              background-color: #4e657a"></div>
-                  <a th:href="@{addproduct}" class="btn btn-primary btn-block text-uppercase m-0 button-hover-blue-default" style="position: sticky; bottom: 0px">Add new product</a>
-                </div>
-                <!-- table container th:attr="onclick=|productService.deleteProduct(96)|"-->
-              
-              </div>          
-            </div>
-            <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 tm-block-col">
-            <div class="tm-bg-primary-dark tm-block tm-block-product-categories">
-              <h2 class="tm-block-title">Product Categories</h2>
-              <div class="tm-product-table-container">
-                <table class="table tm-table-small tm-product-table">
+      <div class="row tm-content-row">
+        <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 tm-block-col">
+          <div class="tm-bg-primary-dark tm-block tm-block-products">
+            <div class="tm-product-table-container">
+              <form th:object="${selectedProduct}" method="post">
+                <table class="table table-hover tm-table-small tm-product-table m-0">
+                  <thead>
+                    <tr>
+                      <th scope="col">&nbsp;</th>
+                      <th scope="col">Invoice Date</th>
+                      <th scope="col">Payment Status</th>
+                      <th scope="col">Delivery Status</th>
+                      <th scope="col">Description</th>
+                      <th scope="col">Intent</th>
+                      <th scope="col">Accept</th>
+                      <th scope="col">Comfirm</th>
+                      <!-- <th scope="col">IMPORT DATE</th> -->
+                      <th scope="col">&nbsp;</th>
+                    </tr>
+                  </thead>
                   <tbody>
-                    <tr th:each="category, categoriesListState: ${cateList}">
-                      <td class="tm-product-name" th:text="${category.name}"></td>
-                      <td class="text-center">
-                        <button type="submit" name="action" th:value="'delete catalog ' + ${category.name}" style="background-color: transparent; border: none">
-                          <a class="tm-product-delete-link">
-                            <i class="fa-regular fa-trash-can"></i>
-                          </a>
-                        </button>
-                      </td>
+                    <tr >
+
+                        <th scope="row" > 1 </th>
+                        <td class="tm-product-name" >Ngay thang</td>
+                        <td >Da thanh toan </td>
+                        <td >Da giao hang</td>
+                        <td >mieu ta san pham</td>
+                        <td >????</td>
+                        <td >Awaiting</td>
+                        <td > <button class="fa-regular fa-trash-can" ></button></td>
+
+                      
+                      <!-- <td th:text="${product.formattedImportedDate()}"></td> -->
+                      <!-- <td>
+                        <a  class="tm-product-delete-link" th:href="" >
+                          <i class="fa-regular fa-trash-can"></i>
+                        </a>
+                      </td> -->
                     </tr>
                   </tbody>
                 </table>
-              </div>
-              <!-- table container -->
-              <a class="btn btn-primary btn-block text-uppercase mb-3 has-text-white" id="openModalCreateCategory">
-                Add new category
-              </a>
+                <button class="btn btn-primary btn-block text-uppercase button-hover-blue-default" type="submit" style="position: sticky; bottom: 53px">
+                  Delete selected products
+                </button>
+                <div style="position: sticky; 
+                            bottom: 50px;
+                            height:3px;
+                            background-color: #4e657a"></div>
+                <a th:href="@{addproduct}" class="btn btn-primary btn-block text-uppercase m-0 button-hover-blue-default" style="position: sticky; bottom: 0px">Add new product</a>
+              </form>
             </div>
-          </div>
+            <!-- table container th:attr="onclick=|productService.deleteProduct(96)|"-->
+            
+          </div>          
         </div>
-        <div class="modal" id="modalCreateCategory">
-          <div class="modal-background"></div>
-          <div class="modal-card">
-            <header class="modal-card-head">
-              <p class="modal-card-title m-0">Adding Category</p>
-            </header>
-            <section class="modal-card-body">
-              <div class="title is-6 mb-2">Category Name:</div>
-              <input type="text" th:field="*{newCatalogName}" class="input" placeholder="Ex: Shirts, Pants,...">
-            </section>
-            <footer class="modal-card-foot is-flex is-justify-content-center">
-              <button type="submit" name="action" value="add a new catalog" class="button is-success">
-                Save change
-              </button>
-            </footer>
-          </div>
-        </div>
-      </form>
+        
+      </div>
     </div>
 
+    
 
     <script>
-      let openModalCreateCategory = document.getElementById("openModalCreateCategory");
-      openModalCreateCategory.onclick = function () {
-        let modalCreateCategory = document.getElementById("modalCreateCategory");
-        modalCreateCategory.classList.add("is-active");
-      };
+      
 
       let modalList = document.querySelectorAll(".modal");
       modalList.forEach(modal => {
@@ -242,7 +209,7 @@
     <script>
       $(function() {
         $(".tm-product-name").on("click", function() {
-          window.location.href = "edit-product";
+          window.location.href = "edit-product.html";
         });
       });
     </script>
