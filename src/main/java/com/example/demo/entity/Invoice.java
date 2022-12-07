@@ -3,6 +3,7 @@ package com.example.demo.entity;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,8 +19,11 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import com.example.demo.entity.dto.InvoicesWithProducts;
+import com.example.demo.util.ValueRender;
 
 import lombok.Data;
 import lombok.Getter;
@@ -70,21 +74,14 @@ public class Invoice {
 	String adminAcceptance;
 	
 	@OneToOne(mappedBy = "invoice")
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Delivery delivery;
 	
-//	@ManyToMany
-//	@JoinTable(
-//            name = "invoices_with_products", 
-//            joinColumns = @JoinColumn(name = "Invoice_ID"), 
-//            inverseJoinColumns = {
-//                @JoinColumn(name = "Product_ID")})
-//	private List<Product> products;
-	
-	@OneToMany(mappedBy = "invoice")
+	@OneToMany(mappedBy = "invoice", cascade={CascadeType.ALL})
 	List<InvoicesWithProducts> invoicesWithProducts;
 	
-	@ManyToOne()
-	@MapsId("Customer_ID")
+	@ManyToOne
+	@MapsId("customer_id")
 	private Customer customer;
 	
 
@@ -146,6 +143,10 @@ public class Invoice {
         
         return result;
     }
+	
+	public String formattedInvoiceDate() {
+		return ValueRender.formatDateDMY(this.invoiceDate);
+	}
     
 
 

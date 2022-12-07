@@ -23,12 +23,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "delivery")
-@DynamicInsert
-@DynamicUpdate
 public class Delivery implements Serializable{
-	@Column(name = "Invoice_ID")
-	int invoiceId;
-	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Column(name = "Delivery_Date")
 	Date deliveryDate;
 	
@@ -36,7 +36,7 @@ public class Delivery implements Serializable{
 	int currentStatus;
 	
 	@ManyToOne
-	@MapsId("Shipper_ID")
+	@JoinColumn(name = "shipper_id")
 	Staff staff;
 	
 	@Id
@@ -46,4 +46,45 @@ public class Delivery implements Serializable{
 	
 	
 	public Delivery() {}
+
+	public Delivery(Date deliveryDate, int currentStatus, Staff staff, Invoice invoice) {
+		super();
+		this.deliveryDate = deliveryDate;
+		this.currentStatus = currentStatus;
+		this.staff = staff;
+		this.invoice = invoice;
+	}
+
+	
+	public Date getDeliveryDate() {
+		return deliveryDate;
+	}
+
+	public void setDeliveryDate(Date deliveryDate) {
+		this.deliveryDate = deliveryDate;
+	}
+
+	public int getCurrentStatus() {
+		return currentStatus;
+	}
+
+	public void setCurrentStatus(int currentStatus) {
+		this.currentStatus = currentStatus;
+	}
+
+	public Staff getStaff() {
+		return staff;
+	}
+
+	public void setStaff(Staff staff) {
+		this.staff = staff;
+	}
+
+	public Invoice getInvoice() {
+		return invoice;
+	}
+
+	public void setInvoice(Invoice invoice) {
+		this.invoice = invoice;
+	}
 }

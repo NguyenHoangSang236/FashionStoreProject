@@ -126,7 +126,7 @@ public class CheckOutController {
         	else {
         		checkoutInfo = new CheckoutInfo(GlobalStaticValues.currentCustomer.getName(), modelCheckoutInfo.getCountry(), modelCheckoutInfo.getAddress(), modelCheckoutInfo.getCity(), GlobalStaticValues.currentCustomer.getPhoneNumber(), GlobalStaticValues.currentCustomer.getEmail(), modelCheckoutInfo.getInvoiceNote(), modelCheckoutInfo.getPaymentIntentNote());
         		
-        		System.out.println(checkoutInfo.getAddress() + " " + checkoutInfo.getCity()+ " " + checkoutInfo.getCountry() + " " + checkoutInfo.getInvoiceNote() + " " + checkoutInfo.getPaymentIntentNote() + " " + checkoutInfo.getFullName() + " " + checkoutInfo.getPhone());
+//        		System.out.println(checkoutInfo.getAddress() + " " + checkoutInfo.getCity()+ " " + checkoutInfo.getCountry() + " " + checkoutInfo.getInvoiceNote() + " " + checkoutInfo.getPaymentIntentNote() + " " + checkoutInfo.getFullName() + " " + checkoutInfo.getPhone());
 
         		Account currentAccount = (Account)session.getAttribute("currentuser");
         	    
@@ -139,9 +139,9 @@ public class CheckOutController {
         	    
                     cartList = ValueRender.getCartListFromIdList(GlobalStaticValues.customerSelectedCartIdList, cartRepo);
                     
-                    for(int i = 0; i < cartList.size(); i++) {
-                    	System.out.println(cartList.get(i).formatedTotalPrice());
-                    }
+//                    for(int i = 0; i < cartList.size(); i++) {
+//                    	System.out.println(cartList.get(i).formatedTotalPrice());
+//                    }
                     
                     createNewInvoice(checkoutInfo, Ccustomer, cartList);
                     
