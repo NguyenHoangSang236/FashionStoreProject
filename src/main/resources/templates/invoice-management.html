@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Account Page - Admin HTML Template</title>
+    <title>Invoice Page - Admin HTML Template</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">    
     <link
@@ -28,7 +28,7 @@
     <nav class="navbar navbar-expand-xl">
       <div class="container h-100">
         <a class="navbar-brand" href="index.html">
-          <h1 class="tm-site-title mb-0">Account Admin</h1>
+          <h1 class="tm-site-title mb-0">Invoiceg Admin</h1>
         </a>
         <button
           class="navbar-toggler ml-auto mr-0"
@@ -111,7 +111,7 @@
       </div>
     </nav>
     <div class="container mt-5">
-      <div class="row tm-content-row">
+      <div class="row tm-content-row" style="justify-content:center;">
         <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 tm-block-col">
           <div class="tm-bg-primary-dark tm-block tm-block-products">
             <div class="tm-product-table-container">
@@ -119,43 +119,53 @@
                 <table class="table table-hover tm-table-small tm-product-table m-0">
                   <thead>
                     <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">Invoice Date</th>
+                      <th scope="col">Payment Status</th>
+                      <th scope="col">Currency</th> Status</th>
+                      <th scope="col">Payment Method</th>
+                      <th scope="col">Delivery Status</th>
+                      <th scope="col">Description</th>
+                      <th scope="col">Intent Content</th>
+                      <th scope="col">Acceptance Status</th>
+                      <th scope="col">Customer ID</th>
                       <th scope="col">&nbsp;</th>
-                      <th scope="col">Customer NAME</th>
-                      <th scope="col">EMAIL</th>
-                      <th scope="col">PHONE NUMBER</th>
-                      <th scope="col">USER NAME</th>
-                      <th scope="col">PASSWORD</th>
-                      <!-- <th scope="col">IMPORT DATE</th> -->
-                      <th scope="col">&nbsp;</th>
+                      <!--<th scope="col">&nbsp;</th>
+                      <th scope="col">&nbsp;</th>-->
                     </tr>
                   </thead>
                   <tbody>
-                    <tr th:each="list, listState: ${ListAccount}">
-
-                        <th scope="row"><input type="checkbox" th:field="*{idList}" th:value="${list.id}"/></th>
-                        <td class="tm-product-name" th:text="${list.getCustomer().getName()}"></td>
-                        <td th:text="${list.getCustomer().getEmail()}"></td>
-                        <td th:text="${list.getCustomer().getPhoneNumber()}"></td>
-                        <td th:text="${list.userName}"></td>
-                        <td th:text="${list.password}"></td>
-                      
-                      <!-- <td th:text="${product.formattedImportedDate()}"></td> -->
-                      <td>
-                        <a  class="tm-product-delete-link" th:href="@{/editcustomer-id={uID} (uID = ${list.getId()})}" >
-                          <i class="fa-regular fa-trash-can"></i>
-                        </a>
-                      </td>
+                    <tr th:each="invoice, invoiceListState: ${allInvoiceList}">
+                        <td th:text="${invoice.id}"> </td>
+                        <td th:text="${invoice.formattedInvoiceDate()}"> </td>
+                        <td th:text="(${invoice.paymentStatus} == 1)? 'Payed' : 'Not Payed'"> </td>
+                        <td th:text="${invoice.currency}" class="tm-product-name"> </td>
+                        <td th:text="${invoice.paymentMethod}" class="tm-product-name"> </td>
+                        <td th:text="(${invoice.deliveryStatus} == 1)? 'Shipped' : 'Not Shipped'"> </td>
+                        <td th:text="(${invoice.description} != null)? ${invoice.description} : '...'"> </td>
+                        <td th:text="(${invoice.intent} != null)? ${invoice.intent} : '...'"> </td>
+                        <td th:text="${invoice.adminAcceptance}" class="tm-product-name"> </td>
+                        <td th:text="${invoice.getCustomer().getId()}" class="tm-product-name"> </td>
+                        <td > 
+                          <button class="fa-solid fa-magnifying-glass tm-product-delete-link" type="submit" name="action" value="view this invoice" ></button>
+                        </td>
+                        <!--<td > 
+                          <button class="fa-solid fa-pen-to-square tm-product-delete-link" type="submit" name="action" value="edit this invoice" ></button>
+                        </td>
+                        <td > 
+                          <button class="fa-regular fa-trash-can tm-product-delete-link" type="submit" name="action" value="delete this invoice" ></button>
+                        </td>-->
                     </tr>
                   </tbody>
                 </table>
-                <button class="btn btn-primary btn-block text-uppercase button-hover-blue-default" type="submit" style="position: sticky; bottom: 53px">
-                  Delete selected accounts
+                <!--<button class="btn btn-primary btn-block text-uppercase button-hover-blue-default" type="submit" style="position: sticky; bottom: 53px">
+                  Delete selected invoices
                 </button>
                 <div style="position: sticky; 
                             bottom: 50px;
                             height:3px;
                             background-color: #4e657a"></div>
-                <a th:href="@{addproduct}" class="btn btn-primary btn-block text-uppercase m-0 button-hover-blue-default" style="position: sticky; bottom: 0px">Add new account</a>
+                <a class="btn btn-primary btn-block text-uppercase m-0 button-hover-blue-default" style="position: sticky; bottom: 0px">Add new Invoice</a>-->
               </form>
             </div>
             <!-- table container th:attr="onclick=|productService.deleteProduct(96)|"-->
