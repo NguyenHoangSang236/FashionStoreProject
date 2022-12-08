@@ -7,7 +7,7 @@
     <meta name="keywords" content="Male_Fashion, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Checkout</title>
+    <title>My Shopping Cart</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
@@ -21,13 +21,13 @@
     <link rel="stylesheet" href="css/nice-select.css" type="text/css">
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="CSS/style.css" type="text/css">
+    <link rel="stylesheet" href="css/bulma-checkradio.min.css" type="text/css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 </head>
 
-<body>
-    <!-- Page Preloder -->
-    <div id="preloder">
+     <!-- Page Preloder -->
+     <div id="preloder">
         <div class="loader"></div>
     </div>
 
@@ -60,7 +60,7 @@
         <div class="offcanvas__nav__option">
             <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
             <a href="#"><img src="img/icon/heart.png" alt=""></a>
-            <a th:href="@{/cart-of-customer-id={id} (id = session.currentuser.id)}"><img src="img/icon/newcart.png" alt=""> <span>0</span></a>
+            <a th:href="@{/cart-of-customer-account-id={id} (id = session.currentuser.id)}"><img src="img/icon/newcart.png" alt=""> <span>0</span></a>
             <div class="formattedPrice()">$0.00</div>
         </div>
         <div id="mobile-menu-wrap"></div>
@@ -148,7 +148,7 @@
                         <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
                         <a href="#"><img src="img/icon/heart.png" alt=""></a>
                         <a th:if= "${session.currentuser != null}"
-                        th:href="@{/cart-of-customer-id={id} (id = ${session.currentuser.id})}"><img src="img/icon/newcart.png" alt=""> <span>0</span></a>
+                        th:href="@{/cart-of-customer-account-id={id} (id = ${session.currentuser.id})}"><img src="img/icon/newcart.png" alt=""> <span>0</span></a>
                         <div class="formattedPrice()">$0.00</div>
                     </div>
                 </div>
@@ -164,11 +164,11 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb__text">
-                        <h4>Check Out</h4>
+                        <h4>Shopping Cart</h4>
                         <div class="breadcrumb__links">
                             <a href="./index.html">Home</a>
                             <a href="./shop.html">Shop</a>
-                            <span>Check Out</span>
+                            <span>Shopping Cart</span>
                         </div>
                     </div>
                 </div>
@@ -177,117 +177,77 @@
     </section>
     <!-- Breadcrumb Section End -->
 
-    <!-- Checkout Section Begin -->
-    <section class="checkout spad">
+    <!-- Shopping Cart Section Begin -->
+    <section class="shopping-cart spad">
         <div class="container">
-            <div class="checkout__form">
-                <form action="" method="post" th:object="${checkoutInfo}">
-                    <div class="row">
-                        <div class="col-lg-8 col-md-6">
-                            <h6 class="coupon__code"><span class="icon_tag_alt"></span> Have a coupon? <a href="#">Click
-                            here</a> to enter your code</h6>
-                            <h6 class="checkout__title">Billing Details</h6>
-                            <div class="checkout__input">
-                                <p>Full Name<span>*</span></p>
-                                <input type="text" th:field="*{fullName}" th:value="${currentCustomer.name}" th:placeholder="${currentCustomer.name}" disabled required title="Please edit this information at your Profile !!">
-                            </div>
-                            <div class="checkout__input">
-                                <p>Country<span>*</span></p>
-                                <input type="text" th:field="*{country}">
-                            </div>
-                            <div class="checkout__input">
-                                <p>Address<span>*</span></p>
-                                <input type="text" th:field="*{address}" placeholder="Street Address" class="checkout__input__add">
-                            </div>
-                            <div class="checkout__input">
-                                <p>Town/City<span>*</span></p>
-                                <input type="text" th:field="*{city}">
-                            </div>                   
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="checkout__input">
-                                        <p>Phone<span>*</span></p>
-                                        <input type="text" th:field="*{phone}" th:placeholder="${currentCustomer.phoneNumber}" disabled required title="Please edit this information at your Profile !!">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="checkout__input">
-                                        <p>Email<span>*</span></p>
-                                        <input type="text" th:field="*{email}" th:placeholder="${currentCustomer.email}" disabled required title="Please edit this information at your Profile !!">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="checkout__input">
-                                <p>Invoice notes<span>*</span></p>
-                                <input type="text" th:field="*{invoiceNote}"
-                                placeholder="Notes about your order, e.g. special notes for delivery.">
-                            </div>
-                            <div class="checkout__input">
-                                <p>Payment Intent notes<span>*</span></p>
-                                <input type="text" th:field="*{paymentIntentNote}"
-                                placeholder="Notes about your intent of payment, e.g. special notes for banking payment.">
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6">
-                            <div class="checkout__order">
-                                <h4 class="order__title">Your order</h4>
-                                <div class="checkout__order__products">Product <span>Total</span></div>
-                                <ul class="checkout__total__products" th:each="cartItem, cartListState: ${cartList}">
-                                    <li th:inline="text"> 
-                                        [[|${cartListState.index + 1}. ${cartItem.getProduct().getName()}]]
-                                        <span th:text="|${cartItem.formatedTotalPrice()} vnd|"> </span>                          
-                                    </li>
-                                </ul>
-                                <ul class="checkout__total__all">
-                                    <li>Total <span th:text="${invoiceTotal}"></span></li>
-                                </ul>
-                                <button type="submit" name="action" value="place order" class="site-btn">PLACE ORDER</button>
-                                <!-- Include the PayPal JavaScript SDK; replace "test" with your own sandbox Business account app client ID -->
-                                <script src="https://www.paypal.com/sdk/js?client-id=AbUOzHdwitRn-mCTn1eSVZITmCGk7A1zclLoIyspZfh1cf4QrfisJY5hsIc3ACd2_RUcJHKcNTsFeWqA&currency=USD"></script>
-                                <div id="paypal"> </div>
-                                <script th:inline="javascript">
-                                    let amountMoney = [[${invoiceTotal}]]
-                                    payMoney = amountMoney.split('.').join('')
-                                    //console.log(amountMoney)
-                                    
-                                    function usdToVND(money){
-                                        let moneyUsd = money/24510
-                                        moneyUsd = Math.round(moneyUsd)
-                                        return moneyUsd
-                                    }
-                                    
-                        
-                                    paypal.Buttons({
-                        
-                                    createOrder: function(data, actions) {
-                                    return actions.order.create({
-                                    purchase_units: [{
-                                        amount: {
-                                        value: usdToVND(payMoney),
-                                        }
-                                    }]
-                                    });
-                                    },
-                        
-                                    onApprove: function(data, actions) {
-                                    return actions.order.capture().then(function(orderData) {
-                        
-                                        console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-                                        var transaction = orderData.purchase_units[0].payments.captures[0];
-                                        alert('Thank you for your payment!');
-                        
-                                    });
-                                    }
-                                    }).render('#paypal');
-                                    </script>
-                            </div>
+            <form action="" th:object="${customerCart}" method="post">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="shopping__cart__table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="has-width-4rem"></th>
+                                        <th>Product</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="cartProduct, cartProductState: ${fullCartList}" id="table_row">
+                                        <!--<th scope="row"><input type="checkbox" th:field="*{fullCartList}" th:value="${cartProduct}" /></th>-->
+                                        <th scope="row">
+                                        </th>
+                                        <td class="product__cart__item">
+                                            <div class="product__cart__item__pic" style="width:6rem">
+                                                <img th:src="${cartProduct.getProduct().getImage1()}" alt="">
+                                            </div>
+                                            <div class="product__cart__item__text" style="margin-right: 5px; padding-top: 0">
+                                                <h6 th:text="${cartProduct.getProduct().getName()}"></h6>
+                                                <h5 th:text="${cartProduct.formatedPrice()} + ' vnd'"></h5>
+                                                <h4 th:text="${'Size: ' + cartProduct.getProduct().getSize().toUpperCase()}" class="mt-4" ></h4>
+                                            </div>
+                                        </td>
+                                        <td class="quantity__item">
+                                            <div class="quantity">
+                                                <div class="" style="width: 80px;">
+                                                    <input style="width: 50px;
+                                                    border: none;
+                                                    text-align: center;
+                                                    color: #111111;
+                                                    font-size: 16px;" type="text" th:field="*{fullCartQuantityList[__${cartProductState.index}__]}" th:value="${cartProduct.quantity}">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="cart__price" th:text="${cartProduct.formatedTotalPrice()} + ' vnd'"></td>
+                                        <td class="cart__close">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                </form>
-            </div>
+                    <div class="col-lg-4">
+                        <!--<div class="cart__discount">
+                            <h6>Discount codes</h6>
+                            <form action="#">
+                                <input type="text" placeholder="Coupon code">
+                                <button type="submit">Apply</button>
+                            </form>
+                        </div>-->
+                        <div class="cart__total">
+                            <h6>Cart total</h6>
+                            <ul>
+                                <li>Subtotal <span id ="subtotal" th:value="*{formatedCartSubtotal()}" type="text" th:text="*{formatedCartSubtotal()} + ' VND'"></span></li>
+                                <li>Total <span  th:text="*{formatedCartTotal} + ' VND'"></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </section>
-    <!-- Checkout Section End -->
+    <!-- Shopping Cart Section End -->
 
     <!-- Footer Section Begin -->
     <footer class="footer">
@@ -378,6 +338,23 @@
     <script src="js/mixitup.min.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        let shoppingcard = document.querySelector(".shopping-cart");
+        let valueTop = shoppingcard.offsetTop;
+
+        window.scroll({top: valueTop, behavior: 'smooth'});
+        setTimeout(function() {
+            document.querySelector([data - filter== ".best-seller"]).click();
+    },500)
+    </script>
+    <!--<script>
+        $(document).ready(function(){
+            $(".cart__close").click(function(){
+              $("#table_row").remove();
+            });
+          });
+    </script>-->
 </body>
 
 </html>
