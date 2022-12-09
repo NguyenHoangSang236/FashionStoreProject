@@ -181,7 +181,7 @@
     <section class="checkout spad">
         <div class="container">
             <div class="checkout__form">
-                <form action="" method="post" th:object="${checkoutInfo}">
+                <form id="formCheckout" action="checkout" method="post" th:object="${checkoutInfo}" >
                     <div class="row">
                         <div class="col-lg-8 col-md-6">
                             <h6 class="coupon__code"><span class="icon_tag_alt"></span> Have a coupon? <a href="#">Click
@@ -193,15 +193,15 @@
                             </div>
                             <div class="checkout__input">
                                 <p>Country<span>*</span></p>
-                                <input type="text" th:field="*{country}">
+                                <input type="text" th:field="*{country}" required >
                             </div>
                             <div class="checkout__input">
                                 <p>Address<span>*</span></p>
-                                <input type="text" th:field="*{address}" placeholder="Street Address" class="checkout__input__add">
+                                <input type="text" th:field="*{address}" placeholder="Street Address" class="checkout__input__add" required >
                             </div>
                             <div class="checkout__input">
                                 <p>Town/City<span>*</span></p>
-                                <input type="text" th:field="*{city}">
+                                <input type="text" th:field="*{city}" required >
                             </div>                   
                             <div class="row">
                                 <div class="col-lg-6">
@@ -244,9 +244,12 @@
                                 <button type="submit" name="action" value="place order" class="site-btn">PLACE ORDER</button>
                                 <!-- Include the PayPal JavaScript SDK; replace "test" with your own sandbox Business account app client ID -->
                                 <script src="https://www.paypal.com/sdk/js?client-id=AbUOzHdwitRn-mCTn1eSVZITmCGk7A1zclLoIyspZfh1cf4QrfisJY5hsIc3ACd2_RUcJHKcNTsFeWqA&currency=USD"></script>
-                                <div id="paypal"> </div>
+                                <div id="paypal" >
+
+                                </div>
                                 <script th:inline="javascript">
                                     let amountMoney = [[${invoiceTotal}]]
+                                    let cusName = [[${currentCustomer.name}]]
                                     payMoney = amountMoney.split('.').join('')
                                     //console.log(amountMoney)
                                     
@@ -264,7 +267,19 @@
                                     purchase_units: [{
                                         amount: {
                                         value: usdToVND(payMoney),
+                                        },
+                                        shipping: {
+                                            name: {
+                                            full_name: cusName
+                                            },
+                                            address: {
+                                            address_line_1: "Thu duc",
+                                            admin_area_2: "HCM",
+                                            postal_code: "10000",
+                                            country_code: "VN"
+                                            },       
                                         }
+
                                     }]
                                     });
                                     },
@@ -272,13 +287,12 @@
                                     onApprove: function(data, actions) {
                                     return actions.order.capture().then(function(orderData) {
                         
-                                        console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-                                        var transaction = orderData.purchase_units[0].payments.captures[0];
-                                        alert('Thank you for your payment!');
+                                        document.getElementById("formCheckout").submit();
                         
                                     });
                                     }
                                     }).render('#paypal');
+
                                     </script>
                             </div>
                         </div>
