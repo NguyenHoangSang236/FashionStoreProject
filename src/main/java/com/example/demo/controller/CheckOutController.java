@@ -154,6 +154,41 @@ public class CheckOutController {
                 }
         	}
     	}
+    	else {
+    		if(modelCheckoutInfo.getAddress() == null || modelCheckoutInfo.getCity() == null || modelCheckoutInfo.getCountry() == null || modelCheckoutInfo.getPaymentIntentNote() == null) {
+        		GlobalStaticValues.message = "Address, Town/City, Country and Payment Intent notes must be filled in !!";
+        	}
+        	else {
+        		checkoutInfo = new CheckoutInfo(GlobalStaticValues.currentCustomer.getName(), modelCheckoutInfo.getCountry(), modelCheckoutInfo.getAddress(), modelCheckoutInfo.getCity(), GlobalStaticValues.currentCustomer.getPhoneNumber(), GlobalStaticValues.currentCustomer.getEmail(), modelCheckoutInfo.getInvoiceNote(), modelCheckoutInfo.getPaymentIntentNote());
+        		
+//        		System.out.println(checkoutInfo.getAddress() + " " + checkoutInfo.getCity()+ " " + checkoutInfo.getCountry() + " " + checkoutInfo.getInvoiceNote() + " " + checkoutInfo.getPaymentIntentNote() + " " + checkoutInfo.getFullName() + " " + checkoutInfo.getPhone());
+
+        		Account currentAccount = (Account)session.getAttribute("currentuser");
+        	    
+            	//check customer logged in or not
+        	    if(currentAccount != null) {
+        		    Customer Ccustomer = customerRepo.getCustomerByAccountId(currentAccount.getId());
+        		    
+        		    model.addAttribute("curentcusImage",Ccustomer.getImage());
+        		    model.addAttribute("curentcusName",Ccustomer.getName());
+        	    
+                    cartList = ValueRender.getCartListFromIdList(GlobalStaticValues.customerSelectedCartIdList, cartRepo);
+                    
+//                    for(int i = 0; i < cartList.size(); i++) {
+//                    	System.out.println(cartList.get(i).formatedTotalPrice());
+//                    }
+                    
+                    createNewInvoice(checkoutInfo, Ccustomer, cartList);
+                    
+                    model.addAttribute("invoiceTotal", ValueRender.formatDoubleNumber(GlobalStaticValues.customerInvoiceTotalPrice));
+                    model.addAttribute("cartList", cartList);
+                    model.addAttribute("checkoutInfo", checkoutInfo);
+                    model.addAttribute("currentCustomer", GlobalStaticValues.currentCustomer);
+                	
+                    return "checkout";
+                }
+        	}
+    	}
     	return "checkout";
     }
 }

@@ -62,4 +62,22 @@ public class InvoiceController {
 	    
         return "invoice-history";
     }
+	@GetMapping("/invoice-details")
+	public String invoiceDetail(HttpSession session,Model model, HttpServletRequest request ) {
+		Account Cuser = (Account)session.getAttribute("currentuser");
+	    
+	    if(Cuser != null) {
+	    	Customer currentCustomer = cusRepo.getCustomerByAccountId(Cuser.getId());
+	    	
+	    	
+		    model.addAttribute("curentcusImage",currentCustomer.getImage());
+		    model.addAttribute("curentcusName",currentCustomer.getName());
+		   
+	    }
+	    else {
+			return "redirect:/loginpage";
+		}
+	    
+        return "invoice-detail";
+    }
 }
