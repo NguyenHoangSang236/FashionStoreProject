@@ -95,9 +95,9 @@ public class CheckOutController {
 	    		
 	    		cartList = ValueRender.getCartListFromIdList(GlobalStaticValues.customerSelectedCartIdList, cartRepo);
 	    		
-	    		for(int i = 0; i < cartList.size(); i++) {
-	    			System.out.println(cartList.get(i).formatedTotalPrice());
-	    		}
+//	    		for(int i = 0; i < cartList.size(); i++) {
+//	    			System.out.println(cartList.get(i).formatedTotalPrice());
+//	    		}
 	    		
 	    		model.addAttribute("invoiceTotal", ValueRender.formatDoubleNumber(GlobalStaticValues.customerInvoiceTotalPrice));
 	    		model.addAttribute("cartList", cartList);

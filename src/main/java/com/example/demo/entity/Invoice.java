@@ -132,21 +132,15 @@ public class Invoice {
     
     
 
-	public double totalPrice() {
-        double result = 0;
-        
-        for(int i = 0; i < this.invoicesWithProducts.size(); i++) {
-            int quantity = this.invoicesWithProducts.get(i).getQuantity();
-            double productPrice = this.invoicesWithProducts.get(i).getProduct().getPrice();
-            result += quantity * productPrice;
-        }
-        
-        return result;
+	public String fomattedTotalPrice() {
+        return ValueRender.formatDoubleNumber(this.totalPrice);
     }
 	
 	public String formattedInvoiceDate() {
 		return ValueRender.formatDateDMY(this.invoiceDate);
 	}
+	
+	
     
 
 

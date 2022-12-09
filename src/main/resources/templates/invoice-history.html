@@ -10,8 +10,8 @@
     <title>Male-Fashion | Template</title>
 
     <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Css Styles -->
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
@@ -194,12 +194,21 @@
                 </thead>
                 <tbody>
                     <tr th:each="invoice, invoiceHistoryListState: ${invoiceHistoryList}">
-                        <td >Ngay thang</td>
-                        <td >Da thanh toan </td>
-                        <td >Da giao hang</td>
-                        <td >mieu ta san pham</td>
-                        <td >????</td>
-                        <td >Awaiting</td>
+                        <td th:text="${invoice.id}"> </td>
+                        <td th:text="${invoice.formattedInvoiceDate()}"> </td>
+                        <td th:text="(${invoice.paymentStatus} == 1)? 'Payed' : 'Not Payed'"> </td>
+                        <td th:text="${invoice.currency.toUpperCase()}" class="tm-product-name"> </td>
+                        <td th:text="${invoice.paymentMethod.toUpperCase()}" class="tm-product-name"> </td>
+                        <td th:text="(${invoice.deliveryStatus} == 1)? 'Shipped' : 'Not Shipped'"> </td>
+                        <td th:text="(${invoice.description} != null)? ${invoice.description} : '...'"> </td>
+                        <td th:text="(${invoice.intent} != null)? ${invoice.intent} : '...'"> </td>
+                        <td th:text="${invoice.adminAcceptance.toUpperCase()}" class="tm-product-name"> </td>
+                        <td th:text="${invoice.fomattedTotalPrice()}" class="tm-product-name"> </td>
+                        <td > 
+                            <button type="submit" name="action" value="view this invoice" style="height: 2rem;width: 2rem;">
+                                <i class="fa-solid fa-magnifying-glass"></i>                            
+                            </button>
+                        </td>
                     </tr>
                 </tbody>
             </table>

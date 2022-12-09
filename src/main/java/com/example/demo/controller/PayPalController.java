@@ -26,7 +26,7 @@ public class PayPalController {
     @PostMapping("/pay")
     public String payment(@ModelAttribute("invoice") Invoice invoice) {
         try {
-            Payment payment = service.createPayment(invoice.totalPrice(), invoice.getCurrency(), invoice.getPaymentMethod(), invoice.getIntent(), invoice.getDescription(), "http://localhost:9090/" + CANCEL_URL, "http://localhost:9090/" + SUCCESS_URL);
+            Payment payment = service.createPayment(invoice.getTotalPrice(), invoice.getCurrency(), invoice.getPaymentMethod(), invoice.getIntent(), invoice.getDescription(), "http://localhost:9090/" + CANCEL_URL, "http://localhost:9090/" + SUCCESS_URL);
             for(Links link:payment.getLinks()) {
                 if(link.getRel().equals("approval_url")) {
                     return "redirect:"+link.getHref();
