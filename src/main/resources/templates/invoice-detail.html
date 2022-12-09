@@ -197,9 +197,6 @@
                                     <tr th:each="cartProduct, cartProductState: ${fullCartList}" id="table_row">
                                         <!--<th scope="row"><input type="checkbox" th:field="*{fullCartList}" th:value="${cartProduct}" /></th>-->
                                         <th scope="row">
-                                            <div class="">
-                                                <input type="checkbox" class="item-selected-shopping-cart" th:field="*{selectedCartIdList}" th:value="${cartProduct.id}" th:checked="${checkedCartList[__${cartProductState.index}__]}"/>
-                                            </div>
                                         </th>
                                         <td class="product__cart__item">
                                             <div class="product__cart__item__pic" style="width:6rem">
@@ -213,32 +210,21 @@
                                         </td>
                                         <td class="quantity__item">
                                             <div class="quantity">
-                                                <div class="pro-qty-2">
-                                                    <input type="text" th:field="*{fullCartQuantityList[__${cartProductState.index}__]}" th:value="${cartProduct.quantity}">
+                                                <div class="" style="width: 80px;">
+                                                    <input style="width: 50px;
+                                                    border: none;
+                                                    text-align: center;
+                                                    color: #111111;
+                                                    font-size: 16px;" type="text" th:field="*{fullCartQuantityList[__${cartProductState.index}__]}" th:value="${cartProduct.quantity}">
                                                 </div>
                                             </div>
                                         </td>
                                         <td class="cart__price" th:text="${cartProduct.formatedTotalPrice()} + ' vnd'"></td>
                                         <td class="cart__close">
-                                            <button type="submit" name="action" th:value="${cartProduct.id}" style="background: transparent; border: none"> 
-                                                <i class="fa fa-close"></i>
-                                            </button>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                <div class="continue__btn">
-                                    <a th:href="@{/shopproduct}">Continue Shopping</a>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                <div class="continue__btn update__btn">
-                                    <button class="primary-btn" type="submit" name="action" value="update"><i class="fa fa-spinner"></i> Update cart</button>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -255,7 +241,6 @@
                                 <li>Subtotal <span id ="subtotal" th:value="*{formatedCartSubtotal()}" type="text" th:text="*{formatedCartSubtotal()} + ' VND'"></span></li>
                                 <li>Total <span  th:text="*{formatedCartTotal} + ' VND'"></span></li>
                             </ul>
-                            <a th:href="@{/checkout}" class="primary-btn" type="submit">Proceed to checkout</a>
                         </div>
                     </div>
                 </div>
