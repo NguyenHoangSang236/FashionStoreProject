@@ -102,60 +102,60 @@ public class DetailsController {
     }
     
     
-    @GetMapping("/shop-details_name={productName}")
-    public String showDefaultProductDetails(HttpSession session, Model model, @PathVariable("productName") String productName, HttpServletRequest request) {
-        String realProductName = ValueRender.linkToString(productName);
-        currentProduct = productRepo.getDefaultProductDetailsByName(realProductName);
-
-        renderToProductDetails(session, model, realProductName, currentProduct, request);
-
-        return "shopdetails";
-    }
-    
-    
-    @PostMapping("/shop-details_name={productName}")
-    public String addToCartFromDefaultDetailPage(@RequestParam(value="action") String action, HttpSession session, Model model, @PathVariable("productName") String productName, HttpServletRequest request, @ModelAttribute("productDetail") Product productDetail, @ModelAttribute("addToCartProduct") AddToCartProductInfo modelAddToCartProductInfo) {
-        String realProductName = ValueRender.linkToString(productName);
-        
-        if(modelAddToCartProductInfo.getProductSize() == null) {
-        	GlobalStaticValues.message = "Please choose a size first !!";
-        }
-        else if(action.equals("logged in - add to cart")) {        	
-        	int id = cartRepo.getLastestCartId() + 1;
-        	int quantity = 0;
-        	
-        	Account currentAcount = (Account)session.getAttribute("currentuser");
-        	Product product = productRepo.getProductDetailsByNameAndColorAndSize(realProductName, currentProduct.getColor(), modelAddToCartProductInfo.getProductSize());
-        	int availableQuantity = productRepo.getAvailableQuantityById(product.getId());
-        	
-        	Cart tmpCart = cartRepo.getCartByProductIdAndCustomerId(product.getId(), GlobalStaticValues.currentCustomer.getId());
-        	System.out.println(currentProduct.getId() + " " + GlobalStaticValues.currentCustomer.getId());
-        	
-        	//if this product has already been in the cart --> quantity = this product's quantity
-        	if(tmpCart != null) {
-        		quantity = tmpCart.getQuantity();
-        		id = tmpCart.getId();
-        	} 
-        	
-        	//if available quantity of product > selected product quantity --> save cart
-        	if(availableQuantity > quantity + modelAddToCartProductInfo.getQuantity()) {
-        		Customer customer = customerRepo.getCustomerByAccountId(currentAcount.getId());
-        	
-        		Cart newCart = new Cart(id, quantity + modelAddToCartProductInfo.getQuantity(), 0, 0, customer, product);
-        		cartRepo.save(newCart);
-        	} else {
-        		GlobalStaticValues.message = "Oops! We are having only " + String.valueOf(availableQuantity) + " available products";
-        	}
-        	
-        }
-        else if(action.equals("need to login")) {
-        	return "redirect:/loginpage";
-        }
-
-        renderToProductDetails(session, model, realProductName, currentProduct, request);
-        
-    	return "shopdetails";
-    }
+//    @GetMapping("/shop-details_name={productName}")
+//    public String showDefaultProductDetails(HttpSession session, Model model, @PathVariable("productName") String productName, HttpServletRequest request) {
+//        String realProductName = ValueRender.linkToString(productName);
+//        currentProduct = productRepo.getDefaultProductDetailsByName(realProductName);
+//
+//        renderToProductDetails(session, model, realProductName, currentProduct, request);
+//
+//        return "shopdetails";
+//    }
+//    
+//    
+//    @PostMapping("/shop-details_name={productName}")
+//    public String addToCartFromDefaultDetailPage(@RequestParam(value="action") String action, HttpSession session, Model model, @PathVariable("productName") String productName, HttpServletRequest request, @ModelAttribute("productDetail") Product productDetail, @ModelAttribute("addToCartProduct") AddToCartProductInfo modelAddToCartProductInfo) {
+//        String realProductName = ValueRender.linkToString(productName);
+//        
+//        if(modelAddToCartProductInfo.getProductSize() == null) {
+//        	GlobalStaticValues.message = "Please choose a size first !!";
+//        }
+//        else if(action.equals("logged in - add to cart")) {        	
+//        	int id = cartRepo.getLastestCartId() + 1;
+//        	int quantity = 0;
+//        	
+//        	Account currentAcount = (Account)session.getAttribute("currentuser");
+//        	Product product = productRepo.getProductDetailsByNameAndColorAndSize(realProductName, currentProduct.getColor(), modelAddToCartProductInfo.getProductSize());
+//        	int availableQuantity = productRepo.getAvailableQuantityById(product.getId());
+//        	
+//        	Cart tmpCart = cartRepo.getCartByProductIdAndCustomerId(product.getId(), GlobalStaticValues.currentCustomer.getId());
+//        	System.out.println(currentProduct.getId() + " " + GlobalStaticValues.currentCustomer.getId());
+//        	
+//        	//if this product has already been in the cart --> quantity = this product's quantity
+//        	if(tmpCart != null) {
+//        		quantity = tmpCart.getQuantity();
+//        		id = tmpCart.getId();
+//        	} 
+//        	
+//        	//if available quantity of product > selected product quantity --> save cart
+//        	if(availableQuantity > quantity + modelAddToCartProductInfo.getQuantity()) {
+//        		Customer customer = customerRepo.getCustomerByAccountId(currentAcount.getId());
+//        	
+//        		Cart newCart = new Cart(id, quantity + modelAddToCartProductInfo.getQuantity(), 0, 0, customer, product);
+//        		cartRepo.save(newCart);
+//        	} else {
+//        		GlobalStaticValues.message = "Oops! We are having only " + String.valueOf(availableQuantity) + " available products";
+//        	}
+//        	
+//        }
+//        else if(action.equals("need to login")) {
+//        	return "redirect:/loginpage";
+//        }
+//
+//        renderToProductDetails(session, model, realProductName, currentProduct, request);
+//        
+//    	return "shopdetails";
+//    }
     
     
     
@@ -181,16 +181,12 @@ public class DetailsController {
         	int id = cartRepo.getLastestCartId() + 1;
         	int quantity = 0;
         	
-//        	System.out.println(id);
-//        	System.out.println(currentProduct.getColor());
-//        	System.out.println(modelAddToCartProductInfo.getProductSize());
-        	 
         	Account currentAcount = (Account)session.getAttribute("currentuser");
         	Product product = productRepo.getProductDetailsByNameAndColorAndSize(realProductName, color, modelAddToCartProductInfo.getProductSize());
-//        	System.out.println(product.getId());
+        	int availableQuantity = productRepo.getAvailableQuantityById(product.getId());
         	
         	Cart tmpCart = cartRepo.getCartByProductIdAndCustomerId(product.getId(), GlobalStaticValues.currentCustomer.getId());
-        	System.out.println(currentProduct.getId() + " " + GlobalStaticValues.currentCustomer.getId());
+        	System.out.println("input quantity: " + modelAddToCartProductInfo.getQuantity());
         	
         	//if this product has already been in the cart --> quantity = this product's quantity
         	if(tmpCart != null) {
@@ -199,10 +195,16 @@ public class DetailsController {
         		System.out.println(quantity);
         	}
         	
-        	Customer customer = customerRepo.getCustomerByAccountId(currentAcount.getId());
-        	Cart newCart = new Cart(id, quantity + modelAddToCartProductInfo.getQuantity(), 0, 0, customer, product);
+        	//if available quantity of product > selected product quantity --> save cart
+        	if(availableQuantity > quantity + modelAddToCartProductInfo.getQuantity()) {
+        		Customer customer = customerRepo.getCustomerByAccountId(currentAcount.getId());
+        		Cart newCart = new Cart(id, quantity + modelAddToCartProductInfo.getQuantity(), 0, 0, customer, product);
+        		cartRepo.save(newCart);
+        	} else {
+        		GlobalStaticValues.message = "Oops! We are having only " + String.valueOf(availableQuantity) + " available products";
+        		System.out.println(GlobalStaticValues.message);
+        	}
         	
-        	cartRepo.save(newCart);
         }
         else if(action.equals("need to login")) {
         	return "redirect:/loginpage";

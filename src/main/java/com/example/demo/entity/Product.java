@@ -196,7 +196,7 @@ public class Product implements Serializable {
         int priceAfterDiscount = (int) (this.price * ((100 - this.discount) / 100));
         return ValueRender.formatDoubleNumber(priceAfterDiscount);
     }
-    
+
     public String fomattedOriginalPrice() {
         return ValueRender.formatDoubleNumber(this.price);
     }

@@ -132,7 +132,7 @@ public class Invoice {
     
     
 
-	public String fomattedTotalPrice() {
+	public String formattedTotalPrice() {
         return ValueRender.formatDoubleNumber(this.totalPrice);
     }
 	

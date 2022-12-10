@@ -14,6 +14,7 @@ import org.hibernate.annotations.NotFoundAction;
 import com.example.demo.entity.Invoice;
 import com.example.demo.entity.Product;
 import com.example.demo.entity.embededkey.InvoicesWithProductsPrimaryKeys;
+import com.example.demo.util.ValueRender;
 
 import lombok.Data;
 import lombok.Getter;
@@ -52,6 +53,12 @@ public class InvoicesWithProducts {
         this.quantity = quantity;
     }
 
+    
+    public String formattedProductTotalPrice() {
+    	return ValueRender.formatDoubleNumber(this.quantity * (this.product.getPrice() * ((100 - this.product.getDiscount()) / 100)));
+    }
+    
+    
     public InvoicesWithProductsPrimaryKeys getId() {
         return id;
     }

@@ -119,7 +119,8 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo">
-                        <a th:href="@{home}">                            <div class="logo-shop">
+                        <a th:href="@{home}">                            
+                            <div class="logo-shop">
                                 Fool!st.
                             </div></a>
                     </div>
@@ -194,32 +195,26 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="cartProduct, cartProductState: ${fullCartList}" id="table_row">
-                                        <!--<th scope="row"><input type="checkbox" th:field="*{fullCartList}" th:value="${cartProduct}" /></th>-->
+                                    <tr th:each="invoiceProduct, productListState: ${productsList}" id="table_row">
+                                        <!--<th scope="row"><input type="checkbox" th:field="*{fullCartList}" th:value="${invoiceProduct}" /></th>-->
                                         <th scope="row">
                                         </th>
                                         <td class="product__cart__item">
                                             <div class="product__cart__item__pic" style="width:6rem">
-                                                <img th:src="${cartProduct.getProduct().getImage1()}" alt="">
+                                                <img th:src="${invoiceProduct.getProduct().getImage1()}" alt="">
                                             </div>
                                             <div class="product__cart__item__text" style="margin-right: 5px; padding-top: 0">
-                                                <h6 th:text="${cartProduct.getProduct().getName()}"></h6>
-                                                <h5 th:text="${cartProduct.formatedPrice()} + ' vnd'"></h5>
-                                                <h4 th:text="${'Size: ' + cartProduct.getProduct().getSize().toUpperCase()}" class="mt-4" ></h4>
+                                                <h6 th:text="${invoiceProduct.getProduct().getName()}"></h6>
+                                                <h5 th:text="${invoiceProduct.getProduct().formattedPrice()} + ' vnd'"></h5>
+                                                <h4 th:text="${'Size: ' + invoiceProduct.getProduct().getSize().toUpperCase()}" class="mt-4" ></h4>
                                             </div>
                                         </td>
                                         <td class="quantity__item">
                                             <div class="quantity">
-                                                <div class="" style="width: 80px;">
-                                                    <input style="width: 50px;
-                                                    border: none;
-                                                    text-align: center;
-                                                    color: #111111;
-                                                    font-size: 16px;" type="text" th:field="*{fullCartQuantityList[__${cartProductState.index}__]}" th:value="${cartProduct.quantity}">
-                                                </div>
+                                                <h5 th:text="${invoiceProduct.quantity}"></h5>
                                             </div>
                                         </td>
-                                        <td class="cart__price" th:text="${cartProduct.formatedTotalPrice()} + ' vnd'"></td>
+                                        <td class="cart__price" th:text="${invoiceProduct.formattedProductTotalPrice()} + ' vnd'"></td>
                                         <td class="cart__close">
                                         </td>
                                     </tr>
@@ -238,8 +233,7 @@
                         <div class="cart__total">
                             <h6>Cart total</h6>
                             <ul>
-                                <li>Subtotal <span id ="subtotal" th:value="*{formatedCartSubtotal()}" type="text" th:text="*{formatedCartSubtotal()} + ' VND'"></span></li>
-                                <li>Total <span  th:text="*{formatedCartTotal} + ' VND'"></span></li>
+                                <li>Total <span  th:text="${selectedInvoice.formattedTotalPrice()} + ' VND'"></span></li>
                             </ul>
                         </div>
                     </div>

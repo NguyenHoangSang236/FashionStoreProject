@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.example.demo.entity.Account;
 import com.example.demo.entity.Customer;
@@ -45,10 +46,10 @@ public class InvoiceController {
 	
 	@GetMapping("/invoice-history")
 	public String invoiceHistory(HttpSession session,Model model, HttpServletRequest request ) {
-		Account Cuser = (Account)session.getAttribute("currentuser");
+		Account currentAccount = (Account)session.getAttribute("currentuser");
 	    
-	    if(Cuser != null) {
-	    	Customer currentCustomer = cusRepo.getCustomerByAccountId(Cuser.getId());
+	    if(currentAccount != null) {
+	    	Customer currentCustomer = cusRepo.getCustomerByAccountId(currentAccount.getId());
 	    	
 	    	customerInvoiceHistoryList = invoiceRepo.getPaymentHistoryByCustomerId(currentCustomer.getId());
 	    	
@@ -62,17 +63,23 @@ public class InvoiceController {
 	    
         return "invoice-history";
     }
-	@GetMapping("/invoice-details")
-	public String invoiceDetail(HttpSession session,Model model, HttpServletRequest request ) {
-		Account Cuser = (Account)session.getAttribute("currentuser");
+	
+	
+	@GetMapping("/invoice-details-id={invoiceId}")
+	public String invoiceDetail(HttpSession session,Model model, HttpServletRequest request, @PathVariable("invoiceId") int invoiceId) {
+		Account currentAccount = (Account)session.getAttribute("currentuser");
 	    
-	    if(Cuser != null) {
-	    	Customer currentCustomer = cusRepo.getCustomerByAccountId(Cuser.getId());
+	    if(currentAccount != null) {
+	    	Customer currentCustomer = cusRepo.getCustomerByAccountId(currentAccount.getId());
 	    	
+	    	Invoice selectedInvoice = invoiceRepo.getInvoiceFromId(invoiceId);
 	    	
+	    	System.out.println(selectedInvoice.getInvoicesWithProducts().get(0).formattedProductTotalPrice());
+	    	
+	    	model.addAttribute("selectedInvoice", selectedInvoice);
+	    	model.addAttribute("productsList", selectedInvoice.getInvoicesWithProducts());
 		    model.addAttribute("curentcusImage",currentCustomer.getImage());
 		    model.addAttribute("curentcusName",currentCustomer.getName());
-		   
 	    }
 	    else {
 			return "redirect:/loginpage";

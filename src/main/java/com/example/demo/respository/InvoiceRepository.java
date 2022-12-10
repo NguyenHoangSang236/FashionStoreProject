@@ -21,4 +21,8 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Integer> {
 	
 	@Query(value = "select * from invoice", nativeQuery = true)
 	List<Invoice> getAllInvoices();
+	
+	
+	@Query(value = "select * from invoice where id = :idVal", nativeQuery = true)
+	Invoice getInvoiceFromId(@Param("idVal") int id);
 }
