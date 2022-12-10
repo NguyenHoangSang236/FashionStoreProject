@@ -300,13 +300,16 @@
                             <div class="product__item" >
                                 <div class="product__item__pic set-bg" th:data-setbg="${product.image1}">
                                     <ul class="product__hover">
+                                        <li>
+                                            <a th:href="@{/shop-details-by-color_name={productName}__color={color} (productName = ${product.formatProductNameToLink()}, color = ${product.color})}">
+                                                <img src="img/icon/search.png" alt="">
+                                            </a>
                                         </li>
-                                        <li><a th:href="@{/shop-details_name={productName} (productName = ${product.formatProductNameToLink()})}"><img src="img/icon/search.png" alt=""></a></li>
                                     </ul>
                                 </div>
                                 <div class="product__item__text">
                                     <h6 th:text="${product.name}"></h6>
-                                    <a th:href="@{/shop-details_name={productName} (productName = ${product.formatProductNameToLink()})}" class="add-cart">+ Add To Cart</a>
+                                    <a th:href="@{/shop-details-by-color_name={productName}__color={color} (productName = ${product.formatProductNameToLink()})}" class="add-cart">+ Add To Cart</a>
                                     <div class="row">
                                         <div class="rating" style="margin-left: 16px">
                                             <i class="fa fa-star" style="margin-left: 5px" th:each="ratingStar, ratingState: ${ratingStarArr}" th:if="${ratingState.index} < ${product.totalRatingStarPoint()}"></i>
