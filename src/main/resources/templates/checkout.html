@@ -193,15 +193,15 @@
                             </div>
                             <div class="checkout__input">
                                 <p>Country<span>*</span></p>
-                                <input type="text" th:field="*{country}" required >
+                                <input  onChange={handleChangeCountry(event)} type="text" th:field="*{country}" required >
                             </div>
                             <div class="checkout__input">
                                 <p>Address<span>*</span></p>
-                                <input type="text" th:field="*{address}" placeholder="Street Address" class="checkout__input__add" required >
+                                <input onChange={handleChangeAdress(event)} type="text" th:field="*{address}" placeholder="Street Address" class="checkout__input__add" required >
                             </div>
                             <div class="checkout__input">
                                 <p>Town/City<span>*</span></p>
-                                <input type="text" th:field="*{city}" required >
+                                <input onChange={handleChangeCity(event)} type="text" th:field="*{city}" required >
                             </div>                   
                             <div class="row">
                                 <div class="col-lg-6">
@@ -250,6 +250,10 @@
                                 <script th:inline="javascript">
                                     let amountMoney = [[${invoiceTotal}]]
                                     let cusName = [[${currentCustomer.name}]]
+                                    console.log(cusName)
+                                    var address1 = ""
+                                    var city = ""
+                                    var country = ""
                                     payMoney = amountMoney.split('.').join('')
                                     //console.log(amountMoney)
                                     
@@ -258,8 +262,17 @@
                                         moneyUsd = Math.round(moneyUsd)
                                         return moneyUsd
                                     }
+                                    function handleChangeAdress(event){
+                                        address1=event.target.value
+                                    }
+                                    function handleChangeCity(event){
+                                        city=event.target.value
+                                    }
+                                    function handleChangeCountry(event){
+                                        country=event.target.value
+                                        console.log(city, country)
+                                    }
                                     
-                        
                                     paypal.Buttons({
                         
                                     createOrder: function(data, actions) {
@@ -273,9 +286,9 @@
                                             full_name: cusName
                                             },
                                             address: {
-                                            address_line_1: "Thu duc",
-                                            admin_area_2: "HCM",
-                                            postal_code: "10000",
+                                            address_line_1: address1,
+                                            admin_area_2: city,
+                                            postal_code: country,
                                             country_code: "VN"
                                             },       
                                         }
@@ -286,7 +299,7 @@
                         
                                     onApprove: function(data, actions) {
                                     return actions.order.capture().then(function(orderData) {
-                        
+                                        
                                         document.getElementById("formCheckout").submit();
                         
                                     });
