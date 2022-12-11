@@ -23,7 +23,9 @@ import com.example.demo.entity.Customer;
 import com.example.demo.respository.AccountRepository;
 import com.example.demo.respository.CartRepository;
 import com.example.demo.respository.CustomerRepository;
+import com.example.demo.util.GlobalStaticValues;
 import com.example.demo.util.LoginState;
+import com.example.demo.util.ValueRender;
 
 @SessionAttributes("currentuser")
 @Controller
@@ -41,11 +43,28 @@ public class AccountController {
 	Customer customer = new Customer();
 	Account accountEdited;
 
+	
+	public String showMyProfileForm(HttpSession session,Model model, HttpServletRequest request) {
+		Account currentuser = (Account)session.getAttribute("currentuser");
+		accountEdited = currentuser;
+		
+	    if (currentuser != null) {
+	    	Customer accountDetail = cusRepo.getCustomerByAccountId(currentuser.getId());
+	 		model.addAttribute("Ccustomer", accountDetail);
+	 		model.addAttribute("accObj", currentuser);
+	    }
+	    else {
+	    	return "redirect:/loginpage";
+	    }
+		
+        return "accounts";
+	}
+	
+	
 	@PostMapping("/account")
 	public Account saveAccount(@Validated @RequestBody Account account) {
 		return accRepo.save(account);
 	}
-	
 	
 	@GetMapping("/account")
 	public List<Account> allAccount() {
@@ -54,41 +73,33 @@ public class AccountController {
 
 	
 	@GetMapping("/showaccount")
-    public String showAbout(HttpSession session,Model model, HttpServletRequest request ) {
-		
-		Account Cuser = (Account)session.getAttribute("currentuser");
-		accountEdited = Cuser;
-		Cookie[] cookies = request.getCookies();
-	    if (Cuser != null) {
-	        
-//	        Customer accountDetail = cusRepo.getCustomerById(Integer.valueOf(cookies[0].getValue()));
-	    	Customer accountDetail = cusRepo.getCustomerByAccountId(Cuser.getId());
-	 		model.addAttribute("Ccustomer", accountDetail);
-	 		model.addAttribute("accObj", Cuser);
-	    }
-	    else {System.out.println("nulllll");}
-		
-        return "accounts";
+    public String showAbout(HttpSession session, Model model, HttpServletRequest request ) {
+		return showMyProfileForm(session, model, request);
     }
 	
-	@PostMapping("/saveCurrentAccount")
-	public String saveEditAccount(Model model, @ModelAttribute("accObj") Account accountObj ) {
-		Customer customer = cusRepo.getCustomerById(accountEdited.getCustomer().getId());
-		
-		customer.setName(accountObj.getCustomer().getName());
-		customer.setEmail(accountObj.getCustomer().getEmail());
-		customer.setPhoneNumber(accountObj.getCustomer().getPhoneNumber());
-		
-		
-		accountEdited.setUserName(accountObj.getUserName());
-		accountEdited.setPassword(accountObj.getPassword());
-		accountEdited.setCustomer(customer);
-		
-		
-		accRepo.save(accountEdited);
-		
-		return "redirect:/showaccount";
+	@PostMapping("/showaccount")
+	public String saveEditAccount(Model model, @ModelAttribute("accObj") Account accountObj, HttpSession session, HttpServletRequest request) {
+		if(ValueRender.formattedInputString(accountObj.getCustomer().getName()) == "" || accountObj.getCustomer().getEmail() == null || accountObj.getPassword() == null || accountObj.getCustomer().getPhoneNumber() == null) {
+			GlobalStaticValues.message = "Please input all information !!";
+			System.out.println(GlobalStaticValues.message);
+			return showMyProfileForm(session, model, request);
+		}
+		else {
+			Customer customer = cusRepo.getCustomerById(accountEdited.getCustomer().getId());
+			
+			customer.setName(accountObj.getCustomer().getName());
+			customer.setEmail(accountObj.getCustomer().getEmail());
+			customer.setPhoneNumber(accountObj.getCustomer().getPhoneNumber());
+			
+			accountEdited.setUserName(accountObj.getUserName());
+			accountEdited.setPassword(accountObj.getPassword());
+			accountEdited.setCustomer(customer);
+			
+			System.out.println("..." + ValueRender.formattedInputString(accountObj.getCustomer().getName()) + "...");
+			
+//			accRepo.save(accountEdited);
+			
+			return showMyProfileForm(session, model, request);
+		}
 	}
-
-	
 }

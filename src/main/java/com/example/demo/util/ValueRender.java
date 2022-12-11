@@ -175,7 +175,6 @@ public class ValueRender {
     }
     
     
-    
     //get a products in invoice list by a cart ID list
     public static List<InvoicesWithProducts> getInvoiceProductsListByCartIdList(List<Cart> cartList, Invoice invoice) {
     	List<InvoicesWithProducts> result = new ArrayList<InvoicesWithProducts>();
@@ -186,5 +185,45 @@ public class ValueRender {
     	}
     	
     	return result;
+    }
+    
+    
+    //remove spaces at the beginning of the input text
+    public static String formattedInputString(String input) {
+    	int count = 0;
+    	
+    	 char[] charArr = input.toCharArray();
+    	 char[] resultCharArr = new char[charArr.length];
+         
+         for(int i = 0; i < charArr.length - 1; i++) {
+             if(i > 0) {
+            	if(charArr[i] != ' ' || (charArr[i] == ' ' && charArr[i - 1] != ' ')) {
+                	resultCharArr[count] = charArr[i];
+                	count++;
+                }
+             }
+             else {
+				if(charArr[i] != ' ') {
+					resultCharArr[count] = charArr[i];
+					count++;
+				}
+			}
+         }
+         
+    	return String.copyValueOf(resultCharArr).trim();
+    }
+    
+    
+    //check if the text has special sign 
+    public boolean hasSpecialSign (String input) {
+    	char[] testCharArr = input.toCharArray();
+    	
+    	for(int i = 0; i < testCharArr.length - 1; i++) {
+    		if(testCharArr[i] != 32 && testCharArr[i] < 65 && testCharArr[i] > 90 && testCharArr[i] < 97 && testCharArr[i] > 122) {
+    			return true;
+    		}
+    	}
+    	
+    	return false;
     }
 }
