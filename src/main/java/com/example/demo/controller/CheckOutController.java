@@ -55,10 +55,22 @@ public class CheckOutController {
 	
 	
 	//create a new invoice -> insert into invoice and invoices_with_products table -> update sold_quantity and available_quantity of each product in invoice
-	public void createNewInvoice(CheckoutInfo checkoutInfo, Customer customer, List<Cart> cartList) {
+	public void createNewInvoice(CheckoutInfo checkoutInfo, Customer customer, List<Cart> cartList, String paymentType) {
 		Date currentDate = new Date();
 		int newInvoiceID = invoiceRepo.getLastestInvoiceId() + 1;
-		Invoice newInvoice = new Invoice(newInvoiceID, currentDate, 0, 1, "paypal", "vnd", checkoutInfo.getPaymentIntentNote(), checkoutInfo.getInvoiceNote(), customer, GlobalStaticValues.customerInvoiceTotalPrice, "waiting");
+		String deliveryStatus;
+		String adminAcceptance;
+		
+		if(paymentType.equals("cod")) {
+			deliveryStatus = "acceptance waiting";
+			adminAcceptance = "waiting";
+		}
+		else {
+			deliveryStatus = "packing";
+			adminAcceptance = "accepted";
+		}
+		
+		Invoice newInvoice = new Invoice(newInvoiceID, currentDate, deliveryStatus, 1, paymentType, "vnd", checkoutInfo.getPaymentIntentNote(), checkoutInfo.getInvoiceNote(), customer, GlobalStaticValues.customerInvoiceTotalPrice, adminAcceptance);
 		
 		List<InvoicesWithProducts> invoiceProductsList = ValueRender.getInvoiceProductsListByCartIdList(cartList, newInvoice);
 		newInvoice.setInvoicesWithProducts(invoiceProductsList);
@@ -88,16 +100,12 @@ public class CheckOutController {
     	//check customer logged in or not
 	    if(currentAccount != null) {
 	    	if(GlobalStaticValues.customerSelectedCartIdList.length > 0) {
-	    		Customer Ccustomer = customerRepo.getCustomerByAccountId(currentAccount.getId());
+	    		Customer currentCustomer = customerRepo.getCustomerByAccountId(currentAccount.getId());
 	    		
-	    		model.addAttribute("curentcusImage",Ccustomer.getImage());
-	    		model.addAttribute("curentcusName",Ccustomer.getName());
+	    		model.addAttribute("curentcusImage",currentCustomer.getImage());
+	    		model.addAttribute("curentcusName",currentCustomer.getName());
 	    		
 	    		cartList = ValueRender.getCartListFromIdList(GlobalStaticValues.customerSelectedCartIdList, cartRepo);
-	    		
-//	    		for(int i = 0; i < cartList.size(); i++) {
-//	    			System.out.println(cartList.get(i).formatedTotalPrice());
-//	    		}
 	    		
 	    		model.addAttribute("invoiceTotal", ValueRender.formatDoubleNumber(GlobalStaticValues.customerInvoiceTotalPrice));
 	    		model.addAttribute("cartList", cartList);
@@ -119,76 +127,57 @@ public class CheckOutController {
     
     @PostMapping("/checkout")
     public String placeOrderSubmit(HttpSession session, Model model, HttpServletRequest request,@ModelAttribute("checkoutInfo") CheckoutInfo modelCheckoutInfo, @RequestParam(value="action") String action) {
+    	//if click at Place Order button --> COD payment
     	if(action.equals("place order")) {
-    		if(modelCheckoutInfo.getAddress() == null || modelCheckoutInfo.getCity() == null || modelCheckoutInfo.getCountry() == null || modelCheckoutInfo.getPaymentIntentNote() == null) {
-        		GlobalStaticValues.message = "Address, Town/City, Country and Payment Intent notes must be filled in !!";
-        	}
-        	else {
-        		checkoutInfo = new CheckoutInfo(GlobalStaticValues.currentCustomer.getName(), modelCheckoutInfo.getCountry(), modelCheckoutInfo.getAddress(), modelCheckoutInfo.getCity(), GlobalStaticValues.currentCustomer.getPhoneNumber(), GlobalStaticValues.currentCustomer.getEmail(), modelCheckoutInfo.getInvoiceNote(), modelCheckoutInfo.getPaymentIntentNote());
-        		
-//        		System.out.println(checkoutInfo.getAddress() + " " + checkoutInfo.getCity()+ " " + checkoutInfo.getCountry() + " " + checkoutInfo.getInvoiceNote() + " " + checkoutInfo.getPaymentIntentNote() + " " + checkoutInfo.getFullName() + " " + checkoutInfo.getPhone());
-
-        		Account currentAccount = (Account)session.getAttribute("currentuser");
-        	    
-            	//check customer logged in or not
-        	    if(currentAccount != null) {
-        		    Customer Ccustomer = customerRepo.getCustomerByAccountId(currentAccount.getId());
-        		    
-        		    model.addAttribute("curentcusImage",Ccustomer.getImage());
-        		    model.addAttribute("curentcusName",Ccustomer.getName());
-        	    
-                    cartList = ValueRender.getCartListFromIdList(GlobalStaticValues.customerSelectedCartIdList, cartRepo);
-                    
-//                    for(int i = 0; i < cartList.size(); i++) {
-//                    	System.out.println(cartList.get(i).formatedTotalPrice());
-//                    }
-                    
-                    createNewInvoice(checkoutInfo, Ccustomer, cartList);
-                    
-                    model.addAttribute("invoiceTotal", ValueRender.formatDoubleNumber(GlobalStaticValues.customerInvoiceTotalPrice));
-                    model.addAttribute("cartList", cartList);
-                    model.addAttribute("checkoutInfo", checkoutInfo);
-                    model.addAttribute("currentCustomer", GlobalStaticValues.currentCustomer);
-                	
-                    return "checkout";
-                }
-        	}
+    		checkoutInfo = new CheckoutInfo(GlobalStaticValues.currentCustomer.getName(), modelCheckoutInfo.getCountry(), modelCheckoutInfo.getAddress(), modelCheckoutInfo.getCity(), GlobalStaticValues.currentCustomer.getPhoneNumber(), GlobalStaticValues.currentCustomer.getEmail(), modelCheckoutInfo.getInvoiceNote(), modelCheckoutInfo.getPaymentIntentNote());
+    		
+    		Account currentAccount = (Account)session.getAttribute("currentuser");
+    	    
+        	//check customer logged in or not
+    	    if(currentAccount != null) {
+    		    Customer currentCustomer = customerRepo.getCustomerByAccountId(currentAccount.getId());
+    		    
+    		    model.addAttribute("curentcusImage",currentCustomer.getImage());
+    		    model.addAttribute("curentcusName",currentCustomer.getName());
+    	    
+                cartList = ValueRender.getCartListFromIdList(GlobalStaticValues.customerSelectedCartIdList, cartRepo);
+                
+                createNewInvoice(checkoutInfo, currentCustomer, cartList, "cod");
+                
+                model.addAttribute("invoiceTotal", ValueRender.formatDoubleNumber(GlobalStaticValues.customerInvoiceTotalPrice));
+                model.addAttribute("cartList", cartList);
+                model.addAttribute("checkoutInfo", checkoutInfo);
+                model.addAttribute("currentCustomer", GlobalStaticValues.currentCustomer);
+            	
+                return "checkout";
+    	    }
+    	    else return "redirect:/loginpage";
     	}
-    	else {
-    		if(modelCheckoutInfo.getAddress() == null || modelCheckoutInfo.getCity() == null || modelCheckoutInfo.getCountry() == null || modelCheckoutInfo.getPaymentIntentNote() == null) {
-        		GlobalStaticValues.message = "Address, Town/City, Country and Payment Intent notes must be filled in !!";
-        	}
-        	else {
-        		checkoutInfo = new CheckoutInfo(GlobalStaticValues.currentCustomer.getName(), modelCheckoutInfo.getCountry(), modelCheckoutInfo.getAddress(), modelCheckoutInfo.getCity(), GlobalStaticValues.currentCustomer.getPhoneNumber(), GlobalStaticValues.currentCustomer.getEmail(), modelCheckoutInfo.getInvoiceNote(), modelCheckoutInfo.getPaymentIntentNote());
-        		
-//        		System.out.println(checkoutInfo.getAddress() + " " + checkoutInfo.getCity()+ " " + checkoutInfo.getCountry() + " " + checkoutInfo.getInvoiceNote() + " " + checkoutInfo.getPaymentIntentNote() + " " + checkoutInfo.getFullName() + " " + checkoutInfo.getPhone());
-
-        		Account currentAccount = (Account)session.getAttribute("currentuser");
-        	    
-            	//check customer logged in or not
-        	    if(currentAccount != null) {
-        		    Customer Ccustomer = customerRepo.getCustomerByAccountId(currentAccount.getId());
-        		    
-        		    model.addAttribute("curentcusImage",Ccustomer.getImage());
-        		    model.addAttribute("curentcusName",Ccustomer.getName());
-        	    
-                    cartList = ValueRender.getCartListFromIdList(GlobalStaticValues.customerSelectedCartIdList, cartRepo);
-                    
-//                    for(int i = 0; i < cartList.size(); i++) {
-//                    	System.out.println(cartList.get(i).formatedTotalPrice());
-//                    }
-                    
-                    createNewInvoice(checkoutInfo, Ccustomer, cartList);
-                    
-                    model.addAttribute("invoiceTotal", ValueRender.formatDoubleNumber(GlobalStaticValues.customerInvoiceTotalPrice));
-                    model.addAttribute("cartList", cartList);
-                    model.addAttribute("checkoutInfo", checkoutInfo);
-                    model.addAttribute("currentCustomer", GlobalStaticValues.currentCustomer);
-                	
-                    return "checkout";
-                }
-        	}
-    	}
-    	return "checkout";
+    	//if click at PayPal button --> PayPal payment
+	    else {
+	    	checkoutInfo = new CheckoutInfo(GlobalStaticValues.currentCustomer.getName(), modelCheckoutInfo.getCountry(), modelCheckoutInfo.getAddress(), modelCheckoutInfo.getCity(), GlobalStaticValues.currentCustomer.getPhoneNumber(), GlobalStaticValues.currentCustomer.getEmail(), modelCheckoutInfo.getInvoiceNote(), modelCheckoutInfo.getPaymentIntentNote());
+	    		
+	    	Account currentAccount = (Account)session.getAttribute("currentuser");
+	    	    
+	      	//check customer logged in or not
+	        if(currentAccount != null) {
+	    	    Customer currentCustomer = customerRepo.getCustomerByAccountId(currentAccount.getId());
+	    	    
+	    	    model.addAttribute("curentcusImage",currentCustomer.getImage());
+	    	    model.addAttribute("curentcusName",currentCustomer.getName());
+	        
+	            cartList = ValueRender.getCartListFromIdList(GlobalStaticValues.customerSelectedCartIdList, cartRepo);
+	               
+	            createNewInvoice(checkoutInfo, currentCustomer, cartList, "paypal");
+	                
+	            model.addAttribute("invoiceTotal", ValueRender.formatDoubleNumber(GlobalStaticValues.customerInvoiceTotalPrice));
+	            model.addAttribute("cartList", cartList);
+	            model.addAttribute("checkoutInfo", checkoutInfo);
+	            model.addAttribute("currentCustomer", GlobalStaticValues.currentCustomer);
+	            	
+	            return "checkout";
+	        }
+	        else return "redirect:/loginpage";
+	    }    
     }
 }

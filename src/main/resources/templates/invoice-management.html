@@ -115,7 +115,7 @@
         <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 tm-block-col">
           <div class="tm-bg-primary-dark tm-block tm-block-products">
             <div class="tm-product-table-container">
-              <form th:object="${selectedProduct}" method="post">
+              <form method="post">
                 <table class="table table-hover tm-table-small tm-product-table m-0">
                   <thead>
                     <tr>
@@ -124,11 +124,12 @@
                       <th scope="col">Payment Status</th>
                       <th scope="col">Currency</th>
                       <th scope="col">Payment Method</th>
-                      <th scope="col">Delivery Status</th>
                       <th scope="col">Description</th>
-                      <th scope="col">Intent Content</th>
                       <th scope="col">Acceptance Status</th>
                       <th scope="col">Customer ID</th>
+                      <th scope="col">Delivery Status</th>
+                      <th scope="col" th:text="(${isInvoiceAcceptanceForm} == true) ? '&nbsp;' : 'Intent Content'"></th>
+                      <th scope="col" th:text="(${isInvoiceAcceptanceForm} == true) ? '&nbsp;' : 'Reason'"></th>
                       <th scope="col">&nbsp;</th>
                       <!--<th scope="col">&nbsp;</th>
                       <th scope="col">&nbsp;</th>-->
@@ -141,13 +142,20 @@
                         <td th:text="(${invoice.paymentStatus} == 1)? 'Payed' : 'Not Payed'"> </td>
                         <td th:text="${invoice.currency}" class="tm-product-name"> </td>
                         <td th:text="${invoice.paymentMethod}" class="tm-product-name"> </td>
-                        <td th:text="(${invoice.deliveryStatus} == 1)? 'Shipped' : 'Not Shipped'"> </td>
                         <td th:text="(${invoice.description} != null)? ${invoice.description} : '...'"> </td>
-                        <td th:text="(${invoice.intent} != null)? ${invoice.intent} : '...'"> </td>
                         <td th:text="${invoice.adminAcceptance}" class="tm-product-name"> </td>
                         <td th:text="${invoice.getCustomer().getId()}" class="tm-product-name"> </td>
+                        <td th:text="${invoice.deliveryStatus}" class="tm-product-name"> </td>
+                        <td th:switch="${isInvoiceAcceptanceForm}">
+                          <span th:case="false" th:text="(${invoice.reason} != null)? ${invoice.reason} : '...'"></span>
+                          <button th:case="true" class="fa-solid fa-circle-check tm-product-delete-link" type="submit" name="action" th:value="'accept invoice ' + ${invoice.id}" ></button>
+                        </td>
+                        <td th:switch="${isInvoiceAcceptanceForm}">
+                          <span th:case="false" th:text="(${invoice.intent} != null)? ${invoice.intent} : '...'"></span>
+                          <button th:case="true" class="fa-solid fa-xmark tm-product-delete-link" type="submit" name="action" th:value="'refuse invoice ' + ${invoice.id}" ></button>
+                        </td>                        
                         <td > 
-                          <button class="fa-solid fa-magnifying-glass tm-product-delete-link" type="submit" name="action" value="view this invoice" ></button>
+                          <button class="fa-solid fa-magnifying-glass tm-product-delete-link" type="submit" name="action" value="'view invoice ' + ${invoice.id}" ></button>
                         </td>
                         <!--<td > 
                           <button class="fa-solid fa-pen-to-square tm-product-delete-link" type="submit" name="action" value="edit this invoice" ></button>
@@ -158,16 +166,23 @@
                     </tr>
                   </tbody>
                 </table>
-                <!--<button class="btn btn-primary btn-block text-uppercase button-hover-blue-default" type="submit" style="position: sticky; bottom: 53px">
-                  Delete selected invoices
-                </button>
-                <div style="position: sticky; 
+                <!--<div style="position: sticky; 
                             bottom: 50px;
                             height:3px;
                             background-color: #4e657a"></div>
                 <a class="btn btn-primary btn-block text-uppercase m-0 button-hover-blue-default" style="position: sticky; bottom: 0px">Add new Invoice</a>-->
               </form>
             </div>
+            <p class="btn btn-primary btn-block text-uppercase button-hover-blue-default" >
+              <a th:href="@{/invoice-cod-accept}">
+                View Waiting COD Invoices
+              </a>
+            </p>
+            <p class="btn btn-primary btn-block text-uppercase button-hover-blue-default" >
+              <a th:href="@{/invoice-control}">
+                View All Invoices
+              </a>
+            </p>
             <!-- table container th:attr="onclick=|productService.deleteProduct(96)|"-->
             
           </div>          
