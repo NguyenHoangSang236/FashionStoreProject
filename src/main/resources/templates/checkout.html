@@ -11,7 +11,9 @@
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
-    rel="stylesheet">
+        rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 
     <!-- Css Styles -->
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
@@ -22,7 +24,8 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="css/toast.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 </head>
 
 <body>
@@ -41,7 +44,7 @@
             </div>
             <div class="offcanvas__top__hover">
                 <span>
-                    <img src="img/user.png" alt=""> 
+                    <img src="img/user.png" alt="">
                     <i class="arrow_carrot-down"></i>
                 </span>
                 <ul>
@@ -60,7 +63,8 @@
         <div class="offcanvas__nav__option">
             <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
             <a href="#"><img src="img/icon/heart.png" alt=""></a>
-            <a th:href="@{/cart-of-customer-id={id} (id = session.currentuser.id)}"><img src="img/icon/newcart.png" alt=""> <span>0</span></a>
+            <a th:href="@{/cart-of-customer-id={id} (id = session.currentuser.id)}"><img src="img/icon/newcart.png"
+                    alt=""> <span>0</span></a>
             <div class="formattedPrice()">$0.00</div>
         </div>
         <div id="mobile-menu-wrap"></div>
@@ -83,31 +87,33 @@
                     <div class="col-lg-6 col-md-5">
                         <div class="header__top__right is-flex is-justify-content-right">
                             <div class="header__top__links " style="margin-block: auto;">
-                                <a th:if= "${session.currentuser == null}"  th:href="@{loginpage}">Sign in</a>
+                                <a th:if="${session.currentuser == null}" th:href="@{loginpage}">Sign in</a>
                                 <a href="#">FAQs</a>
                             </div>
-                            <div class="dropdown is-right is-hoverable" th:if= "${session.currentuser != null}" >
+                            <div class="dropdown is-right is-hoverable" th:if="${session.currentuser != null}">
                                 <div class="dropdown-trigger">
-                                  <div class="button dropdown-profile" aria-haspopup="true" aria-controls="dropdown-menu">
-                                    <span>  
-                                        <img height="30" width="30"  class="has-img-is-rouned"
-                                        th:src="${curentcusImage}">
-                                        <span th:if= "${session.currentuser != null}" class="has-text-white" th:text="${curentcusName}" ></span>  
-                                    </span>
-                                    <span class="icon is-small has-text-white">
-                                        <i class="arrow_carrot-down"></i>
-                                    </span>
-                                  </div>
+                                    <div class="button dropdown-profile" aria-haspopup="true"
+                                        aria-controls="dropdown-menu">
+                                        <span>
+                                            <img height="30" width="30" class="has-img-is-rouned"
+                                                th:src="${curentcusImage}">
+                                            <span th:if="${session.currentuser != null}" class="has-text-white"
+                                                th:text="${curentcusName}"></span>
+                                        </span>
+                                        <span class="icon is-small has-text-white">
+                                            <i class="arrow_carrot-down"></i>
+                                        </span>
+                                    </div>
                                 </div>
                                 <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                                  <div class="dropdown-content">
-                                    <a class="dropdown-item" th:href="@{showaccount}">
-                                      My Profile
-                                    </a>
-                                    <a class="dropdown-item" th:href="@{logout}">
-                                        Logout
-                                      </a>
-                                  </div>
+                                    <div class="dropdown-content">
+                                        <a class="dropdown-item" th:href="@{showaccount}">
+                                            My Profile
+                                        </a>
+                                        <a class="dropdown-item" th:href="@{logout}">
+                                            Logout
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -119,9 +125,11 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo">
-                        <a th:href="@{home}">                            <div class="logo-shop">
+                        <a th:href="@{home}">
+                            <div class="logo-shop">
                                 Fool!st.
-                            </div></a>
+                            </div>
+                        </a>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
@@ -147,8 +155,9 @@
                     <div class="header__nav__option">
                         <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
                         <a href="#"><img src="img/icon/heart.png" alt=""></a>
-                        <a th:if= "${session.currentuser != null}"
-                        th:href="@{/cart-of-customer-id={id} (id = ${session.currentuser.id})}"><img src="img/icon/newcart.png" alt=""> <span>0</span></a>
+                        <a th:if="${session.currentuser != null}"
+                            th:href="@{/cart-of-customer-id={id} (id = ${session.currentuser.id})}"><img
+                                src="img/icon/newcart.png" alt=""> <span>0</span></a>
                         <div class="formattedPrice()">$0.00</div>
                     </div>
                 </div>
@@ -179,53 +188,60 @@
 
     <!-- Checkout Section Begin -->
     <section class="checkout spad">
+        <div id="snackbar">Some text some message..</div>
         <div class="container">
             <div class="checkout__form">
-                <form id="formCheckout" action="checkout" method="post" th:object="${checkoutInfo}" >
+                <form id="formCheckout" action="checkout" method="post" th:object="${checkoutInfo}">
                     <div class="row">
                         <div class="col-lg-8 col-md-6">
                             <h6 class="coupon__code"><span class="icon_tag_alt"></span> Have a coupon? <a href="#">Click
-                            here</a> to enter your code</h6>
+                                    here</a> to enter your code</h6>
                             <h6 class="checkout__title">Billing Details</h6>
                             <div class="checkout__input">
                                 <p>Full Name<span>*</span></p>
-                                <input type="text" th:field="*{fullName}" th:value="${currentCustomer.name}" th:placeholder="${currentCustomer.name}" disabled required title="Please edit this information at your Profile !!">
+                                <input type="text" th:field="*{fullName}" th:value="${currentCustomer.name}"
+                                    th:placeholder="${currentCustomer.name}" disabled required
+                                    title="Please edit this information at your Profile !!">
                             </div>
                             <div class="checkout__input">
                                 <p>Country<span>*</span></p>
-                                <input  onChange={handleChangeCountry(event)} type="text" th:field="*{country}" required >
+                                <input onChange={handleChangeCountry(event)} type="text" th:field="*{country}" required>
                             </div>
                             <div class="checkout__input">
                                 <p>Address<span>*</span></p>
-                                <input onChange={handleChangeAdress(event)} type="text" th:field="*{address}" placeholder="Street Address" class="checkout__input__add" required >
+                                <input onChange={handleChangeAdress(event)} type="text" th:field="*{address}"
+                                    placeholder="Street Address" class="checkout__input__add" required>
                             </div>
                             <div class="checkout__input">
                                 <p>Town/City<span>*</span></p>
-                                <input onChange={handleChangeCity(event)} type="text" th:field="*{city}" required >
-                            </div>                   
+                                <input onChange={handleChangeCity(event)} type="text" th:field="*{city}" required>
+                            </div>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Phone<span>*</span></p>
-                                        <input type="text" th:field="*{phone}" th:placeholder="${currentCustomer.phoneNumber}" disabled required title="Please edit this information at your Profile !!">
+                                        <input type="text" th:field="*{phone}"
+                                            th:placeholder="${currentCustomer.phoneNumber}" disabled required
+                                            title="Please edit this information at your Profile !!">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Email<span>*</span></p>
-                                        <input type="text" th:field="*{email}" th:placeholder="${currentCustomer.email}" disabled required title="Please edit this information at your Profile !!">
+                                        <input type="text" th:field="*{email}" th:placeholder="${currentCustomer.email}"
+                                            disabled required title="Please edit this information at your Profile !!">
                                     </div>
                                 </div>
                             </div>
                             <div class="checkout__input">
                                 <p>Invoice notes<span>*</span></p>
                                 <input type="text" th:field="*{invoiceNote}"
-                                placeholder="Notes about your order, e.g. special notes for delivery.">
+                                    placeholder="Notes about your order, e.g. special notes for delivery.">
                             </div>
                             <div class="checkout__input">
                                 <p>Payment Intent notes<span>*</span></p>
                                 <input type="text" th:field="*{paymentIntentNote}"
-                                placeholder="Notes about your intent of payment, e.g. special notes for banking payment.">
+                                    placeholder="Notes about your intent of payment, e.g. special notes for banking payment.">
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6">
@@ -233,86 +249,96 @@
                                 <h4 class="order__title">Your order</h4>
                                 <div class="checkout__order__products">Product <span>Total</span></div>
                                 <ul class="checkout__total__products" th:each="cartItem, cartListState: ${cartList}">
-                                    <li th:inline="text"> 
+                                    <li th:inline="text">
                                         [[|${cartListState.index + 1}. ${cartItem.getProduct().getName()}]]
-                                        <span th:text="|${cartItem.formatedTotalPrice()} vnd|"> </span>                          
+                                        <span th:text="|${cartItem.formatedTotalPrice()} vnd|"> </span>
                                     </li>
                                 </ul>
                                 <ul class="checkout__total__all">
                                     <li>Total <span th:text="${invoiceTotal}"></span></li>
                                 </ul>
-                                <button type="submit" name="action" value="place order" class="site-btn">PLACE ORDER</button>
+                                <button type="submit" name="action" value="place order" class="site-btn">PLACE
+                                    ORDER</button>
                                 <!-- Include the PayPal JavaScript SDK; replace "test" with your own sandbox Business account app client ID -->
-                                <script src="https://www.paypal.com/sdk/js?client-id=AbUOzHdwitRn-mCTn1eSVZITmCGk7A1zclLoIyspZfh1cf4QrfisJY5hsIc3ACd2_RUcJHKcNTsFeWqA&currency=USD"></script>
-                                <div id="paypal" >
+                                <script
+                                    src="https://www.paypal.com/sdk/js?client-id=AbUOzHdwitRn-mCTn1eSVZITmCGk7A1zclLoIyspZfh1cf4QrfisJY5hsIc3ACd2_RUcJHKcNTsFeWqA&currency=USD"></script>
+                                <div id="paypal">
 
                                 </div>
                                 <script th:inline="javascript">
-                                    let amountMoney = [[${invoiceTotal}]]
-                                    let cusName = [[${currentCustomer.name}]]
+                                    let amountMoney = [[${ invoiceTotal }]]
+                                    let cusName = [[${ currentCustomer.name }]]
                                     console.log(cusName)
                                     var address1 = ""
                                     var city = ""
                                     var country = ""
                                     payMoney = amountMoney.split('.').join('')
                                     //console.log(amountMoney)
-                                    
-                                    function usdToVND(money){
-                                        let moneyUsd = money/24510
+
+                                    function usdToVND(money) {
+                                        let moneyUsd = money / 24510
                                         moneyUsd = Math.round(moneyUsd)
                                         return moneyUsd
                                     }
-                                    function handleChangeAdress(event){
-                                        address1=event.target.value
+                                    function handleChangeAdress(event) {
+                                        address1 = event.target.value
                                     }
-                                    function handleChangeCity(event){
-                                        city=event.target.value
+                                    function handleChangeCity(event) {
+                                        city = event.target.value
                                     }
-                                    function handleChangeCountry(event){
-                                        country=event.target.value
+                                    function handleChangeCountry(event) {
+                                        country = event.target.value
                                         console.log(city, country)
                                     }
-                                    
-                                    paypal.Buttons({
-                        
-                                    createOrder: function(data, actions) {
-                                    return actions.order.create({
-                                    purchase_units: [{
-                                        amount: {
-                                        value: usdToVND(payMoney),
-                                        },
-                                        shipping: {
-                                            name: {
-                                            full_name: cusName
-                                            },
-                                            address: {
-                                            address_line_1: address1,
-                                            admin_area_2: city,
-                                            postal_code: country,
-                                            country_code: "VN"
-                                            },       
-                                        }
 
-                                    }]
-                                    });
-                                    },
-                        
-                                    onApprove: function(data, actions) {
-                                    return actions.order.capture().then(function(orderData) {
-                                        
-                                        document.getElementById("formCheckout").submit();
-                        
-                                    });
-                                    }
+                                    paypal.Buttons({
+
+                                        createOrder: function (data, actions) {
+                                            return actions.order.create({
+                                                purchase_units: [{
+                                                    amount: {
+                                                        value: usdToVND(payMoney),
+                                                    },
+                                                    shipping: {
+                                                        name: {
+                                                            full_name: cusName
+                                                        },
+                                                        address: {
+                                                            address_line_1: address1,
+                                                            admin_area_2: city,
+                                                            postal_code: country,
+                                                            country_code: "VN"
+                                                        },
+                                                    }
+
+                                                }]
+                                            });
+                                        },
+
+                                        onApprove: function (data, actions) {
+                                            return actions.order.capture().then(function (orderData) {
+
+                                                document.getElementById("formCheckout").submit();
+
+                                            });
+                                        }
                                     }).render('#paypal');
 
-                                    </script>
+                                </script>
                             </div>
                         </div>
                     </div>
                 </form>
+                <button onclick="myFunction();">ORDER</button>
             </div>
         </div>
+        <script th:inline="javascript">
+            function myFunction() {
+                var x = document.getElementById("snackbar");
+                x.className = "show";
+                setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+            }
+        </script>
     </section>
     <!-- Checkout Section End -->
 
@@ -373,7 +399,7 @@
                                 document.write(new Date().getFullYear());
                             </script>2020
                             All rights reserved | This template is made with <i class="fa fa-heart-o"
-                            aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                                aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
                         </p>
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                     </div>

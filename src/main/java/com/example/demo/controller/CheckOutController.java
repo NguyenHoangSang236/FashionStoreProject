@@ -118,8 +118,8 @@ public class CheckOutController {
     
     
     @PostMapping("/checkout")
-    public String placeOrderSubmit(HttpSession session, Model model, HttpServletRequest request,@ModelAttribute("checkoutInfo") CheckoutInfo modelCheckoutInfo, @RequestParam(value="action") String action) {
-    	if(action.equals("place order")) {
+    public String placeOrderSubmit(HttpSession session, Model model, HttpServletRequest request,@ModelAttribute("checkoutInfo") CheckoutInfo modelCheckoutInfo, @RequestParam(required=false, value="action") String action) {
+    	if(action == "place order") {
     		if(modelCheckoutInfo.getAddress() == null || modelCheckoutInfo.getCity() == null || modelCheckoutInfo.getCountry() == null || modelCheckoutInfo.getPaymentIntentNote() == null) {
         		GlobalStaticValues.message = "Address, Town/City, Country and Payment Intent notes must be filled in !!";
         	}
