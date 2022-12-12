@@ -36,6 +36,8 @@ public class ProductServiceImpl implements ProductService{
     
     private List<Product> products;
     
+    
+    
     @Override
     public Page<Product> findPaginated(Pageable pageable) {
         products = productRepo.getAllProducts();
@@ -155,5 +157,25 @@ public class ProductServiceImpl implements ProductService{
             productRepo.deleteById(productId);
         }
     }
+
+
+	@Override
+	public Page<Product> findByFilters(Pageable pageable, String query) {
+		products = productRepo.getProductsByName(query);
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startProduct = pageSize * currentPage;
+        List<Product> list;
+        
+        if(products.size() < startProduct) {
+            list = Collections.emptyList();
+        }
+        else {
+            int toIndex = Math.min(startProduct + pageSize, products.size());
+            list = products.subList(startProduct, toIndex);
+        }
+        
+        return new PageImpl<Product>(list, PageRequest.of(currentPage, pageSize), products.size());
+	}
     
 }

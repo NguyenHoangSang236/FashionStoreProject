@@ -9,14 +9,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.Account;
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.Invoice;
+import com.example.demo.entity.dto.CheckoutInfo;
 import com.example.demo.respository.AccountRepository;
 import com.example.demo.respository.CustomerRepository;
 import com.example.demo.respository.InvoiceRepository;
+import com.example.demo.util.ValueRender;
 
 
 @Controller
@@ -33,19 +38,88 @@ public class InvoiceController {
 	String message = "";
 	List<Invoice> mngInvoiceList;
 	List<Invoice> customerInvoiceHistoryList;
+	boolean isInvoiceAcceptanceForm;
 	
 	
 	@GetMapping("/invoice-control")
-    public String invoiceControl(HttpSession session, Model model, HttpServletRequest request ) {
-		mngInvoiceList = invoiceRepo.getAllInvoices();
+    public String allInvoices(HttpSession session, Model model, HttpServletRequest request ) {
+		Account currentAccount = (Account)session.getAttribute("currentuser");
 		
-		model.addAttribute("allInvoiceList", mngInvoiceList);
-		
-        return "invoice-management";
+		if(currentAccount != null) {
+			mngInvoiceList = invoiceRepo.getAllInvoices();
+			isInvoiceAcceptanceForm = false;
+			
+			model.addAttribute("allInvoiceList", mngInvoiceList);
+			model.addAttribute("isInvoiceAcceptanceForm", isInvoiceAcceptanceForm);
+			
+	        return "invoice-management";
+		}
+		else {
+			return "redirect:/loginpage";
+		}
     }
 	
+	
+	@GetMapping("/invoice-cod-accept")
+	public String waitingCodInvoices(HttpSession session, Model model, HttpServletRequest request ) {
+		Account currentAccount = (Account)session.getAttribute("currentuser");
+		
+		if(currentAccount != null) {
+			mngInvoiceList = invoiceRepo.getWaitingCodInvoices();
+			isInvoiceAcceptanceForm = true;
+			
+			model.addAttribute("allInvoiceList", mngInvoiceList);
+			model.addAttribute("isInvoiceAcceptanceForm", isInvoiceAcceptanceForm);
+			
+	        return "invoice-management";
+		}
+		else {
+			return "redirect:/loginpage";
+		}
+    }
+	
+	
+	@PostMapping("/invoice-cod-accept")
+	public String waitingCodInvoicesEvent(HttpSession session, Model model, HttpServletRequest request, @RequestParam(value="action") String action) {
+		Account currentAccount = (Account)session.getAttribute("currentuser");
+		
+		if(currentAccount != null) {
+			isInvoiceAcceptanceForm = true;
+			
+			if(action.contains("accept invoice")) {
+				int selectedInvoiceId = Integer.parseInt(ValueRender.getSubstring(action, 15, action.length()));
+				
+				Invoice selectedInvoice = invoiceRepo.getInvoiceById(selectedInvoiceId);
+				selectedInvoice.setDeliveryStatus("packing");
+				selectedInvoice.setAdminAcceptance("accepted");
+				
+				invoiceRepo.save(selectedInvoice);
+			}
+			else if(action.contains("refuse invoice")) {
+				int selectedInvoiceId = Integer.parseInt(ValueRender.getSubstring(action, 15, action.length()));
+				
+				Invoice selectedInvoice = invoiceRepo.getInvoiceById(selectedInvoiceId);
+				selectedInvoice.setDeliveryStatus("not shipped");
+				selectedInvoice.setAdminAcceptance("refused");
+				
+				invoiceRepo.save(selectedInvoice);
+			}
+			
+			mngInvoiceList = invoiceRepo.getWaitingCodInvoices();
+			
+			model.addAttribute("allInvoiceList", mngInvoiceList);
+			model.addAttribute("isInvoiceAcceptanceForm", isInvoiceAcceptanceForm);
+			
+	        return "invoice-management";
+		}
+		else {
+			return "redirect:/loginpage";
+		}
+    }
+	
+	
 	@GetMapping("/invoice-history")
-	public String invoiceHistory(HttpSession session,Model model, HttpServletRequest request ) {
+	public String invoiceHistory(HttpSession session, Model model, HttpServletRequest request ) {
 		Account currentAccount = (Account)session.getAttribute("currentuser");
 	    
 	    if(currentAccount != null) {
@@ -66,13 +140,13 @@ public class InvoiceController {
 	
 	
 	@GetMapping("/invoice-details-id={invoiceId}")
-	public String invoiceDetail(HttpSession session,Model model, HttpServletRequest request, @PathVariable("invoiceId") int invoiceId) {
+	public String invoiceDetails(HttpSession session,Model model, HttpServletRequest request, @PathVariable("invoiceId") int invoiceId) {
 		Account currentAccount = (Account)session.getAttribute("currentuser");
 	    
 	    if(currentAccount != null) {
 	    	Customer currentCustomer = cusRepo.getCustomerByAccountId(currentAccount.getId());
 	    	
-	    	Invoice selectedInvoice = invoiceRepo.getInvoiceFromId(invoiceId);
+	    	Invoice selectedInvoice = invoiceRepo.getInvoiceById(invoiceId);
 	    	
 	    	System.out.println(selectedInvoice.getInvoicesWithProducts().get(0).formattedProductTotalPrice());
 	    	

@@ -33,7 +33,13 @@ public class Delivery implements Serializable{
 	Date deliveryDate;
 	
 	@Column(name = "Current_Status")
-	int currentStatus;
+	String currentStatus;
+	
+	@Column(name = "Additional_shipper_comment")
+	String additionalShipperComment;
+	
+	@Column(name = "Evidence_image")
+	String evidenceImage;
 	
 	@ManyToOne
 	@JoinColumn(name = "shipper_id")
@@ -47,15 +53,20 @@ public class Delivery implements Serializable{
 	
 	public Delivery() {}
 
-	public Delivery(Date deliveryDate, int currentStatus, Staff staff, Invoice invoice) {
+	public Delivery(Date deliveryDate, String currentStatus, String additionalShipperComment, String evidenceImage,
+			Staff staff, Invoice invoice) {
 		super();
 		this.deliveryDate = deliveryDate;
 		this.currentStatus = currentStatus;
+		this.additionalShipperComment = additionalShipperComment;
+		this.evidenceImage = evidenceImage;
 		this.staff = staff;
 		this.invoice = invoice;
 	}
 
-	
+
+
+
 	public Date getDeliveryDate() {
 		return deliveryDate;
 	}
@@ -64,11 +75,11 @@ public class Delivery implements Serializable{
 		this.deliveryDate = deliveryDate;
 	}
 
-	public int getCurrentStatus() {
+	public String getCurrentStatus() {
 		return currentStatus;
 	}
 
-	public void setCurrentStatus(int currentStatus) {
+	public void setCurrentStatus(String currentStatus) {
 		this.currentStatus = currentStatus;
 	}
 
@@ -86,5 +97,21 @@ public class Delivery implements Serializable{
 
 	public void setInvoice(Invoice invoice) {
 		this.invoice = invoice;
+	}
+
+	public String getAdditionalShipperComment() {
+		return additionalShipperComment;
+	}
+
+	public void setAdditionalShipperComment(String additionalShipperComment) {
+		this.additionalShipperComment = additionalShipperComment;
+	}
+
+	public String getEvidenceImage() {
+		return evidenceImage;
+	}
+
+	public void setEvidenceImage(String evidenceImage) {
+		this.evidenceImage = evidenceImage;
 	}
 }

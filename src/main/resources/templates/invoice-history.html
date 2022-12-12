@@ -199,7 +199,7 @@
                         <td th:text="(${invoice.paymentStatus} == 1)? 'Payed' : 'Not Payed'"> </td>
                         <td th:text="${invoice.currency.toUpperCase()}" class="tm-product-name"> </td>
                         <td th:text="${invoice.paymentMethod.toUpperCase()}" class="tm-product-name"> </td>
-                        <td th:text="(${invoice.deliveryStatus} == 1)? 'Shipped' : 'Not Shipped'"> </td>
+                        <td th:text="${invoice.deliveryStatus.toUpperCase()}" class="tm-product-name"> </td>
                         <td th:text="(${invoice.description} != null)? ${invoice.description} : '...'"> </td>
                         <td th:text="(${invoice.intent} != null)? ${invoice.intent} : '...'"> </td>
                         <td th:text="${invoice.adminAcceptance.toUpperCase()}" class="tm-product-name"> </td>

@@ -44,7 +44,7 @@ public class Invoice {
 	Date invoiceDate;
 	
 	@Column(name = "Delivery_Status")
-	int deliveryStatus;
+	String deliveryStatus;
 	
 	@Column(name = "Payment_Status")
 	int paymentStatus;
@@ -70,6 +70,9 @@ public class Invoice {
 	@Column(name = "reason")
 	String reason;
 	
+	@Column(name = "online_payment_account")
+	String onlinePaymentAccount;
+	
 	@Column(name = "admin_acceptance")
 	String adminAcceptance;
 	
@@ -94,7 +97,7 @@ public class Invoice {
 		this.customer = customer;
 	}
 
-	public Invoice(int id, Date invoiceDate, int deliveryStatus, int paymentStatus, String paymentMethod, String currency,
+	public Invoice(int id, Date invoiceDate, String deliveryStatus, int paymentStatus, String paymentMethod, String currency,
             String intent, String description, double refundPercentage, String reason, Delivery delivery,
             List<InvoicesWithProducts> invoicesWithProducts, Customer customer, String adminAcceptance) {
         super();
@@ -114,7 +117,7 @@ public class Invoice {
         this.adminAcceptance = adminAcceptance;
     }
 	
-    public Invoice(int id,Date invoiceDate, int deliveryStatus, int paymentStatus, String paymentMethod, String currency,
+    public Invoice(int id,Date invoiceDate, String deliveryStatus, int paymentStatus, String paymentMethod, String currency,
 			String intent, String description, Customer customer, double totalPrice, String adminAcceptance) {
 		super();
         this.id = id;
@@ -164,12 +167,12 @@ public class Invoice {
     }
 
 
-    public int getDeliveryStatus() {
+    public String getDeliveryStatus() {
         return deliveryStatus;
     }
 
 
-    public void setDeliveryStatus(int deliveryStatus) {
+    public void setDeliveryStatus(String deliveryStatus) {
         this.deliveryStatus = deliveryStatus;
     }
 
@@ -287,5 +290,13 @@ public class Invoice {
 
 	public void setAdminAcceptance(String adminAcceptance) {
 		this.adminAcceptance = adminAcceptance;
+	}
+
+	public String getOnlinePaymentAccount() {
+		return onlinePaymentAccount;
+	}
+
+	public void setOnlinePaymentAccount(String onlinePaymentAccount) {
+		this.onlinePaymentAccount = onlinePaymentAccount;
 	}
 }
