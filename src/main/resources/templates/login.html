@@ -20,7 +20,7 @@
                             filter: blur(8px);
                             -webkit-filter: blur(4px);">
     <div>
-        <form name="loginForm" class="sign-in" th:action="@{/loginpage}" method="post" th:object="${loginPage}" onsubmit="return validateForm()">
+        <form name="loginForm" class="sign-in" th:action="@{/loginpage}" method="post" th:object="${loginPage}" >
             <div class="cont mt-6">
                 <div class="m-6" style="width: 35rem">
                     <div class="has-text-centered pb-6" style="position:relative;">
@@ -74,23 +74,23 @@
                         <div class="title is-4 mb-6">Create your Account</div>
                         <label>
                             <span class="is-capitalized">Username</span>
-                            <input name="registerUserName" type="text" th:field="*{registerUserName}" required />
+                            <input name="registerUserName" type="text" th:field="*{registerUserName}"  />
                         </label>
                         <label>
                             <span class="is-capitalized">Password</span>
-                            <input name="registerPassword" type="password" th:field="*{registerPassword}" required />
+                            <input name="registerPassword" type="password" th:field="*{registerPassword}"  />
                         </label>
                         <label>
                             <span class="is-capitalized">Full Name</span>
-                            <input name="fullName" type="text" th:field="*{fullName}" required />
+                            <input name="fullName" type="text" th:field="*{fullName}"  />
                         </label>
                         <label>
                             <span class="is-capitalized">Phone Number</span>
-                            <input name="phoneNumber" type="text" th:field="*{phoneNumber}" required />
+                            <input name="phoneNumber" type="text" th:field="*{phoneNumber}"  />
                         </label>
                         <label>
                             <span class="is-capitalized">Email</span>
-                            <input name="email" type="email" th:field="*{email}" required />
+                            <input name="email" type="email" th:field="*{email}"  />
                         </label>
                         <div class="has-text-centered mb-5 has-text-weight-bold is-flex is-justify-content-center">
                             <button type="submit" name="action" value="register"
