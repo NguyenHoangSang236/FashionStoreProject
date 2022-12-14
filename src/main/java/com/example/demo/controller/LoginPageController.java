@@ -108,14 +108,9 @@ public class LoginPageController {
 		
 		//click Register
 		if(action.equals("register")) {
-		    Account acc = accRepo.findByUserNameAndPassword(loginPage.getRegisterUserName(), loginPage.getRegisterPassword());
+		    Account acc = accRepo.findByUserName(loginPage.getRegisterUserName());
 
-		    //not all information input
-		    if(loginPage.getFullName() == null || loginPage.getEmail() == null || loginPage.getPhoneNumber() == null || loginPage.getRegisterUserName() == null || loginPage.getRegisterPassword() == null) {
-		    	GlobalStaticValues.message = "Please input all information !!";
-		    }
-		    //account not existed --> create a new account and new customer
-		    else if(acc == null) {
+		    if(acc == null) {
 	            Account newAcc = new Account(loginPage.getRegisterUserName(), loginPage.getRegisterPassword(), "user");
 	            accRepo.save(newAcc);
 	            
@@ -126,6 +121,8 @@ public class LoginPageController {
 	        }
 	        //account existed --> notice 'This user name has already existed !!'
 	        else {
+	        	GlobalStaticValues.message = "This user name has already existed !!";
+	        	System.out.println(GlobalStaticValues.message);
 	            return "login";
 	        }
 		}

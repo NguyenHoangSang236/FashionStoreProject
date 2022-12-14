@@ -10,9 +10,12 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.entity.Product;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Integer> { 
-	@Query(value = ":query", nativeQuery = true)
-	List<Product> getFilteredProductList(@Param("query") String query);
+public interface ProductRepository extends JpaRepository<Product, Integer> { 	
+//	final static String filterQuery = "";
+//
+//
+//	@Query(value = filterQuery, nativeQuery = true)
+//	List<Product> getFilteredProductList();
 	
 	
 	@Query(value = "select * from products group by color, name", nativeQuery = true)
