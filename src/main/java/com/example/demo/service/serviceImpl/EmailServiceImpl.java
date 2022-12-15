@@ -27,13 +27,13 @@ public class EmailServiceImpl implements EmailService{
 		
 		String toAddress = currentCustomer.getEmail();
 	    String fromAddress = "nguyenhoangsang236@gmail.com";
-	    String senderName = "Fool!sh Fashion Store";
+	    String senderName = "Fool!st Fashion Store";
 	    String subject = "Your new temporary password";
 	    String content = "Dear [[name]],<br>"
 	            + "Your new temporary password is " + Network.randomTemporaryPassword(user) + "<br>"
 	            + "Please rememder to change a new password for your new account because this temporary password will be changed after you close the website !!<br><br>"
 	            + "Thank you,<br>"
-	            + "Fool!sh Fashion Store";
+	            + "Fool!st Fashion Store";
 	     
 	    MimeMessage message = mailSender.createMimeMessage();
 	    MimeMessageHelper helper = new MimeMessageHelper(message);

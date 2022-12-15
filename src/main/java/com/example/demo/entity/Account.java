@@ -38,11 +38,15 @@ public class Account {
 	@Column(name = "Role")
 	String role;
 	
+	@Column(name = "Status")
+	String status;
+	
 	@OneToOne(mappedBy = "account")
     private Customer customer;
 	
 	@OneToOne(mappedBy = "account")
     private Staff staff;
+	
 	
 	public Account() {}
 	
@@ -59,6 +63,7 @@ public class Account {
 		this.role = role;
 	}
 
+	
 	public int getId() {
 		return id;
 	}
@@ -106,8 +111,13 @@ public class Account {
     public void setStaff(Staff staff) {
         this.staff = staff;
     }
-	
-	
-	
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 }
 

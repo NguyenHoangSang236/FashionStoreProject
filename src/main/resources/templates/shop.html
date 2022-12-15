@@ -7,7 +7,7 @@
     <meta name="keywords" content="Male_Fashion, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Male-Fashion | Template</title>
+    <title>Fool!st Fashion Store</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
@@ -269,41 +269,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card">
-                                        <div class="card-heading">
-                                            <a data-toggle="collapse" data-target="#collapseFour">Size</a>
-                                        </div>
-                                        <div id="collapseFour" class="collapse show" data-parent="#accordionExample">
-                                            <div class="card-body">
-                                                <div class="shop__sidebar__size">
-                                                    <label for="xs">xs
-                                                        <input type="radio" id="xs">
-                                                    </label>
-                                                    <label for="sm">s
-                                                        <input type="radio" id="sm">
-                                                    </label>
-                                                    <label for="md">m
-                                                        <input type="radio" id="md">
-                                                    </label>
-                                                    <label for="xl">xl
-                                                        <input type="radio" id="xl">
-                                                    </label>
-                                                    <label for="2xl">2xl
-                                                        <input type="radio" id="2xl">
-                                                    </label>
-                                                    <label for="xxl">xxl
-                                                        <input type="radio" id="xxl">
-                                                    </label>
-                                                    <label for="3xl">3xl
-                                                        <input type="radio" id="3xl">
-                                                    </label>
-                                                    <label for="4xl">4xl
-                                                        <input type="radio" id="4xl">
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -314,7 +279,7 @@
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="shop__product__option__left">
-                                    <p>Showing 1–12 of 126 results</p>
+                                    <p th:text="|There are ${totalResult} products|"></p>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6">

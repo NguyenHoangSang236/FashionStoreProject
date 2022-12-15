@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.example.demo.entity.Account;
@@ -41,37 +43,51 @@ public class AccountManagement {
 	Customer customer = new Customer();
 	SelectedCustomerID selectedCustomerID = new SelectedCustomerID();
 	Account accountEdited;
-
-//	@PostMapping("/account")
-//	public Account saveAccount(@Validated @RequestBody Account account) {
-//		return accRepo.save(account);
-//	}
+	
+	
+	public String renderToAccountManagement(Model model, HttpSession session, String action) {
+		Account currentAccount = (Account)session.getAttribute("currentuser");
+		
+		if(currentAccount != null) {
+			if(action != null) {
+				int selectedAccId = Integer.valueOf(action);
+				
+				Account selectedAccount = accRepo.findByUserID(selectedAccId);
+				if(selectedAccount.getStatus().equals("allowed")) {
+					selectedAccount.setStatus("banned");
+				}
+				else if (selectedAccount.getStatus().equals("banned")) {
+					selectedAccount.setStatus("allowed");
+				}
+				
+				accRepo.save(selectedAccount);
+			}
+			
+			List<Customer> AllCustomers = cusRepo.getCustomerById();
+			List<Account> AllAcount = accRepo.getAllCustomerAccounts();
+			
+			model.addAttribute("ListCustomer", AllCustomers);
+			model.addAttribute("ListAccount", AllAcount);
+			
+			return "accountcontrol";
+		}
+		else {
+            return "redirect:/loginpage";
+        }
+	}
 	
 	
 	@GetMapping("/accountmanagement")
-	public String allCustomer(Model model) {
-		List<Customer> AllCustomers = cusRepo.getCustomerById();
-		List<Account> AllAcount = accRepo.getAllCustomerAccounts();
-		model.addAttribute("ListCustomer", AllCustomers);
-		model.addAttribute("ListAccount", AllAcount);
-		model.addAttribute("selectedProduct", selectedCustomerID);
-		
-		return "accountcontrol";
+	public String allCustomer(Model model, HttpSession session) {
+		return renderToAccountManagement(model, session, null);
 	}
 	
+	
 	@PostMapping("/accountmanagement")
-	public String deleteCustomer(Model model, @ModelAttribute("selectedProduct") SelectedCustomerID productID ) {
-		List<Customer> AllCustomers = cusRepo.getCustomerById();
-		List<Account> AllAcount = accRepo.getAllCustomerAccounts();
-		
-		System.out.println(AllAcount.size());
-		model.addAttribute("ListCustomer", AllCustomers);
-		model.addAttribute("ListAccount", AllAcount);
-		
-		model.addAttribute("selectedProduct", selectedCustomerID);
-		
-		return "accountcontrol";
+	public String deleteCustomer(Model model, HttpSession session, @RequestParam(value="action") String action) {
+		return renderToAccountManagement(model, session, action);
 	}
+	
 	
 	@GetMapping("/editcustomer-id={uID}")
 	public String showEditAccount(Model model, @PathVariable("uID") int uID ) {
@@ -86,6 +102,7 @@ public class AccountManagement {
 		
 		return "editaccount";
 	}
+	
 	
 	@PostMapping("/saveEditAccount")
 	public String saveEditAccount(Model model, @ModelAttribute("accObj") Account accountObj ) {
