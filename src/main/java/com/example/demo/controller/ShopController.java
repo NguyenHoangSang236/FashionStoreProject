@@ -7,6 +7,7 @@ import java.util.stream.IntStream;
 
 import javax.servlet.http.HttpSession;
 
+import org.aspectj.weaver.ast.And;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.example.demo.entity.Account;
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.Product;
+import com.example.demo.entity.dto.FilterSelections;
 import com.example.demo.respository.CatalogRepository;
 import com.example.demo.respository.CustomerRepository;
 import com.example.demo.respository.ProductRepository;
@@ -51,9 +54,7 @@ public class ShopController {
     
     Integer[] ratingStarArr = {1,2,3,4,5};
     
-    String[] catalogsFilter;
-    String priceFilter;
-    String brandFilterString;
+    FilterSelections filterSelections = new FilterSelections();
 
     
     //create a query for binding filters
@@ -62,21 +63,37 @@ public class ShopController {
     			+ "from products p join catalog_with_products cwp on p.name = cwp.product_name\r\n"
     			+ "                join catalog c on c.id = cwp.catalog_id\r\n"
     			+ "where ";
+    	String dynamicConditions = "";
+    	int catalogsLength;
 
-    	result += ("brand = " + brand);
+    	if(catalogs == null) {
+    		catalogsLength = 0;
+    	}
+    	else catalogsLength = catalogs.length;
+    	
+    	if(brand != null) {
+    		dynamicConditions += ("and brand = '" + brand + "' ");
+    	}
     			
-    	for(int i = 0; i < catalogs.length; i++) {
-    		result += (" and c.name = " + catalogs[i]);
+    	for(int i = 0; i < catalogsLength; i++) {
+    		dynamicConditions += ("and c.name = '" + catalogs[i] + "' ");
     	}
     	
-    	result += (" and price >= " + price1 + " and price <= " + price2 + " group by p.name");
+    	if(price1 > 0 && price2 > 0) {
+    		dynamicConditions += ("and price >= " + price1 + " and price <= " + price2 );
+    	}
+    	
+    	dynamicConditions = dynamicConditions.substring(4);
+    	result += dynamicConditions + " group by p.name";
+    	
+    	System.out.println(result);
     	
     	return result;
     }
     
     
     //render form's data 
-    void renderToShop(HttpSession session, Model model, Page<Product> pageination, Optional<Integer> page, Optional<Integer> size) {
+    void renderToShop(HttpSession session, Model model, Page<Product> pageination, Optional<Integer> page, Optional<Integer> size, FilterSelections filterSelections) {
         //pagination
         Page<Product> productPage = pageination;
         
@@ -89,6 +106,7 @@ public class ShopController {
 		    model.addAttribute("curentcusName",Ccustomer.getName());
 	    }
                         
+	    model.addAttribute("filterSelections", filterSelections);
         model.addAttribute("productPage", productPage);
         model.addAttribute("ratingStarArr", ratingStarArr);
         
@@ -97,7 +115,6 @@ public class ShopController {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
         }
-        
         
         //branding
         List<String> brandingList = productRepo.getAllProductBrands();
@@ -113,80 +130,36 @@ public class ShopController {
     public String showShop(HttpSession session,Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(16);
+        
         model.addAttribute("pName", new Product());
         
         Page<Product> productPage = productService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
 
-        renderToShop(session, model, productPage, page, size);
+        renderToShop(session, model, productPage, page, size, filterSelections);
         
         return "shop";
     }
     
     
-//    @PostMapping("/shopproduct")
-//    public String showFilteredShop(HttpSession session,Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
-//    	int currentPage = page.orElse(1);
-//        int pageSize = size.orElse(16);
-//        model.addAttribute("pName", new Product());
-//        
-//        String query = createQueryForFilters(catalogsFilter, brandFilterString, currentPage, pageSize);
-//        Page<Product> productPage = productService.findByFilters(PageRequest.of(currentPage - 1, pageSize), query);
-//
-//        renderToShop(session, model, productPage, page, size);
-//    	
-//    	return "shop";
-//    }
-//    
+    @PostMapping("/shopproduct")
+    public String showFilteredShop(HttpSession session,Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size, @ModelAttribute("filterSelections") FilterSelections selectedFilters) {
+    	int currentPage = page.orElse(1);
+        int pageSize = size.orElse(16);
+        
+        model.addAttribute("pName", new Product());
 
-    @GetMapping("/shopproduct{price1}and{price2}")
-    public String showShopbyPrice(HttpSession session,Model model, @PathVariable("price1") double price1, @PathVariable("price2") double price2, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size ) {
-        int currentPage = page.orElse(1);
-        int pageSize = size.orElse(12);
+        filterSelections = selectedFilters;
+        filterSelections.setPriceRangeLimits();
         
-        model.addAttribute("pName", new Product());
+        String filterQuery = createQueryForFilters(filterSelections.getCatalogs(), filterSelections.getBrand(), filterSelections.getPrice1(), filterSelections.getPrice2());
         
-        Page<Product> productPage = productService.findByPriceFilter(PageRequest.of(currentPage - 1, pageSize),price1,price2);
-        
-        renderToShop(session, model, productPage, page, size);
-        
-        return "shop";
+        Page<Product> productPage = productService.findByFilters(PageRequest.of(currentPage - 1, pageSize), filterQuery);
+
+        renderToShop(session, model, productPage, page, size, filterSelections);
+    	
+    	return "shop";
     }
     
-    
-    @GetMapping("/shopproductcate={cate}")
-    public String showShopbyCate(HttpSession session, Model model, @PathVariable("cate") String cate, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size ) {
-        int currentPage = page.orElse(1);
-        int pageSize = size.orElse(12);
-        
-        model.addAttribute("pName", new Product());
-        
-        Page<Product> productPage = productService.findByCate(PageRequest.of(currentPage - 1, pageSize),cate);
-        
-        renderToShop(session, model, productPage, page, size);
-        
-        return "shop";
-    }
-    
-    
-    @GetMapping("/shopproductbrand={brand}")
-    public String showShopbyBrand(HttpSession session, Model model, @PathVariable("brand") String brand, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size ) {
-        int currentPage = page.orElse(1);
-        int pageSize = size.orElse(12);
-        
-        model.addAttribute("pName", new Product());
-        
-        Page<Product> productPage = productService.findByBrand(PageRequest.of(currentPage - 1, pageSize),brand);
-        
-        renderToShop(session, model, productPage, page, size);
-        
-        return "shop";
-    }
-    
-//    @GetMapping("/shopproductsearch")
-//    public String showShopbyName(Model model ) {
-//    	model.addAttribute("Name", new Product());
-//        return "shop";
-//    }
     
     @GetMapping("/shopproductsearch")
     public String showShopbyName(HttpSession session, Model model, @ModelAttribute("pName") Product name, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size ) {
@@ -196,7 +169,7 @@ public class ShopController {
         
         Page<Product> productPage = productService.searchProduct(PageRequest.of(currentPage - 1, pageSize),name.getName());
         
-        renderToShop(session,model, productPage, page, size);
+        renderToShop(session,model, productPage, page, size, filterSelections);
         
         return "shop";
     }

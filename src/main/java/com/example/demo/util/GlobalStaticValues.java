@@ -3,6 +3,10 @@ package com.example.demo.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 import com.example.demo.entity.Cart;
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.Product;
@@ -33,6 +37,8 @@ public class GlobalStaticValues {
 	
 	public static String message = "";
 	
+	public static String filterQuery = "";
+	
 	public static List<Cart> customerFullCartList = new ArrayList<Cart>();
 	
 	public static boolean[] customerCheckedCartList(int[] selectStatusArr) {
@@ -48,4 +54,7 @@ public class GlobalStaticValues {
 		
 		return tmpArr;
 	}
+	
+	public static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("persistence");
+	public static EntityManager entityManager = entityManagerFactory.createEntityManager();
 }
