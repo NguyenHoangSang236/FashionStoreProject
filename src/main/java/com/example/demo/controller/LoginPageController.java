@@ -51,7 +51,7 @@ public class LoginPageController {
 	CartRepository cartRepo;
 	
 	LoginPage loginPage = new LoginPage();
-	
+	String message;
 	
 	@GetMapping("/loginpage")
 	public String showLoginPage(Model model) {
@@ -61,19 +61,25 @@ public class LoginPageController {
 	 
 	
 	@PostMapping("/loginpage")
-	public String submitForm(HttpSession session, @ModelAttribute("loginPage") LoginPage loginPage, @RequestParam(value="action") String action,  HttpServletResponse response) { 
+	public String submitForm(Model model, HttpSession session, @ModelAttribute("loginPage") LoginPage loginPage, @RequestParam(value="action") String action,  HttpServletResponse response) { 
 		if(action.equals("login")) {
 		    //username and password are null
 		    if(loginPage.getLoginUserName() == null && loginPage.getLoginPassword() == null) {
 	        	GlobalStaticValues.message = "Please input your Account User name and Password !!";
+	        	message = GlobalStaticValues.message;
+	        	model.addAttribute("message", message);
+	        	
 	        }
 		    //password is null
 	        else if(loginPage.getLoginUserName() != null && loginPage.getLoginPassword() == null) {
 	        	GlobalStaticValues.message = "Please input Password !!";
+	        	message = GlobalStaticValues.message;
+	        	model.addAttribute("message", message);
 	        }
 		    //username is null
 	        else if(loginPage.getLoginUserName() == null && loginPage.getLoginPassword() != null) {
 	        	GlobalStaticValues.message = "Please input Account User name !!";
+	        	model.addAttribute("message", GlobalStaticValues.message);
 	        }
 		    //account existed --> proceed login
 	        else {
@@ -102,30 +108,35 @@ public class LoginPageController {
 			    //account is not existed, username is not null
 			    else {
 			    	GlobalStaticValues.message = "User name or password is invalid !!";
+			    	message = GlobalStaticValues.message;
+		        	System.out.println(message);
+		        	model.addAttribute("message", message);
 			    }
 	        }
 		}
 		
 		//click Register
-		if(action.equals("register")) {
-		    Account acc = accRepo.findByUserName(loginPage.getRegisterUserName());
+				if(action.equals("register")) {
+				    Account acc = accRepo.findByUserName(loginPage.getRegisterUserName());
 
-		    if(acc == null) {
-	            Account newAcc = new Account(loginPage.getRegisterUserName(), loginPage.getRegisterPassword(), "user");
-	            accRepo.save(newAcc);
-	            
-	            Customer newCus = new Customer(loginPage.getFullName(), loginPage.getEmail(), loginPage.getPhoneNumber(), "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQnfcK8aWadEUBLCnstq0gd7sBmsB33Tvcng&usqp=CAU", newAcc);
-	            cusRepo.save(newCus);
-	            
-	            return "redirect:/home";
-	        }
-	        //account existed --> notice 'This user name has already existed !!'
-	        else {
-	        	GlobalStaticValues.message = "This user name has already existed !!";
-	        	System.out.println(GlobalStaticValues.message);
-	            return "login";
-	        }
-		}
+				    if(acc == null) {
+			            Account newAcc = new Account(loginPage.getRegisterUserName(), loginPage.getRegisterPassword(), "user");
+			            accRepo.save(newAcc);
+			            
+			            Customer newCus = new Customer(loginPage.getFullName(), loginPage.getEmail(), loginPage.getPhoneNumber(), "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQnfcK8aWadEUBLCnstq0gd7sBmsB33Tvcng&usqp=CAU", newAcc);
+			            cusRepo.save(newCus);
+			            
+			            return "redirect:/home";
+			        }
+			        //account existed --> notice 'This user name has already existed !!'
+			        else {
+			        	GlobalStaticValues.message = "This user name has already existed !!";
+			        	message = GlobalStaticValues.message;
+			        	System.out.println(message);
+			        	model.addAttribute("message", message);
+			            return "login";
+			        }
+				}
 		
 		//click Forget password
 		if(action.equals("forgot")) {
@@ -149,7 +160,7 @@ public class LoginPageController {
 	        }
 		}
 		
-		return "";
+		return "login";
 	}
 	
 	

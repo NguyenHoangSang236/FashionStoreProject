@@ -1,107 +1,142 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="CSS/stylelogin.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="css/toast.css" type="text/css">
 </head>
-<body class="has-background-transparent">
+
+<body th:onload="showToast()" class="has-background-transparent">
+    <div th:if="${message} != null" id="snackbar" th:text="${message}"></div>
     <img src="https://c8.alamy.com/comp/KRC3CA/women-clothes-in-front-with-store-background-in-paris-KRC3CA.jpg" alt=""
-                    style="position: fixed;
+        style="position: fixed;
                             z-index: -100;
                             top: 0;
                             width:100%;
                             filter: blur(8px);
                             -webkit-filter: blur(4px);">
     <div>
-    <form class="sign-in" th:action = "@{/loginpage}" method="post" th:object = "${loginPage}">
-        <div class="cont mt-6">
-            <div class="m-6" style="width: 35rem">
-                <div class="has-text-centered pb-6" style="position:relative;">
-                    <div class="logo-shop">
-                        Fool!st.
+        <form name="loginForm" class="sign-in" th:action="@{/loginpage}" method="post" th:object="${loginPage}" >
+            <div class="cont mt-6">
+                <div class="m-6" style="width: 35rem">
+                    <div class="has-text-centered pb-6" style="position:relative;">
+                        <div class="logo-shop">
+                            Fool!st.
+                        </div>
                     </div>
-                </div>
-                <div class="container">
-                    <div class="">
-                        <div class="m-4">
-                            <div class="title is-6 mb-3 has-text-left">
-                                Username
+                    <div class="container">
+                        <div class="">
+                            <div class="m-4">
+                                <div class="title is-6 mb-3 has-text-left">
+                                    Username
+                                </div>
+                                <input type="text" class="input has-text-left" th:field="*{loginUserName}" >
                             </div>
-                            <input type="text" class="input has-text-left" th:field="*{loginUserName}">
-                        </div>
-                        <div class="m-4">
-                            <div class="title is-6 mb-3 has-text-left">
-                                Password
+                            <div class="m-4">
+                                <div class="title is-6 mb-3 has-text-left">
+                                    Password
+                                </div>
+                                <input type="password" class="input has-text-left" th:field="*{loginPassword}" >
                             </div>
-                            <input type="password" class="input has-text-left" th:field="*{loginPassword}">
+                            <div class="ml-4">
+                                <button type="submit" name="action" value="forgot" class="forgot-pass">Forgot your
+                                    password?</button>
+                            </div>
                         </div>
-                        <div class="ml-4">
-                            <button type="submit" name="action" value="forgot" class="forgot-pass">Forgot your password?</button>
+                        <div class="has-text-centered mt-5 mb-5 has-text-weight-bold is-flex is-justify-content-center">
+                            <button type="submit" name="action" value="login"
+                                class="has-width-20rem button has-text-white is-rounded is-fullwidth"
+                                style="background-color: #d4af7a; width: 20rem;">Login NOW</button>
                         </div>
                     </div>
-                    <div class="has-text-centered mt-5 mb-5 has-text-weight-bold is-flex is-justify-content-center">
-                        <button type="submit" name="action" value="login" class="has-width-20rem button has-text-white is-rounded is-fullwidth" 
-                            style="background-color: #d4af7a; width: 20rem;">Login NOW</button>
-                    </div>
                 </div>
-            </div>
-            <div class="sub-cont">
-                <div class="img">
-                    <div class="img__text m--up">
-                    
-                        <h3>Don't have an account? Please Sign up!<h3>
-                    </div>
-                    <div class="img__text m--in">
-                    
-                        <h3>If you already has an account, just sign in.<h3>
-                    </div>
-                    <div class="img__btn">
-                        <span class="m--up">Sign Up</span>
-                        <span class="m--in">Sign In</span>
-                    </div>
-                </div>
-                
-                <div class="form sign-up has-text-centered m-3" style = "overflow: scroll;">
-                    <div class="title is-4 mb-6">Create your Account</div>
-                    <label>
-                        <span class="is-capitalized">Username</span>
-                        <input type="text" th:field="*{registerUserName}" />
-                    </label>
-                    <label>
-                        <span class="is-capitalized">Password</span>
-                        <input type="password" th:field="*{registerPassword}" />
-                    </label>
-                    <label>
-                        <span class="is-capitalized">Full Name</span>
-                        <input type="text" th:field="*{fullName}" />
-                    </label>
-                    <label>
-                        <span class="is-capitalized">Phone Number</span>
-                        <input type="text" th:field="*{phoneNumber}" />
-                    </label>
-                    <label>
-                        <span class="is-capitalized">Email</span>
-                        <input type="email" th:field="*{email}" />
-                    </label>
-                    <div class="has-text-centered mb-5 has-text-weight-bold is-flex is-justify-content-center">
-                        <button type="submit" name="action" value="register" class="has-width-20rem submit button has-text-white is-rounded is-fullwidth" 
-                            style="background-color: #d4af7a; width: 20rem;">Register</button> 
-                    </div>
-                </div>
+                <div class="sub-cont">
+                    <div class="img">
+                        <div class="img__text m--up">
 
+                            <h3>Don't have an account? Please Sign up!<h3>
+                        </div>
+                        <div class="img__text m--in">
+
+                            <h3>If you already has an account, just sign in.<h3>
+                        </div>
+                        <div class="img__btn">
+                            <span class="m--up">Sign Up</span>
+                            <span class="m--in">Sign In</span>
+                        </div>
+                    </div>
+
+                    <div class="form sign-up has-text-centered m-3" style="overflow: scroll;">
+                        <div class="title is-4 mb-6">Create your Account</div>
+                        <label>
+                            <span class="is-capitalized">Username</span>
+                            <input name="registerUserName" type="text" th:field="*{registerUserName}"  />
+                        </label>
+                        <label>
+                            <span class="is-capitalized">Password</span>
+                            <input name="registerPassword" type="password" th:field="*{registerPassword}"  />
+                        </label>
+                        <label>
+                            <span class="is-capitalized">Full Name</span>
+                            <input name="fullName" type="text" th:field="*{fullName}"  />
+                        </label>
+                        <label>
+                            <span class="is-capitalized">Phone Number</span>
+                            <input name="phoneNumber" type="text" th:field="*{phoneNumber}"  />
+                        </label>
+                        <label>
+                            <span class="is-capitalized">Email</span>
+                            <input name="email" type="email" th:field="*{email}"  />
+                        </label>
+                        <div class="has-text-centered mb-5 has-text-weight-bold is-flex is-justify-content-center">
+                            <button type="submit" name="action" value="register"
+                                class="has-width-20rem submit button has-text-white is-rounded is-fullwidth"
+                                style="background-color: #d4af7a; width: 20rem;">Register</button>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
+    <script>
+        const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+        var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        function showToast() {
+            var x = document.getElementById("snackbar");
+            x.className = "show";
+            setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+        }
+
+        function validateForm() {
+            let registerName = document.forms["loginForm"]["fullName"].value;
+            let phoneNumber = document.forms["loginForm"]["phoneNumber"].value;
+            let email = document.forms["loginForm"]["email"].value;
+            if (specialChars.test(registerName)) {
+                alert("Name not valid");
+                return false;
+            }
+            if (specialChars.test(registerName) || phoneNumber.lenght!=10 ){
+                alert("Phone not valid");
+                return false;
+            }
+            if (email.match(validRegex) == false){
+                alert("Email not valid");
+                return false;
+            }
+        }
+    </script>
 </body>
+
 </html>
 
 
 <script>
-    document.querySelector('.img__btn').addEventListener('click', function() {
+    document.querySelector('.img__btn').addEventListener('click', function () {
         document.querySelector('.cont').classList.toggle('s--signup');
     });
 </script>
