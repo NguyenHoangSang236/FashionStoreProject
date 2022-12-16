@@ -21,6 +21,7 @@ import com.example.demo.entity.dto.CheckoutInfo;
 import com.example.demo.respository.AccountRepository;
 import com.example.demo.respository.CustomerRepository;
 import com.example.demo.respository.InvoiceRepository;
+import com.example.demo.util.GlobalStaticValues;
 import com.example.demo.util.ValueRender;
 
 
@@ -44,6 +45,7 @@ public class InvoiceController {
 	@GetMapping("/invoice-control")
     public String allInvoices(HttpSession session, Model model, HttpServletRequest request ) {
 		Account currentAccount = (Account)session.getAttribute("currentuser");
+		GlobalStaticValues.currentPage = "/invoice-control";
 		
 		if(currentAccount != null) {
 			mngInvoiceList = invoiceRepo.getAllInvoices();
@@ -63,6 +65,7 @@ public class InvoiceController {
 	@GetMapping("/invoice-cod-accept")
 	public String waitingCodInvoices(HttpSession session, Model model, HttpServletRequest request ) {
 		Account currentAccount = (Account)session.getAttribute("currentuser");
+		GlobalStaticValues.currentPage = "/invoice-cod-accept";
 		
 		if(currentAccount != null) {
 			mngInvoiceList = invoiceRepo.getWaitingCodInvoices();
@@ -121,7 +124,8 @@ public class InvoiceController {
 	@GetMapping("/invoice-history")
 	public String invoiceHistory(HttpSession session, Model model, HttpServletRequest request ) {
 		Account currentAccount = (Account)session.getAttribute("currentuser");
-	    
+	    GlobalStaticValues.currentPage = "/invoice-history";
+		
 	    if(currentAccount != null) {
 	    	Customer currentCustomer = cusRepo.getCustomerByAccountId(currentAccount.getId());
 	    	
@@ -142,7 +146,8 @@ public class InvoiceController {
 	@GetMapping("/invoice-details-id={invoiceId}")
 	public String invoiceDetails(HttpSession session,Model model, HttpServletRequest request, @PathVariable("invoiceId") int invoiceId) {
 		Account currentAccount = (Account)session.getAttribute("currentuser");
-	    
+		GlobalStaticValues.currentPage = "/invoice-details-id=" + invoiceId;
+		
 	    if(currentAccount != null) {
 	    	Customer currentCustomer = cusRepo.getCustomerByAccountId(currentAccount.getId());
 	    	

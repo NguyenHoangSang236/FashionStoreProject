@@ -39,6 +39,8 @@ public class GlobalStaticValues {
 	
 	public static String filterQuery = "";
 	
+	public static String currentPage = "/home";
+	
 	public static List<Cart> customerFullCartList = new ArrayList<Cart>();
 	
 	public static boolean[] customerCheckedCartList(int[] selectStatusArr) {

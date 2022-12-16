@@ -1,7 +1,5 @@
 package com.example.demo.controller;
 
-import java.util.List;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -9,19 +7,14 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.entity.Account;
 import com.example.demo.entity.Customer;
+import com.example.demo.entity.Staff;
 import com.example.demo.entity.dto.LoginPage;
 import com.example.demo.respository.AccountRepository;
 import com.example.demo.respository.CartRepository;
@@ -30,8 +23,7 @@ import com.example.demo.respository.StaffRepository;
 import com.example.demo.service.EmailService;
 import com.example.demo.util.GlobalStaticValues;
 import com.example.demo.util.LoginState;
-import com.example.demo.util.Network;
-import com.example.demo.util.ValueRender;
+
 
 @Controller
 public class LoginPageController {
@@ -52,6 +44,7 @@ public class LoginPageController {
 	
 	LoginPage loginPage = new LoginPage();
 	String message;
+	
 	
 	@GetMapping("/loginpage")
 	public String showLoginPage(Model model) {
@@ -96,7 +89,7 @@ public class LoginPageController {
 		            if(acc.getRole().equals("admin")) {
 		                GlobalStaticValues.currentStaff = acc.getStaff();
 		                
-		                return "redirect:/allproduct";
+		                return "redirect:" + GlobalStaticValues.currentPage;
 		            }
 		            else if(acc.getRole().equals("user")) {
 		            	if(acc.getStatus().equals("banned")) {
@@ -109,7 +102,7 @@ public class LoginPageController {
 		            		GlobalStaticValues.currentCustomer = acc.getCustomer();
 		            		GlobalStaticValues.customerFullCartIdList = cartRepo.getFullCartIdListByCustomerId(acc.getCustomer().getId());
 		            		
-		            		return "redirect:/home";
+		            		return "redirect:" + GlobalStaticValues.currentPage;
 		            	}
 		            }
 			    }
@@ -175,6 +168,9 @@ public class LoginPageController {
 	@GetMapping("/logout")
 	public String logout(HttpSession session ) {
 	    session.invalidate();
+	    GlobalStaticValues.currentCustomer = new Customer();
+	    GlobalStaticValues.currentStaff = new Staff();
+	    GlobalStaticValues.currentPage = "/home";
 	    return "redirect:/loginpage";
 	} 
 }

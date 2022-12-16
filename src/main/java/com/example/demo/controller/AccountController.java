@@ -1,10 +1,7 @@
 package com.example.demo.controller;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -21,10 +18,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.example.demo.entity.Account;
 import com.example.demo.entity.Customer;
 import com.example.demo.respository.AccountRepository;
-import com.example.demo.respository.CartRepository;
 import com.example.demo.respository.CustomerRepository;
 import com.example.demo.util.GlobalStaticValues;
-import com.example.demo.util.LoginState;
 import com.example.demo.util.ValueRender;
 
 @SessionAttributes("currentuser")
@@ -61,19 +56,20 @@ public class AccountController {
 	}
 	
 	
-	@PostMapping("/account")
-	public Account saveAccount(@Validated @RequestBody Account account) {
-		return accRepo.save(account);
-	}
-	
-	@GetMapping("/account")
-	public List<Account> allAccount() {
-		return accRepo.findAll();
-	}
+//	@PostMapping("/account")
+//	public Account saveAccount(@Validated @RequestBody Account account) {
+//		return accRepo.save(account);
+//	}
+//	
+//	@GetMapping("/account")
+//	public List<Account> allAccount() {
+//		return accRepo.findAll();
+//	}
 
 	
 	@GetMapping("/showaccount")
     public String showAbout(HttpSession session, Model model, HttpServletRequest request ) {
+		GlobalStaticValues.currentPage = "/showaccount";
 		return showMyProfileForm(session, model, request);
     }
 	

@@ -15,6 +15,7 @@ import com.example.demo.entity.Customer;
 import com.example.demo.entity.Product;
 import com.example.demo.respository.CustomerRepository;
 import com.example.demo.respository.ProductRepository;
+import com.example.demo.util.GlobalStaticValues;
 
 @SessionAttributes("currentuser")
 @Controller
@@ -50,6 +51,8 @@ public class IndexPageController {
         model.addAttribute("top8NewArrivals", top8NewArrivalProducts);
         model.addAttribute("top8HotSaleProducts", top8HotSaleProducts);
 	    
+        GlobalStaticValues.currentPage = "/home";
+        
 		return "index";
 	}
 }

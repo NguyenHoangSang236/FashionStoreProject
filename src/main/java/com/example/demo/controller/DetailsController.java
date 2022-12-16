@@ -50,7 +50,7 @@ public class DetailsController {
     Product currentProduct;
     AddToCartProductInfo addToCartProduct = new AddToCartProductInfo();
     int defaultQuantity = 1;
-    int ratingPoint;
+    int ratingPoint = 0;
     Comment newComment = new Comment();
     
     
@@ -109,6 +109,7 @@ public class DetailsController {
     	
     	String realProductName = ValueRender.linkToString(productName);
         currentProduct = productRepo.getProductByNameAndColor(realProductName, color);
+        GlobalStaticValues.currentPage = "/shop-details-by-color_name=" + productName + "__color=" + color;
         
         renderToProductDetails(session, model, realProductName, currentProduct, request);
         
@@ -124,8 +125,7 @@ public class DetailsController {
     		HttpServletRequest request, 
     		@ModelAttribute("productDetail") Product productDetail, 
     		@ModelAttribute("addToCartProduct") AddToCartProductInfo modelAddToCartProductInfo, 
-    		@ModelAttribute("newComment") Comment modelNewComment,
-    		@ModelAttribute("ratingPoint") int modelRatingPoint) {
+    		@ModelAttribute("newComment") Comment modelNewComment) {
     	
     	String realProductName = ValueRender.linkToString(productName);
         

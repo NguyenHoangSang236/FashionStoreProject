@@ -17,6 +17,7 @@ import com.example.demo.respository.CatalogRepository;
 import com.example.demo.respository.ProductRepository;
 import com.example.demo.service.CatalogService;
 import com.example.demo.service.ProductService;
+import com.example.demo.util.GlobalStaticValues;
 import com.example.demo.util.ValueRender;
 
 @Controller
@@ -45,6 +46,8 @@ public class AllProductsController {
         model.addAttribute("productsList", productsList);
         model.addAttribute("cateList", cateList);
         model.addAttribute("productManagement", productManagement);
+        
+        GlobalStaticValues.currentPage = "/allproduct";
                 
         return "products";
     }
