@@ -90,22 +90,14 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public void deleteProduct(int productId) {
-        Optional<Product> optProduct = productRepo.findById(productId);
-        Optional<Comment> optComment = commentRepo.getCommentByProductId(productId);
-        String productName;
+        Product product = productRepo.getProductById(productId);
+        String productName = product.getName();
         
-        if(optProduct.isPresent()) {
-            productName = optProduct.get().getName();
-            if(optComment.isPresent()) {
-                productId = optComment.get().getProduct().getId();
-                productRemoveRepo.deleteFromProductComments(productId);
-                cartRemoveRepo.deleteProductFromCartByProductId(productId);
-            }
-            
-            productRemoveRepo.deleteProductFromCatalogWithProducts(productName);
-            
-            productRepo.deleteById(productId);
-        }
+        productRemoveRepo.deleteFromProductComments(productId);
+        cartRemoveRepo.deleteProductFromCartByProductId(productId);
+        productRemoveRepo.deleteProductFromCatalogWithProducts(productName);
+        
+        productRepo.deleteById(productId);
     }
 
 

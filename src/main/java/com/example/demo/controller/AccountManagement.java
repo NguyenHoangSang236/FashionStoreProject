@@ -122,10 +122,4 @@ public class AccountManagement {
 		
 		return "redirect:/accountmanagement";
 	}
-	
-	
-	
-	
-
-	
 }
