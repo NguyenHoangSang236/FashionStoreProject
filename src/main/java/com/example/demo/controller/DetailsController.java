@@ -60,6 +60,7 @@ public class DetailsController {
         List<String> colorList = productRepo.getAllColorsOfProductByName(realProductName);
         List<String> cateList = productRepo.getAllCatalogsByProductName(realProductName);
         List<ProductComment> commentList = new ArrayList<ProductComment>();
+        ratingPoint = productDetail.getTotalRatingNumber();
         
         if(comments.size() > 0) {            
             for(int i = 0; i < comments.size(); i++) {
