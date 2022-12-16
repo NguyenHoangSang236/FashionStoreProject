@@ -120,6 +120,7 @@ public class CheckOutController {
 	    	}
         }
         else {
+        	GlobalStaticValues.currentPage = "/checkout";
             return "redirect:/loginpage";
         }
     }
@@ -151,7 +152,10 @@ public class CheckOutController {
             	
                 return "checkout";
     	    }
-    	    else return "redirect:/loginpage";
+    	    else {
+    	    	GlobalStaticValues.currentPage = "/checkout";
+    	    	return "redirect:/loginpage";
+    	    }
     	}
     	//if click at PayPal button --> PayPal payment
 	    else {
@@ -177,7 +181,10 @@ public class CheckOutController {
 	            	
 	            return "checkout";
 	        }
-	        else return "redirect:/loginpage";
+	        else {
+    	    	GlobalStaticValues.currentPage = "/checkout";
+    	    	return "redirect:/loginpage";
+    	    }
 	    }    
     }
 }

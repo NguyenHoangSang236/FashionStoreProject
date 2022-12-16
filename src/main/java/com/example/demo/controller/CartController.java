@@ -158,18 +158,23 @@ public class CartController {
     
     @GetMapping("/cart-of-customer-account-id={id}")
     public String showCart(HttpSession session, Model model, @PathVariable("id") int id) {
-    	GlobalStaticValues.currentCustomer = customerRepo.getCustomerByAccountId(id);
-        GlobalStaticValues.customerFullCartIdList = cartRepo.getFullCartIdListByCustomerId(GlobalStaticValues.currentCustomer.getId());
-        GlobalStaticValues.customerFullSelectStatusList = cartRepo.getFullCartSelectStatusListByCustomerId(GlobalStaticValues.currentCustomer.getId()); 
-        GlobalStaticValues.customerFullCartQuantityList = cartRepo.getFullCartQuantityListByCustomerId(GlobalStaticValues.currentCustomer.getId());
-        GlobalStaticValues.customerFullCartList = ValueRender.getCartListFromIdList(GlobalStaticValues.customerFullCartIdList, cartRepo);
-        
-        //init checked list with full of FALSE 
-        boolean[] globalCheckedCartArr = GlobalStaticValues.customerCheckedCartList(GlobalStaticValues.customerFullSelectStatusList);
-        
-        customerCart.setCheckedList(globalCheckedCartArr);
-        
-        return getCartInfo(session, model, id, globalCheckedCartArr, customerCart);
+    	if(id == GlobalStaticValues.currentCustomer.getAccount().getId()) {
+    		GlobalStaticValues.currentCustomer = customerRepo.getCustomerByAccountId(id);
+            GlobalStaticValues.customerFullCartIdList = cartRepo.getFullCartIdListByCustomerId(GlobalStaticValues.currentCustomer.getId());
+            GlobalStaticValues.customerFullSelectStatusList = cartRepo.getFullCartSelectStatusListByCustomerId(GlobalStaticValues.currentCustomer.getId()); 
+            GlobalStaticValues.customerFullCartQuantityList = cartRepo.getFullCartQuantityListByCustomerId(GlobalStaticValues.currentCustomer.getId());
+            GlobalStaticValues.customerFullCartList = ValueRender.getCartListFromIdList(GlobalStaticValues.customerFullCartIdList, cartRepo);
+            
+            //init checked list with full of FALSE 
+            boolean[] globalCheckedCartArr = GlobalStaticValues.customerCheckedCartList(GlobalStaticValues.customerFullSelectStatusList);
+            
+            customerCart.setCheckedList(globalCheckedCartArr);
+            
+            return getCartInfo(session, model, id, globalCheckedCartArr, customerCart);
+    	}
+    	else {
+			return "redirect:/loginpage";
+		}
     }
     
     
