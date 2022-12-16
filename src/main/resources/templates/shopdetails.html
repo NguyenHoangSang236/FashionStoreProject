@@ -283,13 +283,15 @@
                                         </div>
                                       </div>
                                 </form>
-                                <script>
+                                <div id="snackbar">Some text some message..</div>
+                                <script th:inline="javascript">
                                     var modal = document.getElementById("ratingModel");
                                     //var btn = document.getElementById("5");
                                     var span = document.getElementById("close"); 
                                     // btn.onclick = function () {
                                     //     modal.style.display = "block";
                                     // }
+                                    let currentUser = [[${session.currentuser}]]
                                     function ratingProduct(id){
                                         var btn = document.getElementById(id);
                                         modal.style.display = "block";
