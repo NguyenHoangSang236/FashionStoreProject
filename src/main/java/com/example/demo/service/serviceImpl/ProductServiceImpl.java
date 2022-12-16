@@ -44,9 +44,6 @@ public class ProductServiceImpl implements ProductService{
     @Autowired
     private CartRemoveRepository cartRemoveRepo;
     
-    @Autowired
-    private ProductFilterRepository productFilterRepo;
-    
     private List<Product> products;
     
     

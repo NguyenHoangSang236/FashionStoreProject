@@ -98,11 +98,19 @@ public class LoginPageController {
 		                
 		                return "redirect:/allproduct";
 		            }
-		            else {
-		            	GlobalStaticValues.currentCustomer = acc.getCustomer();
-		                GlobalStaticValues.customerFullCartIdList = cartRepo.getFullCartIdListByCustomerId(acc.getCustomer().getId());
-		                
-		                return "redirect:/home";
+		            else if(acc.getRole().equals("user")) {
+		            	if(acc.getStatus().equals("banned")) {
+		            		GlobalStaticValues.message = "This account has been banned !!";
+					    	message = GlobalStaticValues.message;
+				        	System.out.println(message);
+				        	model.addAttribute("message", message);
+		            	}
+		            	else {
+		            		GlobalStaticValues.currentCustomer = acc.getCustomer();
+		            		GlobalStaticValues.customerFullCartIdList = cartRepo.getFullCartIdListByCustomerId(acc.getCustomer().getId());
+		            		
+		            		return "redirect:/home";
+		            	}
 		            }
 			    }
 			    //account is not existed, username is not null

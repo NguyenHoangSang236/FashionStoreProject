@@ -53,6 +53,7 @@ public class ShopController {
     Customer customer = new Customer();
     
     Integer[] ratingStarArr = {1,2,3,4,5};
+    int totalResult = 0;
     
     FilterSelections filterSelections = new FilterSelections();
 
@@ -86,7 +87,7 @@ public class ShopController {
     	dynamicConditions = dynamicConditions.substring(4);
     	result += dynamicConditions + " group by p.name";
     	
-    	System.out.println(result);
+//    	System.out.println(result);
     	
     	return result;
     }
@@ -97,6 +98,8 @@ public class ShopController {
         //pagination
         Page<Product> productPage = pageination;
         
+        totalResult = (int) productPage.getTotalElements();
+
         Account Cuser = (Account)session.getAttribute("currentuser");
 	    
 	    if(Cuser != null) {
@@ -105,10 +108,11 @@ public class ShopController {
 		    model.addAttribute("curentcusImage",Ccustomer.getImage());
 		    model.addAttribute("curentcusName",Ccustomer.getName());
 	    }
-                        
+        
 	    model.addAttribute("filterSelections", filterSelections);
         model.addAttribute("productPage", productPage);
         model.addAttribute("ratingStarArr", ratingStarArr);
+        model.addAttribute("totalResult", totalResult);
         
         int totalPages = productPage.getTotalPages();
         if(totalPages > 0) {
@@ -129,7 +133,7 @@ public class ShopController {
     @GetMapping("/shopproduct")
     public String showShop(HttpSession session,Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
         int currentPage = page.orElse(1);
-        int pageSize = size.orElse(16);
+        int pageSize = size.orElse(15);
         
         model.addAttribute("pName", new Product());
         
@@ -144,7 +148,7 @@ public class ShopController {
     @PostMapping("/shopproduct")
     public String showFilteredShop(HttpSession session,Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size, @ModelAttribute("filterSelections") FilterSelections selectedFilters) {
     	int currentPage = page.orElse(1);
-        int pageSize = size.orElse(16);
+        int pageSize = size.orElse(15);
         
         model.addAttribute("pName", new Product());
 
@@ -164,7 +168,7 @@ public class ShopController {
     @GetMapping("/shopproductsearch")
     public String showShopbyName(HttpSession session, Model model, @ModelAttribute("pName") Product name, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size ) {
         int currentPage = page.orElse(1);
-        int pageSize = size.orElse(12);
+        int pageSize = size.orElse(15);
         System.out.println(name.getBrand());
         
         Page<Product> productPage = productService.searchProduct(PageRequest.of(currentPage - 1, pageSize),name.getName());
