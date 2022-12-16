@@ -11,7 +11,7 @@
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
-    rel="stylesheet">
+        rel="stylesheet">
 
     <!-- Css Styles -->
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
@@ -22,12 +22,13 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="css/styleComment.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 </head>
 
 <body>
-     <!-- Page Preloder -->
-     <div id="preloder">
+    <!-- Page Preloder -->
+    <div id="preloder">
         <div class="loader"></div>
     </div>
 
@@ -41,7 +42,7 @@
             </div>
             <div class="offcanvas__top__hover">
                 <span>
-                    <img src="img/user.png" alt=""> 
+                    <img src="img/user.png" alt="">
                     <i class="arrow_carrot-down"></i>
                 </span>
                 <ul>
@@ -60,7 +61,8 @@
         <div class="offcanvas__nav__option">
             <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
             <a href="#"><img src="img/icon/heart.png" alt=""></a>
-            <a th:href="@{/cart-of-customer-account-id={id} (id = session.currentuser.id)}"><img src="img/icon/newcart.png" alt=""> <span>0</span></a>
+            <a th:href="@{/cart-of-customer-account-id={id} (id = session.currentuser.id)}"><img
+                    src="img/icon/newcart.png" alt=""> <span>0</span></a>
             <div class="formattedPrice()">$0.00</div>
         </div>
         <div id="mobile-menu-wrap"></div>
@@ -83,31 +85,33 @@
                     <div class="col-lg-6 col-md-5">
                         <div class="header__top__right is-flex is-justify-content-right">
                             <div class="header__top__links " style="margin-block: auto;">
-                                <a th:if= "${session.currentuser == null}"  th:href="@{loginpage}">Sign in</a>
+                                <a th:if="${session.currentuser == null}" th:href="@{loginpage}">Sign in</a>
                                 <a href="#">FAQs</a>
                             </div>
-                            <div class="dropdown is-right is-hoverable" th:if= "${session.currentuser != null}" >
+                            <div class="dropdown is-right is-hoverable" th:if="${session.currentuser != null}">
                                 <div class="dropdown-trigger">
-                                  <div class="button dropdown-profile" aria-haspopup="true" aria-controls="dropdown-menu">
-                                    <span>  
-                                        <img height="30" width="30"  class="has-img-is-rouned"
-                                        th:src="${curentcusImage}">
-                                        <span th:if= "${session.currentuser != null}" class="has-text-white" th:text="${curentcusName}" ></span>  
-                                    </span>
-                                    <span class="icon is-small has-text-white">
-                                        <i class="arrow_carrot-down"></i>
-                                    </span>
-                                  </div>
+                                    <div class="button dropdown-profile" aria-haspopup="true"
+                                        aria-controls="dropdown-menu">
+                                        <span>
+                                            <img height="30" width="30" class="has-img-is-rouned"
+                                                th:src="${curentcusImage}">
+                                            <span th:if="${session.currentuser != null}" class="has-text-white"
+                                                th:text="${curentcusName}"></span>
+                                        </span>
+                                        <span class="icon is-small has-text-white">
+                                            <i class="arrow_carrot-down"></i>
+                                        </span>
+                                    </div>
                                 </div>
                                 <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                                  <div class="dropdown-content">
-                                    <a class="dropdown-item" th:href="@{showaccount}">
-                                      My Profile
-                                    </a>
-                                    <a class="dropdown-item" th:href="@{logout}">
-                                        Logout
-                                      </a>
-                                  </div>
+                                    <div class="dropdown-content">
+                                        <a class="dropdown-item" th:href="@{showaccount}">
+                                            My Profile
+                                        </a>
+                                        <a class="dropdown-item" th:href="@{logout}">
+                                            Logout
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -119,9 +123,11 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo">
-                        <a th:href="@{home}">                            <div class="logo-shop">
+                        <a th:href="@{home}">
+                            <div class="logo-shop">
                                 Fool!st.
-                            </div></a>
+                            </div>
+                        </a>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
@@ -147,8 +153,9 @@
                     <div class="header__nav__option">
                         <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
                         <a href="#"><img src="img/icon/heart.png" alt=""></a>
-                        <a th:if= "${session.currentuser != null}"
-                        th:href="@{/cart-of-customer-account-id={id} (id = ${session.currentuser.id})}"><img src="img/icon/newcart.png" alt=""> <span>0</span></a>
+                        <a th:if="${session.currentuser != null}"
+                            th:href="@{/cart-of-customer-account-id={id} (id = ${session.currentuser.id})}"><img
+                                src="img/icon/newcart.png" alt=""> <span>0</span></a>
                         <div class="formattedPrice()">$0.00</div>
                     </div>
                 </div>
@@ -242,17 +249,30 @@
                     <div class="col-lg-8">
                         <div class="product__details__text">
                             <p style="font-size: 30px; font-weight: 600;" th:text="*{name}"></p>
-                            <div class="rating" style="display: flex; justify-content: center;">
-                                <div class="rating">
-                                    <i class="fa fa-star" style="margin-left: 5px" th:each="ratingStar, ratingState: ${ratingStarArr}" th:if="${ratingState.index} < *{totalRatingStarPoint()}"></i>
+                            <div class="rating" >
+                                <!-- <div class="rating">
+                                    <i class="fa fa-star" style="margin-left: 5px"
+                                        th:each="ratingStar, ratingState: ${ratingStarArr}"
+                                        th:if="${ratingState.index} < *{totalRatingStarPoint()}"></i>
                                 </div>
                                 <div class="rating">
-                                    <i class="fa fa-star-o" style="margin-left: 5px" th:each="ratingStar, ratingState: ${ratingStarArr}" th:if="${ratingState.index} < 5 - *{totalRatingStarPoint()}"></i>
+                                    <i class="fa fa-star-o" style="margin-left: 5px"
+                                        th:each="ratingStar, ratingState: ${ratingStarArr}"
+                                        th:if="${ratingState.index} < 5 - *{totalRatingStarPoint()}"></i>
+                                </div> -->
+                                <span style="margin-right: 12px;"
+                                    th:text="*{getTotalRatingNumber()} + ' Reviews'"></span>
+                                <div class="rating" style="display: flex; justify-content: center;flex-direction: row-reverse;">
+                                    <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
+                                    <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label> 
+                                    <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label>
+                                    <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label>
+                                    <input type="radio" name="rating" value="5" id="6"><label for="5">☆</label>
                                 </div>
-                                <span style="margin-right: 14px;" th:text="'- ' + *{getTotalRatingNumber()} + ' Reviews'"></span>
                             </div>
-                            <h3 class = "row" style="justify-content: center">
-                                <p style="font-size: 20px; font-weight: 600;" th:text="*{formattedPrice() + ' vnd'}"></p>
+                            <h3 class="row" style="justify-content: center">
+                                <p style="font-size: 20px; font-weight: 600;" th:text="*{formattedPrice() + ' vnd'}">
+                                </p>
                                 <span th:text="*{discount} > 0 ? *{fomattedOriginalPrice() + ' vnd'} : ''"></span>
                             </h3>
                             <p style="text-align: justify;" th:text="*{description}"></p>
@@ -262,8 +282,10 @@
                                         <div class="columns">
                                             <span class="column is-4 has-text-right mr-0">Size:</span>
                                             <div class="column has-text-left">
-                                                <label class="has-text-centered has-width-4rem" th:each="size, sizeState: ${sizeList}">
-                                                    <input type="radio" th:field="${addToCartProduct.productSize}" th:value="${size}" th:text="${size}">
+                                                <label class="has-text-centered has-width-4rem"
+                                                    th:each="size, sizeState: ${sizeList}">
+                                                    <input type="radio" th:field="${addToCartProduct.productSize}"
+                                                        th:value="${size}" th:text="${size}">
                                                 </label>
                                             </div>
                                         </div>
@@ -275,9 +297,11 @@
                                                 <input type="button" th:id="${color}" href = "/shopproduct">
                                             </label>-->
                                             <div class=" button-color-formated is-flex">
-                                                <div th:each="color, colorState: ${colorList}" class="round-button mr-2">
+                                                <div th:each="color, colorState: ${colorList}"
+                                                    class="round-button mr-2">
                                                     <div class="round-button-circle" th:classappend="${color}">
-                                                        <a th:href="@{/shop-details-by-color_name={productName}__color={color} (productName = ${productDetail.formatProductNameToLink()}, color = ${color})}" class="round-button"></a>
+                                                        <a th:href="@{/shop-details-by-color_name={productName}__color={color} (productName = ${productDetail.formatProductNameToLink()}, color = ${color})}"
+                                                            class="round-button"></a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -299,10 +323,12 @@
                                 <div class="product__details__cart__option">
                                     <div class="quantity">
                                         <div class="pro-qty">
-                                            <input type="text" th:field="${addToCartProduct.quantity}" >
+                                            <input type="text" th:field="${addToCartProduct.quantity}">
                                         </div>
                                     </div>
-                                    <button type="submit" name="action" th:value="${session.currentuser != null}? 'logged in - add to cart' : 'need to login'" style="background-color: transparent; border: none">
+                                    <button type="submit" name="action"
+                                        th:value="${session.currentuser != null}? 'logged in - add to cart' : 'need to login'"
+                                        style="background-color: transparent; border: none">
                                         <a class="primary-btn" style="color: #ffffff !important">add to cart</a>
                                     </button>
                                 </div>
@@ -324,15 +350,15 @@
                             <ul class="nav nav-tabs" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" data-toggle="tab" href="#tabs-5"
-                                    role="tab">Description</a>
+                                        role="tab">Description</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" data-toggle="tab" href="#tabs-6" role="tab">Customer
-                                    Previews</a>
+                                        Previews</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" data-toggle="tab" href="#tabs-7" role="tab">Additional
-                                    information</a>
+                                        information</a>
                                 </li>
                             </ul>
                             <div class="tab-content">
@@ -341,7 +367,7 @@
                                         <p class="note">Nam tempus turpis at metus scelerisque placerat nulla deumantos
                                             solicitud felis. Pellentesque diam dolor, elementum etos lobortis des mollis
                                             ut risus. Sedcus faucibus an sullamcorper mattis drostique des commodo
-                                        pharetras loremos.</p>
+                                            pharetras loremos.</p>
                                         <div class="product__details__tab__content__item">
                                             <h5>Products Infomation</h5>
                                             <p>A Pocket PC is a handheld computer, which features many of the same
@@ -350,13 +376,13 @@
                                                 file, coordinate appointments, surf the internet, exchange text messages
                                                 and more. Every product that is labeled as a Pocket PC must be
                                                 accompanied with specific software to operate the unit and must feature
-                                            a touchscreen and touchpad.</p>
+                                                a touchscreen and touchpad.</p>
                                             <p>As is the case with any new technology product, the cost of a Pocket PC
                                                 was substantial during it’s early release. For approximately $700.00,
                                                 consumers could purchase one of top-of-the-line Pocket PCs in 2003.
                                                 These days, customers are finding that prices have become much more
                                                 reasonable now that the newness is wearing off. For approximately
-                                            $350.00, a new Pocket PC can now be purchased.</p>
+                                                $350.00, a new Pocket PC can now be purchased.</p>
                                         </div>
                                         <div class="product__details__tab__content__item">
                                             <h5>Material used</h5>
@@ -366,16 +392,20 @@
                                                 tend to have a shine to them compared to wool and cotton suits, this can
                                                 make the suit look cheap. The texture of velvet is luxurious and
                                                 breathable. Velvet is a great choice for dinner party jacket and can be
-                                            worn all year round.</p>
+                                                worn all year round.</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="tabs-6" role="tabpanel">
-                                    <div class="product__details__tab__content" style="width: 50rem; margin-left: auto; margin-right: auto;">
-                                        <div class="product__details__tab__content__item" th:each="comment, commentState: ${commentList}">
+                                    <div class="product__details__tab__content"
+                                        style="width: 50rem; margin-left: auto; margin-right: auto; overflow: visible;">
+                                        <div class="product__details__tab__content__item"
+                                            th:each="comment, commentState: ${commentList}">
                                             <div class="columns">
                                                 <div class="column is-2">
-                                                    <div class="set-bg has-border-10px" th:data-setbg="${comment.getImageUrl()}" style="height:80px; width:80px"></div>
+                                                    <div class="set-bg has-border-10px"
+                                                        th:data-setbg="${comment.getImageUrl()}"
+                                                        style="height:80px; width:80px"></div>
                                                 </div>
                                                 <div class="column">
                                                     <h5 class="mt-2" th:text="${comment.getCustomerName()}"></h5>
@@ -385,6 +415,25 @@
                                             </div>
                                             <!-- <p th:text="${comment.getImageUrl()}"></p> -->
                                         </div>
+                                        <div id="comments" th:if="${session.currentuser != null}">
+                                            <form>
+                                                <fieldset>
+                                                    <div class="row">
+                                                        <div class="col-sm-3 col-lg-2 hidden-xs">
+                                                            <img class="set-bg has-border-10px"
+                                                                th:src="${curentcusImage}" alt=""
+                                                                style="height:80px; width:80px">
+                                                        </div>
+                                                        <div class="form-group col-xs-12 col-sm-9 col-lg-10">
+                                                            <textarea class="form-control" id="message"
+                                                                placeholder="Your message" required=""></textarea>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                                <button type="submit" class="btn btn-primary btn-sm shadow-none" style="float: right;
+                                                margin-bottom: 7px;">Submit</button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="tabs-7" role="tabpanel">
@@ -392,7 +441,7 @@
                                         <p class="note">Nam tempus turpis at metus scelerisque placerat nulla deumantos
                                             solicitud felis. Pellentesque diam dolor, elementum etos lobortis des mollis
                                             ut risus. Sedcus faucibus an sullamcorper mattis drostique des commodo
-                                        pharetras loremos.</p>
+                                            pharetras loremos.</p>
                                         <div class="product__details__tab__content__item">
                                             <h5>Products Infomation</h5>
                                             <p>A Pocket PC is a handheld computer, which features many of the same
@@ -401,13 +450,13 @@
                                                 file, coordinate appointments, surf the internet, exchange text messages
                                                 and more. Every product that is labeled as a Pocket PC must be
                                                 accompanied with specific software to operate the unit and must feature
-                                            a touchscreen and touchpad.</p>
+                                                a touchscreen and touchpad.</p>
                                             <p>As is the case with any new technology product, the cost of a Pocket PC
                                                 was substantial during it’s early release. For approximately $700.00,
                                                 consumers could purchase one of top-of-the-line Pocket PCs in 2003.
                                                 These days, customers are finding that prices have become much more
                                                 reasonable now that the newness is wearing off. For approximately
-                                            $350.00, a new Pocket PC can now be purchased.</p>
+                                                $350.00, a new Pocket PC can now be purchased.</p>
                                         </div>
                                         <div class="product__details__tab__content__item">
                                             <h5>Material used</h5>
@@ -417,7 +466,7 @@
                                                 tend to have a shine to them compared to wool and cotton suits, this can
                                                 make the suit look cheap. The texture of velvet is luxurious and
                                                 breathable. Velvet is a great choice for dinner party jacket and can be
-                                            worn all year round.</p>
+                                                worn all year round.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -639,7 +688,7 @@
                                 document.write(new Date().getFullYear());
                             </script>2020
                             All rights reserved | This template is made with <i class="fa fa-heart-o"
-                            aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                                aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
                         </p>
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                     </div>
