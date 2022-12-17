@@ -52,7 +52,7 @@ public class AccountController {
 	    	return "redirect:/loginpage";
 	    }
 		
-        return "accounts";
+        return "user-detail";
 	}
 	
 	
@@ -90,10 +90,10 @@ public class AccountController {
 			accountEdited.setUserName(accountObj.getUserName());
 			accountEdited.setPassword(accountObj.getPassword());
 			accountEdited.setCustomer(customer);
-			
+			System.out.println(accountEdited.getUserName());
 			System.out.println("..." + ValueRender.formattedInputString(accountObj.getCustomer().getName()) + "...");
 			
-//			accRepo.save(accountEdited);
+			//accRepo.save(accountEdited);
 			
 			return showMyProfileForm(session, model, request);
 		}
