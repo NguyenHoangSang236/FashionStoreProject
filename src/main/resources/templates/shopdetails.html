@@ -262,26 +262,27 @@
                                 </div> -->
                                 <span style="margin-right: 12px;"
                                     th:text="*{getTotalRatingNumber()} + ' Reviews'"></span>
-                                <form class="rating"
-                                    style="display: flex; justify-content: center;flex-direction: row-reverse;">
-                                    <input type="radio" name="rating" value="1" id="1" onclick="ratingProduct(this.id)"><label for="1">☆</label>
-                                    <input type="radio" name="rating" value="2" id="2" onclick="ratingProduct(this.id)"><label for="2">☆</label>
-                                    <input type="radio" name="rating" value="3" id="3" onclick="ratingProduct(this.id)"><label for="3">☆</label>
-                                    <input type="radio" name="rating" value="4" id="4" onclick="ratingProduct(this.id)"><label for="4">☆</label>
-                                    <input type="radio" name="rating" value="5" id="5" onclick="ratingProduct(this.id)"><label for="5">☆</label>
+                                <form class="rating" style="display: flex; justify-content: center;flex-direction: row-reverse;" method="post">
+                                    <input type="checkbox" name="rating" th:field="${ratingPoint}" value="1" id="1" onclick="ratingProduct(this.id)"><label for="1">☆</label>
+                                    <input type="checkbox" name="rating" th:field="${ratingPoint}" value="2" id="2" onclick="ratingProduct(this.id)"><label for="2">☆</label>
+                                    <input type="checkbox" name="rating" th:field="${ratingPoint}" value="3" id="3" onclick="ratingProduct(this.id)"><label for="3">☆</label>
+                                    <input type="checkbox" name="rating" th:field="${ratingPoint}" value="4" id="4" onclick="ratingProduct(this.id)"><label for="4">☆</label>
+                                    <input type="checkbox" name="rating" th:field="${ratingPoint}" value="5" id="5" onclick="ratingProduct(this.id)"><label for="5">☆</label>
                                     <!-- The Modal -->
                                     <div class="modal" id="ratingModel" >
                                         <div class="modal-background"></div>
                                         <div class="modal-card" style="margin-top:10%;">
                                           <header class="modal-card-head">
-                                            <p class="modal-card-title">Bạn có chắc về đánh giá của mình</p>
+                                            <p class="modal-card-title">Are you sure about your rating ?</p>
                                           </header>
                                           <footer class="modal-card-foot">
-                                            <button type="submit" class="button is-success">Rating</button>
+                                            <button type="submit" name="action" th:value="${ratingPoint} + ' stars'" class="button is-success">
+                                                Yes
+                                            </button>
                                             <button class="button" id="close">Cancel</button>
                                           </footer>
                                         </div>
-                                      </div>
+                                    </div>
                                 </form>
                                 <div id="snackbar">Some text some message..</div>
                                 <script th:inline="javascript">
@@ -291,7 +292,7 @@
                                     // btn.onclick = function () {
                                     //     modal.style.display = "block";
                                     // }
-                                    let currentUser = [[${session.currentuser}]]
+                                    //let currentUser = [[${session.currentuser}]]
                                     function ratingProduct(id){
                                         var btn = document.getElementById(id);
                                         modal.style.display = "block";
@@ -305,6 +306,8 @@
                                         }
                                     }
                                 </script>
+=======
+>>>>>>> 35b8e68e7fe9de6adb0c9cc627040d571e0ed763
                             </div>
                             <h3 class="row" style="justify-content: center">
                                 <p style="font-size: 20px; font-weight: 600;" th:text="*{formattedPrice() + ' vnd'}">
@@ -748,6 +751,27 @@
         </div>
     </div>
     <!-- Search End -->
+
+    <script>
+        var modal = document.getElementById("ratingModel");
+        //var btn = document.getElementById("5");
+        var span = document.getElementById("close"); 
+        // btn.onclick = function () {
+        //     modal.style.display = "block";
+        // }
+        function ratingProduct(id){
+            var btn = document.getElementById(id);
+            modal.style.display = "block";
+        }
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 
     <!-- Js Plugins -->
     <script src="js/jquery-3.3.1.min.js"></script>

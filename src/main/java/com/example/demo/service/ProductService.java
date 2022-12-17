@@ -21,4 +21,5 @@ public interface ProductService {
     Page<Product> findByFilters(Pageable pageable, String query);
     Page<Product> searchProduct(Pageable pageable, String Name );
     void deleteProduct(int productId);
+    void ratingProduct(int ratingPoint, String name, String color);
 }

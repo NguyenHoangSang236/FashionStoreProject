@@ -29,6 +29,7 @@ import com.example.demo.respository.CartRepository;
 import com.example.demo.respository.CommentRepository;
 import com.example.demo.respository.CustomerRepository;
 import com.example.demo.respository.ProductRepository;
+import com.example.demo.service.ProductService;
 import com.example.demo.util.GlobalStaticValues;
 import com.example.demo.util.ValueRender;
 
@@ -47,11 +48,14 @@ public class DetailsController {
     @Autowired
     CartRepository cartRepo;
     
+    @Autowired
+    ProductService productService;
+    
     Product currentProduct;
     AddToCartProductInfo addToCartProduct = new AddToCartProductInfo();
+    Comment newComment = new Comment();
     int defaultQuantity = 1;
     int ratingPoint = 0;
-    Comment newComment = new Comment();
     
     
     public void renderToProductDetails(HttpSession session, Model model, String realProductName, Product productDetail, HttpServletRequest request) {
@@ -60,7 +64,7 @@ public class DetailsController {
         List<String> colorList = productRepo.getAllColorsOfProductByName(realProductName);
         List<String> cateList = productRepo.getAllCatalogsByProductName(realProductName);
         List<ProductComment> commentList = new ArrayList<ProductComment>();
-        ratingPoint = productDetail.getTotalRatingNumber();
+//        ratingPoint = productDetail.getTotalRatingNumber();
         
         if(comments.size() > 0) {            
             for(int i = 0; i < comments.size(); i++) {
@@ -128,8 +132,8 @@ public class DetailsController {
     		@ModelAttribute("newComment") Comment modelNewComment) {
     	
     	String realProductName = ValueRender.linkToString(productName);
-        
-        if(action.equals("logged in - add to cart")) {        
+    	
+        if(action.equals("logged in - add to cart")) {
         	if(modelAddToCartProductInfo.getProductSize() == null) {
             	GlobalStaticValues.message = "Please choose a size first !!";
             }
@@ -148,7 +152,6 @@ public class DetailsController {
         		if(tmpCart != null) {
         			quantity = tmpCart.getQuantity();
         			id = tmpCart.getId();
-        			System.out.println(quantity);
         		}
         		
         		//if available quantity of product > selected product quantity --> save cart
@@ -169,10 +172,15 @@ public class DetailsController {
         	newComment.setId(commentRepo.getLastestCommentId() + 1);
         	
         	commentRepo.save(newComment);
-//        	System.out.println(newComment.getContent() + " " + newComment.getCustomer().getId() + " " + newComment.getProduct().getId());
         }
         else if(action.equals("need to login")) {
         	return "redirect:/loginpage";
+        }
+        else if(action.contains("stars")) {
+        	int starNumber = Integer.parseInt(action.substring(0, 1));
+        	System.out.println(starNumber + " " + realProductName + " " + color);
+        	productService.ratingProduct(starNumber, realProductName, color);
+        	currentProduct = productRepo.getProductByNameAndColor(realProductName, color);
         }
 
         renderToProductDetails(session, model, realProductName, currentProduct, request);

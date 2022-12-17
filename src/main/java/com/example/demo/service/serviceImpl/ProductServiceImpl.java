@@ -39,9 +39,6 @@ public class ProductServiceImpl implements ProductService{
     private ProductRemoveRepository productRemoveRepo;
     
     @Autowired
-    private CommentRepository commentRepo;
-    
-    @Autowired
     private CartRemoveRepository cartRemoveRepo;
     
     private List<Product> products;
@@ -155,6 +152,38 @@ public class ProductServiceImpl implements ProductService{
         }
         
         return new PageImpl<Product>(list, PageRequest.of(currentPage, pageSize), products.size());
+	}
+
+
+	@Override
+	public void ratingProduct(int ratingPoint, String name, String color) {
+		List<Product> productList = productRepo.getProductListByNameAndColor(name, color);
+		
+		for(int i = 0; i < productList.size(); i++) {
+			switch (ratingPoint) {
+				case 1: {
+					int num = productList.get(i).getOneStarQuantity();
+					productList.get(i).setOneStarQuantity(num + 1);
+				}
+				case 2: {
+					int num = productList.get(i).getTwoStarQuantity();
+					productList.get(i).setTwoStarQuantity(num + 1);
+				}
+				case 3: {
+					int num = productList.get(i).getThreeStarQuantity();
+					productList.get(i).setThreeStarQuantity(num + 1);
+				}
+				case 4: {
+					int num = productList.get(i).getFourStarQuantity();
+					productList.get(i).setFourStarQuantity(num + 1);
+				}
+				case 5: {
+					int num = productList.get(i).getFiveStarQuantity();
+					productList.get(i).setFiveStarQuantity(num + 1);
+				}
+	    	}
+			productRepo.save(productList.get(i));
+		}
 	}
 
     

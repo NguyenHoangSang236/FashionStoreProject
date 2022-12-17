@@ -3,9 +3,11 @@ package com.example.demo.respository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.entity.Product;
 
@@ -32,6 +34,10 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	
 	@Query(value = "select * from products where name = :nameVal and color = :colorVal group by name", nativeQuery = true)
 	Product getProductByNameAndColor(@Param("nameVal") String productName, @Param("colorVal") String color);
+	
+	
+	@Query(value = "select * from products where name = :nameVal and color = :colorVal", nativeQuery = true)
+	List<Product> getProductListByNameAndColor(@Param("nameVal") String productName, @Param("colorVal") String color);
 	
 	
 	@Query(value = "select * from products where name = :nameVal group by name", nativeQuery = true)

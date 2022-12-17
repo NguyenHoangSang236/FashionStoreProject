@@ -214,19 +214,19 @@ public class Product implements Serializable {
         int total = 0;
         
         if(this.oneStarQuantity != 0) {
-            total += 1;
+            total += this.oneStarQuantity;
         }
         if(this.twoStarQuantity != 0) {
-            total += 1;
+            total += this.twoStarQuantity;
         }
         if(this.threeStarQuantity != 0) {
-            total += 1;
+            total += this.threeStarQuantity;
         }
         if(this.fourStarQuantity != 0) {
-            total += 1;
+            total += this.fourStarQuantity;
         }
         if(this.fiveStarQuantity != 0) {
-            total += 1;
+            total += this.fiveStarQuantity;
         }
         
         return total;

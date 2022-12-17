@@ -35,6 +35,7 @@ import com.example.demo.respository.CatalogRepository;
 import com.example.demo.respository.CustomerRepository;
 import com.example.demo.respository.ProductRepository;
 import com.example.demo.service.ProductService;
+import com.example.demo.util.GlobalStaticValues;
 import com.example.demo.util.ValueRender;
 
 @Controller
@@ -134,6 +135,7 @@ public class ShopController {
     public String showShop(HttpSession session,Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(15);
+        GlobalStaticValues.currentPage = "shopproduct";
         
         model.addAttribute("pName", new Product());
         
