@@ -164,22 +164,27 @@ public class ProductServiceImpl implements ProductService{
 				case 1: {
 					int num = productList.get(i).getOneStarQuantity();
 					productList.get(i).setOneStarQuantity(num + 1);
+					break;
 				}
 				case 2: {
 					int num = productList.get(i).getTwoStarQuantity();
 					productList.get(i).setTwoStarQuantity(num + 1);
+					break;
 				}
 				case 3: {
 					int num = productList.get(i).getThreeStarQuantity();
 					productList.get(i).setThreeStarQuantity(num + 1);
+					break;
 				}
 				case 4: {
 					int num = productList.get(i).getFourStarQuantity();
 					productList.get(i).setFourStarQuantity(num + 1);
+					break;
 				}
 				case 5: {
 					int num = productList.get(i).getFiveStarQuantity();
 					productList.get(i).setFiveStarQuantity(num + 1);
+					break;
 				}
 	    	}
 			productRepo.save(productList.get(i));
