@@ -187,10 +187,11 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="profile-img">
-                        <img th:src="${Ccustomer.getImage()}" alt="" />
+                        <img id="display_image" th:src="${Ccustomer.getImage()}"  alt="" />
                         <div class="file btn btn-lg btn-primary">
                             Change Photo
-                            <input type="file" name="file" />
+                            <input type="file" id="image_input" name="file" />
+                            <input type="hidden" id="image_value" th:field="*{customer.image}" >
                         </div>
                     </div>
                 </div>
@@ -263,6 +264,30 @@
                 </div>
             </div>
         </form>
+        <script th:inline="javascript">
+            const image_input = document.querySelector("#image_input");
+            console.log(image_input)
+            console.log(document.querySelector("#image_value").value)
+            if(image_input){
+            image_input.addEventListener("change", function () {
+              //console.log(image_input.value);
+              const reader = new FileReader();
+              reader.addEventListener("load", () => {
+                const uploaded_image = reader.result;
+                //console.log(uploaded_image)
+                document.querySelector("#display_image").src = `${uploaded_image}`;
+
+                var ret = uploaded_image.replace('data:image/jpeg;base64,','');
+                //var decode = atob(ret);
+                //console.log(uploaded_image);
+                document.querySelector("#image_value").value = ret;
+                console.log(document.querySelector("#image_value").value)
+              });
+              reader.readAsDataURL(this.files[0]);
+            });
+          
+        }
+          </script>
     </section>
     <!-- Blog Section End -->
 
