@@ -262,12 +262,16 @@
                                 </div> -->
                                 <span style="margin-right: 12px;"
                                     th:text="*{getTotalRatingNumber()} + ' Reviews'"></span>
-                                <form class="rating" style="display: flex; justify-content: center;flex-direction: row-reverse;" method="post">
-                                    <input type="checkbox" name="rating" th:field="${ratingPoint}" value="1" id="1" onclick="ratingProduct(this.id)"><label for="1">☆</label>
-                                    <input type="checkbox" name="rating" th:field="${ratingPoint}" value="2" id="2" onclick="ratingProduct(this.id)"><label for="2">☆</label>
-                                    <input type="checkbox" name="rating" th:field="${ratingPoint}" value="3" id="3" onclick="ratingProduct(this.id)"><label for="3">☆</label>
-                                    <input type="checkbox" name="rating" th:field="${ratingPoint}" value="4" id="4" onclick="ratingProduct(this.id)"><label for="4">☆</label>
-                                    <input type="checkbox" name="rating" th:field="${ratingPoint}" value="5" id="5" onclick="ratingProduct(this.id)"><label for="5">☆</label>
+                                <form class="rating" style="display: flex; justify-content: center;flex-direction: row-reverse;" th:object="${shopDetails}" method="post">
+                                    <div th:each="voteStar, voteStarArrState: ${voteStarsArr}">
+                                        <input type="checkbox" 
+                                               name="rating" 
+                                               th:field="*{votedStars}" 
+                                               th:value="${voteStarsArr[__voteStarArrState.index__]}" 
+                                               th:id="${voteStarsArr[__voteStarArrState.index__]}" 
+                                               onclick="ratingProduct(this.id)">
+                                               <label th:for="${voteStarsArr[__voteStarArrState.index__]}">☆</label>
+                                    </div>
                                     <!-- The Modal -->
                                     <div class="modal" id="ratingModel" >
                                         <div class="modal-background"></div>
@@ -276,7 +280,7 @@
                                             <p class="modal-card-title">Are you sure about your rating ?</p>
                                           </header>
                                           <footer class="modal-card-foot">
-                                            <button type="submit" name="action" th:value="${ratingPoint} + ' stars'" class="button is-success">
+                                            <button type="submit" class="button is-success">
                                                 Yes
                                             </button>
                                             <button class="button" id="close">Cancel</button>
@@ -291,7 +295,7 @@
                                 <span th:text="*{discount} > 0 ? *{fomattedOriginalPrice() + ' vnd'} : ''"></span>
                             </h3>
                             <p style="text-align: justify;" th:text="*{description}"></p>
-                            <form method="post" th:object="${addToCartProduct}">
+                            <form method="post" th:object="${shopDetails}">
                                 <div class="columns product__details__option">
                                     <div class="column product__details__option__size">
                                         <div class="columns">
@@ -299,7 +303,7 @@
                                             <div class="column has-text-left">
                                                 <label class="has-text-centered has-width-4rem"
                                                     th:each="size, sizeState: ${sizeList}">
-                                                    <input type="radio" th:field="${addToCartProduct.productSize}"
+                                                    <input type="radio" th:field="${shopDetails.productSize}"
                                                         th:value="${size}" th:text="${size}">
                                                 </label>
                                             </div>
@@ -338,7 +342,7 @@
                                 <div class="product__details__cart__option">
                                     <div class="quantity">
                                         <div class="pro-qty">
-                                            <input type="text" th:field="${addToCartProduct.quantity}">
+                                            <input type="text" th:field="${shopDetails.quantity}">
                                         </div>
                                     </div>
                                     <button type="submit" name="action"
