@@ -82,7 +82,7 @@ public class AccountController {
 			return showMyProfileForm(session, model, request);
 		}
 		else {
-			Customer customer = cusRepo.getCustomerById(accountEdited.getCustomer().getId());
+			customer = cusRepo.getCustomerById(accountEdited.getCustomer().getId());
 			
 			customer.setName(accountObj.getCustomer().getName());
 			customer.setEmail(accountObj.getCustomer().getEmail());

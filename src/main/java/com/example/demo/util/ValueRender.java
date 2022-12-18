@@ -1,10 +1,12 @@
 package com.example.demo.util;
 
+import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HexFormat;
 import java.util.List;
 import java.util.Locale;
 
@@ -225,5 +227,17 @@ public class ValueRender {
     	}
     	
     	return false;
+    }
+    
+    
+    //convert String to byte[]
+    public static byte[] convertStringToByteArray(String input) {
+    	return input.getBytes(StandardCharsets.UTF_8);
+    }
+    
+    
+    //convert byte[] to String
+    public static String convertByteToString(byte[] input) {
+    	return new String(input, StandardCharsets.UTF_8);
     }
 }
