@@ -1,395 +1,296 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Edit Product - Dashboard HTML Template</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Roboto:400,700"
-    />
-    <!-- https://fonts.google.com/specimen/Roboto -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">    
-    <!-- https://fontawesome.com/ -->
-    <link rel="stylesheet" href="jquery-ui-datepicker/jquery-ui.min.css" type="text/css" />
-    <!-- http://api.jqueryui.com/datepicker/ -->
-    <link rel="stylesheet" href="CSS/bootstrap.min.css" />
-    <!-- https://getbootstrap.com/ -->
-    <link rel="stylesheet" href="CSS/templatemo-style.css">
-    <link rel="stylesheet" href="CSS/style.css">
-    <!--
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Add Product - Dashboard HTML Template</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700" />
+  <!-- https://fonts.google.com/specimen/Roboto -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+  <!-- https://fontawesome.com/ -->
+  <link rel="stylesheet" href="jquery-ui-datepicker/jquery-ui.min.css" type="text/css" />
+  <!-- http://api.jqueryui.com/datepicker/ -->
+  <link rel="stylesheet" href="CSS/bootstrap.min.css" />
+  <!-- https://getbootstrap.com/ -->
+  <link rel="stylesheet" href="CSS/templatemo-style.css">
+  <link rel="stylesheet" href="CSS/style.css">
+  <!--
 	Product Admin CSS Template
 	https://templatemo.com/tm-524-product-admin
 	-->
-  </head>
+</head>
 
-  <body>
-    <nav class="navbar navbar-expand-xl">
-      <div class="container h-100">
-        <a class="navbar-brand" href="index.html">
-          <h1 class="tm-site-title mb-0">Product Admin</h1>
-        </a>
-        <button
-          class="navbar-toggler ml-auto mr-0"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <i class="fas fa-bars tm-nav-icon"></i>
-        </button>
+<body>
+  <nav class="navbar navbar-expand-xl">
+    <div class="container h-100">
+      <a class="navbar-brand" href="index.html">
+        <h1 class="tm-site-title mb-0">Product Admin</h1>
+      </a>
+      <button class="navbar-toggler ml-auto mr-0" type="button" data-toggle="collapse"
+        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <i class="fas fa-bars tm-nav-icon"></i>
+      </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mx-auto h-100">
-            <li class="nav-item">
-              <a class="nav-link" href="index.html">
-                <i class="fas fa-tachometer-alt"></i> Dashboard
-                <span class="sr-only">(current)</span>
-              </a>
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <i class="far fa-file-alt"></i>
-                <span> Reports <i class="fas fa-angle-down"></i> </span>
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Daily Report</a>
-                <a class="dropdown-item" href="#">Weekly Report</a>
-                <a class="dropdown-item" href="#">Yearly Report</a>
-              </div>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="products.html">
-                <i class="fas fa-shopping-cart"></i> Products
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link" href="accounts.html">
-                <i class="far fa-user"></i> Accounts
-              </a>
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <i class="fas fa-cog"></i>
-                <span> Settings <i class="fas fa-angle-down"></i> </span>
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Profile</a>
-                <a class="dropdown-item" href="#">Billing</a>
-                <a class="dropdown-item" href="#">Customize</a>
-              </div>
-            </li>
-          </ul>
-          <ul class="navbar-nav">
-              <li class="nav-item">
-                <p class="nav-link d-block" th:if= "${session.currentuser != null}" th:text="${#session.getAttribute('currentuser').getUserName()}">
-                </p>
-              </li>
-      		<li class="nav-item">
-      		<a class="nav-link d-block" th:href="@{logout}">logout</a>
-      		</li>
-            </ul>
-        </div>
-      </div>
-    </nav>
-    <div class="container tm-mt-big tm-mb-big">
-      <div class="row">
-        <div class="col-xl-9 col-lg-10 col-md-12 col-sm-12 mx-auto">
-          <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
-            <div class="row">
-              <div class="col-12">
-                <h2 class="tm-block-title d-inline-block">Edit Product</h2>
-              </div>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mx-auto h-100">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">
+              <i class="fas fa-tachometer-alt"></i> Dashboard
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              <i class="far fa-file-alt"></i>
+              <span> Reports <i class="fas fa-angle-down"></i> </span>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">Daily Report</a>
+              <a class="dropdown-item" href="#">Weekly Report</a>
+              <a class="dropdown-item" href="#">Yearly Report</a>
             </div>
-            <form action="" method="post" th:object="${selectedProduct}" class="tm-edit-product-form">
-              <div class="row tm-edit-product-row">
-                <div class="col-xl-6 col-lg-6 col-md-12">
-                  <div class="form-group mb-3">
-                    <label for="name">Product Name</label>
-                    <input
-                      id="name"
-                      name="name"
-                      type="text"
-                      th:field="*{name}"
-                      class="form-control validate"
-                      required
-                    />
-                  </div>
-                  <div class="form-group mb-3">
-                    <label for="brand">Brand</label>
-                    <input
-                      id="brand"
-                      name="brand"
-                      type="text"
-                      th:field="*{brand}"
-                      class="form-control validate"
-                      required
-                    />
-                  </div>
-                  <div class="form-group mb-3">
-                    <label for="color">Color</label>
-                    <input
-                      id="color"
-                      name="color"
-                      type="text"
-                      th:field="*{color}"
-                      class="form-control validate"
-                      required
-                    />
-                  </div>
-                  <div class="row">
-                    <div class="form-group mb-3 col-xs-12 col-sm-6">
-                      <label
-                        for="price"
-                        >Selling Price
-                      </label>
-                      <input
-                        id="price"
-                        name="price"
-                        type="text"
-                        th:field="*{price}"
-                        class="form-control validate"
-                        data-large-mode="true"
-                      />
-                    </div>
-                    <div class="form-group mb-3 col-xs-12 col-sm-6">
-                      <label
-                        for="original_price"
-                        >Original Price
-                      </label>
-                      <input
-                        id="original_price"
-                        name="original_price"
-                        type="text"
-                        th:field="*{originalPrice}"
-                        class="form-control validate"
-                        required
-                      />
-                    </div>
-                  </div> 
-                  <div class="form-group mb-3">
-                    <label for="description">Description</label>
-                    <input
-                      style="height: 10rem"
-                      type="text"
-                      th:field="*{description}"
-                      class="form-control validate"
-                    />
-                  </div>
-                  <!--
-                  <div class="form-group mb-3">
-                    <label
-                      for="category"
-                      >Category</label
-                    >
-                    <select
-                      class="custom-select tm-select-accounts"
-                      id="category"
-                    >
-                      <option selected>Select category</option>
-                      <option value="1">New Arrival</option>
-                      <option value="2">Most Popular</option>
-                      <option value="3">Trending</option>
-                    </select>
-                  </div>
-                  -->
-                  <div class="form-group mb-3" id="detailCategoryModifier">
-                    <div class="title-detail mb-3 is-flex is-justify-content-space-between">
-                      <div class="is-flex">
-                        <label style="display: none" for="stock"></label>
-                        <div class="has-text-white has-margin-block-auto">
-                          Category
-                        </div>
-                        <div class="button ml-1 is-small is-rounded" id="getDetailCategory">Get</div>
-                      </div>
-                      <div class="button is-small is-rounded" id="addDetailCategory">Add Category</div>
-                    </div>
-                    <div class="data-detail"></div>
-                  </div>
-                  <div class="form-group mb-3">
-                    <label
-                      for="import_date"
-                      >Import Date
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="products.html">
+              <i class="fas fa-shopping-cart"></i> Products
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="accounts.html">
+              <i class="far fa-user"></i> Accounts
+            </a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-cog"></i>
+              <span> Settings <i class="fas fa-angle-down"></i> </span>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">Profile</a>
+              <a class="dropdown-item" href="#">Billing</a>
+              <a class="dropdown-item" href="#">Customize</a>
+            </div>
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <p class="nav-link d-block" th:if="${session.currentuser != null}"
+              th:text="${#session.getAttribute('currentuser').getUserName()}">
+            </p>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link d-block" th:href="@{logout}">logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container tm-mt-big tm-mb-big">
+    <div class="row">
+      <div class="col-xl-9 col-lg-10 col-md-12 col-sm-12 mx-auto">
+        <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+          <div class="row">
+            <div class="col-12">
+              <h2 class="tm-block-title d-inline-block">Edit Product</h2>
+            </div>
+          </div>
+          <form action="" method="post" th:object="${selectedProduct}" class="tm-edit-product-form">
+            <div class="row tm-edit-product-row">
+              <div class="col-xl-6 col-lg-6 col-md-12">
+                <div class="form-group mb-3">
+                  <label for="name">Product Name</label>
+                  <input id="name" name="name" type="text" th:field="*{name}" class="form-control validate" required />
+                </div>
+                <div class="form-group mb-3">
+                  <label for="brand">Brand</label>
+                  <input id="brand" name="brand" type="text" th:field="*{brand}" class="form-control validate"
+                    required />
+                </div>
+                <div class="form-group mb-3">
+                  <label for="color">Color</label>
+                  <input id="color" name="color" type="text" th:field="*{color}" class="form-control validate"
+                    required />
+                </div>
+                <div class="row">
+                  <div class="form-group mb-3 col-xs-12 col-sm-6">
+                    <label for="price">Selling Price
                     </label>
-                    <input
-                      id="import_date"
-                      name="import_date"
-                      type="text"
-                      class="form-control validate"
-                      data-large-mode="true"
-                    />
+                    <input id="price" name="price" type="text" th:field="*{sellingPrice}" class="form-control validate"
+                      data-large-mode="true" />
                   </div>
-                  <div class="form-group mb-3" id="detailProductModifier">
-                    <div class="title-detail mb-3 is-flex is-justify-content-space-between">
-                      <div class="is-flex">
-                        <label style="display: none" for="stock"></label>
-                        <div class="has-text-white has-margin-block-auto">
-                          Detail item
-                        </div>
-                        <div class="button ml-1 is-small is-rounded" id="getDetailProduct">Get Data</div>
+                  <div class="form-group mb-3 col-xs-12 col-sm-6">
+                    <label for="original_price">Original Price
+                    </label>
+                    <input id="original_price" name="original_price" type="text" th:field="*{originalPrice}"
+                      class="form-control validate" required />
+                  </div>
+                </div>
+                <div class="form-group mb-3">
+                  <label for="description">Description</label>
+                  <input type="text" th:field="*{description}" class="form-control validate" />
+                </div>
+                <div class="form-group mb-3">
+                  <label for="category">Category</label>
+                  <ul>
+                    <li th:each="category, categoriesListState: ${cateList}" style="white-space:nowrap; ">
+                      <input type="checkbox" th:field="*{catalogList}" th:value="${category.name}" />
+                      <label th:text="${category.name}"></label>
+                    </li>
+                  </ul>
+                </div>
+                <div class="form-group mb-3">
+                  <label for="import_date">Import Date
+                  </label>
+                  <input id="import_date" name="import_date" type="text" class="form-control validate"
+                    data-large-mode="true" />
+                </div>
+                <div class="form-group mb-3" id="detailProductModifier">
+                  <div class="title-detail mb-3 is-flex is-justify-content-space-between">
+                    <div class="is-flex">
+                      <label style="display: none" for="stock"></label>
+                      <div class="has-text-white has-margin-block-auto">
+                        Detail item
                       </div>
-                      <div class="button is-small is-rounded" id="addDetailProduct">Add</div>
+                      <div class="button ml-1 is-small is-rounded" id="getDetailProduct">Get Data</div>
                     </div>
-                    <div class="data-detail"></div>
+                    <div class="button is-small is-rounded" id="addDetailProduct">Add</div>
                   </div>
+                  <div class="data-detail"></div>
+                </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
-                <div class="tm-product-img-dummy mx-auto" style="margin-top: 2rem">
-                  <i
-                    class="fas fa-cloud-upload-alt tm-upload-icon"
-                    onclick="document.getElementById('fileInput').click();"
-                  ></i>
+                <div class="tm-product-img-dummy mx-auto" style="margin-top: 2rem; width: 25rem;
+                height: 15rem; " >
+                  <img id="linkImage1_preview" src="https://ps.w.org/image-comparison/assets/icon-256x256.png?rev=2587037" style="width: 25rem;
+                  height: 15rem;
+                  object-fit: contain;" >
                 </div>
                 <div class="custom-file mt-3 mb-3">
-                  <input id="fileInput" type="file" style="display:none;" />
-                  <input
-                    type="button"
-                    class="btn btn-primary btn-block mx-auto"
-                    value="UPLOAD PRODUCT IMAGE"
-                    onclick="document.getElementById('fileInput').click();"
-                  />
+                  <input id="linkImage1" name="name" type="text"
+                      class="form-control validate" required style="margin-bottom:1rem;" />
+                  <input id="fileInput1" type="file" style="display:none;" onclick="upload_image(this.id)" />
+                  <input type="button" class="btn btn-primary btn-block mx-auto" value="UPLOAD PRODUCT IMAGE"
+                    onclick="upload_link_image('linkImage1')" />
                 </div>
-                <div class="tm-product-img-dummy mx-auto" style="margin-top: 3rem">
-                  <i
-                    class="fas fa-cloud-upload-alt tm-upload-icon"
-                    onclick="document.getElementById('fileInput').click();"
-                  ></i>
+                <div class="tm-product-img-dummy mx-auto" style="margin-top: 3rem; width: 25rem;
+                height: 15rem;">
+                  <img id="linkImage2_preview" src="https://ps.w.org/image-comparison/assets/icon-256x256.png?rev=2587037" style="width: 25rem;
+                  height: 15rem;
+                  object-fit: contain;" >
                 </div>
                 <div class="custom-file mt-3 mb-3">
-                  <input id="fileInput" type="file" style="display:none;" />
-                  <input
-                    type="button"
-                    class="btn btn-primary btn-block mx-auto"
-                    value="UPLOAD PRODUCT IMAGE"
-                    onclick="document.getElementById('fileInput').click();"
-                  />
+                  <input id="linkImage2" name="name" type="text"
+                      class="form-control validate" required style="margin-bottom:1rem;" />
+                  <input id="fileInput2" type="file" style="display:none;" onclick="upload_image(this.id)"/>
+                  <input type="button" class="btn btn-primary btn-block mx-auto" value="UPLOAD PRODUCT IMAGE"
+                    onclick="upload_link_image('linkImage2')" />
                 </div>
-                <div class="tm-product-img-dummy mx-auto" style="margin-top: 3rem">
-                  <i
-                    class="fas fa-cloud-upload-alt tm-upload-icon"
-                    onclick="document.getElementById('fileInput').click();"
-                  ></i>
+                <div class="tm-product-img-dummy mx-auto" style="margin-top: 3rem; width: 25rem;
+                height: 15rem;">
+                  <img id="linkImage3_preview" src="https://ps.w.org/image-comparison/assets/icon-256x256.png?rev=2587037" style="width: 25rem;
+                  height: 15rem;
+                  object-fit: contain;" >
                 </div>
                 <div class="custom-file mt-3 mb-3">
-                  <input id="fileInput" type="file" style="display:none;" />
-                  <input
-                    type="button"
-                    class="btn btn-primary btn-block mx-auto"
-                    value="UPLOAD PRODUCT IMAGE"
-                    onclick="document.getElementById('fileInput').click();"
-                  />
+                  <input id="linkImage3" name="name" type="text"
+                      class="form-control validate" required style="margin-bottom:1rem;" />
+                  <input id="fileInput3" type="file" style="display:none;" onclick="upload_image(this.id)" />
+                  <input type="button" class="btn btn-primary btn-block mx-auto" value="UPLOAD PRODUCT IMAGE"
+                    onclick="upload_link_image('linkImage3')" />
                 </div>
-                <div class="tm-product-img-dummy mx-auto" style="margin-top: 3rem">
-                  <i
-                    class="fas fa-cloud-upload-alt tm-upload-icon"
-                    onclick="document.getElementById('fileInput').click();"
-                  ></i>
+                <div class="tm-product-img-dummy mx-auto" style="margin-top: 3rem; width: 25rem;
+                height: 15rem;">
+                  <img id="linkImage4_preview" src="https://ps.w.org/image-comparison/assets/icon-256x256.png?rev=2587037" style="width: 25rem;
+                  height: 15rem;
+                  object-fit: contain;" >
                 </div>
                 <div class="custom-file mt-3 mb-3">
-                  <input id="fileInput" type="file" style="display:none;" />
-                  <input
-                    type="button"
-                    class="btn btn-primary btn-block mx-auto"
-                    value="UPLOAD PRODUCT IMAGE"
-                    onclick="document.getElementById('fileInput').click();"
-                  />
+                  <input id="linkImage4" name="name" type="text"
+                      class="form-control validate" required style="margin-bottom:1rem;" />
+                  <input id="fileInput4" type="file" style="display:none;" onclick="upload_image(this.id)" />
+                  <input type="button" class="btn btn-primary btn-block mx-auto" value="UPLOAD PRODUCT IMAGE"
+                    onclick="upload_link_image('linkImage4')" />
                 </div>
               </div>
               <div class="col-12">
                 <button type="submit" class="btn btn-primary btn-block text-uppercase">Edit Product Now</button>
               </div>
-            </form>
-            </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
-    <footer class="tm-footer row tm-mt-small">
-        <div class="col-12 font-weight-light">
-          <p class="text-center text-white mb-0 px-4 small">
-            Copyright &copy; <b>2018</b> All rights reserved. 
-            
-            Design: <a rel="nofollow noopener" href="https://templatemo.com" class="tm-footer-link">Template Mo</a>
-        </p>
-        </div>
-    </footer> 
+  </div>
+  </div>
+  <footer class="tm-footer row tm-mt-small">
+    <div class="col-12 font-weight-light">
+      <p class="text-center text-white mb-0 px-4 small">
+        Copyright &copy; <b>2018</b> All rights reserved.
 
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <!-- https://jquery.com/download/ -->
-    <script src="jquery-ui-datepicker/jquery-ui.min.js"></script>
-    <!-- https://jqueryui.com/download/ -->
-    <script src="js/bootstrap.min.js"></script>
-    <!-- https://getbootstrap.com/ -->
-    <script>
-      $(function() {
-        $("#expire_date").datepicker();
+        Design: <a rel="nofollow noopener" href="https://templatemo.com" class="tm-footer-link">Template Mo</a>
+      </p>
+    </div>
+  </footer>
+
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <!-- https://jquery.com/download/ -->
+  <script src="jquery-ui-datepicker/jquery-ui.min.js"></script>
+  <!-- https://jqueryui.com/download/ -->
+  <script src="js/bootstrap.min.js"></script>
+  <!-- https://getbootstrap.com/ -->
+  <script>
+    $(function () {
+      $("#expire_date").datepicker();
+    });
+  </script>
+
+  <script>
+    let dataSize1 = ["S", "M", "L", "XL"];
+    let dataSize2 = ["33", "34", "35", "40"];
+    let data = dataSize1;
+
+    // Khai bao
+    let detailProductModifier = document.getElementById("detailProductModifier");
+    let button = detailProductModifier.querySelector("#addDetailProduct");
+    let getDataButton = detailProductModifier.querySelector("#getDetailProduct");
+    let detail = detailProductModifier.querySelector(".data-detail");
+
+
+    getDataButton.onclick = function () {
+      let returnJson = {};
+      let productList = document.querySelectorAll(".detail-products");
+      productList.forEach(product => {
+        let size = product.querySelector(".product-size");
+        let quantity = product.querySelector(".product-quantity");
+
+        returnJson[`${size.value}`] = quantity.value;
       });
-    </script>
+      console.log(returnJson);
+    };
 
-    <script>
-      let dataSize1 = ["S", "M", "L", "XL"];
-      let dataSize2 = ["33", "34", "35", "40"];
-      let data = dataSize1;
+    // Create Select
+    let container = document.createElement("div");
+    let selectSection = document.createElement("select");
+    selectSection.classList.add("product-size");
+    selectSection.style.width = "6rem";
+    for (let index = 0; index < data.length; index++) {
+      selectSection.innerHTML += `
+          <option value="${data[index]}">${data[index]}</option>
+        `;
+    }
+    container.appendChild(selectSection);
 
-      function renderDetailProductModifier()  {
-
-      }
-      // Khai bao
-      let detailProductModifier = document.getElementById("detailProductModifier");
-      let button = detailProductModifier.querySelector("#addDetailProduct");
-      let getDataButton = detailProductModifier.querySelector("#getDetailProduct");
-      let detail = detailProductModifier.querySelector(".data-detail");
-
-      getDataButton.onclick = function() {
-        let returnJson = {};
-        let productList = detailProductModifier.querySelectorAll(".detail-products");
-        productList.forEach(product => {
-          let size = product.querySelector(".product-size");
-          let quantity = product.querySelector(".product-quantity");
-
-          returnJson[`${size.value}`] = quantity.value;
-        });
-        console.log(returnJson);
-      };
-
-      // Build add button
-      button.onclick = function() {
-        // Create Select
-        let container = document.createElement("div");
-        let selectSection = document.createElement("select");
-        selectSection.classList.add("product-size");
-        selectSection.style.width = "6rem";
-        for (let index = 0 ; index < data.length; index ++) {
-          selectSection.innerHTML += `
-            <option value="${data[index]}">${data[index]}</option>
-          `;
-        }
-        container.appendChild(selectSection);
-
-        let div = document.createElement("div");
-        div.classList.add("is-flex", "mb-2", "detail-products");
-        div.innerHTML = `
+    // Build add button
+    button.onclick = function () {
+      let div = document.createElement("div");
+      div.classList.add("is-flex", "mb-2", "detail-products");
+      div.innerHTML = `
           <input class="input product-quantity mr-2" type="number" placeholder="Quantity">
           <div class="select mr-2">
             ${container.innerHTML}
@@ -397,17 +298,46 @@
           <div class="button button-delete is-small is-rounded has-text-danger has-text-weight-bold" 
             style="height:auto; width:3rem;">X</div>
         `;
-        
-        let deleteButton = div.querySelector(".button-delete");
-        deleteButton.onclick = function () {
-          div.remove();
-        }
 
-        detail.appendChild(div);
+      let deleteButton = div.querySelector(".button-delete");
+      deleteButton.onclick = function () {
+        div.remove();
+      }
+
+      detail.appendChild(div);
+    };
+    
+    function upload_image(id) {
+      let image_review = document.getElementById(`${id}_preview`)
+      const image_input = document.getElementById(id);
+      if (image_input) {
+        image_input.addEventListener("change", function () {
+          const reader = new FileReader();
+          reader.addEventListener("load", () => {
+            const uploaded_image = reader.result;
+            //console.log(uploaded_image)
+            image_review.setAttribute("src", `${uploaded_image}`);
+
+            var ret = uploaded_image.replace('data:image/jpeg;base64,', '');
+            //var decode = atob(ret);
+            //console.log(uploaded_image);
+            //document.querySelector("#image_value").value = ret;
+            //console.log(document.querySelector("#image_value").value)
+          });
+          reader.readAsDataURL(this.files[0]);
+        });
+
+      }
+    }
+
+    function upload_link_image(id) {
+      let image_review = document.getElementById(`${id}_preview`)
+      const image_input = document.getElementById(id).value;
+      console.log(image_input)
+      image_review.setAttribute("src", image_input);
       };
-    </script>
-  </body>
+
+  </script>
+</body>
+
 </html>
-
-
-
