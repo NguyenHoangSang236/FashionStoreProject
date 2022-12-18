@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,7 +24,7 @@ import com.example.demo.entity.Cart;
 import com.example.demo.entity.Comment;
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.Product;
-import com.example.demo.entity.dto.AddToCartProductInfo;
+import com.example.demo.entity.dto.ShopDetails;
 import com.example.demo.entity.dto.ProductComment;
 import com.example.demo.respository.CartRepository;
 import com.example.demo.respository.CommentRepository;
@@ -52,19 +53,25 @@ public class DetailsController {
     ProductService productService;
     
     Product currentProduct;
-    AddToCartProductInfo addToCartProduct = new AddToCartProductInfo();
+    ShopDetails shopDetails = new ShopDetails();
+    ShopDetails ratingShopDetails = new ShopDetails();
     Comment newComment = new Comment();
     int defaultQuantity = 1;
-    int ratingPoint = 0;
+    int[] voteStarsArr = {1,2,3,4,5};
     
     
-    public void renderToProductDetails(HttpSession session, Model model, String realProductName, Product productDetail, HttpServletRequest request) {
+    public void renderToProductDetails(HttpSession session, 
+    		Model model, 
+    		String realProductName, 
+    		Product productDetail, 
+    		HttpServletRequest request,
+    		ShopDetails shopDetails) {
+    	
         List<Comment> comments = commentRepo.getCommentsByProductNameAndColor(realProductName, productDetail.getColor());
         List<String> sizeList = productRepo.getAllSizesOfProductByNameAndColor(realProductName, productDetail.getColor());
         List<String> colorList = productRepo.getAllColorsOfProductByName(realProductName);
         List<String> cateList = productRepo.getAllCatalogsByProductName(realProductName);
         List<ProductComment> commentList = new ArrayList<ProductComment>();
-//        ratingPoint = productDetail.getTotalRatingNumber();
         
         if(comments.size() > 0) {            
             for(int i = 0; i < comments.size(); i++) {
@@ -72,7 +79,7 @@ public class DetailsController {
                 
                 if(customer != null) {
                     String cusName = customer.getName();
-                    String cusImgUrl = customer.getImage();
+                    String cusImgUrl = new String(customer.getImage(), StandardCharsets.UTF_8);
                     String content = comments.get(i).getContent();
                     
                     commentList.add(new ProductComment(cusName, content, cusImgUrl));
@@ -94,13 +101,14 @@ public class DetailsController {
 	    }
     	
         model.addAttribute("defaultQuantity", defaultQuantity);
-        model.addAttribute("ratingPoint", ratingPoint);
+        model.addAttribute("voteStarsArr", voteStarsArr);
         model.addAttribute("productDetail", productDetail);
         model.addAttribute("sizeList", sizeList);
         model.addAttribute("colorList", colorList);
         model.addAttribute("cateList", cateList);
         model.addAttribute("commentList", commentList);
-        model.addAttribute("addToCartProduct", addToCartProduct);
+        model.addAttribute("shopDetails", shopDetails);
+        model.addAttribute("ratingShopDetails", ratingShopDetails);
         model.addAttribute("newComment", newComment);
     }
     
@@ -115,26 +123,32 @@ public class DetailsController {
         currentProduct = productRepo.getProductByNameAndColor(realProductName, color);
         GlobalStaticValues.currentPage = "/shop-details-by-color_name=" + productName + "__color=" + color;
         
-        renderToProductDetails(session, model, realProductName, currentProduct, request);
+        renderToProductDetails(session, model, realProductName, currentProduct, request, shopDetails);
         
         return "shopdetails";
     }
     
     
     @PostMapping("/shop-details-by-color_name={productName}__color={color}")
-    public String addToCartFromColorDetailPage(@RequestParam(value="action") String action, 
+    public String addToCartFromColorDetailPage(
+    		@RequestParam(value="action", required = false) String action, 
     		HttpSession session, Model model , 
     		@PathVariable("color") String color,
     		@PathVariable("productName") String productName, 
     		HttpServletRequest request, 
     		@ModelAttribute("productDetail") Product productDetail, 
-    		@ModelAttribute("addToCartProduct") AddToCartProductInfo modelAddToCartProductInfo, 
+    		@ModelAttribute("shopDetails") ShopDetails modelShopDetails, 
     		@ModelAttribute("newComment") Comment modelNewComment) {
     	
     	String realProductName = ValueRender.linkToString(productName);
     	
-        if(action.equals("logged in - add to cart")) {
-        	if(modelAddToCartProductInfo.getProductSize() == null) {
+    	if(action == null) {
+        	int starNumber = modelShopDetails.getVotedStars();
+        	productService.ratingProduct(starNumber, realProductName, color);
+        	currentProduct = productRepo.getProductByNameAndColor(realProductName, color);
+        }
+    	else if(action.equals("logged in - add to cart")) {
+        	if(modelShopDetails.getProductSize() == null) {
             	GlobalStaticValues.message = "Please choose a size first !!";
             }
         	else {
@@ -142,11 +156,11 @@ public class DetailsController {
         		int quantity = 0;
         		
         		Account currentAcount = (Account)session.getAttribute("currentuser");
-        		Product product = productRepo.getProductDetailsByNameAndColorAndSize(realProductName, color, modelAddToCartProductInfo.getProductSize());
+        		Product product = productRepo.getProductDetailsByNameAndColorAndSize(realProductName, color, modelShopDetails.getProductSize());
         		int availableQuantity = productRepo.getAvailableQuantityById(product.getId());
         		
         		Cart tmpCart = cartRepo.getCartByProductIdAndCustomerId(product.getId(), GlobalStaticValues.currentCustomer.getId());
-        		System.out.println("input quantity: " + modelAddToCartProductInfo.getQuantity());
+        		System.out.println("input quantity: " + modelShopDetails.getQuantity());
         		
         		//if this product has already been in the cart --> quantity = this product's quantity
         		if(tmpCart != null) {
@@ -155,9 +169,9 @@ public class DetailsController {
         		}
         		
         		//if available quantity of product > selected product quantity --> save cart
-        		if(availableQuantity > quantity + modelAddToCartProductInfo.getQuantity()) {
+        		if(availableQuantity > quantity + modelShopDetails.getQuantity()) {
         			Customer customer = customerRepo.getCustomerByAccountId(currentAcount.getId());
-        			Cart newCart = new Cart(id, quantity + modelAddToCartProductInfo.getQuantity(), 0, 0, customer, product);
+        			Cart newCart = new Cart(id, quantity + modelShopDetails.getQuantity(), 0, 0, customer, product);
         			cartRepo.save(newCart);
         		} else {
         			GlobalStaticValues.message = "Oops! We are having only " + String.valueOf(availableQuantity) + " available products";
@@ -176,14 +190,8 @@ public class DetailsController {
         else if(action.equals("need to login")) {
         	return "redirect:/loginpage";
         }
-        else if(action.contains("stars")) {
-        	int starNumber = Integer.parseInt(action.substring(0, 1));
-        	System.out.println(starNumber + " " + realProductName + " " + color);
-        	productService.ratingProduct(starNumber, realProductName, color);
-        	currentProduct = productRepo.getProductByNameAndColor(realProductName, color);
-        }
-
-        renderToProductDetails(session, model, realProductName, currentProduct, request);
+        
+        renderToProductDetails(session, model, realProductName, currentProduct, request, shopDetails);
     	
     	return "shopdetails";
     }

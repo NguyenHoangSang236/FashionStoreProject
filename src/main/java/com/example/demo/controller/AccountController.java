@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -8,11 +7,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.example.demo.entity.Account;
@@ -74,29 +71,24 @@ public class AccountController {
 		return showMyProfileForm(session, model, request);
     }
 	
+	
 	@PostMapping("/showaccount")
 	public String saveEditAccount(Model model, @ModelAttribute("accObj") Account accountObj, HttpSession session, HttpServletRequest request) {
-		if(ValueRender.formattedInputString(accountObj.getCustomer().getName()) == "" || accountObj.getCustomer().getEmail() == null || accountObj.getPassword() == null || accountObj.getCustomer().getPhoneNumber() == null) {
-			GlobalStaticValues.message = "Please input all information !!";
-			System.out.println(GlobalStaticValues.message);
-			return showMyProfileForm(session, model, request);
-		}
-		else {
-			Customer customer = cusRepo.getCustomerById(accountEdited.getCustomer().getId());
-			
-			customer.setName(accountObj.getCustomer().getName());
-			customer.setEmail(accountObj.getCustomer().getEmail());
-			customer.setPhoneNumber(accountObj.getCustomer().getPhoneNumber());
-			
-			accountEdited.setUserName(accountObj.getUserName());
-			accountEdited.setPassword(accountObj.getPassword());
-			accountEdited.setCustomer(customer);
-			System.out.println(accountObj.getCustomer().getImage());
-			//System.out.println("..." + ValueRender.formattedInputString(accountObj.getCustomer().getName()) + "...");
-			
-			//accRepo.save(accountEdited);
-			
-			return showMyProfileForm(session, model, request);
-		}
+		customer = cusRepo.getCustomerById(accountEdited.getCustomer().getId());
+		
+		customer.setName(accountObj.getCustomer().getName());
+		customer.setImage(accountObj.getCustomer().getImage());
+		customer.setEmail(accountObj.getCustomer().getEmail());
+		customer.setPhoneNumber(accountObj.getCustomer().getPhoneNumber());
+		
+		accountEdited.setUserName(accountObj.getUserName());
+		accountEdited.setPassword(accountObj.getPassword());
+		accountEdited.setCustomer(customer);
+//		System.out.println(ValueRender.convertByteToString(accountObj.getCustomer().getImage()));
+//		System.out.println("..." + ValueRender.formattedInputString(accountObj.getCustomer().getName()) + "...");
+		
+		accRepo.save(accountEdited);
+		
+		return showMyProfileForm(session, model, request);
 	}
 }

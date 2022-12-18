@@ -128,7 +128,6 @@ public class Product implements Serializable {
     
     public Product() { }
    
-   
     public Product(int id, String color, String size, String name, double price, double originalPrice,
             int availableQuantity, int soldQuantity, int oneStarQuantity, int twoStarQuantity, int threeStarQuantity,
             int fourStarQuantity, int fiveStarQuantity, double discount, String brand, String image1, String image2,

@@ -252,8 +252,7 @@
                         <div class="cart__total">
                             <h6>Cart total</h6>
                             <ul>
-                                <li>Subtotal <span id ="subtotal" th:value="*{formatedCartSubtotal()}" type="text" th:text="*{formatedCartSubtotal()} + ' VND'"></span></li>
-                                <li>Total <span  th:text="*{formatedCartTotal} + ' VND'"></span></li>
+                                <li>Total<span  th:text="*{formatedCartSubtotal} + ' VND'"></span></li>
                             </ul>
                             <a th:href="@{/checkout}" class="primary-btn" type="submit">Proceed to checkout</a>
                         </div>

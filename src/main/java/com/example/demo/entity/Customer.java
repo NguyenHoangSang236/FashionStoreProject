@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -39,8 +40,9 @@ public class Customer {
 	@Column(name = "Phone_Number")
 	String phoneNumber;
 	
+	@Lob
 	@Column(name = "Avatar")
-	String image;
+	byte[] image;
 	
 	@Column(name = "Country")
 	String country;
@@ -68,7 +70,7 @@ public class Customer {
 	
 	public Customer() {}
 
-    public Customer(int id, String name, String email, String phoneNumber, String image, Account account,
+    public Customer(int id, String name, String email, String phoneNumber, byte[] image, Account account,
             List<Invoice> invoices, List<Cart> carts, List<Comment> comments) {
         super();
         this.id = id;
@@ -82,7 +84,7 @@ public class Customer {
         this.comments = comments;
     }
     
-    public Customer(String name, String email, String phoneNumber, String image, Account account) {
+    public Customer(String name, String email, String phoneNumber, byte[] image, Account account) {
         super();
         this.name = name;
         this.email = email;
@@ -125,14 +127,6 @@ public class Customer {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     public Account getAccount() {
         return account;
     }
@@ -163,5 +157,38 @@ public class Customer {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
-    }	
+    }
+
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}	
+    
 }

@@ -1,16 +1,16 @@
 package com.example.demo.entity.dto;
 
-public class AddToCartProductInfo {
+public class ShopDetails {
 	String productName;
 	String productColor;
 	String productSize;
 	int quantity;
+    int votedStars;
 	
 	
+	public ShopDetails() {}
 	
-	public AddToCartProductInfo() {}
-	
-	public AddToCartProductInfo(String productName, String productColor, String productSize, int quantity) {
+	public ShopDetails(String productName, String productColor, String productSize, int quantity) {
 		super();
 		this.productName = productName;
 		this.productColor = productColor;
@@ -50,5 +50,13 @@ public class AddToCartProductInfo {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+	public int getVotedStars() {
+		return votedStars;
+	}
+
+	public void setVotedStars(int votedStars) {
+		this.votedStars = votedStars;
 	}
 }
