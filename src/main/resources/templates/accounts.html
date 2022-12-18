@@ -111,8 +111,8 @@
           <div class="tm-bg-primary-dark tm-block tm-block-avatar">
             <h2 class="tm-block-title">Change Avatar</h2>
             <div >
-              <img id="display_image" th:src="${Ccustomer.getImage()}" alt="Avatar" class="tm-avatar img-fluid mb-4" />
-              <!-- <img th:src="${Ccustomer.getImage()}" alt="Avatar" class="tm-avatar img-fluid mb-4" /> -->
+              <img id="display_image" th:src="${Ccustomer.convertByteImamgeToBase64String()}" alt="Avatar" class="tm-avatar img-fluid mb-4" />
+              <!-- <img th:src="${Ccustomer.convertByteImamgeToBase64String()}" alt="Avatar" class="tm-avatar img-fluid mb-4" /> -->
               <!-- <a href="#" class="tm-avatar-delete-link">
                   <i class="far fa-trash-alt tm-product-delete-icon"></i>
                 </a> -->

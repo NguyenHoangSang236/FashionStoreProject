@@ -96,18 +96,16 @@
                             </div>
                             <div class="dropdown is-right is-hoverable" th:if="${session.currentuser != null}">
                                 <div class="dropdown-trigger">
-                                    <div class="button dropdown-profile" aria-haspopup="true"
-                                        aria-controls="dropdown-menu">
-                                        <span>
-                                            <img height="30" width="30" class="has-img-is-rouned"
-                                                th:src="${Ccustomer.getImage()}">
-                                            <span th:if="${session.currentuser != null}" class="has-text-white"
-                                                th:text="${curentcusName}"></span>
-                                        </span>
-                                        <span class="icon is-small has-text-white">
-                                            <i class="arrow_carrot-down"></i>
-                                        </span>
-                                    </div>
+                                  <div class="button dropdown-profile" aria-haspopup="true" aria-controls="dropdown-menu">
+                                    <span>  
+                                        <img height="30" width="30"  class="has-img-is-rouned"
+                                        th:src="${Ccustomer.convertByteImamgeToBase64String()}">
+                                        <span th:if= "${session.currentuser != null}" class="has-text-white" th:text="${curentcusName}" ></span>  
+                                    </span>
+                                    <span class="icon is-small has-text-white">
+                                        <i class="arrow_carrot-down"></i>
+                                    </span>
+                                  </div>
                                 </div>
                                 <div class="dropdown-menu" id="dropdown-menu" role="menu">
                                     <div class="dropdown-content">
@@ -192,7 +190,7 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="profile-img">
-                        <img id="display_image" th:src="${Ccustomer.getImage()}" alt="" />
+                        <img id="display_image" th:src="${Ccustomer.convertByteImamgeToBase64String()}"  alt="" />
                         <div class="file btn btn-lg btn-primary">
                             Change Photo
                             <input type="file" id="image_input" name="file" />
@@ -379,6 +377,29 @@
     <!-- Search End -->
 
     <!-- Js Plugins -->
+    <script th:inline="javascript">
+        const image_input = document.querySelector("#image_input");
+        console.log(image_input)
+        console.log(document.querySelector("#image_value").value)
+        if(image_input){
+            image_input.addEventListener("change", function () {
+            //console.log(image_input.value);
+            const reader = new FileReader();
+            reader.addEventListener("load", () => {
+                const uploaded_image = reader.result;
+                //console.log(uploaded_image)
+                document.querySelector("#display_image").src = `${uploaded_image}`;
+
+                var ret = uploaded_image.replace('data:image/jpeg;base64,','');
+                //var decode = atob(ret);
+                //console.log(uploaded_image);
+                document.querySelector("#image_value").value = ret;
+                console.log(document.querySelector("#image_value").value)
+            });
+            reader.readAsDataURL(this.files[0]);
+            });
+        }
+    </script>
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.nice-select.min.js"></script>
