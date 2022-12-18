@@ -81,7 +81,7 @@ public class AccountController {
 			return showMyProfileForm(session, model, request);
 		}
 		else {
-			Customer customer = cusRepo.getCustomerById(accountEdited.getCustomer().getId());
+			customer = cusRepo.getCustomerById(accountEdited.getCustomer().getId());
 			
 			customer.setName(accountObj.getCustomer().getName());
 			customer.setEmail(accountObj.getCustomer().getEmail());
@@ -90,8 +90,8 @@ public class AccountController {
 			accountEdited.setUserName(accountObj.getUserName());
 			accountEdited.setPassword(accountObj.getPassword());
 			accountEdited.setCustomer(customer);
-			System.out.println(accountEdited.getUserName());
-			System.out.println("..." + ValueRender.formattedInputString(accountObj.getCustomer().getName()) + "...");
+//			System.out.println(accountEdited.getUserName());
+//			System.out.println("..." + ValueRender.formattedInputString(accountObj.getCustomer().getName()) + "...");
 			
 			//accRepo.save(accountEdited);
 			

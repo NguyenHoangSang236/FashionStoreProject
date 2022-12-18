@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -78,7 +79,7 @@ public class DetailsController {
                 
                 if(customer != null) {
                     String cusName = customer.getName();
-                    String cusImgUrl = customer.getImage();
+                    String cusImgUrl = new String(customer.getImage(), StandardCharsets.UTF_8);
                     String content = comments.get(i).getContent();
                     
                     commentList.add(new ProductComment(cusName, content, cusImgUrl));

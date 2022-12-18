@@ -23,6 +23,7 @@ import com.example.demo.respository.StaffRepository;
 import com.example.demo.service.EmailService;
 import com.example.demo.util.GlobalStaticValues;
 import com.example.demo.util.LoginState;
+import com.example.demo.util.ValueRender;
 
 
 @Controller
@@ -88,6 +89,7 @@ public class LoginPageController {
 		            
 		            if(acc.getRole().equals("admin")) {
 		                GlobalStaticValues.currentStaff = acc.getStaff();
+		                GlobalStaticValues.currentPage = "/allproduct";
 		                
 		                return "redirect:" + GlobalStaticValues.currentPage;
 		            }
@@ -99,6 +101,7 @@ public class LoginPageController {
 				        	model.addAttribute("message", message);
 		            	}
 		            	else {
+//		            		System.out.println(ValueRender.convertByteToString(acc.getCustomer().getImage()));
 		            		GlobalStaticValues.currentCustomer = acc.getCustomer();
 		            		GlobalStaticValues.customerFullCartIdList = cartRepo.getFullCartIdListByCustomerId(acc.getCustomer().getId());
 		            		
@@ -117,27 +120,27 @@ public class LoginPageController {
 		}
 		
 		//click Register
-				if(action.equals("register")) {
-				    Account acc = accRepo.findByUserName(loginPage.getRegisterUserName());
+		if(action.equals("register")) {
+		    Account acc = accRepo.findByUserName(loginPage.getRegisterUserName());
 
-				    if(acc == null) {
-			            Account newAcc = new Account(loginPage.getRegisterUserName(), loginPage.getRegisterPassword(), "user");
-			            accRepo.save(newAcc);
-			            
-			            Customer newCus = new Customer(loginPage.getFullName(), loginPage.getEmail(), loginPage.getPhoneNumber(), "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQnfcK8aWadEUBLCnstq0gd7sBmsB33Tvcng&usqp=CAU", newAcc);
-			            cusRepo.save(newCus);
-			            
-			            return "redirect:/home";
-			        }
-			        //account existed --> notice 'This user name has already existed !!'
-			        else {
-			        	GlobalStaticValues.message = "This user name has already existed !!";
-			        	message = GlobalStaticValues.message;
-			        	System.out.println(message);
-			        	model.addAttribute("message", message);
-			            return "login";
-			        }
-				}
+		    if(acc == null) {
+	            Account newAcc = new Account(loginPage.getRegisterUserName(), loginPage.getRegisterPassword(), "user");
+	            accRepo.save(newAcc);
+	            
+	            Customer newCus = new Customer(loginPage.getFullName(), loginPage.getEmail(), loginPage.getPhoneNumber(), GlobalStaticValues.defaultUserImageByte, newAcc);
+	            cusRepo.save(newCus);
+	            
+	            return "redirect:/home";
+	        }
+	        //account existed --> notice 'This user name has already existed !!'
+	        else {
+	        	GlobalStaticValues.message = "This user name has already existed !!";
+	        	message = GlobalStaticValues.message;
+	        	System.out.println(message);
+	        	model.addAttribute("message", message);
+	            return "login";
+	        }
+		}		
 		
 		//click Forget password
 		if(action.equals("forgot")) {
