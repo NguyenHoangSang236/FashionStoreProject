@@ -88,7 +88,7 @@ public class LoginPageController {
 		            
 		            if(acc.getRole().equals("admin")) {
 		                GlobalStaticValues.currentStaff = acc.getStaff();
-		                
+		                GlobalStaticValues.currentPage = "/allproduct";
 		                return "redirect:" + GlobalStaticValues.currentPage;
 		            }
 		            else if(acc.getRole().equals("user")) {
