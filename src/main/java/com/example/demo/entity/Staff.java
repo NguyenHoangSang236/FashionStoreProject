@@ -20,6 +20,8 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.example.demo.util.ValueRender;
+
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -81,6 +83,12 @@ public class Staff {
 	}
 
 	public Staff() {}
+	
+	
+	public String convertByteImamgeToBase64String() {
+    	return "data:image/jpeg;base64," + ValueRender.convertByteToString(this.image);
+    }
+	
 
 	public int getId() {
 		return id;
