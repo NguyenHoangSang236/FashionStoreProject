@@ -47,6 +47,7 @@ public class AccountController {
 	    	Customer accountDetail = cusRepo.getCustomerByAccountId(currentuser.getId());
 	 		model.addAttribute("Ccustomer", accountDetail);
 	 		model.addAttribute("accObj", currentuser);
+	 		
 	    }
 	    else {
 	    	return "redirect:/loginpage";
@@ -90,8 +91,8 @@ public class AccountController {
 			accountEdited.setUserName(accountObj.getUserName());
 			accountEdited.setPassword(accountObj.getPassword());
 			accountEdited.setCustomer(customer);
-//			System.out.println(accountEdited.getUserName());
-//			System.out.println("..." + ValueRender.formattedInputString(accountObj.getCustomer().getName()) + "...");
+			System.out.println(accountObj.getCustomer().getImage());
+			//System.out.println("..." + ValueRender.formattedInputString(accountObj.getCustomer().getName()) + "...");
 			
 			//accRepo.save(accountEdited);
 			
