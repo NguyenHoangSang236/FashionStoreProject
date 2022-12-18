@@ -91,10 +91,10 @@
                     <div class="col-lg-6 col-md-5">
                         <div class="header__top__right is-flex is-justify-content-right">
                             <div class="header__top__links " style="margin-block: auto;">
-                                <a th:if= "${session.currentuser == null}"  th:href="@{loginpage}">Sign in</a>
+                                <a th:if="${session.currentuser == null}" th:href="@{loginpage}">Sign in</a>
                                 <a href="#">FAQs</a>
                             </div>
-                            <div class="dropdown is-right is-hoverable" th:if= "${session.currentuser != null}" >
+                            <div class="dropdown is-right is-hoverable" th:if="${session.currentuser != null}">
                                 <div class="dropdown-trigger">
                                   <div class="button dropdown-profile" aria-haspopup="true" aria-controls="dropdown-menu">
                                     <span>  
@@ -108,17 +108,17 @@
                                   </div>
                                 </div>
                                 <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                                  <div class="dropdown-content">
-                                    <a class="dropdown-item" th:href="@{showaccount}">
-                                      My Profile
-                                    </a>
-                                    <a class="dropdown-item" th:href="@{invoice-history}">
-                                        Purchase history
-                                      </a>
-                                    <a class="dropdown-item" th:href="@{logout}">
-                                        Logout
-                                      </a>
-                                  </div>
+                                    <div class="dropdown-content">
+                                        <a class="dropdown-item" th:href="@{showaccount}">
+                                            My Profile
+                                        </a>
+                                        <a class="dropdown-item" th:href="@{invoice-history}">
+                                            Purchase history
+                                        </a>
+                                        <a class="dropdown-item" th:href="@{logout}">
+                                            Logout
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -130,9 +130,11 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo">
-                        <a th:href="@{home}">                            <div class="logo-shop">
+                        <a th:href="@{home}">
+                            <div class="logo-shop">
                                 Fool!st.
-                            </div></a>
+                            </div>
+                        </a>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
@@ -158,8 +160,9 @@
                     <div class="header__nav__option">
                         <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
                         <a href="#"><img src="img/icon/heart.png" alt=""></a>
-                        <a th:if= "${session.currentuser != null}"
-                        th:href="@{/cart-of-customer-account-id={id} (id = ${session.currentuser.id})}"><img src="img/icon/newcart.png" alt=""> <span>0</span></a>
+                        <a th:if="${session.currentuser != null}"
+                            th:href="@{/cart-of-customer-account-id={id} (id = ${session.currentuser.id})}"><img
+                                src="img/icon/newcart.png" alt=""> <span>0</span></a>
                         <div class="formattedPrice()">$0.00</div>
                     </div>
                 </div>
@@ -191,7 +194,7 @@
                         <div class="file btn btn-lg btn-primary">
                             Change Photo
                             <input type="file" id="image_input" name="file" />
-                            <input type="hidden" id="image_value" th:field="*{customer.image}" >
+                            <input type="hidden" id="image_value" th:field="*{customer.image}">
                         </div>
                     </div>
                 </div>
@@ -212,8 +215,8 @@
                                         <label>Username</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <input class="form-input basic smooth-corner" id="name" name="name" type="text" th:field="*{userName}"
-                                            th:placeholder="*{userName}" readonly required
+                                        <input class="form-input basic smooth-corner" id="name" name="name" type="text"
+                                            th:field="*{userName}" th:placeholder="*{userName}" readonly required
                                             title="You can not edit this information !!" />
                                     </div>
                                 </div>
@@ -222,7 +225,8 @@
                                         <label>User full name</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <input class="form-input basic smooth-corner" id="name" name="name" type="text" th:field="*{customer.name}" required/>
+                                        <input class="form-input basic smooth-corner" id="name" name="name" type="text"
+                                            th:field="*{customer.name}" required />
                                     </div>
                                 </div>
                                 <div class="row">
@@ -230,7 +234,8 @@
                                         <label>Email</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <input class="form-input basic smooth-corner" id="email" name="email" type="email" th:field="*{customer.email}" required />
+                                        <input class="form-input basic smooth-corner" id="email" name="email"
+                                            type="email" th:field="*{customer.email}" required />
                                     </div>
                                 </div>
                                 <div class="row">
@@ -238,7 +243,8 @@
                                         <label>Phone</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <input class="form-input basic smooth-corner" id="phone" name="phone" type="tel" th:field="*{customer.phoneNumber}" required />
+                                        <input class="form-input basic smooth-corner" id="phone" name="phone" type="tel"
+                                            th:field="*{customer.phoneNumber}" required />
                                     </div>
                                 </div>
                                 <div class="row">
@@ -246,7 +252,8 @@
                                         <label>Password</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <input class="form-input basic smooth-corner" id="password" name="password" th:field="*{password}" required />
+                                        <input class="form-input basic smooth-corner" id="password" name="password"
+                                            th:field="*{password}" required />
                                     </div>
                                 </div>
                             </div>
@@ -254,7 +261,7 @@
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <input type="submit" class="profile-edit-btn" name="action" value="Edit Profile"  />
+                    <input type="submit" class="profile-edit-btn" name="action" value="Edit Profile" />
                 </div>
             </div>
             <div class="row">
@@ -264,6 +271,30 @@
                 </div>
             </div>
         </form>
+        <script th:inline="javascript">
+            const image_input = document.querySelector("#image_input");
+            console.log(image_input)
+            console.log(document.querySelector("#image_value").value)
+            if (image_input) {
+                image_input.addEventListener("change", function () {
+                    //console.log(image_input.value);
+                    const reader = new FileReader();
+                    reader.addEventListener("load", () => {
+                        const uploaded_image = reader.result;
+                        //console.log(uploaded_image)
+                        document.querySelector("#display_image").src = `${uploaded_image}`;
+
+                        var ret = uploaded_image.replace('data:image/jpeg;base64,', '');
+                        //var decode = atob(ret);
+                        //console.log(uploaded_image);
+                        document.querySelector("#image_value").value = ret;
+                        console.log(document.querySelector("#image_value").value)
+                    });
+                    reader.readAsDataURL(this.files[0]);
+                });
+
+            }
+        </script>
     </section>
     <!-- Blog Section End -->
 
