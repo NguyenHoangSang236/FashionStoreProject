@@ -106,7 +106,7 @@ public class ShopController {
 	    if(Cuser != null) {
 		    Customer Ccustomer = cusRepo.getCustomerByAccountId(Cuser.getId());
 		    
-		    model.addAttribute("curentcusImage",Ccustomer.getImage());
+		    model.addAttribute("curentcusImage",Ccustomer.convertByteImamgeToBase64String());
 		    model.addAttribute("curentcusName",Ccustomer.getName());
 	    }
         
