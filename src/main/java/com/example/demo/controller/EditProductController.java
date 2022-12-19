@@ -29,7 +29,7 @@ public class EditProductController {
 	Product selectedProduct = new Product();
 	
 	
-	@GetMapping("/edit-product")
+	@GetMapping("/editproduct")
     public String editproduct(Model model ) {
 		model.addAttribute("selectedProduct", selectedProduct);
 		
