@@ -98,10 +98,10 @@
         <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
           <div class="row">
             <div class="col-12">
-              <h2 class="tm-block-title d-inline-block">Add Product</h2>
+              <h2 class="tm-block-title d-inline-block">Edit Product</h2>
             </div>
           </div>
-          <form action="" method="post" th:object="${newProduct}" class="tm-edit-product-form">
+          <form action="" method="post" th:object="${selectedProduct}" class="tm-edit-product-form">
             <div class="row tm-edit-product-row">
               <div class="col-xl-6 col-lg-6 col-md-12">
                 <div class="form-group mb-3">
@@ -168,47 +168,55 @@
               <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
                 <div class="tm-product-img-dummy mx-auto" style="margin-top: 2rem; width: 25rem;
                 height: 15rem; " >
-                  <img id="fileInput1_preview" src="https://ps.w.org/image-comparison/assets/icon-256x256.png?rev=2587037" style="width: 25rem;
+                  <img id="linkImage1_preview" src="https://ps.w.org/image-comparison/assets/icon-256x256.png?rev=2587037" style="width: 25rem;
                   height: 15rem;
                   object-fit: contain;" >
                 </div>
                 <div class="custom-file mt-3 mb-3">
+                  <input id="linkImage1" name="name" type="text"
+                      class="form-control validate" required style="margin-bottom:1rem;" />
                   <input id="fileInput1" type="file" style="display:none;" onclick="upload_image(this.id)" />
                   <input type="button" class="btn btn-primary btn-block mx-auto" value="UPLOAD PRODUCT IMAGE"
-                    onclick="document.getElementById('fileInput1').click();" />
+                    onclick="upload_link_image('linkImage1')" />
                 </div>
                 <div class="tm-product-img-dummy mx-auto" style="margin-top: 3rem; width: 25rem;
                 height: 15rem;">
-                  <img id="fileInput2_preview" src="https://ps.w.org/image-comparison/assets/icon-256x256.png?rev=2587037" style="width: 25rem;
+                  <img id="linkImage2_preview" src="https://ps.w.org/image-comparison/assets/icon-256x256.png?rev=2587037" style="width: 25rem;
                   height: 15rem;
                   object-fit: contain;" >
                 </div>
                 <div class="custom-file mt-3 mb-3">
+                  <input id="linkImage2" name="name" type="text"
+                      class="form-control validate" required style="margin-bottom:1rem;" />
                   <input id="fileInput2" type="file" style="display:none;" onclick="upload_image(this.id)"/>
                   <input type="button" class="btn btn-primary btn-block mx-auto" value="UPLOAD PRODUCT IMAGE"
-                    onclick="document.getElementById('fileInput2').click();" />
+                    onclick="upload_link_image('linkImage2')" />
                 </div>
                 <div class="tm-product-img-dummy mx-auto" style="margin-top: 3rem; width: 25rem;
                 height: 15rem;">
-                  <img id="fileInput3_preview" src="https://ps.w.org/image-comparison/assets/icon-256x256.png?rev=2587037" style="width: 25rem;
+                  <img id="linkImage3_preview" src="https://ps.w.org/image-comparison/assets/icon-256x256.png?rev=2587037" style="width: 25rem;
                   height: 15rem;
                   object-fit: contain;" >
                 </div>
                 <div class="custom-file mt-3 mb-3">
+                  <input id="linkImage3" name="name" type="text"
+                      class="form-control validate" required style="margin-bottom:1rem;" />
                   <input id="fileInput3" type="file" style="display:none;" onclick="upload_image(this.id)" />
                   <input type="button" class="btn btn-primary btn-block mx-auto" value="UPLOAD PRODUCT IMAGE"
-                    onclick="document.getElementById('fileInput3').click();" />
+                    onclick="upload_link_image('linkImage3')" />
                 </div>
                 <div class="tm-product-img-dummy mx-auto" style="margin-top: 3rem; width: 25rem;
                 height: 15rem;">
-                  <img id="fileInput4_preview" src="https://ps.w.org/image-comparison/assets/icon-256x256.png?rev=2587037" style="width: 25rem;
+                  <img id="linkImage4_preview" src="https://ps.w.org/image-comparison/assets/icon-256x256.png?rev=2587037" style="width: 25rem;
                   height: 15rem;
                   object-fit: contain;" >
                 </div>
                 <div class="custom-file mt-3 mb-3">
+                  <input id="linkImage4" name="name" type="text"
+                      class="form-control validate" required style="margin-bottom:1rem;" />
                   <input id="fileInput4" type="file" style="display:none;" onclick="upload_image(this.id)" />
                   <input type="button" class="btn btn-primary btn-block mx-auto" value="UPLOAD PRODUCT IMAGE"
-                    onclick="document.getElementById('fileInput4').click();" />
+                    onclick="upload_link_image('linkImage4')" />
                 </div>
               </div>
               <div class="col-12">
@@ -321,6 +329,14 @@
 
       }
     }
+
+    function upload_link_image(id) {
+      let image_review = document.getElementById(`${id}_preview`)
+      const image_input = document.getElementById(id).value;
+      console.log(image_input)
+      image_review.setAttribute("src", image_input);
+      };
+
   </script>
 </body>
 
