@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Product;
+import com.example.demo.entity.dto.NewProductInfo;
 import com.example.demo.respository.ProductRepository;
 
 @Service
@@ -22,4 +23,5 @@ public interface ProductService {
     Page<Product> searchProduct(Pageable pageable, String Name );
     void deleteProduct(int productId);
     void ratingProduct(int ratingPoint, String name, String color);
+    void addNewProduct(NewProductInfo newProductInfo);
 }

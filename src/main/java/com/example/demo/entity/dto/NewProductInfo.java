@@ -5,6 +5,7 @@ import java.util.Date;
 public class NewProductInfo {
 	String name;
 	String[] sizeList;
+	int[] availableQuantityList;
 	String brand;
 	String color;
 	double sellingPrice;
@@ -20,14 +21,16 @@ public class NewProductInfo {
 	
 	
 	public NewProductInfo() {}
-	
-	public NewProductInfo(String name, String[] sizeList, String brand, String color, double sellingPrice, double originalPrice,
-			String description, String[] catalogList, Date importDate, String image1Url, String image2Url,
-			String image3Url, String image4Url) {
+
+	public NewProductInfo(String name, String[] sizeList, int[] availableQuantityList, String brand, String color,
+			double sellingPrice, double originalPrice, String description, String[] catalogList, Date importDate,
+			String image1Url, String image2Url, String image3Url, String image4Url) {
 		super();
 		this.name = name;
 		this.sizeList = sizeList;
+		this.availableQuantityList = availableQuantityList;
 		this.brand = brand;
+		this.color = color;
 		this.sellingPrice = sellingPrice;
 		this.originalPrice = originalPrice;
 		this.description = description;
@@ -37,10 +40,8 @@ public class NewProductInfo {
 		this.image2Url = image2Url;
 		this.image3Url = image3Url;
 		this.image4Url = image4Url;
-		this.color = color;
 	}
 
-	
 	
 	public String getName() {
 		return name;
@@ -58,12 +59,28 @@ public class NewProductInfo {
 		this.sizeList = sizeList;
 	}
 
+	public int[] getAvailableQuantityList() {
+		return availableQuantityList;
+	}
+
+	public void setAvailableQuantityList(int[] availableQuantityList) {
+		this.availableQuantityList = availableQuantityList;
+	}
+
 	public String getBrand() {
 		return brand;
 	}
 
 	public void setBrand(String brand) {
 		this.brand = brand;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
 	}
 
 	public double getSellingPrice() {
@@ -136,13 +153,5 @@ public class NewProductInfo {
 
 	public void setImage4Url(String image4Url) {
 		this.image4Url = image4Url;
-	}
-
-	public String getColor() {
-		return color;
-	}
-
-	public void setColor(String color) {
-		this.color = color;
 	}
 }

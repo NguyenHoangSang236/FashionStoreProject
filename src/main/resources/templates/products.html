@@ -132,7 +132,7 @@
                         <th scope="row"><input type="checkbox" th:field="*{idList}" th:value="${product.id}"/></th>
                         <td class="tm-product-name" th:text="${product.name + ' - color: ' + product.color + ' - size: ' + product.size}"></td>
                         <td th:text="${product.soldQuantity}"></td>
-                        <td th:text="${product.getInStockQuantity()}"></td>
+                        <td th:text="${product.availableQuantity}"></td>
                         <td th:text="${product.formattedImportedDate()}"></td>
                         <!--<td>
                           <a  class="tm-product-delete-link" type="submit" ">

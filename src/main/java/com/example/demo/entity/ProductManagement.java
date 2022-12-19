@@ -49,11 +49,9 @@ public class ProductManagement {
     
     public ProductManagement() {}
     
-    public ProductManagement(int id, int productId, Date importDate, int importQuantity, Date outOfStockDate,
-            Product product) {
+    public ProductManagement(int id, Date importDate, int importQuantity, Date outOfStockDate, Product product) {
         super();
         this.id = id;
-        this.productId = productId;
         this.importDate = importDate;
         this.importQuantity = importQuantity;
         this.outOfStockDate = outOfStockDate;

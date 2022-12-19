@@ -148,7 +148,7 @@
                 <div class="form-group mb-3">
                   <label for="import_date">Import Date
                   </label>
-                  <input id="import_date" name="import_date" type="text" class="form-control validate"
+                  <input id="import_date" name="import_date" th:field="*{importDate}" type="date" class="form-control validate"
                     data-large-mode="true" />
                 </div>
                 <div class="form-group mb-3" id="detailProductModifier">
@@ -156,11 +156,11 @@
                     <div class="is-flex">
                       <label style="display: none" for="stock"></label>
                       <div class="has-text-white has-margin-block-auto">
-                        Detail item
+                        Product's size and available quantity
                       </div>
-                      <div class="button ml-1 is-small is-rounded" id="getDetailProduct">Get Data</div>
+                      <div class="button ml-1 is-small is-rounded" id="getDetailProduct">Confirm</div>
                     </div>
-                    <div class="button is-small is-rounded" id="addDetailProduct">Add</div>
+                    <div class="button is-small is-rounded" id="addDetailProduct">Add new size</div>
                   </div>
                   <div class="data-detail"></div>
                 </div>
@@ -250,7 +250,7 @@
     });
   </script>
 
-  <script>
+  <script th:inline="javascript">
     let dataSize1 = ["S", "M", "L", "XL"];
     let dataSize2 = ["33", "34", "35", "40"];
     let data = dataSize1;
@@ -280,9 +280,7 @@
     selectSection.classList.add("product-size");
     selectSection.style.width = "6rem";
     for (let index = 0; index < data.length; index++) {
-      selectSection.innerHTML += `
-          <option value="${data[index]}">${data[index]}</option>
-        `;
+      selectSection.innerHTML += `<option value="${data[index]}">${data[index]}</option>`;
     }
     container.appendChild(selectSection);
 

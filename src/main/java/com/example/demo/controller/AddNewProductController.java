@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,19 +13,47 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.demo.entity.Catalog;
 import com.example.demo.entity.dto.NewProductInfo;
 import com.example.demo.respository.CatalogRepository;
+import com.example.demo.service.ProductService;
 
 @Controller
 public class AddNewProductController {
-	NewProductInfo newProduct = new NewProductInfo();
-	
 	@Autowired
 	CatalogRepository catalogRepo;
 	
+	@Autowired
+	ProductService productService;
+	
+	NewProductInfo newProduct = new NewProductInfo();
+	
     @GetMapping("/addproduct")
     public String loadAddProductForm(Model model) {
-    	model.addAttribute("newProduct", newProduct);
     	List<Catalog> cateList = catalogRepo.getAllCatalogs();
+    	
+    	model.addAttribute("newProduct", newProduct);
     	model.addAttribute("cateList", cateList);
+    	
+    	int[] quantityArr = {1,2,3,4};
+    	String[] sizeArr = {"X", "M", "L", "XL"};
+    	String[] cateArr = {"Shoes", "Jackets"};
+    	
+    	NewProductInfo test = new NewProductInfo(
+    			"test", 
+    			sizeArr, 
+    			quantityArr, 
+    			"Nike", 
+    			"red", 
+    			20, 
+    			15, 
+    			"asfasgaSGASgasgasg",
+    			cateArr, 
+    			new Date(), 
+    			"http://t0.gstatic.com/licensed-image?q=tbn:ANd9GcRaHOjF0WYP8MwqkqHU1UD0j_56bTDXrsZnLxm_xGo4w06dskJFONOZqMG9HLLvQqTU4sqVJfbvGJ0aMqmjWG8", 
+    			"http://t0.gstatic.com/licensed-image?q=tbn:ANd9GcRaHOjF0WYP8MwqkqHU1UD0j_56bTDXrsZnLxm_xGo4w06dskJFONOZqMG9HLLvQqTU4sqVJfbvGJ0aMqmjWG8", 
+    			"http://t0.gstatic.com/licensed-image?q=tbn:ANd9GcRaHOjF0WYP8MwqkqHU1UD0j_56bTDXrsZnLxm_xGo4w06dskJFONOZqMG9HLLvQqTU4sqVJfbvGJ0aMqmjWG8",
+    			"http://t0.gstatic.com/licensed-image?q=tbn:ANd9GcRaHOjF0WYP8MwqkqHU1UD0j_56bTDXrsZnLxm_xGo4w06dskJFONOZqMG9HLLvQqTU4sqVJfbvGJ0aMqmjWG8");
+    	
+    	productService.addNewProduct(test);
+    	
         return "add-product";
     }
     

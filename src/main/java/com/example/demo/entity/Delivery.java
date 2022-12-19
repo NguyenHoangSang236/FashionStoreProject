@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
@@ -14,6 +15,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+
+import com.example.demo.util.ValueRender;
 
 import lombok.Data;
 import lombok.Getter;
@@ -38,8 +41,9 @@ public class Delivery implements Serializable{
 	@Column(name = "Additional_shipper_comment")
 	String additionalShipperComment;
 	
+	@Lob
 	@Column(name = "Evidence_image")
-	String evidenceImage;
+	byte[] evidenceImage;
 	
 	@ManyToOne
 	@JoinColumn(name = "shipper_id")
@@ -53,7 +57,7 @@ public class Delivery implements Serializable{
 	
 	public Delivery() {}
 
-	public Delivery(Date deliveryDate, String currentStatus, String additionalShipperComment, String evidenceImage,
+	public Delivery(Date deliveryDate, String currentStatus, String additionalShipperComment, byte[] evidenceImage,
 			Staff staff, Invoice invoice) {
 		super();
 		this.deliveryDate = deliveryDate;
@@ -64,7 +68,10 @@ public class Delivery implements Serializable{
 		this.invoice = invoice;
 	}
 
-
+	
+	public String convertByteImamgeToBase64String() {
+    	return "data:image/jpeg;base64," + ValueRender.convertByteToString(this.evidenceImage);
+    }
 
 
 	public Date getDeliveryDate() {
@@ -107,11 +114,11 @@ public class Delivery implements Serializable{
 		this.additionalShipperComment = additionalShipperComment;
 	}
 
-	public String getEvidenceImage() {
+	public byte[] getEvidenceImage() {
 		return evidenceImage;
 	}
 
-	public void setEvidenceImage(String evidenceImage) {
+	public void setEvidenceImage(byte[] evidenceImage) {
 		this.evidenceImage = evidenceImage;
 	}
 }

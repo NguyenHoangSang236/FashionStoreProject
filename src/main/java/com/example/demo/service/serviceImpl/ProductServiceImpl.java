@@ -21,11 +21,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.entity.Catalog;
 import com.example.demo.entity.Comment;
 import com.example.demo.entity.Product;
+import com.example.demo.entity.ProductManagement;
+import com.example.demo.entity.dto.NewProductInfo;
 import com.example.demo.respository.CartRemoveRepository;
+import com.example.demo.respository.CatalogRepository;
 import com.example.demo.respository.CommentRepository;
 import com.example.demo.respository.ProductFilterRepository;
+import com.example.demo.respository.ProductManagementRepository;
 import com.example.demo.respository.ProductRemoveRepository;
 import com.example.demo.respository.ProductRepository;
 import com.example.demo.service.ProductService;
@@ -40,6 +45,12 @@ public class ProductServiceImpl implements ProductService{
     
     @Autowired
     private CartRemoveRepository cartRemoveRepo;
+    
+    @Autowired
+    private CatalogRepository catalogRepo;
+    
+    @Autowired
+    private ProductManagementRepository productMngRepo;
     
     private List<Product> products;
     
@@ -191,37 +202,41 @@ public class ProductServiceImpl implements ProductService{
 		}
 	}
 
-    
-//    @SuppressWarnings("unchecked")
-//	@Override
-//    public List<Product> findByFilters(Pageable pageable, String[] catalogs, String brand, double price1, double price2) {
-//		Page<Product> page = productFilterRepo.findAll(new Specification<Product>() {
-//			@Override
-//			public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-//				List<Predicate> predicates = new ArrayList<>();
-//				if(catalogs != null) {
-//					for(int i = 0; i < catalogs.length; i++) {
-//						predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("c.name"), catalogs[])));
-//					}
-//				}
-//				
-//                if(brand != null) {
-//                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("brand"), brand)));
-//                }
-//                
-//                if(price1 != 0) {
-//                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("price1"), price1)));
-//                }
-//                
-//                if(price2 != 0) {
-//                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("price2"), price2)));
-//                }
-//                
-//                return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
-//			}
-//		}, pageable);
-//		page.getTotalElements();        // get total elements
-//        page.getTotalPages();           // get total pages
-//        return page.getContent();  
-//	};
+
+	@Override
+	public void addNewProduct(NewProductInfo newProductInfo) {
+		List<Catalog> catalogList = new ArrayList<Catalog>();
+		
+		for(int i = 0; i < newProductInfo.getCatalogList().length; i++) {
+			String catalogName = newProductInfo.getCatalogList()[i];
+			Catalog catalog = catalogRepo.getCatalogByName(catalogName);
+			catalogList.add(catalog);
+		}
+		
+		for(int i = 0; i < newProductInfo.getSizeList().length; i++) {
+			Product product = new Product(
+					newProductInfo.getColor(), 
+					newProductInfo.getSizeList()[i],
+					newProductInfo.getName(), 
+					newProductInfo.getSellingPrice(), 
+					newProductInfo.getOriginalPrice(), 
+					newProductInfo.getAvailableQuantityList()[i],
+					0, 0, 0, 0, 0, 0, 0,
+					newProductInfo.getBrand(),
+					newProductInfo.getImage1Url(),
+					newProductInfo.getImage2Url(),
+					newProductInfo.getImage3Url(),
+					newProductInfo.getImage4Url(),
+					newProductInfo.getDescription(),
+					catalogList);
+			
+			ProductManagement newProductMng = new ProductManagement(
+					productMngRepo.getLastProductManagementId() + 1, 
+					newProductInfo.getImportDate(), newProductInfo.getAvailableQuantityList()[i], null, product);
+			
+			productRepo.save(product);
+			productMngRepo.save(newProductMng);
+			
+		}
+	}
 }

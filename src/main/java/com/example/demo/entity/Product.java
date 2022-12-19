@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
@@ -35,9 +36,6 @@ import net.bytebuddy.asm.Advice.This;
 @DynamicInsert
 @DynamicUpdate
 public class Product implements Serializable {
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -162,10 +160,36 @@ public class Product implements Serializable {
         this.productManagements = productManagements;
     }
 
+    public Product(String color, String size, String name, double price, double originalPrice, int availableQuantity,
+			int soldQuantity, int oneStarQuantity, int twoStarQuantity, int threeStarQuantity, int fourStarQuantity,
+			int fiveStarQuantity, double discount, String brand, String image1, String image2, String image3,
+			String image4, String description, List<Catalog> catalogs) {
+		super();
+		this.color = color;
+		this.size = size;
+		this.name = name;
+		this.price = price;
+		this.originalPrice = originalPrice;
+		this.availableQuantity = availableQuantity;
+		this.soldQuantity = soldQuantity;
+		this.oneStarQuantity = oneStarQuantity;
+		this.twoStarQuantity = twoStarQuantity;
+		this.threeStarQuantity = threeStarQuantity;
+		this.fourStarQuantity = fourStarQuantity;
+		this.fiveStarQuantity = fiveStarQuantity;
+		this.discount = discount;
+		this.brand = brand;
+		this.image1 = image1;
+		this.image2 = image2;
+		this.image3 = image3;
+		this.image4 = image4;
+		this.description = description;
+		this.catalogs = catalogs;
+	}
 
-
-
-    public String formattedImportedDate() {
+    
+    
+	public String formattedImportedDate() {
         int recentIndex = this.productManagements.size() - 1;
         
         if(recentIndex >= 0) {            
