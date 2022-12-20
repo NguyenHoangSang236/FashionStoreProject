@@ -2,6 +2,8 @@ package com.example.demo.entity.dto;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class NewProductInfo {
 	String name;
 	String[] sizeList;
@@ -12,6 +14,7 @@ public class NewProductInfo {
 	double originalPrice;
 	String description;
 	String[] catalogList;
+	@DateTimeFormat(pattern ="yyyy-MM-dd")
 	Date importDate;
 	String image1Url;
 	String image2Url;
