@@ -54,7 +54,10 @@ public class CheckOutController {
 	Invoice newInvoice = new Invoice();
 	
 	
-	//create a new invoice -> insert into invoice and invoices_with_products table -> update sold_quantity and available_quantity of each product in invoice
+	//create a new invoice 
+	//-> insert into invoice and invoices_with_products table 
+	//-> update sold_quantity and available_quantity of each product in invoice
+	//-> set
 	public void createNewInvoice(CheckoutInfo checkoutInfo, Customer customer, List<Cart> cartList, String paymentType) {
 		Date currentDate = new Date();
 		int newInvoiceID = invoiceRepo.getLastestInvoiceId() + 1;
@@ -76,6 +79,10 @@ public class CheckOutController {
 		newInvoice.setInvoicesWithProducts(invoiceProductsList);
 		
 		invoiceInsertRepository.insertNewInvoice(newInvoice);
+		
+		for(int i = 0; i < cartList.size(); i++) {
+			cartList.get(i).setBuyingStatus(1);
+		}
 		
 		for(int i = 0; i < invoiceProductsList.size(); i++) {
 			invoiceInsertRepository.insertInvoicesWithProducts(invoiceProductsList.get(i));

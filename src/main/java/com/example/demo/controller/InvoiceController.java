@@ -91,7 +91,7 @@ public class InvoiceController {
 			
 			if(action.contains("accept invoice")) {
 				int selectedInvoiceId = Integer.parseInt(ValueRender.getSubstring(action, 15, action.length()));
-				
+				   
 				Invoice selectedInvoice = invoiceRepo.getInvoiceById(selectedInvoiceId);
 				selectedInvoice.setDeliveryStatus("packing");
 				selectedInvoice.setAdminAcceptance("accepted");
