@@ -250,6 +250,8 @@ input {
 }
 
 .forgot-pass {
+    margin-right: auto;
+    margin-left: auto;  
     margin-top: 15px;
     text-align: center;
     font-size: 12px;

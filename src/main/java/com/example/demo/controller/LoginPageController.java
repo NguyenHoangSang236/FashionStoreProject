@@ -114,6 +114,8 @@ public class LoginPageController {
 			    	message = GlobalStaticValues.message;
 		        	System.out.println(message);
 		        	model.addAttribute("message", message);
+		        	
+		        	return "login";
 			    }
 	        }
 		}
@@ -129,7 +131,7 @@ public class LoginPageController {
 	            Customer newCus = new Customer(loginPage.getFullName(), loginPage.getEmail(), loginPage.getPhoneNumber(), GlobalStaticValues.defaultUserImageByte, newAcc);
 	            cusRepo.save(newCus);
 	            
-	            return "redirect:/home";
+	            return "login";
 	        }
 	        //account existed --> notice 'This user name has already existed !!'
 	        else {

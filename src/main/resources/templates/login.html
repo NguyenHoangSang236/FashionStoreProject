@@ -11,6 +11,7 @@
 </head>
 
 <body th:onload="showToast()" class="has-background-transparent">
+    <div id="snackbar">Chao mung den voi cua hang</div>
     <div th:if="${message} != null" id="snackbar" th:text="${message}"></div>
     <img src="https://c8.alamy.com/comp/KRC3CA/women-clothes-in-front-with-store-background-in-paris-KRC3CA.jpg" alt=""
         style="position: fixed;
@@ -28,7 +29,7 @@
                             Fool!st.
                         </div>
                     </div>
-                    <div class="container">
+                    <div class="container login-container">
                         <div class="">
                             <div class="m-4">
                                 <div class="title is-6 mb-3 has-text-left">
@@ -42,15 +43,18 @@
                                 </div>
                                 <input type="password" class="input has-text-left" th:field="*{loginPassword}" >
                             </div>
-                            <div class="ml-4">
-                                <button type="submit" name="action" value="forgot" class="forgot-pass">Forgot your
+                            <div class="">
+                                <button type="submit" name="action" value="forgot" class="forgot-pass" 
+                                    style="margin-right: auto; margin-left: auto; ">Forgot your
                                     password?</button>
                             </div>
                         </div>
                         <div class="has-text-centered mt-5 mb-5 has-text-weight-bold is-flex is-justify-content-center">
-                            <button type="submit" name="action" value="login"
+                            <input
                                 class="has-width-20rem button has-text-white is-rounded is-fullwidth"
-                                style="background-color: #d4af7a; width: 20rem;">Login NOW</button>
+                                style="background-color: #d4af7a; width: 20rem;" value="Login NOW" 
+                                onclick="checkConditionLogin()" readonly >
+                            <input class="login-submit" type="submit" name="action" value="login" style="display: none;">
                         </div>
                     </div>
                 </div>
@@ -70,7 +74,7 @@
                         </div>
                     </div>
 
-                    <div class="form sign-up has-text-centered m-3" style="overflow: scroll;">
+                    <div class="form sign-up has-text-centered m-3 register-container" style="overflow: scroll;">
                         <div class="title is-4 mb-6">Create your Account</div>
                         <label>
                             <span class="is-capitalized">Username</span>
@@ -82,20 +86,22 @@
                         </label>
                         <label>
                             <span class="is-capitalized">Full Name</span>
-                            <input name="fullName" type="text" th:field="*{fullName}"  />
+                            <input class="is-capitalized" name="fullName" type="text" th:field="*{fullName}"  />
                         </label>
                         <label>
                             <span class="is-capitalized">Phone Number</span>
-                            <input name="phoneNumber" type="text" th:field="*{phoneNumber}"  />
+                            <input name="phoneNumber" type="tel" th:field="*{phoneNumber}" pattern="[0-9]{10}"  />
                         </label>
                         <label>
                             <span class="is-capitalized">Email</span>
                             <input name="email" type="email" th:field="*{email}"  />
                         </label>
                         <div class="has-text-centered mb-5 has-text-weight-bold is-flex is-justify-content-center">
-                            <button type="submit" name="action" value="register"
+                            <input 
                                 class="has-width-20rem submit button has-text-white is-rounded is-fullwidth"
-                                style="background-color: #d4af7a; width: 20rem;">Register</button>
+                                style="background-color: #d4af7a; width: 20rem;" onclick="checkConditionRegister()" 
+                                readonly value="Register">
+                            <input class="register-submit" type="submit" name="action" value="register" style="display: none;">
                         </div>
                     </div>
 
@@ -103,33 +109,6 @@
             </div>
         </form>
     </div>
-    <script>
-        const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-        var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-        function showToast() {
-            var x = document.getElementById("snackbar");
-            x.className = "show";
-            setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
-        }
-
-        function validateForm() {
-            let registerName = document.forms["loginForm"]["fullName"].value;
-            let phoneNumber = document.forms["loginForm"]["phoneNumber"].value;
-            let email = document.forms["loginForm"]["email"].value;
-            if (specialChars.test(registerName)) {
-                alert("Name not valid");
-                return false;
-            }
-            if (specialChars.test(registerName) || phoneNumber.lenght!=10 ){
-                alert("Phone not valid");
-                return false;
-            }
-            if (email.match(validRegex) == false){
-                alert("Email not valid");
-                return false;
-            }
-        }
-    </script>
 </body>
 
 </html>
@@ -139,4 +118,141 @@
     document.querySelector('.img__btn').addEventListener('click', function () {
         document.querySelector('.cont').classList.toggle('s--signup');
     });
+</script>
+<script>
+    const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+    var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    function showToast() {
+        var x = document.getElementById("snackbar");
+        x.className = "show";
+        setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+    }
+
+    function validateForm() {
+        let registerName = document.forms["loginForm"]["fullName"].value;
+        let phoneNumber = document.forms["loginForm"]["phoneNumber"].value;
+        let email = document.forms["loginForm"]["email"].value;
+        if (specialChars.test(registerName)) {  
+            alert("Name not valid");
+            return false;
+        }
+        if (specialChars.test(registerName) || phoneNumber.lenght!=10 ){
+            alert("Phone not valid");
+            return false;
+        }
+        if (email.match(validRegex) == false){
+            alert("Email not valid");
+            return false;
+        }
+    }
+
+    function checkConditionRegister() {
+        let bool = true;
+        let container = document.querySelector(".register-container");
+
+        let checkArray = ["fullName", "registerUserName", "registerPassword", "phoneNumber", "email"];
+        for (let index = 0; index < checkArray.length; index++) {
+            let checkCondition = checkArray[index];
+
+            let elem = container.querySelector(`input#${checkCondition}`);
+            let value = elem.value;
+
+            switch (checkCondition){
+                case "registerUserName":
+                    bool = (value) ? true : false;
+                    if (!bool) 
+                        showWarningMessage("tai khoan dang ky ngu");
+                    break;
+                case "registerPassword":
+                    bool = (value) ? true : false;
+                    if (!bool) 
+                        showWarningMessage("pass dang ky ngu");
+                    break;
+                case "fullName":
+                    elem.value = capitalizeString(value);
+                    bool = (value) ? true : false;
+                    if (!bool) 
+                        showWarningMessage("ten ngu");
+                    break;
+                case "phoneNumber":
+                    bool = (Number(value)) ? 
+                        ((value.length == 10) ? true : false) : 
+                        false; 
+                    if (!bool) 
+                        showWarningMessage("sdt dang ky ngu");
+                    break;
+                case "email":
+                    bool = (value) ? 
+                        ((value.split("@").length == 2) ? true : false) : false;
+                    if (!bool) 
+                        showWarningMessage("email dang ky ngu");
+                    break;
+            }
+
+            if (!bool)
+                break;
+        }   
+
+        if (bool) {
+            let submitbutton = document.querySelector(".register-submit");
+            submitbutton.click();
+        }
+    }
+
+    function checkConditionLogin() {
+        let bool = true;
+        let container = document.querySelector(".login-container");
+
+        let checkArray = ["loginUserName", "loginPassword"];
+        for (let index = 0; index < checkArray.length; index++) {
+            let checkCondition = checkArray[index];
+
+            let elem = container.querySelector(`input#${checkCondition}`);
+            let value = elem.value;
+
+            switch (checkCondition){
+                case "loginUserName":
+                    bool = (value) ? true : false;
+                    if (!bool) 
+                        showWarningMessage("chua co nhap tai khoannnn");
+                    break;
+                case "registerPassword":
+                    bool = (value) ? true : false;
+                    if (!bool) 
+                        showWarningMessage("chua co nhap mat khau ne troi dat oi :D??");
+                    break;
+            }
+
+            if (!bool)
+                break;
+        }   
+
+        if (bool) {
+            let submitbutton = document.querySelector(".login-submit");
+            submitbutton.click();
+        }
+    }
+
+    function capitalizeString(str) {
+        if (str) {
+            const words = str.split(" ");
+            
+            for (let i = 0; i < words.length; i++) {
+                words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+            }
+            
+            return words.join(" ");
+        } else {
+            return str; 
+        }
+    }
+
+    function showWarningMessage (warningTest) {
+        if (warningTest) { 
+            let container = document.getElementById("snackbar");
+            container.className = "show";
+            container.innerHTML = warningTest;
+            setTimeout(function () { container.className = container.className.replace("show", ""); }, 3000);
+        }
+    }
 </script>
