@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -59,10 +60,17 @@ public class AddNewProductController {
     
     
     @PostMapping("/addproduct")
-    public String addProduct(Model model, @RequestParam("newProduct") NewProductInfo product) {
+    public String addProduct(Model model, @ModelAttribute("newProduct") NewProductInfo product) {
     	
     	
-    	model.addAttribute("newProduct", newProduct);
+    	
+    	System.out.println(product.getSizeList());
+    	String[] sizeStrings = product.getSizeList();
+    	
+    	for (int element: product.getAvailableQuantityList()) {
+            System.out.println(element);
+        }
+    	//model.addAttribute("newProduct", newProduct);
     	
         return "add-product";
     }

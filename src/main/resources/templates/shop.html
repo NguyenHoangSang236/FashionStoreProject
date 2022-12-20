@@ -196,9 +196,12 @@
                         </div>
                         <div class="shop__sidebar__accordion">
                             <div class="accordion" id="accordionExample">
-                                <form action="" method="post" th:object="${filterSelections}">
-                                    <button type="submit" class="site-btn" style="margin-bottom: 5%;">Filter</button>
-                                    <div class="card">
+                                <form id="filterForm" action="" method="post" th:object="${filterSelections}">
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <button type="submit" class="site-btn" style="margin-bottom: 5%;width: 100%;">Filter</button>
+                                        <div class="site-btn" style="margin-bottom: 5%; margin-left: 0.1rem; cursor: pointer;" onclick="clearAll()">Clear</div>
+                                    </div>
+                                        <div class="card">
                                         <div class="card-heading">
                                             <a data-toggle="collapse" data-target="#collapseOne">Categories</a>
                                         </div>
@@ -245,7 +248,7 @@
                                                         <li>
                                                             <input id="checkbox1" type="checkbox"
                                                                 th:field="*{priceRange}" th:value="0-500000"
-                                                                 onclick="selectOnlyThis(this.id)"/>
+                                                                 onclick="selectOnlyThis(this.id)"/ checked>
                                                             <label>0 - 500.000 vnd</label>
                                                         </li>
                                                         <li>
@@ -282,16 +285,26 @@
                                         let brandLength = [[${#lists.size(brandingList)}]]
                                         let a = document.getElementById("brand2")
                                         function selectOnlyThis(id) {
-                                            for (var i = 1; i <= 6; i++) {
-                                                document.getElementById("checkbox" + i).checked = false;
-                                            }
-                                            document.getElementById(id).checked = true;
+                                            let checkbox = document.getElementById(id);
+                                            
+                                                for (var i = 1; i <= 6; i++) {
+                                                    document.getElementById("checkbox" + i).checked = false;
+                                                    console.log('text2',document.getElementById("checkbox" + i).checked)
+                                                }
+                                                checkbox.checked = true;
+                                            
                                         }
                                         function selectBrand(id) {
                                             for (var i = 0; i < brandLength; i++) {
                                                 document.getElementById("brand" + i).checked = false;
                                             }
                                             document.getElementById(id).checked = true;
+                                        }
+                                        function clearAll(){
+                                            //let clearCB = document
+                                            let filterForm = document.getElementById('filterForm')
+                                            let checkBoxArray = filterForm.querySelectorAll('input[type="checkbox"]')
+                                            checkBoxArray.forEach(checkbox=>{checkbox.checked=false})
                                         }
                                     </script>
 
