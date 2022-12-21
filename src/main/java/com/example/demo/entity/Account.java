@@ -13,6 +13,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -41,6 +43,7 @@ public class Account {
 	@Column(name = "Status")
 	String status;
 	
+	@JsonIgnore
 	@OneToOne(mappedBy = "account")
     private Customer customer;
 	

@@ -27,10 +27,11 @@ import lombok.Setter;
 @Setter
 @Table(name = "delivery")
 public class Delivery implements Serializable{
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 8224872009182197032L;
 
 	@Column(name = "Delivery_Date")
 	Date deliveryDate;

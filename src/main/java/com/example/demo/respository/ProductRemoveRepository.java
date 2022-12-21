@@ -23,4 +23,9 @@ public interface ProductRemoveRepository extends JpaRepository<Product, Integer>
     @Query(value = "delete from comments where product_id = :idVal", nativeQuery = true)
     void deleteFromProductComments(@Param("idVal") int id);
     
+    
+    @Modifying
+    @Transactional
+    @Query(value = "delete from products_management where product_id = :idVal", nativeQuery = true)
+    void deleteFromProductProductsManagement(@Param("idVal") int id);
 }

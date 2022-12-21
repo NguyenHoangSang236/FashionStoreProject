@@ -23,6 +23,8 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import com.example.demo.entity.dto.InvoicesWithProducts;
 import com.example.demo.util.ValueRender;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 import lombok.Getter;
@@ -36,7 +38,10 @@ import net.bytebuddy.asm.Advice.This;
 @DynamicInsert
 @DynamicUpdate
 public class Product implements Serializable {
-	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3612182239388257218L;
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

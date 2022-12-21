@@ -14,6 +14,9 @@ import javax.persistence.Table;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,8 +34,8 @@ public class Comment {
 	int id;
 	
 	@ManyToOne
-	@JoinColumn(name = "product_id")
-	Product product;
+    @JoinColumn(name = "product_id")
+    Product product;
 	
 	@ManyToOne
 	@JoinColumn(name = "customer_id")

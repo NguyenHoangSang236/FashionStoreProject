@@ -10,7 +10,7 @@ public class ProductPrimaryKey implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2696916899223821930L;
 
 	@Column(name = "ID", nullable = false)
     private int id;

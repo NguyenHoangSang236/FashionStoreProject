@@ -7,10 +7,10 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class InvoicesWithProductsPrimaryKeys implements Serializable {
-    /**
+	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -3919178711820914812L;
 
 	@Column(name = "product_id", nullable = false)
     int productId;

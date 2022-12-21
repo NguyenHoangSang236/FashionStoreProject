@@ -14,6 +14,9 @@ import javax.persistence.Table;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,9 +32,6 @@ public class ProductManagement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private int id;
-    
-    @Column(name = "product_id", updatable = false, insertable = false)
-    private int productId;
     
     @Column(name = "import_date")
     private Date importDate;
@@ -65,14 +65,6 @@ public class ProductManagement {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
     }
 
     public Date getImportDate() {

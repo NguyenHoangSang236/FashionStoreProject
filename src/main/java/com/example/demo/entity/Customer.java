@@ -17,6 +17,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import com.example.demo.util.ValueRender;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 import lombok.Getter;
@@ -55,6 +56,7 @@ public class Customer {
 	@Column(name = "City")
 	String city;
 	
+	@JsonIgnore
 	@OneToOne
     @JoinColumn(name = "Account_ID", referencedColumnName = "id")
     private Account account;

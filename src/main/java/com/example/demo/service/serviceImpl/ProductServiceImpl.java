@@ -101,6 +101,7 @@ public class ProductServiceImpl implements ProductService{
         Product product = productRepo.getProductById(productId);
         String productName = product.getName();
         
+        productRemoveRepo.deleteFromProductProductsManagement(productId);
         productRemoveRepo.deleteFromProductComments(productId);
         cartRemoveRepo.deleteProductFromCartByProductId(productId);
         productRemoveRepo.deleteProductFromCatalogWithProducts(productName);

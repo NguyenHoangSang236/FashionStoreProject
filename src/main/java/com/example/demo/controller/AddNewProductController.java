@@ -33,27 +33,27 @@ public class AddNewProductController {
     	model.addAttribute("newProduct", newProduct);
     	model.addAttribute("cateList", cateList);
     	
-    	int[] quantityArr = {1,2,3,4};
-    	String[] sizeArr = {"X", "M", "L", "XL"};
-    	String[] cateArr = {"Shoes", "Jackets"};
-    	
-    	NewProductInfo test = new NewProductInfo(
-    			"test", 
-    			sizeArr, 
-    			quantityArr, 
-    			"Nike", 
-    			"red", 
-    			20, 
-    			15, 
-    			"asfasgaSGASgasgasg",
-    			cateArr, 
-    			new Date(), 
-    			"http://t0.gstatic.com/licensed-image?q=tbn:ANd9GcRaHOjF0WYP8MwqkqHU1UD0j_56bTDXrsZnLxm_xGo4w06dskJFONOZqMG9HLLvQqTU4sqVJfbvGJ0aMqmjWG8", 
-    			"http://t0.gstatic.com/licensed-image?q=tbn:ANd9GcRaHOjF0WYP8MwqkqHU1UD0j_56bTDXrsZnLxm_xGo4w06dskJFONOZqMG9HLLvQqTU4sqVJfbvGJ0aMqmjWG8", 
-    			"http://t0.gstatic.com/licensed-image?q=tbn:ANd9GcRaHOjF0WYP8MwqkqHU1UD0j_56bTDXrsZnLxm_xGo4w06dskJFONOZqMG9HLLvQqTU4sqVJfbvGJ0aMqmjWG8",
-    			"http://t0.gstatic.com/licensed-image?q=tbn:ANd9GcRaHOjF0WYP8MwqkqHU1UD0j_56bTDXrsZnLxm_xGo4w06dskJFONOZqMG9HLLvQqTU4sqVJfbvGJ0aMqmjWG8");
-    	
-    	productService.addNewProduct(test);
+//    	int[] quantityArr = {1,2,3,4};
+//    	String[] sizeArr = {"X", "M", "L", "XL"};
+//    	String[] cateArr = {"Shoes", "Jackets"};
+//    	
+//    	NewProductInfo test = new NewProductInfo(
+//    			"test", 
+//    			sizeArr, 
+//    			quantityArr, 
+//    			"Nike", 
+//    			"red", 
+//    			20, 
+//    			15, 
+//    			"asfasgaSGASgasgasg",
+//    			cateArr, 
+//    			new Date(), 
+//    			"http://t0.gstatic.com/licensed-image?q=tbn:ANd9GcRaHOjF0WYP8MwqkqHU1UD0j_56bTDXrsZnLxm_xGo4w06dskJFONOZqMG9HLLvQqTU4sqVJfbvGJ0aMqmjWG8", 
+//    			"http://t0.gstatic.com/licensed-image?q=tbn:ANd9GcRaHOjF0WYP8MwqkqHU1UD0j_56bTDXrsZnLxm_xGo4w06dskJFONOZqMG9HLLvQqTU4sqVJfbvGJ0aMqmjWG8", 
+//    			"http://t0.gstatic.com/licensed-image?q=tbn:ANd9GcRaHOjF0WYP8MwqkqHU1UD0j_56bTDXrsZnLxm_xGo4w06dskJFONOZqMG9HLLvQqTU4sqVJfbvGJ0aMqmjWG8",
+//    			"http://t0.gstatic.com/licensed-image?q=tbn:ANd9GcRaHOjF0WYP8MwqkqHU1UD0j_56bTDXrsZnLxm_xGo4w06dskJFONOZqMG9HLLvQqTU4sqVJfbvGJ0aMqmjWG8");
+//    	
+//    	productService.addNewProduct(test);
     	
         return "add-product";
     }
@@ -61,16 +61,17 @@ public class AddNewProductController {
     
     @PostMapping("/addproduct")
     public String addProduct(Model model, @ModelAttribute("newProduct") NewProductInfo product) {
+//    	System.out.println(product.getSizeList());
+//    	String[] sizeStrings = product.getSizeList();
+//    	
+//    	for (int element: product.getAvailableQuantityList()) {
+//            System.out.println(element);
+//        }
+    	System.out.println(product.getName());
     	
+    	productService.addNewProduct(product);
     	
-    	
-    	System.out.println(product.getSizeList());
-    	String[] sizeStrings = product.getSizeList();
-    	
-    	for (int element: product.getAvailableQuantityList()) {
-            System.out.println(element);
-        }
-    	//model.addAttribute("newProduct", newProduct);
+    	model.addAttribute("newProduct", newProduct);
     	
         return "add-product";
     }
