@@ -289,27 +289,6 @@
                                     </div>
                                 </form>
                                 <div id="snackbar">Some text some message..</div>
-                                <script th:inline="javascript">
-                                    var modal = document.getElementById("ratingModel");
-                                    //var btn = document.getElementById("5");
-                                    var span = document.getElementById("close"); 
-                                    // btn.onclick = function () {
-                                    //     modal.style.display = "block";
-                                    // }
-                                    //let currentUser = [[${session.currentuser}]]
-                                    function ratingProduct(id){
-                                        var btn = document.getElementById(id);
-                                        modal.style.display = "block";
-                                    }
-                                    span.onclick = function () {
-                                        modal.style.display = "none";
-                                    }
-                                    window.onclick = function (event) {
-                                        if (event.target == modal) {
-                                            modal.style.display = "none";
-                                        }
-                                    }
-                                </script>
                             </div>
                             <h3 class="row" style="justify-content: center">
                                 <p style="font-size: 20px; font-weight: 600;" th:text="*{formattedPrice() + ' vnd'}">
@@ -445,7 +424,7 @@
                                             <div class="columns">
                                                 <div class="column is-2">
                                                     <div class="set-bg has-border-10px"
-                                                        th:data-setbg="${comment.getImageUrl()}"
+                                                        th:src="${comment.getImageUrl()}"
                                                         style="height:80px; width:80px"></div>
                                                 </div>
                                                 <div class="column">
