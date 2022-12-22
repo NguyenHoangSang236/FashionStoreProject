@@ -127,7 +127,7 @@
         <div class="row">
             <div class="col-lg-3 col-md-3">
                 <div class="header__logo">
-                    <a th:href="@{delivery-home}">                            <div class="logo-shop">
+                    <a th:href="@{home}">                            <div class="logo-shop">
                             Fool!st.
                         </div></a>
                 </div>
@@ -136,7 +136,7 @@
                 <nav class="header__menu mobile-menu">
                     <ul>
                         <li class="active"><a href="#">Home</a></li>
-                        <li><a th:href="@{delivery-process}">Orders you are delivering</a></li>
+                        <li><a href="#">Orders you are delivering</a></li>
                         <li><a th:href="@{about}">About Us</a></li>
                         <li><a th:href="@{contact}">Contacts</a></li>
                     </ul>
@@ -153,7 +153,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h2>Select the order you want to ship</h2>
+                    <h2>Order is being shipped</h2>
                 </div>
             </div>
         </div>
@@ -176,7 +176,6 @@
                         <th scope="col" class="has-text-white">Intent Content</th>
                         <th scope="col" class="has-text-white">Acceptance Status</th>
                         <th scope="col" class="has-text-white">Total Price</th>
-                        <th scope="col" class="has-text-white">Choose order</th>
                         <th scope="col" class="has-text-white">&nbsp;</th>
                     </tr>
                 </thead>
@@ -192,11 +191,6 @@
                         <td > </td>
                         <td > </td>
                         <td class="tm-product-name"> </td>
-                        <td>
-                            <a href="#" style="height: 2rem;width: 2rem;margin-left: 1rem;">
-                                <i class="fa-solid fa-check"></i>                            
-                            </a>
-                        </td>
                         <td > 
                             <a href="#" style="height: 2rem;width: 2rem;">
                                 <i class="fa-solid fa-magnifying-glass"></i>                            

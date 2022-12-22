@@ -65,10 +65,11 @@ public class EditProductController {
     	//model.addAttribute("cateList", cateList);
 		model.addAttribute("selectedProduct", selectedProduct);
     	//model.addAttribute("cateList", cateList);
-		model.addAttribute("selectedProduct", selectedProduct);
+		//model.addAttribute("selectedProduct", selectedProduct);
     	model.addAttribute("cateList", cateList);
     	model.addAttribute("importDate", importDate);
     	model.addAttribute("selectedProduct", selectedProduct);
+    	//System.out.println(selectedProduct.getCatalogs().get(1));
 		
         return "edit-specific-product";
     }
