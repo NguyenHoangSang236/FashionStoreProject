@@ -62,9 +62,8 @@ public class EditProductController {
 		
 		importDate = selectedProduct.getProductManagements().get(selectedProduct.getProductManagements().size() - 1).getImportDate();
 
-    	model.addAttribute("cateList", cateList);
-    	model.addAttribute("importDate", importDate);
-    	model.addAttribute("selectedProduct", selectedProduct);
+    	//model.addAttribute("cateList", cateList);
+		model.addAttribute("selectedProduct", selectedProduct);
 		
         return "edit-specific-product";
     }
