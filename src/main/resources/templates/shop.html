@@ -281,33 +281,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <script th:inline="javascript" >
-                                        let brandLength = [[${#lists.size(brandingList)}]]
-                                        let a = document.getElementById("brand2")
-                                        function selectOnlyThis(id) {
-                                            let checkbox = document.getElementById(id);
-                                            
-                                                for (var i = 1; i <= 6; i++) {
-                                                    document.getElementById("checkbox" + i).checked = false;
-                                                    console.log('text2',document.getElementById("checkbox" + i).checked)
-                                                }
-                                                checkbox.checked = true;
-                                            
-                                        }
-                                        function selectBrand(id) {
-                                            for (var i = 0; i < brandLength; i++) {
-                                                document.getElementById("brand" + i).checked = false;
-                                            }
-                                            document.getElementById(id).checked = true;
-                                        }
-                                        function clearAll(){
-                                            //let clearCB = document
-                                            let filterForm = document.getElementById('filterForm')
-                                            let checkBoxArray = filterForm.querySelectorAll('input[type="checkbox"]')
-                                            checkBoxArray.forEach(checkbox=>{checkbox.checked=false})
-                                        }
-                                    </script>
-
                                 </form>
                             </div>
                         </div>
@@ -347,8 +320,9 @@
                                 </div>
                                 <div class="product__item__text">
                                     <h6 th:text="${product.name}"></h6>
-                                    <a th:href="@{/shop-details-by-color_name={productName}__color={color} (productName = ${product.formatProductNameToLink()})}"
-                                        class="add-cart">+ Add To Cart</a>
+                                    <button style="border:none; background-color:transparent; height: 0">
+                                        <a class="add-cart">+ Add To Cart</a>
+                                    </button>
                                     <div class="row">
                                         <div class="rating" style="margin-left: 16px">
                                             <i class="fa fa-star" style="margin-left: 5px"
@@ -483,6 +457,32 @@
     <script src="js/mixitup.min.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
+    <script th:inline="javascript" >
+        let brandLength = [[${#lists.size(brandingList)}]]
+        let a = document.getElementById("brand2")
+        function selectOnlyThis(id) {
+            let checkbox = document.getElementById(id);
+            
+                for (var i = 1; i <= 6; i++) {
+                    document.getElementById("checkbox" + i).checked = false;
+                    console.log('text2',document.getElementById("checkbox" + i).checked)
+                }
+                checkbox.checked = true;
+            
+        }
+        function selectBrand(id) {
+            for (var i = 0; i < brandLength; i++) {
+                document.getElementById("brand" + i).checked = false;
+            }
+            document.getElementById(id).checked = true;
+        }
+        function clearAll(){
+            //let clearCB = document
+            let filterForm = document.getElementById('filterForm')
+            let checkBoxArray = filterForm.querySelectorAll('input[type="checkbox"]')
+            checkBoxArray.forEach(checkbox=>{checkbox.checked=false})
+        }
+    </script>
 </body>
 
 </html>

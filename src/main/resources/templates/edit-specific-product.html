@@ -138,11 +138,11 @@
                 </div>
                 <div class="form-group mb-3">
                   <label for="category">Category</label>
-                  <ul>
-                    <li th:each="category, categoriesListState: ${cateList}" style="white-space:nowrap; ">
+                  <!--<ul>
+                    <li th:each="category, categoriesListState: ${cateList}" style="white-space:nowrap;">
                       <input type="checkbox" th:field="*{catalogs}" th:value="${category}" />
                       <label th:text="${category.name}"></label>
-                    </li>
+                    </li>-->
                   </ul>
                 </div>
                 <div class="form-group mb-3">
@@ -150,7 +150,7 @@
                   </label>
                   <input id="import_date" 
                     name="import_date" 
-                    th:field="${selectedProduct.getProductManagements().get(product.getProductManagements().size() - 1).getImportDate()}" 
+                    th:field="${importDate}" 
                     type="date" class="form-control validate"
                     data-large-mode="true" />
                 </div>
