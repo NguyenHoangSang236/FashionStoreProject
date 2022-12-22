@@ -58,7 +58,7 @@ public class EditProductController {
 		selectedProduct = productRepo.getProductById(selectedProductId);
 		List<Catalog> cateList = catalogRepo.getAllCatalogs();
 
-    	model.addAttribute("cateList", cateList);
+    	//model.addAttribute("cateList", cateList);
 		model.addAttribute("selectedProduct", selectedProduct);
 		
         return "edit-specific-product";
