@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -44,6 +45,7 @@ public class EditProductController {
 	Product selectedProduct = new Product();
 	Account currentAccount;
 	String[] catalogNameArr;
+	Date importDate;
 	
 	
 	public String renderEditProduct(Model model, HttpSession session) {
@@ -57,6 +59,8 @@ public class EditProductController {
     public String editSpecificProduct(Model model, HttpSession session, @PathVariable("id") int selectedProductId) {
 		selectedProduct = productRepo.getProductById(selectedProductId);
 		List<Catalog> cateList = catalogRepo.getAllCatalogs();
+		
+		importDate = selectedProduct.getProductManagements().get(selectedProduct.getProductManagements().size() - 1).getImportDate();
 
     	//model.addAttribute("cateList", cateList);
 		model.addAttribute("selectedProduct", selectedProduct);
