@@ -138,17 +138,11 @@
                 </div>
                 <div class="form-group mb-3">
                   <label for="category">Category</label>
-
                   <ul>
                     <li th:each="category, categoriesListState: ${cateList}" style="white-space:nowrap; ">
                       <input type="checkbox"  th:value="${category.name}" />
-
-                  <!--<ul>
-                    <li th:each="category, categoriesListState: ${cateList}" style="white-space:nowrap;">
-                      <input type="checkbox" th:field="*{catalogs}" th:value="${category}" />
-
                       <label th:text="${category.name}"></label>
-                    </li>-->
+                    </li>
                   </ul>
                 </div>
                 <div class="form-group mb-3">
