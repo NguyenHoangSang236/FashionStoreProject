@@ -25,4 +25,5 @@ public interface ProductService {
     void ratingProduct(int ratingPoint, String name, String color);
     void addNewProduct(ProductInfo newProductInfo);
     ProductInfo getProductInfo(Product product, String mode);
+    Product getProduct(int id, ProductInfo productInfo);
 }

@@ -286,4 +286,21 @@ public class ProductServiceImpl implements ProductService{
 		
 		return productInfo;
 	}
+
+
+	@Override
+	public Product getProduct(int id, ProductInfo productInfo) {
+		Product product = new Product();
+		
+		product.setId(id);
+		product.setName(productInfo.getName());
+		product.setBrand(productInfo.getBrand());
+		product.setColor(productInfo.getColor());
+		product.setPrice(productInfo.getSellingPrice());
+		product.setOriginalPrice(productInfo.getOriginalPrice());
+		product.setDescription(productInfo.getDescription());
+		product.getProductManagements().get(product.getProductManagements().size() - 1).setImportDate(productInfo.getImportDate());
+		
+		return null;
+	}
 }

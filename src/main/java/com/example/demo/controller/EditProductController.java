@@ -14,10 +14,12 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.example.demo.entity.Account;
+import com.example.demo.entity.Catalog;
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.Product;
 import com.example.demo.entity.dto.ProductInfo;
@@ -35,8 +37,13 @@ public class EditProductController {
 	@Autowired
 	ProductService productService;
 	
-	ProductInfo selectedProduct = new ProductInfo();
+	@Autowired
+	CatalogRepository catalogRepo;
+	
+	ProductInfo selectedProductInfo = new ProductInfo();
+	Product selectedProduct = new Product();
 	Account currentAccount;
+	String[] catalogNameArr;
 	
 	
 	public String renderEditProduct(Model model, HttpSession session) {
@@ -48,18 +55,31 @@ public class EditProductController {
 	
 	@GetMapping("/edit-product-id={id}")
     public String editSpecificProduct(Model model, HttpSession session, @PathVariable("id") int selectedProductId) {
-		Product product = productRepo.getProductById(selectedProductId);
-		selectedProduct = productService.getProductInfo(product, "specific product mode");
-		
+		selectedProduct = productRepo.getProductById(selectedProductId);
+		List<Catalog> cateList = catalogRepo.getAllCatalogs();
+
+    	model.addAttribute("cateList", cateList);
 		model.addAttribute("selectedProduct", selectedProduct);
 		
-        return "edit-product";
+        return "edit-specific-product";
+    }
+	
+	
+	@PostMapping("/edit-product-id={id}")
+    public String editSpecificProductEvent(Model model, HttpSession session, @PathVariable("id") int selectedProductId, @RequestAttribute("selectedProduct") Product modelSelectedProduct) {
+		List<Catalog> cateList = catalogRepo.getAllCatalogs();
+
+    	model.addAttribute("cateList", cateList);
+		model.addAttribute("selectedProduct", selectedProduct);
+		
+        return "edit-specific-product";
     }
 	
 	
 	@GetMapping("/edit-product-name={name}__color={color}")
     public String editProduct(Model model, HttpSession session, @PathVariable("id") int selectedProductId) {
 //		Product product = productRepo.getProductById(selectedProductId);
+//		selectedProduct = productService.getProductInfo(product, "specific product mode");
 //		selectedProduct = productService.getProductInfo(product, "specific product mode");
 //		
 //		model.addAttribute("selectedProduct", selectedProduct);

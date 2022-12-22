@@ -39,8 +39,8 @@ public class AddNewProductController {
 		if(currentAccount != null) {
 	    	List<Catalog> cateList = catalogRepo.getAllCatalogs();
 
+	    	model.addAttribute("cateList", cateList);
 			model.addAttribute("newProduct", newProduct);
-			model.addAttribute("cateList", cateList);
 			
 			return "add-product";
 		}
