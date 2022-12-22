@@ -198,7 +198,7 @@
                             <div class="accordion" id="accordionExample">
                                 <form id="filterForm" action="" method="post" th:object="${filterSelections}">
                                     <div style="display: flex; justify-content: space-between;">
-                                        <button type="submit" class="site-btn" style="margin-bottom: 5%;width: 100%; border-radius: 3px;">Filter</button>
+                                        <button type="submit" name="action" value="filter" class="site-btn" style="margin-bottom: 5%;width: 100%; border-radius: 3px;">Filter</button>
                                         <div class="site-btn" style="margin-bottom: 5%; margin-left: 0.1rem; cursor: pointer; border-radius: 3px;" onclick="clearAll()">Clear</div>
                                     </div>
                                         <div class="card">
@@ -305,53 +305,54 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-4 col-md-6 col-sm-6" th:each="product, state: ${productPage.content}">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" th:data-setbg="${product.image1}">
-                                    <ul class="product__hover">
-                                        <li>
-                                            <a
-                                                th:href="@{/shop-details-by-color_name={productName}__color={color} (productName = ${product.formatProductNameToLink()}, color = ${product.color})}">
-                                                <img src="img/icon/search.png" alt="">
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="product__item__text">
-                                    <h6 th:text="${product.name}"></h6>
-                                    <button style="border:none; background-color:transparent; height: 0">
-                                        <a class="add-cart">+ Add To Cart</a>
-                                    </button>
-                                    <div class="row">
-                                        <div class="rating" style="margin-left: 16px">
-                                            <i class="fa fa-star" style="margin-left: 5px"
-                                                th:each="ratingStar, ratingState: ${ratingStarArr}"
-                                                th:if="${ratingState.index} < ${product.totalRatingStarPoint()}"></i>
-                                        </div>
-                                        <div class="rating">
-                                            <i class="fa fa-star-o" style="margin-left: 5px"
-                                                th:each="ratingStar, ratingState: ${ratingStarArr}"
-                                                th:if="${ratingState.index} < 5 - ${product.totalRatingStarPoint()}"></i>
-                                        </div>
+                    <form method="post">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 col-sm-6" th:each="product, state: ${productPage.content}">
+                                <div class="product__item">
+                                    <div class="product__item__pic set-bg" th:data-setbg="${product.image1}">
+                                        <ul class="product__hover">
+                                            <li>
+                                                <a
+                                                    th:href="@{/shop-details-by-color_name={productName}__color={color} (productName = ${product.formatProductNameToLink()}, color = ${product.color})}">
+                                                    <img src="img/icon/search.png" alt="">
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </div>
-                                    <h5 th:text="${product.formattedPrice() + ' vnd'}"></h5>
-                                    <div class="product__color__select is-hidden">
-                                        <label for="pc-4">
-                                            <input type="radio" id="pc-4">
-                                        </label>
-                                        <label class="active black" for="pc-5">
-                                            <input type="radio" id="pc-5">
-                                        </label>
-                                        <label class="grey" for="pc-6">
-                                            <input type="radio" id="pc-6">
-                                        </label>
+                                    <div class="product__item__text">
+                                        <h6 th:text="${product.name}"></h6>
+                                        <button type="submit" name="action" th:value="|add to cart product id = ${product.id}|" style="border:none; background-color:transparent; height: 0">
+                                            <a class="add-cart">+ Add To Cart</a>
+                                        </button>
+                                        <div class="row">
+                                            <div class="rating" style="margin-left: 16px">
+                                                <i class="fa fa-star" style="margin-left: 5px"
+                                                    th:each="ratingStar, ratingState: ${ratingStarArr}"
+                                                    th:if="${ratingState.index} < ${product.totalRatingStarPoint()}"></i>
+                                            </div>
+                                            <div class="rating">
+                                                <i class="fa fa-star-o" style="margin-left: 5px"
+                                                    th:each="ratingStar, ratingState: ${ratingStarArr}"
+                                                    th:if="${ratingState.index} < 5 - ${product.totalRatingStarPoint()}"></i>
+                                            </div>
+                                        </div>
+                                        <h5 th:text="${product.formattedPrice() + ' vnd'}"></h5>
+                                        <div class="product__color__select is-hidden">
+                                            <label for="pc-4">
+                                                <input type="radio" id="pc-4">
+                                            </label>
+                                            <label class="active black" for="pc-5">
+                                                <input type="radio" id="pc-5">
+                                            </label>
+                                            <label class="grey" for="pc-6">
+                                                <input type="radio" id="pc-6">
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                    </div>
+                    </form>
                     <div class="row">
                         <div class="col-lg-12 product__pagination-centered">
                             <div class="product__pagination" th:if="${productPage.totalPages > 0}"
