@@ -11,7 +11,7 @@
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
-    rel="stylesheet">
+        rel="stylesheet">
 
     <!-- Css Styles -->
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
@@ -23,91 +23,92 @@
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="CSS/style.css" type="text/css">
     <link rel="stylesheet" href="css/bulma-checkradio.min.css" type="text/css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 </head>
 
-     <!-- Page Preloder -->
-     <div id="preloder">
-        <div class="loader"></div>
-    </div>
+<!-- Page Preloder -->
+<div id="preloder">
+    <div class="loader"></div>
+</div>
 
-    <!-- Offcanvas Menu Begin -->
-    <div class="offcanvas-menu-overlay"></div>
-    <div class="offcanvas-menu-wrapper">
-        <div class="offcanvas__option">
-            <div class="offcanvas__links">
-                <a th:href="@{loginpage}">Sign in</a>
-                <a href="#">FAQs</a>
-            </div>
-            <div class="offcanvas__top__hover">
-                <span>
-                    <img src="img/user.png" alt=""> 
-                    <i class="arrow_carrot-down"></i>
-                </span>
-                <ul>
-                    <li>
-                        <a href="#">My Profile</a>
-                    </li>
-                    <li>
-                        <a href="#">Edit Account</a>
-                    </li>
-                    <li>
-                        <a href="#">Wallet</a>
-                    </li>
-                </ul>
-            </div>
+<!-- Offcanvas Menu Begin -->
+<div class="offcanvas-menu-overlay"></div>
+<div class="offcanvas-menu-wrapper">
+    <div class="offcanvas__option">
+        <div class="offcanvas__links">
+            <a th:href="@{loginpage}">Sign in</a>
+            <a href="#">FAQs</a>
         </div>
-        <div class="offcanvas__nav__option">
-            <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
-            <a href="#"><img src="img/icon/heart.png" alt=""></a>
-            <a th:href="@{/cart-of-customer-account-id={id} (id = session.currentuser.id)}"><img src="img/icon/newcart.png" alt=""> <span>0</span></a>
-            <div class="formattedPrice()">$0.00</div>
-        </div>
-        <div id="mobile-menu-wrap"></div>
-        <div class="offcanvas__text">
-            <p></p>
+        <div class="offcanvas__top__hover">
+            <span>
+                <img src="img/user.png" alt="">
+                <i class="arrow_carrot-down"></i>
+            </span>
+            <ul>
+                <li>
+                    <a href="#">My Profile</a>
+                </li>
+                <li>
+                    <a href="#">Edit Account</a>
+                </li>
+                <li>
+                    <a href="#">Wallet</a>
+                </li>
+            </ul>
         </div>
     </div>
-    <!-- Offcanvas Menu End -->
+    <div class="offcanvas__nav__option">
+        <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
+        <a href="#"><img src="img/icon/heart.png" alt=""></a>
+        <a th:href="@{/cart-of-customer-account-id={id} (id = session.currentuser.id)}"><img src="img/icon/newcart.png"
+                alt=""> <span>0</span></a>
+        <div class="formattedPrice()">$0.00</div>
+    </div>
+    <div id="mobile-menu-wrap"></div>
+    <div class="offcanvas__text">
+        <p></p>
+    </div>
+</div>
+<!-- Offcanvas Menu End -->
 
-    <!-- Header Section Begin -->
-    <header class="header">
-        <div class="header__top">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 col-md-7">
-                        <div class="header__top__left">
-                            <p></p>
-                        </div>
+<!-- Header Section Begin -->
+<header class="header">
+    <div class="header__top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-7">
+                    <div class="header__top__left">
+                        <p></p>
                     </div>
-                    <div class="col-lg-6 col-md-5">
-                        <div class="header__top__right is-flex is-justify-content-right">
-                            <div class="header__top__links " style="margin-block: auto;">
-                                <a th:if= "${session.currentuser == null}"  th:href="@{loginpage}">Sign in</a>
-                                <a href="#">FAQs</a>
-                            </div>
-                            <div class="dropdown is-right is-hoverable" th:if= "${session.currentuser != null}" >
-                                <div class="dropdown-trigger">
-                                  <div class="button dropdown-profile" aria-haspopup="true" aria-controls="dropdown-menu">
-                                    <span>  
-                                        <img height="30" width="30"  class="has-img-is-rouned"
-                                        th:src="${curentcusImage}">
-                                        <span th:if= "${session.currentuser != null}" class="has-text-white" th:text="${curentcusName}" ></span>  
+                </div>
+                <div class="col-lg-6 col-md-5">
+                    <div class="header__top__right is-flex is-justify-content-right">
+                        <div class="header__top__links " style="margin-block: auto;">
+                            <a th:if="${session.currentuser == null}" th:href="@{loginpage}">Sign in</a>
+                            <a href="#">FAQs</a>
+                        </div>
+                        <div class="dropdown is-right is-hoverable" th:if="${session.currentuser != null}">
+                            <div class="dropdown-trigger">
+                                <div class="button dropdown-profile" aria-haspopup="true" aria-controls="dropdown-menu">
+                                    <span>
+                                        <img height="30" width="30" class="has-img-is-rouned"
+                                            th:src="${curentcusImage}">
+                                        <span th:if="${session.currentuser != null}" class="has-text-white"
+                                            th:text="${curentcusName}"></span>
                                     </span>
                                     <span class="icon is-small has-text-white">
                                         <i class="arrow_carrot-down"></i>
                                     </span>
-                                  </div>
                                 </div>
-                                <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                                  <div class="dropdown-content">
+                            </div>
+                            <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                <div class="dropdown-content">
                                     <a class="dropdown-item" th:href="@{showaccount}">
-                                      My Profile
+                                        My Profile
                                     </a>
                                     <a class="dropdown-item" th:href="@{logout}">
                                         Logout
-                                      </a>
-                                  </div>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -115,234 +116,301 @@
                 </div>
             </div>
         </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-3">
-                    <div class="header__logo">
-                        <a th:href="@{home}">                            
-                            <div class="logo-shop">
-                                Fool!st.
-                            </div></a>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <nav class="header__menu mobile-menu">
-                        <ul>
-                            <li class="active"><a th:href="@{home}">Home</a></li>
-                            <li><a th:href="@{shopproduct}">Shop</a></li>
-                            <li><a href="#">Pages</a>
-                                <ul class="dropdown">
-                                    <li><a th:href="@{about}">About Us</a></li>
-                                    <li><a th:href="@{shop-details}">Shop Details</a></li>
-                                    <li><a th:href="@{cart}">Shopping Cart</a></li>
-                                    <li><a th:href="@{checkout}">Check Out</a></li>
-                                    <li><a href="./blog-details.html">Blog Details</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="./blog.html">Blog</a></li>
-                            <li><a th:href="@{contact}">Contacts</a></li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="col-lg-3 col-md-3">
-                    <div class="header__nav__option">
-                        <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
-                        <a href="#"><img src="img/icon/heart.png" alt=""></a>
-                        <a th:if= "${session.currentuser != null}"
-                        th:href="@{/cart-of-customer-account-id={id} (id = ${session.currentuser.id})}"><img src="img/icon/newcart.png" alt=""> <span>0</span></a>
-                        <div class="formattedPrice()">$0.00</div>
-                    </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3">
+                <div class="header__logo">
+                    <a th:href="@{home}">
+                        <div class="logo-shop">
+                            Fool!st.
+                        </div>
+                    </a>
                 </div>
             </div>
-            <div class="canvas__open"><i class="fa fa-bars"></i></div>
-        </div>
-    </header>
-    <!-- Header Section End -->
-
-    <!-- Breadcrumb Section Begin -->
-    <section class="breadcrumb-option">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="breadcrumb__text">
-                        <h4>Shopping Cart</h4>
-                        <div class="breadcrumb__links">
-                            <a href="./index.html">Home</a>
-                            <a href="./shop.html">Shop</a>
-                            <span>Shopping Cart</span>
-                        </div>
-                    </div>
+            <div class="col-lg-6 col-md-6">
+                <nav class="header__menu mobile-menu">
+                    <ul>
+                        <li class="active"><a th:href="@{home}">Home</a></li>
+                        <li><a th:href="@{shopproduct}">Shop</a></li>
+                        <li><a href="#">Pages</a>
+                            <ul class="dropdown">
+                                <li><a th:href="@{about}">About Us</a></li>
+                                <li><a th:href="@{shop-details}">Shop Details</a></li>
+                                <li><a th:href="@{cart}">Shopping Cart</a></li>
+                                <li><a th:href="@{checkout}">Check Out</a></li>
+                                <li><a href="./blog-details.html">Blog Details</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="./blog.html">Blog</a></li>
+                        <li><a th:href="@{contact}">Contacts</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-3 col-md-3">
+                <div class="header__nav__option">
+                    <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
+                    <a href="#"><img src="img/icon/heart.png" alt=""></a>
+                    <a th:if="${session.currentuser != null}"
+                        th:href="@{/cart-of-customer-account-id={id} (id = ${session.currentuser.id})}"><img
+                            src="img/icon/newcart.png" alt=""> <span>0</span></a>
+                    <div class="formattedPrice()">$0.00</div>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- Breadcrumb Section End -->
+        <div class="canvas__open"><i class="fa fa-bars"></i></div>
+    </div>
+</header>
+<!-- Header Section End -->
 
-    <!-- Shopping Cart Section Begin -->
-    <section class="shopping-cart spad">
-        <div class="container">
-            <form action="" th:object="${customerCart}" method="post">
-                <div class="row">
-                    <div class="col-lg-8">
-                        <div class="shopping__cart__table">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th class="has-width-4rem"></th>
-                                        <th>Product</th>
-                                        <th>Quantity</th>
-                                        <th>Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr th:each="invoiceProduct, productListState: ${productsList}" id="table_row">
-                                        <!--<th scope="row"><input type="checkbox" th:field="*{fullCartList}" th:value="${invoiceProduct}" /></th>-->
-                                        <th scope="row">
-                                        </th>
-                                        <td class="product__cart__item">
-                                            <div class="product__cart__item__pic" style="width:6rem">
-                                                <img th:src="${invoiceProduct.getProduct().getImage1()}" alt="">
-                                            </div>
-                                            <div class="product__cart__item__text" style="margin-right: 5px; padding-top: 0">
-                                                <h6 th:text="${invoiceProduct.getProduct().getName()}"></h6>
-                                                <h5 th:text="${invoiceProduct.getProduct().formattedPrice()} + ' vnd'"></h5>
-                                                <h4 th:text="${'Size: ' + invoiceProduct.getProduct().getSize().toUpperCase()}" class="mt-4" ></h4>
-                                            </div>
-                                        </td>
-                                        <td class="quantity__item">
-                                            <div class="quantity">
-                                                <h5 th:text="${invoiceProduct.quantity}"></h5>
-                                            </div>
-                                        </td>
-                                        <td class="cart__price" th:text="${invoiceProduct.formattedProductTotalPrice()} + ' vnd'"></td>
-                                        <td class="cart__close">
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>Shopping Cart</h4>
+                    <div class="breadcrumb__links">
+                        <a href="./index.html">Home</a>
+                        <a href="./shop.html">Shop</a>
+                        <span>Shopping Cart</span>
                     </div>
-                    <div class="col-lg-4">
-                        <!--<div class="cart__discount">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- Shopping Cart Section Begin -->
+<section class="shopping-cart spad">
+    <div class="container">
+        <form action="" th:object="${customerCart}" method="post">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="shopping__cart__table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="has-width-4rem"></th>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="invoiceProduct, productListState: ${productsList}" id="table_row">
+                                    <!--<th scope="row"><input type="checkbox" th:field="*{fullCartList}" th:value="${invoiceProduct}" /></th>-->
+                                    <th scope="row">
+                                    </th>
+                                    <td class="product__cart__item">
+                                        <div class="product__cart__item__pic" style="width:6rem">
+                                            <img th:src="${invoiceProduct.getProduct().getImage1()}" alt="">
+                                        </div>
+                                        <div class="product__cart__item__text"
+                                            style="margin-right: 5px; padding-top: 0">
+                                            <h6 th:text="${invoiceProduct.getProduct().getName()}"></h6>
+                                            <h5 th:text="${invoiceProduct.getProduct().formattedPrice()} + ' vnd'"></h5>
+                                            <h4 th:text="${'Size: ' + invoiceProduct.getProduct().getSize().toUpperCase()}"
+                                                class="mt-4"></h4>
+                                        </div>
+                                    </td>
+                                    <td class="quantity__item">
+                                        <div class="quantity">
+                                            <h5 th:text="${invoiceProduct.quantity}"></h5>
+                                        </div>
+                                    </td>
+                                    <td class="cart__price"
+                                        th:text="${invoiceProduct.formattedProductTotalPrice()} + ' vnd'"></td>
+                                    <td class="cart__close">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <!--<div class="cart__discount">
                             <h6>Discount codes</h6>
                             <form action="#">
                                 <input type="text" placeholder="Coupon code">
                                 <button type="submit">Apply</button>
                             </form>
                         </div>-->
-                        <div class="cart__total">
-                            <h6>Cart total</h6>
-                            <ul>
-                                <li>Total <span  th:text="${selectedInvoice.formattedTotalPrice()} + ' VND'"></span></li>
-                            </ul>
-                        </div>
+                    <div class="cart__total" style="margin-bottom: 10%;">
+                        <h6>Shipper Info</h6>
+                        <img id="display_image" src="https://pbs.twimg.com/media/DHOeKUmVYAENpZF.jpg"  alt="" />
+                        <div style="    display: flex;
+                        justify-content: center;
+                        margin-top: 1rem;"><p style="font-weight: bold;
+                            font-size: 1.5rem;">ten shipper</p></div>
+                        <div style="margin-top: 1rem;"><p style="display: flex;
+                            justify-content: space-around;">Phone number:<span>0922192182</span></p></div>
                     </div>
-                </div>
-            </form>
-        </div>
-    </section>
-    <!-- Shopping Cart Section End -->
-
-    <!-- Footer Section Begin -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="footer__about">
-                        <div class="footer__logo">
-                            <a href="#"><img src="img/footer-logo.png" alt=""></a>
-                        </div>
-                        <p>The customer is at the heart of our unique business model, which includes design.</p>
-                        <a href="#"><img src="img/payment.png" alt=""></a>
-                    </div>
-                </div>
-                <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
-                    <div class="footer__widget">
-                        <h6>Shopping</h6>
+                    <div class="cart__total" style="margin-bottom: 10%;">
+                        <h6>Giao hang</h6>
                         <ul>
-                            <li><a href="#">Clothing Store</a></li>
-                            <li><a href="#">Trending Shoes</a></li>
-                            <li><a href="#">Accessories</a></li>
-                            <li><a href="#">Sale</a></li>
+                            <li><input type="checkbox"> lan 1</li>
+                            <li><input type="checkbox"> lan 2</li>
+                            <li><input type="checkbox"> lan 3</li>
                         </ul>
                     </div>
-                </div>
-                <div class="col-lg-2 col-md-3 col-sm-6">
-                    <div class="footer__widget">
-                        <h6>Shopping</h6>
+                    <div class="cart__total" style="margin-bottom: 10%;">
+                        <h6>Cart total</h6>
                         <ul>
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">Payment Methods</a></li>
-                            <li><a href="#">Delivary</a></li>
-                            <li><a href="#">Return & Exchanges</a></li>
+                            <li>Total <span th:text="${selectedInvoice.formattedTotalPrice()} + ' VND'"></span></li>
                         </ul>
                     </div>
-                </div>
-                <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
-                    <div class="footer__widget">
-                        <h6>NewLetter</h6>
-                        <div class="footer__newslatter">
-                            <p>Be the first to know about new arrivals, look books, sales & promos!</p>
-                            <form action="#">
-                                <input type="text" placeholder="Your email">
-                                <button type="submit"><span class="icon_mail_alt"></span></button>
-                            </form>
-                        </div>
+                    <div class="cart__total">
+                        <form action="">
+                            <h6 class="checkout__title">Billing Details</h6>
+                            <div class="checkout__input">
+                                <p>Full Name<span>*</span></p>
+                                <input type="text" readonly>
+                            </div>
+                            <div class="checkout__input">
+                                <p>Country<span>*</span></p>
+                                <input type="text" readonly>
+                            </div>
+                            <div class="checkout__input">
+                                <p>Address<span>*</span></p>
+                                <input type="text" placeholder="Street Address" class="checkout__input__add" readonly>
+                            </div>
+                            <div class="checkout__input">
+                                <p>Town/City<span>*</span></p>
+                                <input type="text" readonly>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Phone<span>*</span></p>
+                                        <input type="text">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Email<span>*</span></p>
+                                        <input type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="checkout__input">
+                                <p>Invoice notes<span>*</span></p>
+                                <input type="text">
+                            </div>
+                            <div class="checkout__input">
+                                <p>Payment Intent notes<span>*</span></p>
+                                <input type="text">
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <div class="footer__copyright__text">
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        <p>Copyright ©
-                            <script>
-                                document.write(new Date().getFullYear());
-                            </script>2020
-                            All rights reserved | This template is made with <i class="fa fa-heart-o"
+        </form>
+    </div>
+</section>
+<!-- Shopping Cart Section End -->
+
+<!-- Footer Section Begin -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="footer__about">
+                    <div class="footer__logo">
+                        <a href="#"><img src="img/footer-logo.png" alt=""></a>
+                    </div>
+                    <p>The customer is at the heart of our unique business model, which includes design.</p>
+                    <a href="#"><img src="img/payment.png" alt=""></a>
+                </div>
+            </div>
+            <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
+                <div class="footer__widget">
+                    <h6>Shopping</h6>
+                    <ul>
+                        <li><a href="#">Clothing Store</a></li>
+                        <li><a href="#">Trending Shoes</a></li>
+                        <li><a href="#">Accessories</a></li>
+                        <li><a href="#">Sale</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-6">
+                <div class="footer__widget">
+                    <h6>Shopping</h6>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Payment Methods</a></li>
+                        <li><a href="#">Delivary</a></li>
+                        <li><a href="#">Return & Exchanges</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
+                <div class="footer__widget">
+                    <h6>NewLetter</h6>
+                    <div class="footer__newslatter">
+                        <p>Be the first to know about new arrivals, look books, sales & promos!</p>
+                        <form action="#">
+                            <input type="text" placeholder="Your email">
+                            <button type="submit"><span class="icon_mail_alt"></span></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="footer__copyright__text">
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    <p>Copyright ©
+                        <script>
+                            document.write(new Date().getFullYear());
+                        </script>2020
+                        All rights reserved | This template is made with <i class="fa fa-heart-o"
                             aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                        </p>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    </div>
+                    </p>
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                 </div>
             </div>
-        </div>
-    </footer>
-    <!-- Footer Section End -->
-
-    <!-- Search Begin -->
-    <div class="search-model">
-        <div class="h-100 d-flex align-items-center justify-content-center">
-            <div class="search-close-switch">+</div>
-            <form class="search-model-form">
-                <input type="text" id="search-input" placeholder="Search here.....">
-            </form>
         </div>
     </div>
-    <!-- Search End -->
+</footer>
+<!-- Footer Section End -->
 
-    <!-- Js Plugins -->
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.nice-select.min.js"></script>
-    <script src="js/jquery.nicescroll.min.js"></script>
-    <script src="js/jquery.magnific-popup.min.js"></script>
-    <script src="js/jquery.countdown.min.js"></script>
-    <script src="js/jquery.slicknav.js"></script>
-    <script src="js/mixitup.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/main.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script>
-        let shoppingcard = document.querySelector(".shopping-cart");
-        let valueTop = shoppingcard.offsetTop;
+<!-- Search Begin -->
+<div class="search-model">
+    <div class="h-100 d-flex align-items-center justify-content-center">
+        <div class="search-close-switch">+</div>
+        <form class="search-model-form">
+            <input type="text" id="search-input" placeholder="Search here.....">
+        </form>
+    </div>
+</div>
+<!-- Search End -->
 
-        window.scroll({top: valueTop, behavior: 'smooth'});
-        setTimeout(function() {
-            document.querySelector([data - filter== ".best-seller"]).click();
-    },500)
-    </script>
-    <!--<script>
+<!-- Js Plugins -->
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.nice-select.min.js"></script>
+<script src="js/jquery.nicescroll.min.js"></script>
+<script src="js/jquery.magnific-popup.min.js"></script>
+<script src="js/jquery.countdown.min.js"></script>
+<script src="js/jquery.slicknav.js"></script>
+<script src="js/mixitup.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/main.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    let shoppingcard = document.querySelector(".shopping-cart");
+    let valueTop = shoppingcard.offsetTop;
+
+    window.scroll({ top: valueTop, behavior: 'smooth' });
+    setTimeout(function () {
+        document.querySelector([data - filter == ".best-seller"]).click();
+    }, 500)
+</script>
+<!--<script>
         $(document).ready(function(){
             $(".cart__close").click(function(){
               $("#table_row").remove();
