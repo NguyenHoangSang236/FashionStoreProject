@@ -134,11 +134,11 @@
                         <td th:text="${product.soldQuantity}"></td>
                         <td th:text="${product.availableQuantity}"></td>
                         <td th:text="${product.formattedImportedDate()}"></td>
-                        <!--<td>
-                          <a  class="tm-product-delete-link" type="submit" ">
-                            <i class="fa-regular fa-trash-can"></i>
+                        <td>
+                          <a th:href="@{/edit-product-id={id} (id = ${product.id})}">
+                            <i class="fa-solid fa-pen-to-square"></i>
                           </a>
-                        </td>-->
+                        </td>
                       </tr>
                     </tbody>
                   </table>

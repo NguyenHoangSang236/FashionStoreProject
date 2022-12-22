@@ -101,7 +101,7 @@
               <h2 class="tm-block-title d-inline-block">Add Product</h2>
             </div>
           </div>
-          <form action="" method="post" th:object="${newProduct}" class="tm-edit-product-form">
+          <form action="" method="post" th:object="${selectedProduct}" class="tm-edit-product-form">
             <div class="row tm-edit-product-row">
               <div class="col-xl-6 col-lg-6 col-md-12">
                 <div class="form-group mb-3">
@@ -148,7 +148,7 @@
                 <div class="form-group mb-3">
                   <label for="import_date">Import Date
                   </label>
-                  <input id="import_date" name="import_date" type="text" class="form-control validate"
+                  <input id="import_date" name="import_date" type="date" class="form-control validate"
                     data-large-mode="true" />
                 </div>
                 <div class="form-group mb-3" id="detailProductModifier">
@@ -173,7 +173,7 @@
                   object-fit: contain;" >
                 </div>
                 <div class="custom-file mt-3 mb-3">
-                  <input id="linkImage1" name="name" type="text"
+                  <input id="linkImage1" th:field="*{image1Url}" name="name" type="text"
                       class="form-control validate" required style="margin-bottom:1rem;" />
                   <input id="fileInput1" type="file" style="display:none;" onclick="upload_image(this.id)" />
                   <input type="button" class="btn btn-primary btn-block mx-auto" value="UPLOAD PRODUCT IMAGE"
@@ -186,7 +186,7 @@
                   object-fit: contain;" >
                 </div>
                 <div class="custom-file mt-3 mb-3">
-                  <input id="linkImage2" name="name" type="text"
+                  <input id="linkImage2" th:field="*{image2Url}" name="name" type="text"
                       class="form-control validate" required style="margin-bottom:1rem;" />
                   <input id="fileInput2" type="file" style="display:none;" onclick="upload_image(this.id)"/>
                   <input type="button" class="btn btn-primary btn-block mx-auto" value="UPLOAD PRODUCT IMAGE"
@@ -199,7 +199,7 @@
                   object-fit: contain;" >
                 </div>
                 <div class="custom-file mt-3 mb-3">
-                  <input id="linkImage3" name="name" type="text"
+                  <input id="linkImage3" th:field="*{image3Url}" name="name" type="text"
                       class="form-control validate" required style="margin-bottom:1rem;" />
                   <input id="fileInput3" type="file" style="display:none;" onclick="upload_image(this.id)" />
                   <input type="button" class="btn btn-primary btn-block mx-auto" value="UPLOAD PRODUCT IMAGE"
@@ -212,7 +212,7 @@
                   object-fit: contain;" >
                 </div>
                 <div class="custom-file mt-3 mb-3">
-                  <input id="linkImage4" name="name" type="text"
+                  <input id="linkImage4" th:field="*{image4Url}" name="name" type="text"
                       class="form-control validate" required style="margin-bottom:1rem;" />
                   <input id="fileInput4" type="file" style="display:none;" onclick="upload_image(this.id)" />
                   <input type="button" class="btn btn-primary btn-block mx-auto" value="UPLOAD PRODUCT IMAGE"

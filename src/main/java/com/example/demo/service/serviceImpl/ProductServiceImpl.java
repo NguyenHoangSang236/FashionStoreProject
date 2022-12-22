@@ -25,7 +25,7 @@ import com.example.demo.entity.Catalog;
 import com.example.demo.entity.Comment;
 import com.example.demo.entity.Product;
 import com.example.demo.entity.ProductManagement;
-import com.example.demo.entity.dto.NewProductInfo;
+import com.example.demo.entity.dto.ProductInfo;
 import com.example.demo.respository.CartRemoveRepository;
 import com.example.demo.respository.CatalogRepository;
 import com.example.demo.respository.CommentRepository;
@@ -205,7 +205,7 @@ public class ProductServiceImpl implements ProductService{
 
 
 	@Override
-	public void addNewProduct(NewProductInfo newProductInfo) {
+	public void addNewProduct(ProductInfo newProductInfo) {
 		List<Catalog> catalogList = new ArrayList<Catalog>();
 		
 		for(int i = 0; i < newProductInfo.getCatalogList().length; i++) {
@@ -233,11 +233,57 @@ public class ProductServiceImpl implements ProductService{
 			
 			ProductManagement newProductMng = new ProductManagement(
 					productMngRepo.getLastProductManagementId() + 1, 
-					newProductInfo.getImportDate(), newProductInfo.getAvailableQuantityList()[i], null, product);
+					newProductInfo.getImportDate(), 
+					newProductInfo.getAvailableQuantityList()[i], 
+					null, product);
 			
 			productRepo.save(product);
 			productMngRepo.save(newProductMng);
-			
 		}
+	}
+	
+	
+	@Override
+	public ProductInfo getProductInfo(Product product, String mode) {
+		ProductInfo productInfo = new ProductInfo();
+		List<Product> productList = productRepo.getProductListByNameAndColor(product.getName(), product.getColor());
+		int productMngSize = product.getProductManagements().size();
+		
+		int[] productAvaiQuantArr = new int[productList.size()];
+		String[] productCatalogArr = new String[productList.size()];
+		String[] productSizeArr = new String[productList.size()];
+		
+		for(int i = 0; i < productList.size(); i++) {
+			productAvaiQuantArr[i] = productList.get(i).getAvailableQuantity();
+			productSizeArr[i] = productList.get(i).getSize();
+		}
+		
+		for(int i = 0; i < product.getCatalogs().size(); i++) {
+			productCatalogArr[i] = product.getCatalogs().get(i).getName();
+		}
+		
+		if(mode.equals("specific product mode")) {
+			if(productMngSize > 0) {
+				productInfo.setImportDate(product.getProductManagements().get(productMngSize - 1).getImportDate());
+			}
+			else productInfo.setImportDate(product.getProductManagements().get(productMngSize).getImportDate());
+ 		}
+		
+		productInfo.setEditMode(mode);
+		productInfo.setName(product.getName());
+		productInfo.setBrand(product.getBrand());
+		productInfo.setColor(product.getColor());
+		productInfo.setSellingPrice(product.getPrice());
+		productInfo.setOriginalPrice(product.getOriginalPrice());
+		productInfo.setDescription(product.getDescription());
+		productInfo.setAvailableQuantityList(productAvaiQuantArr);
+		productInfo.setSizeList(productSizeArr);
+		productInfo.setCatalogList(productCatalogArr);
+		productInfo.setImage1Url(product.getImage1());
+		productInfo.setImage2Url(product.getImage2());
+		productInfo.setImage3Url(product.getImage3());
+		productInfo.setImage4Url(product.getImage4());
+		
+		return productInfo;
 	}
 }

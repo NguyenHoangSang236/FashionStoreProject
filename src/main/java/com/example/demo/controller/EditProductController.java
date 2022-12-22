@@ -5,33 +5,64 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.example.demo.entity.Account;
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.Product;
+import com.example.demo.entity.dto.ProductInfo;
 import com.example.demo.respository.CatalogRepository;
 import com.example.demo.respository.ProductRepository;
 import com.example.demo.service.ProductService;
 import com.example.demo.util.ValueRender;
 
+@SessionAttributes("currentuser")
 @Controller
 public class EditProductController {
 	@Autowired
 	ProductRepository productRepo;
 	
-	Product selectedProduct = new Product();
+	@Autowired
+	ProductService productService;
+	
+	ProductInfo selectedProduct = new ProductInfo();
+	Account currentAccount;
 	
 	
-	@GetMapping("/editproduct")
-    public String editproduct(Model model ) {
+	public String renderEditProduct(Model model, HttpSession session) {
+		currentAccount = (Account)session.getAttribute("currentuser");
+		
+		return "";
+	}
+	
+	
+	@GetMapping("/edit-product-id={id}")
+    public String editSpecificProduct(Model model, HttpSession session, @PathVariable("id") int selectedProductId) {
+		Product product = productRepo.getProductById(selectedProductId);
+		selectedProduct = productService.getProductInfo(product, "specific product mode");
+		
 		model.addAttribute("selectedProduct", selectedProduct);
+		
+        return "edit-product";
+    }
+	
+	
+	@GetMapping("/edit-product-name={name}__color={color}")
+    public String editProduct(Model model, HttpSession session, @PathVariable("id") int selectedProductId) {
+//		Product product = productRepo.getProductById(selectedProductId);
+//		selectedProduct = productService.getProductInfo(product, "specific product mode");
+//		
+//		model.addAttribute("selectedProduct", selectedProduct);
 		
         return "edit-product";
     }

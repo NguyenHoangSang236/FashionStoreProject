@@ -4,7 +4,10 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-public class NewProductInfo {
+import com.example.demo.entity.Product;
+import com.example.demo.respository.ProductRepository;
+
+public class ProductInfo {
 	String name;
 	String[] sizeList;
 	int[] availableQuantityList;
@@ -20,12 +23,13 @@ public class NewProductInfo {
 	String image2Url;
 	String image3Url;
 	String image4Url;
+	String editMode;
 	
 	
 	
-	public NewProductInfo() {}
+	public ProductInfo() {}
 
-	public NewProductInfo(String name, String[] sizeList, int[] availableQuantityList, String brand, String color,
+	public ProductInfo(String name, String[] sizeList, int[] availableQuantityList, String brand, String color,
 			double sellingPrice, double originalPrice, String description, String[] catalogList, Date importDate,
 			String image1Url, String image2Url, String image3Url, String image4Url) {
 		super();
@@ -46,6 +50,7 @@ public class NewProductInfo {
 	}
 
 	
+
 	public String getName() {
 		return name;
 	}
@@ -156,5 +161,13 @@ public class NewProductInfo {
 
 	public void setImage4Url(String image4Url) {
 		this.image4Url = image4Url;
+	}
+
+	public String getEditMode() {
+		return editMode;
+	}
+
+	public void setEditMode(String editMode) {
+		this.editMode = editMode;
 	}
 }

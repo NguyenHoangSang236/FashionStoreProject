@@ -3,19 +3,24 @@ package com.example.demo.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.example.demo.entity.Account;
 import com.example.demo.entity.Catalog;
-import com.example.demo.entity.dto.NewProductInfo;
+import com.example.demo.entity.dto.ProductInfo;
 import com.example.demo.respository.CatalogRepository;
 import com.example.demo.service.ProductService;
+import com.example.demo.util.GlobalStaticValues;
 
+@SessionAttributes("currentuser")
 @Controller
 public class AddNewProductController {
 	@Autowired
@@ -24,55 +29,55 @@ public class AddNewProductController {
 	@Autowired
 	ProductService productService;
 	
-	NewProductInfo newProduct = new NewProductInfo();
+	ProductInfo newProduct = new ProductInfo();
+	Account currentAccount;
+	
+	
+	public String renderToAddNewProduct(Model model, HttpSession session) {
+		currentAccount = (Account)session.getAttribute("currentuser");
+		
+		if(currentAccount != null) {
+	    	List<Catalog> cateList = catalogRepo.getAllCatalogs();
+
+			model.addAttribute("newProduct", newProduct);
+			model.addAttribute("cateList", cateList);
+			
+			return "add-product";
+		}
+		else {
+			GlobalStaticValues.currentPage = "/addproduct";
+			return "redirect:/loginpage";
+		}
+	}
+	
 	
     @GetMapping("/addproduct")
-    public String loadAddProductForm(Model model) {
-    	List<Catalog> cateList = catalogRepo.getAllCatalogs();
-    	
-    	model.addAttribute("newProduct", newProduct);
-    	model.addAttribute("cateList", cateList);
-    	
-//    	int[] quantityArr = {1,2,3,4};
-//    	String[] sizeArr = {"X", "M", "L", "XL"};
-//    	String[] cateArr = {"Shoes", "Jackets"};
-//    	
-//    	NewProductInfo test = new NewProductInfo(
-//    			"test", 
-//    			sizeArr, 
-//    			quantityArr, 
-//    			"Nike", 
-//    			"red", 
-//    			20, 
-//    			15, 
-//    			"asfasgaSGASgasgasg",
-//    			cateArr, 
-//    			new Date(), 
-//    			"http://t0.gstatic.com/licensed-image?q=tbn:ANd9GcRaHOjF0WYP8MwqkqHU1UD0j_56bTDXrsZnLxm_xGo4w06dskJFONOZqMG9HLLvQqTU4sqVJfbvGJ0aMqmjWG8", 
-//    			"http://t0.gstatic.com/licensed-image?q=tbn:ANd9GcRaHOjF0WYP8MwqkqHU1UD0j_56bTDXrsZnLxm_xGo4w06dskJFONOZqMG9HLLvQqTU4sqVJfbvGJ0aMqmjWG8", 
-//    			"http://t0.gstatic.com/licensed-image?q=tbn:ANd9GcRaHOjF0WYP8MwqkqHU1UD0j_56bTDXrsZnLxm_xGo4w06dskJFONOZqMG9HLLvQqTU4sqVJfbvGJ0aMqmjWG8",
-//    			"http://t0.gstatic.com/licensed-image?q=tbn:ANd9GcRaHOjF0WYP8MwqkqHU1UD0j_56bTDXrsZnLxm_xGo4w06dskJFONOZqMG9HLLvQqTU4sqVJfbvGJ0aMqmjWG8");
-//    	
-//    	productService.addNewProduct(test);
-    	
-        return "add-product";
+    public String loadAddProductForm(Model model, HttpSession session) {
+    	return renderToAddNewProduct(model, session);
     }
     
     
     @PostMapping("/addproduct")
-    public String addProduct(Model model, @ModelAttribute("newProduct") NewProductInfo product) {
-//    	System.out.println(product.getSizeList());
-//    	String[] sizeStrings = product.getSizeList();
-//    	
-//    	for (int element: product.getAvailableQuantityList()) {
-//            System.out.println(element);
-//        }
-    	System.out.println(product.getName());
+    public String addProduct(Model model, HttpSession session, @ModelAttribute("newProduct") ProductInfo product) {
+    	Date currentDate = new Date();
     	
-    	productService.addNewProduct(product);
-    	
-    	model.addAttribute("newProduct", newProduct);
-    	
-        return "add-product";
+    	//selling price < org price --> message
+    	if(product.getSellingPrice() < product.getOriginalPrice()) {
+    		GlobalStaticValues.message = "Original price must be lower than Selling price !!";
+    		return "redirect:/addproduct";
+    	}
+    	//import date is later than current date --> message
+    	else if (product.getImportDate().compareTo(currentDate) > 0) {
+    		GlobalStaticValues.message = "This product has not been imported yet !!";
+    		return "redirect:/addproduct";
+		}
+    	//still have others
+    	else {
+    		productService.addNewProduct(product);
+    		
+    		model.addAttribute("newProduct", newProduct);
+    		
+    		return "add-product";
+		}
     }
 }
