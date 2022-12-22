@@ -88,9 +88,12 @@ public class ShopController {
     	dynamicConditions = dynamicConditions.substring(4);
     	result += dynamicConditions + " group by p.name";
     	
-//    	System.out.println(result);
-    	
     	return result;
+    }
+    
+    
+    public void addToCartOnClick() {
+    	
     }
     
     
@@ -148,7 +151,12 @@ public class ShopController {
     
     
     @PostMapping("/shopproduct")
-    public String showFilteredShop(HttpSession session,Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size, @ModelAttribute("filterSelections") FilterSelections selectedFilters) {
+    public String showFilteredShop(HttpSession session,
+    		Model model, 
+    		@RequestParam("page") Optional<Integer> page, 
+    		@RequestParam("size") Optional<Integer> size, 
+    		@ModelAttribute("filterSelections") FilterSelections selectedFilters,
+    		@RequestParam(value = "action", required = false) String action) {
     	int currentPage = page.orElse(1);
         int pageSize = size.orElse(15);
         
