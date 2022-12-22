@@ -159,7 +159,6 @@ public class DetailsController {
         		int availableQuantity = productRepo.getAvailableQuantityById(product.getId());
         		
         		Cart tmpCart = cartRepo.getCartByProductIdAndCustomerId(product.getId(), GlobalStaticValues.currentCustomer.getId());
-        		System.out.println("input quantity: " + modelShopDetails.getQuantity());
         		
         		//if this product has already been in the cart --> quantity = this product's quantity
         		if(tmpCart != null) {

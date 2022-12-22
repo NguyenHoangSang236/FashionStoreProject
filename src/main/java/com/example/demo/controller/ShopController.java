@@ -25,12 +25,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.entity.Account;
+import com.example.demo.entity.Cart;
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.Product;
 import com.example.demo.entity.dto.FilterSelections;
+import com.example.demo.respository.CartRepository;
 import com.example.demo.respository.CatalogRepository;
 import com.example.demo.respository.CustomerRepository;
 import com.example.demo.respository.ProductRepository;
@@ -38,6 +41,7 @@ import com.example.demo.service.ProductService;
 import com.example.demo.util.GlobalStaticValues;
 import com.example.demo.util.ValueRender;
 
+@SessionAttributes("currentuser")
 @Controller
 public class ShopController {
     @Autowired
@@ -51,6 +55,10 @@ public class ShopController {
     
     @Autowired
 	CustomerRepository cusRepo;
+    
+    @Autowired
+    CartRepository cartRepo;
+    
     Customer customer = new Customer();
     
     Integer[] ratingStarArr = {1,2,3,4,5};
@@ -88,9 +96,34 @@ public class ShopController {
     	dynamicConditions = dynamicConditions.substring(4);
     	result += dynamicConditions + " group by p.name";
     	
-//    	System.out.println(result);
-    	
     	return result;
+    }
+    
+    
+    public void addToCartOnClick(int productId, Customer customer) {
+    	Product product = productRepo.getProductById(productId);
+    	Cart avaiCart = cartRepo.getCartByProductIdAndCustomerId(product.getId(), GlobalStaticValues.currentCustomer.getId());
+		
+    	int cartId = cartRepo.getLastestCartId() + 1;
+		int availableQuantity = productRepo.getAvailableQuantityById(product.getId());
+		int cartQuantity = 1;
+		
+		//if this product has already been in the cart --> quantity = this product's quantity
+		if(avaiCart != null) {
+			cartQuantity += avaiCart.getQuantity();
+			cartId = avaiCart.getId();
+		}
+
+		//if available quantity of product > selected product quantity --> save cart
+		if(availableQuantity > avaiCart.getQuantity()) {
+			avaiCart.setQuantity(cartQuantity);
+			cartRepo.save(avaiCart);
+			GlobalStaticValues.message = "Added 1 " + product.getColor() + " " + product.getName() + " with size " + product.getSize().toUpperCase() + " in your cart";
+		} else {
+			GlobalStaticValues.message = "Oops! We are having only " + String.valueOf(availableQuantity) + " available products";
+			System.out.println(GlobalStaticValues.message);
+		}
+		
     }
     
     
@@ -148,20 +181,42 @@ public class ShopController {
     
     
     @PostMapping("/shopproduct")
-    public String showFilteredShop(HttpSession session,Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size, @ModelAttribute("filterSelections") FilterSelections selectedFilters) {
+    public String showFilteredShop(HttpSession session,
+    		Model model, 
+    		@RequestParam("page") Optional<Integer> page, 
+    		@RequestParam("size") Optional<Integer> size, 
+    		@ModelAttribute("filterSelections") FilterSelections selectedFilters,
+    		@RequestParam(value = "action", required = false) String action) {
     	int currentPage = page.orElse(1);
         int pageSize = size.orElse(15);
         
         model.addAttribute("pName", new Product());
 
-        filterSelections = selectedFilters;
-        filterSelections.setPriceRangeLimits();
-        
-        String filterQuery = createQueryForFilters(filterSelections.getCatalogs(), filterSelections.getBrand(), filterSelections.getPrice1(), filterSelections.getPrice2());
-        
-        Page<Product> productPage = productService.findByFilters(PageRequest.of(currentPage - 1, pageSize), filterQuery);
+        if(action.contains("add to cart product id")) {
+        	Account currentAcount = (Account)session.getAttribute("currentuser");
+        	
+        	if(currentAcount != null) {
+        		int selectedId = Integer.parseInt(action.substring(action.indexOf("=") + 2));
+        		Customer currentCustomer = cusRepo.getCustomerByAccountId(currentAcount.getId());
+        		
+        		addToCartOnClick(selectedId, currentCustomer);
+        		
+        		Page<Product> productPage = productService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
+        		
+        		renderToShop(session, model, productPage, page, size, filterSelections);
+        	}
+        	else return "redirect:/loginpage";
+        }
+        else {
+        	filterSelections = selectedFilters;
+            filterSelections.setPriceRangeLimits();
+            
+            String filterQuery = createQueryForFilters(filterSelections.getCatalogs(), filterSelections.getBrand(), filterSelections.getPrice1(), filterSelections.getPrice2());
+            
+            Page<Product> productPage = productService.findByFilters(PageRequest.of(currentPage - 1, pageSize), filterQuery);
 
-        renderToShop(session, model, productPage, page, size, filterSelections);
+            renderToShop(session, model, productPage, page, size, filterSelections);
+		}
     	
     	return "shop";
     }
