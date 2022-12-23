@@ -100,47 +100,50 @@
             <div class="col-12">
               <h2 class="tm-block-title d-inline-block">Edit Product</h2>
             </div>
+            <div class="col-12">
+              <a href="#" >Move to edit general products</a>
+            </div>
           </div>
           <form action="" method="post" th:object="${selectedProduct}" class="tm-edit-product-form">
             <div class="row tm-edit-product-row">
               <div class="col-xl-6 col-lg-6 col-md-12">
                 <div class="form-group mb-3">
                   <label for="name">Product Name</label>
-                  <input id="name" name="name" type="text" th:field="*{name}" class="form-control validate" required />
+                  <input id="name" name="name" type="text" th:field="*{name}" readonly class="form-control validate" required />
                 </div>
                 <div class="form-group mb-3">
                   <label for="brand">Brand</label>
-                  <input id="brand" name="brand" type="text" th:field="*{brand}" class="form-control validate"
+                  <input id="brand" name="brand" type="text" th:field="*{brand}" readonly class="form-control validate"
                     required />
                 </div>
                 <div class="form-group mb-3">
                   <label for="color">Color</label>
-                  <input id="color" name="color" type="text" th:field="*{color}" class="form-control validate"
+                  <input id="color" name="color" type="text" th:field="*{color}" readonly class="form-control validate"
                     required />
                 </div>
                 <div class="row">
                   <div class="form-group mb-3 col-xs-12 col-sm-6">
                     <label for="price">Selling Price
                     </label>
-                    <input id="price" name="price" type="text" th:field="*{price}" class="form-control validate"
+                    <input id="price" name="price" type="text" th:field="*{price}" readonly class="form-control validate"
                       data-large-mode="true" />
                   </div>
                   <div class="form-group mb-3 col-xs-12 col-sm-6">
                     <label for="original_price">Original Price
                     </label>
-                    <input id="original_price" name="original_price" type="text" th:field="*{originalPrice}"
+                    <input id="original_price" name="original_price" type="text" readonly th:field="*{originalPrice}"
                       class="form-control validate" required />
                   </div>
                 </div>
                 <div class="form-group mb-3">
                   <label for="description">Description</label>
-                  <input type="text" th:field="*{description}" class="form-control validate" />
+                  <input type="text" th:field="*{description}" readonly class="form-control validate" />
                 </div>
                 <div class="form-group mb-3">
                   <label for="category">Category</label>
                   <ul>
                     <li th:each="category, categoriesListState: ${cateList}" style="white-space:nowrap; ">
-                      <input type="checkbox" th:value="${category.name}" th:checked="${cateCheckedArr[__categoriesListState.index__]}" />
+                      <input type="checkbox" th:value="${category.name}" th:checked="${cateCheckedArr[__categoriesListState.index__]}" disabled/>
                       <label th:text="${category.name}"></label>
                     </li>
                   </ul>
@@ -180,7 +183,7 @@
                   object-fit: contain;">
                 </div>
                 <div class="custom-file mt-3 mb-3">
-                  <input id="linkImage1" th:field="*{image1}" name="name" type="text" class="form-control validate"
+                  <input id="linkImage1" th:field="*{image1}" readonly name="name" type="text" class="form-control validate"
                     required style="margin-bottom:1rem;" />
                   <input id="fileInput1" type="file" style="display:none;" onclick="upload_image(this.id)" />
                   <input type="button" class="btn btn-primary btn-block mx-auto" value="UPLOAD PRODUCT IMAGE"
@@ -194,7 +197,7 @@
                   object-fit: contain;">
                 </div>
                 <div class="custom-file mt-3 mb-3">
-                  <input id="linkImage2" th:field="*{image2}" name="name" type="text" class="form-control validate"
+                  <input id="linkImage2" th:field="*{image2}" readonly name="name" type="text" class="form-control validate"
                     required style="margin-bottom:1rem;" />
                   <input id="fileInput2" type="file" style="display:none;" onclick="upload_image(this.id)"/>
                   <input type="button" class="btn btn-primary btn-block mx-auto" value="UPLOAD PRODUCT IMAGE"
@@ -208,7 +211,7 @@
                   object-fit: contain;">
                 </div>
                 <div class="custom-file mt-3 mb-3">
-                  <input id="linkImage3" th:field="*{image3}" name="name" type="text" class="form-control validate"
+                  <input id="linkImage3" th:field="*{image3}" readonly name="name" type="text" class="form-control validate"
                     required style="margin-bottom:1rem;" />
                   <input id="fileInput3" type="file" style="display:none;" onclick="upload_image(this.id)" />
                   <input type="button" class="btn btn-primary btn-block mx-auto" value="UPLOAD PRODUCT IMAGE"
@@ -222,7 +225,7 @@
                   object-fit: contain;">
                 </div>
                 <div class="custom-file mt-3 mb-3">
-                  <input id="linkImage4" th:field="*{image4}" name="name" type="text" class="form-control validate"
+                  <input id="linkImage4" th:field="*{image4}" readonly name="name" type="text" class="form-control validate"
                     required style="margin-bottom:1rem;" />
                   <input id="fileInput4" type="file" style="display:none;" onclick="upload_image(this.id)" />
                   <input type="button" class="btn btn-primary btn-block mx-auto" value="UPLOAD PRODUCT IMAGE"
