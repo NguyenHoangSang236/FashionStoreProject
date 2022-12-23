@@ -43,10 +43,9 @@ public class DeliveryController {
 	 CustomerRepository cusRepo;
 	 Customer customer = new Customer();
 	
-	@GetMapping("/Delivery-home")
+	@GetMapping("/delivery-home")
     public String deliveryHome(HttpSession session, Model model, HttpServletRequest request ) {
 		Account Cuser = (Account)session.getAttribute("currentuser");
-		GlobalStaticValues.currentPage = "/invoice-control";
 		
 		if(Cuser != null) {
 			Customer Ccustomer = cusRepo.getCustomerByAccountId(Cuser.getId());
@@ -54,16 +53,25 @@ public class DeliveryController {
 		    model.addAttribute("curentcusImage",Ccustomer.convertByteImamgeToBase64String());
 		    model.addAttribute("curentcusName",Ccustomer.getName());
 			
-	        return "shipper-home";
 		}
-		else {
-			return "redirect:/loginpage";
-		}
+		return "shipper-home";
     }
-	@GetMapping("/Delivery-id")
+	@GetMapping("/delivery-process")
+    public String deliveryProcess(HttpSession session, Model model, HttpServletRequest request ) {
+		Account Cuser = (Account)session.getAttribute("currentuser");
+		
+		if(Cuser != null) {
+			Customer Ccustomer = cusRepo.getCustomerByAccountId(Cuser.getId());
+		    
+		    model.addAttribute("curentcusImage",Ccustomer.convertByteImamgeToBase64String());
+		    model.addAttribute("curentcusName",Ccustomer.getName());
+			
+		}
+		return "delivery-process";
+    }
+	@GetMapping("/delivery-id=={id}")
     public String deliveryDetail(HttpSession session, Model model, HttpServletRequest request ) {
 		Account Cuser = (Account)session.getAttribute("currentuser");
-		GlobalStaticValues.currentPage = "/invoice-control";
 		
 		if(Cuser != null) {
 			Customer Ccustomer = cusRepo.getCustomerByAccountId(Cuser.getId());
