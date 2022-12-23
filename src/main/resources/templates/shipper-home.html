@@ -42,7 +42,6 @@
     <div class="offcanvas__option">
         <div class="offcanvas__links">
             <a th:href="@{loginpage}">Sign in</a>
-            <a href="#">FAQs</a>
         </div>
         <div class="offcanvas__top__hover">
             <span>
@@ -66,7 +65,6 @@
         <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
         <a href="#"><img src="img/icon/heart.png" alt=""></a>
         <a th:href="@{/cart-of-customer-account-id={id} (id = session.currentuser.id)}"><img src="img/icon/newcart.png" alt=""> <span>0</span></a>
-        <div class="formattedPrice()">$0.00</div>
     </div>
     <div id="mobile-menu-wrap"></div>
     <div class="offcanvas__text">
@@ -89,7 +87,6 @@
                     <div class="header__top__right is-flex is-justify-content-right">
                         <div class="header__top__links " style="margin-block: auto;">
                             <a th:if= "${session.currentuser == null}"  th:href="@{loginpage}">Sign in</a>
-                            <a href="#">FAQs</a>
                         </div>
                         <div class="dropdown is-right is-hoverable" th:if= "${session.currentuser != null}" >
                             <div class="dropdown-trigger">

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Product Page - Admin HTML Template</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700" />
+    <!-- https://fonts.google.com/specimen/Roboto -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+    <!-- https://fontawesome.com/ -->
+    <link rel="stylesheet" href="CSS/bootstrap.min.css" />
+    <!-- https://getbootstrap.com/ -->
+    <link rel="stylesheet" href="CSS/templatemo-style.css">
+    <link rel="stylesheet" href="CSS/style.css" type="text/css">
+    <!--
+	Product Admin CSS Template
+	https://templatemo.com/tm-524-product-admin
+	-->
+</head>
+
+<body id="reportsPage">
+    <nav class="navbar navbar-expand-xl">
+        <div class="container h-100">
+            <a class="navbar-brand" href="index.html">
+                <h1 class="tm-site-title mb-0">Product Admin</h1>
+            </a>
+            <button class="navbar-toggler ml-auto mr-0" type="button" data-toggle="collapse"
+                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <i class="fas fa-bars tm-nav-icon"></i>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto h-100">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="far fa-file-alt"></i>
+                            <span> Reports <i class="fas fa-angle-down"></i> </span>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" th:href="@{invoice-control}">Invoice management</a>
+                            <a class="dropdown-item" href="#">Weekly Report</a>
+                            <a class="dropdown-item" href="#">Yearly Report</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="products.html">
+                            <i class="fas fa-shopping-cart"></i> Products
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{accountmanagement}">
+                            <i class="far fa-user"></i> Accounts
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-cog"></i>
+                            <span> Settings <i class="fas fa-angle-down"></i> </span>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Profile</a>
+                            <a class="dropdown-item" href="#">Billing</a>
+                            <a class="dropdown-item" href="#">Customize</a>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <p class="nav-link d-block" th:if="${session.currentuser != null}"
+                            th:text="${#session.getAttribute('currentuser').getUserName()}">
+                        </p>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link d-block" th:href="@{logout}">logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <form method="post">
+            <div class="row tm-content-row">
+                <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 tm-block-col">
+                    <div class="tm-bg-primary-dark tm-block tm-block-products" style="max-height: fit-content;">
+                        <div class="shopping__cart__table" style="background-color: #50697f;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="product__cart__item">
+                                            <div class="product__cart__item__pic">
+                                                <img src="img/shopping-cart/cart-1.jpg" alt="">
+                                            </div>
+                                            <div class="product__cart__item__text">
+                                                <h6>T-shirt Contrast Pocket</h6>
+                                                <h5>$98.49</h5>
+                                            </div>
+                                        </td>
+                                        <td class="quantity__item">
+                                            <div class="quantity">
+                                                <div class="pro-qty-2">
+                                                    <input type="text" value="1">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="cart__price">$ 30.00</td>
+                                        <td class="cart__close"><i class="fa fa-close"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="product__cart__item">
+                                            <div class="product__cart__item__pic">
+                                                <img src="img/shopping-cart/cart-2.jpg" alt="">
+                                            </div>
+                                            <div class="product__cart__item__text">
+                                                <h6>Diagonal Textured Cap</h6>
+                                                <h5>$98.49</h5>
+                                            </div>
+                                        </td>
+                                        <td class="quantity__item">
+                                            <div class="quantity">
+                                                <div class="pro-qty-2">
+                                                    <input type="text" value="1">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="cart__price">$ 32.50</td>
+                                        <td class="cart__close"><i class="fa fa-close"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="product__cart__item">
+                                            <div class="product__cart__item__pic">
+                                                <img src="img/shopping-cart/cart-3.jpg" alt="">
+                                            </div>
+                                            <div class="product__cart__item__text">
+                                                <h6>Basic Flowing Scarf</h6>
+                                                <h5>$98.49</h5>
+                                            </div>
+                                        </td>
+                                        <td class="quantity__item">
+                                            <div class="quantity">
+                                                <div class="pro-qty-2">
+                                                    <input type="text" value="1">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="cart__price">$ 47.00</td>
+                                        <td class="cart__close"><i class="fa fa-close"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="product__cart__item">
+                                            <div class="product__cart__item__pic">
+                                                <img src="img/shopping-cart/cart-4.jpg" alt="">
+                                            </div>
+                                            <div class="product__cart__item__text">
+                                                <h6>Basic Flowing Scarf</h6>
+                                                <h5>$98.49</h5>
+                                            </div>
+                                        </td>
+                                        <td class="quantity__item">
+                                            <div class="quantity">
+                                                <div class="pro-qty-2">
+                                                    <input type="text" value="1">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="cart__price">$ 30.00</td>
+                                        <td class="cart__close"><i class="fa fa-close"></i></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="cart__total" style="margin-bottom: 10%;background-color: #50697f;">
+                            <h6 class="checkout__title">Billing Details</h6>
+                            <div class="checkout__input">
+                                <p>Full Name<span>*</span></p>
+                                <input type="text" readonly>
+                            </div>
+                            <div class="checkout__input">
+                                <p>Country<span>*</span></p>
+                                <input type="text" readonly>
+                            </div>
+                            <div class="checkout__input">
+                                <p>Address<span>*</span></p>
+                                <input type="text" placeholder="Street Address" class="checkout__input__add" readonly>
+                            </div>
+                            <div class="checkout__input">
+                                <p>Town/City<span>*</span></p>
+                                <input type="text" readonly>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Phone<span>*</span></p>
+                                        <input type="text">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Email<span>*</span></p>
+                                        <input type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="checkout__input">
+                                <p>Invoice notes<span>*</span></p>
+                                <input type="text">
+                            </div>
+                            <div class="checkout__input">
+                                <p>Payment Intent notes<span>*</span></p>
+                                <input type="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 tm-block-col">
+                    <div class="tm-bg-primary-dark tm-block tm-block-product-categories" style="max-height: fit-content;">
+                        <div class="cart__total" style="margin-bottom: 10%;background-color: #50697f;">
+                            <h6 style="font-weight: bold;
+                            font-size: 1.5rem;
+                            display: flex;
+                            justify-content: center;">Deliver Info</h6>
+                            <img id="display_image" src="https://pbs.twimg.com/media/DHOeKUmVYAENpZF.jpg" alt=""/>
+                            <div style="    display: flex;
+                            justify-content: center;
+                            margin-top: 1rem;">
+                                <p style="font-weight: bold;
+                                font-size: 1.5rem;">Shipper</p>
+                            </div>
+                            <div style="margin-top: 1rem;">
+                                <p style="display: flex;
+                                justify-content: space-around;">Phone number:<span>0922192182</span></p>
+                            </div>
+                        </div>
+                        <div class="cart__total" style="margin-bottom: 10%;background-color: #50697f;">
+                            <form action="">
+                                <h6 style="    font-weight: bold;
+                                font-size: 1.5rem;
+                                display: flex;
+                                justify-content: center;">Delivery status</h6>
+                                <ul>
+                                    <li><input type="checkbox"> successful delivery</li>
+                                    <li><input type="checkbox"> failed fist time</li>
+                                    <li><input type="checkbox"> failed second time</li>
+                                    <li><input type="checkbox"> failed third time</li>
+                                    <li><input type="checkbox"> customer does not receive the item</li>
+                                </ul>
+                            </form>
+                        </div>
+                        <div class="cart__total" style="background-color: #50697f;">
+                            <h6>Cart total</h6>
+                            <ul>
+                                <li>Total <span>$ 169.50</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    </div>
+
+
+    <script>
+    </script>
+
+    <footer class="tm-footer row tm-mt-small">
+        <div class="col-12 font-weight-light">
+            <p class="text-center text-white mb-0 px-4 small">
+                Copyright &copy; <b>2018</b> All rights reserved.
+
+                Design: <a rel="nofollow noopener" href="https://templatemo.com" class="tm-footer-link">Template Mo</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <!-- https://jquery.com/download/ -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- https://getbootstrap.com/ -->
+    <script>
+        $(function () {
+            $(".tm-product-name").on("click", function () {
+                window.location.href = "edit-product";
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -44,6 +44,7 @@ public class AccountController {
 	    	Customer accountDetail = cusRepo.getCustomerByAccountId(currentuser.getId());
 	 		model.addAttribute("Ccustomer", accountDetail);
 	 		model.addAttribute("accObj", currentuser);
+	 		model.addAttribute("curentcusName",currentuser.getCustomer().getName());
 	 		
 	    }
 	    else {

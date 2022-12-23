@@ -166,4 +166,21 @@ public class InvoiceController {
 	    
         return "invoice-detail";
     }
+	@GetMapping("/invoice-details-id")
+	public String invoiceDetails(HttpSession session,Model model, HttpServletRequest request) {
+		Account currentAccount = (Account)session.getAttribute("currentuser");
+		//GlobalStaticValues.currentPage = "/invoice-details-id=" + invoiceId;
+		
+	    if(currentAccount != null) {
+	    	Customer currentCustomer = cusRepo.getCustomerByAccountId(currentAccount.getId());
+	    	
+	    	//Invoice selectedInvoice = invoiceRepo.getInvoiceById(invoiceId);
+	    	
+	    	return "invoice-delivery-details";
+	    }
+	    else {
+			return "redirect:/loginpage";
+		}
+	    
+    }
 }
