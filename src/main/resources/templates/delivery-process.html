@@ -89,7 +89,6 @@
                     <div class="header__top__right is-flex is-justify-content-right">
                         <div class="header__top__links " style="margin-block: auto;">
                             <a th:if= "${session.currentuser == null}"  th:href="@{loginpage}">Sign in</a>
-                            <a href="#">FAQs</a>
                         </div>
                         <div class="dropdown is-right is-hoverable" th:if= "${session.currentuser != null}" >
                             <div class="dropdown-trigger">
@@ -127,7 +126,7 @@
         <div class="row">
             <div class="col-lg-3 col-md-3">
                 <div class="header__logo">
-                    <a th:href="@{home}">                            <div class="logo-shop">
+                    <a th:href="@{delivery-home}">                            <div class="logo-shop">
                             Fool!st.
                         </div></a>
                 </div>
@@ -136,7 +135,7 @@
                 <nav class="header__menu mobile-menu">
                     <ul>
                         <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#">Orders you are delivering</a></li>
+                        <li><a th:href="@{delivery-process}">Orders you are delivering</a></li>
                         <li><a th:href="@{about}">About Us</a></li>
                         <li><a th:href="@{contact}">Contacts</a></li>
                     </ul>
