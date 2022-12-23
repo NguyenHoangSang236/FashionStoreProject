@@ -13,6 +13,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -36,9 +37,11 @@ public class ProductManagement {
     @Column(name = "import_date")
     private Date importDate;
     
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Column(name = "import_quantity")
     int importQuantity;
     
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Column(name = "out_of_stock_date", nullable = true)
     private Date outOfStockDate;
     

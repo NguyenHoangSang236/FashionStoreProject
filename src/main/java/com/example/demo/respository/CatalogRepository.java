@@ -33,4 +33,8 @@ public interface CatalogRepository extends JpaRepository<Catalog, Integer>{
     
     @Query(value = "select * from catalog where name = :catalogNameVal", nativeQuery = true)
     Catalog getCatalogByName(@Param("catalogNameVal") String catalogName);
+    
+    
+    @Query(value = "select * from catalog c join catalog_with_products cwp on c.id = cwp.catalog_id join products p on p.name = cwp.product_name where p.name = :nameVal group by c.name", nativeQuery = true)
+    List<Catalog> getCatalogsByProductName(@Param("nameVal") String productName);
 }

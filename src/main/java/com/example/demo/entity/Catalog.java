@@ -44,8 +44,7 @@ public class Catalog {
 	@JoinTable(
 			name = "catalog_with_products", 
 			joinColumns = @JoinColumn(name = "Catalog_ID"), 
-			inverseJoinColumns = {
-				@JoinColumn(name = "Product_Name")})
+			inverseJoinColumns = @JoinColumn(name = "Product_Name"))
 	private List<Product> products;
 	
 	public String catalogNameToString() {
@@ -95,7 +94,4 @@ public class Catalog {
     public void setProducts(List<Product> products) {
         this.products = products;
     }
-	
-	
-	
 }

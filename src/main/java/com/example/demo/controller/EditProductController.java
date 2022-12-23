@@ -59,17 +59,29 @@ public class EditProductController {
     public String editSpecificProduct(Model model, HttpSession session, @PathVariable("id") int selectedProductId) {
 		selectedProduct = productRepo.getProductById(selectedProductId);
 		List<Catalog> cateList = catalogRepo.getAllCatalogs();
+		List<Catalog> productCateList = catalogRepo.getCatalogsByProductName(selectedProduct.getName());
 		
+		boolean[] cateCheckedArr = new boolean[cateList.size()];
+		int count = 0;
+		
+		for(int i = 0; i < cateList.size(); i++) {
+			if(count < productCateList.size()) {
+				if(cateList.get(i).getName().equals(productCateList.get(count).getName())) {
+					cateCheckedArr[i] = true;
+					count++;
+				}
+			}
+			else {
+				cateCheckedArr[i] = false;
+			}
+		}
 		importDate = selectedProduct.getProductManagements().get(selectedProduct.getProductManagements().size() - 1).getImportDate();
+		System.out.println(importDate);
 
-    	//model.addAttribute("cateList", cateList);
+		model.addAttribute("cateCheckedArr", cateCheckedArr);
 		model.addAttribute("selectedProduct", selectedProduct);
-    	//model.addAttribute("cateList", cateList);
-		//model.addAttribute("selectedProduct", selectedProduct);
     	model.addAttribute("cateList", cateList);
     	model.addAttribute("importDate", importDate);
-    	model.addAttribute("selectedProduct", selectedProduct);
-    	//System.out.println(selectedProduct.getCatalogs().get(1));
 		
         return "edit-specific-product";
     }
