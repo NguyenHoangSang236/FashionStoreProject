@@ -109,14 +109,15 @@ public class EditProductController {
 	
 	
 	@GetMapping("/edit-product-name={name}__color={color}")
-    public String editProduct(Model model, HttpSession session, @PathVariable("id") int selectedProductId) {
+    public String editProduct(Model model, HttpSession session, @PathVariable("name") String selectedProductName,@PathVariable("color") String selectedProductColor ) {
 //		Product product = productRepo.getProductById(selectedProductId);
 //		selectedProduct = productService.getProductInfo(product, "specific product mode");
 //		selectedProduct = productService.getProductInfo(product, "specific product mode");
 //		
 //		model.addAttribute("selectedProduct", selectedProduct);
+		selectedProductInfo = productRepo.
 		
-        return "edit-product";
+        return "edit-general-product";
     }
 
 	
