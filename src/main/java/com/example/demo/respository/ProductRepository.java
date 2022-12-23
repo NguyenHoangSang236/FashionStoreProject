@@ -102,4 +102,9 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	
 	@Query(value = "select available_quantity from products where id = :idVal", nativeQuery = true)
 	int getAvailableQuantityById(@Param("idVal") int id);
+	
+	
+	@Modifying
+	@Query(value = "update catalog_with_products set catalog_id = :resultId where catalog_id = :idVal and productName = :nameVal", nativeQuery = true)
+	void updateCatalogWithProductsByProductNameAndCatalogId(@Param("resultId") int resultId, @Param("idVal") int catalogId, @Param("nameVal") String productName);
 }

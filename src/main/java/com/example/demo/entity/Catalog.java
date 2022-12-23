@@ -40,17 +40,13 @@ public class Catalog {
 	@Column(name = "Name")
 	private String name;
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinTable(
 			name = "catalog_with_products", 
 			joinColumns = @JoinColumn(name = "Catalog_ID"), 
 			inverseJoinColumns = @JoinColumn(name = "Product_Name"))
 	private List<Product> products;
 	
-	public String catalogNameToString() {
-	    return ValueRender.linkToString(this.name);
-	}
-
 	
 	public Catalog() {}
 	
@@ -65,6 +61,12 @@ public class Catalog {
         this.name = name;
     }
 
+    
+    public String catalogNameToString() {
+    	return ValueRender.linkToString(this.name);
+    }
+    
+    
 
     public int getId() {
         return id;

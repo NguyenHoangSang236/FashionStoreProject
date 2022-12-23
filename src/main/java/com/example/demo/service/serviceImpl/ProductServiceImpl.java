@@ -29,7 +29,7 @@ import com.example.demo.entity.dto.ProductInfo;
 import com.example.demo.respository.CartRemoveRepository;
 import com.example.demo.respository.CatalogRepository;
 import com.example.demo.respository.CommentRepository;
-import com.example.demo.respository.ProductFilterRepository;
+import com.example.demo.respository.ProductCustomQueryRepository;
 import com.example.demo.respository.ProductManagementRepository;
 import com.example.demo.respository.ProductRemoveRepository;
 import com.example.demo.respository.ProductRepository;
@@ -51,6 +51,9 @@ public class ProductServiceImpl implements ProductService{
     
     @Autowired
     private ProductManagementRepository productMngRepo;
+    
+    @Autowired
+    private ProductCustomQueryRepository productCustomQueryRepo;
     
     private List<Product> products;
     
@@ -112,7 +115,7 @@ public class ProductServiceImpl implements ProductService{
 
 	@Override
 	public Page<Product> findByFilters(Pageable pageable, String query) {
-		ProductFilterRepository filterRepo = new ProductFilterRepository();
+		ProductCustomQueryRepository filterRepo = new ProductCustomQueryRepository();
 		
 		List<Object[]> objList = filterRepo.getFilteredProducts(query);
 		products = new ArrayList<Product>();
@@ -239,6 +242,10 @@ public class ProductServiceImpl implements ProductService{
 			
 			productRepo.save(product);
 			productMngRepo.save(newProductMng);
+		}
+		
+		for(int i = 0; i < catalogList.size(); i++) {
+			productCustomQueryRepo.insertCatalogWithProducts(catalogList.get(i).getId(), newProductInfo.getName());
 		}
 	}
 	

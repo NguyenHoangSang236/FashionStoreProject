@@ -1,13 +1,13 @@
 package com.example.demo.entity.dto;
 
-public class ProductManagement {
+public class ProductManagementDto {
     private int[] idList;
     private String newCatalogName;
     
     
-    public ProductManagement() {}
+    public ProductManagementDto() {}
 
-	public ProductManagement(int[] idList, String newCatalogName) {
+	public ProductManagementDto(int[] idList, String newCatalogName) {
 		super();
 		this.idList = idList;
 		this.newCatalogName = newCatalogName;

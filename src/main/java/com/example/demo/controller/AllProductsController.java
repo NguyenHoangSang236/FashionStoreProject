@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.Catalog;
 import com.example.demo.entity.Product;
-import com.example.demo.entity.dto.ProductManagement;
+import com.example.demo.entity.dto.ProductManagementDto;
 import com.example.demo.respository.CatalogRepository;
 import com.example.demo.respository.ProductRepository;
 import com.example.demo.service.CatalogService;
@@ -34,7 +34,7 @@ public class AllProductsController {
    @Autowired
    ProductService productService;
 
-   ProductManagement productManagement = new ProductManagement();
+   ProductManagementDto productManagement = new ProductManagementDto();
    String announcement = "";
    
     
@@ -54,7 +54,7 @@ public class AllProductsController {
     
     
     @PostMapping("/allproduct")
-    public String delete(Model model, @ModelAttribute("selectedProduct") ProductManagement productMng, @RequestParam(value="action") String action) {     
+    public String delete(Model model, @ModelAttribute("selectedProduct") ProductManagementDto productMng, @RequestParam(value="action") String action) {     
     	if(action.equals("delete selected products")) {
             for(int i = 0; i < productMng.getIdList().length; i++) {
                 productService.deleteProduct(productMng.getIdList()[i]);

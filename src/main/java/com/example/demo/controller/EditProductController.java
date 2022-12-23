@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
@@ -23,8 +24,10 @@ import com.example.demo.entity.Account;
 import com.example.demo.entity.Catalog;
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.Product;
+import com.example.demo.entity.ProductManagement;
 import com.example.demo.entity.dto.ProductInfo;
 import com.example.demo.respository.CatalogRepository;
+import com.example.demo.respository.ProductManagementRepository;
 import com.example.demo.respository.ProductRepository;
 import com.example.demo.service.ProductService;
 import com.example.demo.util.ValueRender;
@@ -41,6 +44,9 @@ public class EditProductController {
 	@Autowired
 	CatalogRepository catalogRepo;
 	
+	@Autowired
+	ProductManagementRepository productMngRepo;
+	
 	ProductInfo selectedProductInfo = new ProductInfo();
 	Product selectedProduct = new Product();
 	Account currentAccount;
@@ -48,16 +54,9 @@ public class EditProductController {
 	Date importDate;
 	
 	
-	public String renderEditProduct(Model model, HttpSession session) {
-		currentAccount = (Account)session.getAttribute("currentuser");
-		
-		return "";
-	}
-	
-	
-	@GetMapping("/edit-product-id={id}")
-    public String editSpecificProduct(Model model, HttpSession session, @PathVariable("id") int selectedProductId) {
+	public String renderEditProduct(Model model, HttpSession session, int selectedProductId) {
 		selectedProduct = productRepo.getProductById(selectedProductId);
+		currentAccount = (Account)session.getAttribute("currentuser");
 		List<Catalog> cateList = catalogRepo.getAllCatalogs();
 		List<Catalog> productCateList = catalogRepo.getCatalogsByProductName(selectedProduct.getName());
 		
@@ -75,7 +74,7 @@ public class EditProductController {
 				cateCheckedArr[i] = false;
 			}
 		}
-		importDate = selectedProduct.getProductManagements().get(selectedProduct.getProductManagements().size() - 1).getImportDate();
+		importDate = productMngRepo.getLastestProductManagementInfoByProductId(selectedProductId).getImportDate();
 		System.out.println(importDate);
 
 		model.addAttribute("cateCheckedArr", cateCheckedArr);
@@ -84,17 +83,46 @@ public class EditProductController {
     	model.addAttribute("importDate", importDate);
 		
         return "edit-specific-product";
+	}
+	
+	
+	@GetMapping("/edit-product-id={id}")
+    public String editSpecificProduct(Model model, HttpSession session, @PathVariable("id") int selectedProductId) {
+		return renderEditProduct(model, session, selectedProductId);
     }
 	
 	
 	@PostMapping("/edit-product-id={id}")
-    public String editSpecificProductEvent(Model model, HttpSession session, @PathVariable("id") int selectedProductId, @RequestAttribute("selectedProduct") Product modelSelectedProduct) {
-		List<Catalog> cateList = catalogRepo.getAllCatalogs();
-
-    	model.addAttribute("cateList", cateList);
-		model.addAttribute("selectedProduct", selectedProduct);
+    public String editSpecificProductEvent(Model model, HttpSession session, 
+    		@PathVariable("id") int selectedProductId, 
+    		@ModelAttribute("selectedProduct") Product modelSelectedProduct,
+    		@ModelAttribute("importDate") Date modelImportDate) {
+		System.out.println(modelSelectedProduct.getName());
+		System.out.println(modelSelectedProduct.getBrand());
+		System.out.println(modelSelectedProduct.getColor());
+		System.out.println(modelSelectedProduct.getPrice());
+		System.out.println(modelSelectedProduct.getOriginalPrice());
+		System.out.println(modelSelectedProduct.getDescription());
+		System.out.println(modelSelectedProduct.getAvailableQuantity());
+		System.out.println(modelSelectedProduct.getSize());
+		System.out.println(modelImportDate);
 		
-        return "edit-specific-product";
+		String modelSelectedProductSize = modelSelectedProduct.getSize();
+		String modelSelectedProductColor = modelSelectedProduct.getColor();
+		String modelSelectedProductName = modelSelectedProduct.getName();
+		Product testProduct = productRepo.getProductDetailsByNameAndColorAndSize(modelSelectedProductName, modelSelectedProductColor, modelSelectedProductSize);
+		
+		if(testProduct == null) {
+			modelSelectedProduct.setId(selectedProductId);
+			ProductManagement pm = productMngRepo.getLastestProductManagementInfoByProductId(selectedProductId);
+			pm.setImportDate(modelImportDate);
+			
+			productMngRepo.save(pm);
+			productRepo.save(modelSelectedProduct);
+			System.out.println("saved !!");
+		}
+		
+		return renderEditProduct(model, session, selectedProductId);
     }
 	
 	
