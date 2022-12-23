@@ -97,30 +97,12 @@ public class EditProductController {
     		@PathVariable("id") int selectedProductId, 
     		@ModelAttribute("selectedProduct") Product modelSelectedProduct,
     		@ModelAttribute("importDate") Date modelImportDate) {
-		System.out.println(modelSelectedProduct.getName());
-		System.out.println(modelSelectedProduct.getBrand());
-		System.out.println(modelSelectedProduct.getColor());
-		System.out.println(modelSelectedProduct.getPrice());
-		System.out.println(modelSelectedProduct.getOriginalPrice());
-		System.out.println(modelSelectedProduct.getDescription());
-		System.out.println(modelSelectedProduct.getAvailableQuantity());
-		System.out.println(modelSelectedProduct.getSize());
-		System.out.println(modelImportDate);
+		modelSelectedProduct.setId(selectedProductId);
+		ProductManagement pm = productMngRepo.getLastestProductManagementInfoByProductId(selectedProductId);
+		pm.setImportDate(modelImportDate);
 		
-		String modelSelectedProductSize = modelSelectedProduct.getSize();
-		String modelSelectedProductColor = modelSelectedProduct.getColor();
-		String modelSelectedProductName = modelSelectedProduct.getName();
-		Product testProduct = productRepo.getProductDetailsByNameAndColorAndSize(modelSelectedProductName, modelSelectedProductColor, modelSelectedProductSize);
-		
-		if(testProduct == null) {
-			modelSelectedProduct.setId(selectedProductId);
-			ProductManagement pm = productMngRepo.getLastestProductManagementInfoByProductId(selectedProductId);
-			pm.setImportDate(modelImportDate);
-			
-			productMngRepo.save(pm);
-			productRepo.save(modelSelectedProduct);
-			System.out.println("saved !!");
-		}
+		productRepo.save(modelSelectedProduct);
+		productMngRepo.save(pm);
 		
 		return renderEditProduct(model, session, selectedProductId);
     }
@@ -137,4 +119,40 @@ public class EditProductController {
         return "edit-product";
     }
 
+	
+//	@PostMapping("/edit-product-id={id}")
+//    public String editSpecificProductEvent(Model model, HttpSession session, 
+//    		@PathVariable("id") int selectedProductId, 
+//    		@ModelAttribute("selectedProduct") Product modelSelectedProduct,
+//    		@ModelAttribute("importDate") Date modelImportDate) {
+//		System.out.println(modelSelectedProduct.getName());
+//		System.out.println(modelSelectedProduct.getBrand());
+//		System.out.println(modelSelectedProduct.getColor());
+//		System.out.println(modelSelectedProduct.getPrice());
+//		System.out.println(modelSelectedProduct.getOriginalPrice());
+//		System.out.println(modelSelectedProduct.getDescription());
+//		System.out.println(modelSelectedProduct.getAvailableQuantity());
+//		System.out.println(modelSelectedProduct.getSize());
+//		System.out.println(modelImportDate);
+//		
+//		String modelSelectedProductSize = modelSelectedProduct.getSize();
+//		String modelSelectedProductColor = modelSelectedProduct.getColor();
+//		String modelSelectedProductName = modelSelectedProduct.getName();
+//		Product testProduct = productRepo.getProductDetailsByNameAndColorAndSize(modelSelectedProductName, modelSelectedProductColor, modelSelectedProductSize);
+//		
+//		if(testProduct != null) {
+////			for(int i = 0; i < modelSelectedProduct.getCatalogs().size(); i++) {
+////				System.out.println(modelSelectedProduct.getCatalogs().get(i).getName());
+////			}
+//			modelSelectedProduct.setId(selectedProductId);
+//			ProductManagement pm = productMngRepo.getLastestProductManagementInfoByProductId(selectedProductId);
+//			pm.setImportDate(modelImportDate);
+//			
+//			productRepo.save(modelSelectedProduct);
+//			productMngRepo.save(pm);
+//			System.out.println("saved !!");
+//		}
+//		
+//		return renderEditProduct(model, session, selectedProductId);
+//    }
 }

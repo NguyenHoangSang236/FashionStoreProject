@@ -107,4 +107,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	@Modifying
 	@Query(value = "update catalog_with_products set catalog_id = :resultId where catalog_id = :idVal and productName = :nameVal", nativeQuery = true)
 	void updateCatalogWithProductsByProductNameAndCatalogId(@Param("resultId") int resultId, @Param("idVal") int catalogId, @Param("nameVal") String productName);
+	
+//	@Modifying
+//	@Query(value = "update catalog_with_products set productName = :resultId where catalog_id = :idVal and productName = :nameVal", nativeQuery = true)
+//	void updateCatalogWithProductsByProductNameAndCatalogId(@Param("resultId") int resultId, @Param("idVal") int catalogId, @Param("nameVal") String productName);
 }
