@@ -1,5 +1,8 @@
 package com.example.demo.controller;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -75,7 +78,7 @@ public class EditProductController {
 			}
 		}
 		importDate = productMngRepo.getLastestProductManagementInfoByProductId(selectedProductId).getImportDate();
-		System.out.println(importDate);
+		//System.out.println(importDate);
 
 		model.addAttribute("cateCheckedArr", cateCheckedArr);
 		model.addAttribute("selectedProduct", selectedProduct);
@@ -96,9 +99,20 @@ public class EditProductController {
     public String editSpecificProductEvent(Model model, HttpSession session, 
     		@PathVariable("id") int selectedProductId, 
     		@ModelAttribute("selectedProduct") Product modelSelectedProduct,
-    		@ModelAttribute("importDate") Date modelImportDate) {
+    		@ModelAttribute("importDate") Date modelImportDate, 
+    		@ModelAttribute("editDate") String editImportDate){
+		//System.out.println(editImportDate);
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd"); 
+		Date startDate;
+		try {
+		    startDate = df.parse(editImportDate);
+		    modelImportDate = startDate;
+		} catch (ParseException e) {
+		    e.printStackTrace();
+		}
 		modelSelectedProduct.setId(selectedProductId);
 		ProductManagement pm = productMngRepo.getLastestProductManagementInfoByProductId(selectedProductId);
+		System.out.println(modelImportDate);
 		pm.setImportDate(modelImportDate);
 		
 		productRepo.save(modelSelectedProduct);

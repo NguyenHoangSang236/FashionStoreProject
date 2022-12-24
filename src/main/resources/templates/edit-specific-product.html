@@ -150,8 +150,8 @@
                 </div>
                 <div class="form-group mb-3">
                   <label for="import_date">Import Date</label>
-                  <input id="import_date" name="import_date" th:field="${importDate}" type="date"
-                    class="form-control validate" data-large-mode="true" th:value="${importDate}"/>
+                  <input id="import_date" name="import_date"  type="date"
+                    class="form-control validate" data-large-mode="true" th:attr="name='editDate'"  />
                 </div>
                 <div class="form-group mb-3" id="detailProductModifier">
                   <div class="title-detail mb-3 is-flex is-justify-content-space-between">
