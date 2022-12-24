@@ -136,7 +136,7 @@ public class InvoiceController {
 	    	
 	    	customerInvoiceHistoryList = invoiceRepo.getPaymentHistoryByCustomerId(currentCustomer.getId());
 	    	
-		    model.addAttribute("curentcusImage",currentCustomer.getImage());
+		    model.addAttribute("curentcusImage",currentCustomer.convertByteImamgeToBase64String());
 		    model.addAttribute("curentcusName",currentCustomer.getName());
 		    model.addAttribute("invoiceHistoryList",customerInvoiceHistoryList);
 	    }

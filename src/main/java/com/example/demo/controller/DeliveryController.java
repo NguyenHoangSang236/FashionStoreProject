@@ -147,11 +147,13 @@ public class DeliveryController {
 	
 	
 	@PostMapping("/delivery-report-info-id={deliveryId}")
-	public String confirmDeliveryStatus(HttpSession session, Model model, HttpServletRequest request, @PathVariable("deliveryId") int deliveryId, @ModelAttribute("deliveryReportInfo") DeliveryReportInfo modelDeliRpInfo) {
+	public String confirmDeliveryStatus(HttpSession session, Model model, HttpServletRequest request, @PathVariable("deliveryId") int deliveryId, 
+			@ModelAttribute("deliveryReportInfo") DeliveryReportInfo modelDeliRpInfo, 
+			@ModelAttribute("evidenceImage") byte[] evidenceImage) {
 		String shipperComment = modelDeliRpInfo.getDelivery().getAdditionalShipperComment();
 		String deliveryStatus;
 		String invoiceDeliStatus;
-		
+		System.out.println(evidenceImage);
 		if(shipperComment.equals("successful delivery")){
 			deliveryStatus = "success";
 			invoiceDeliStatus = "shipped";

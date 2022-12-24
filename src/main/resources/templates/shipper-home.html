@@ -61,11 +61,6 @@
                 </ul>
             </div>
         </div>
-        <div class="offcanvas__nav__option">
-            <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
-            <a href="#"><img src="img/icon/heart.png" alt=""></a>
-            <a th:href="@{/cart-of-customer-account-id={id} (id = session.currentuser.id)}"><img src="img/icon/newcart.png" alt=""> <span>0</span></a>
-        </div>
         <div id="mobile-menu-wrap"></div>
         <div class="offcanvas__text">
             <p></p>
@@ -106,9 +101,6 @@
                                     <a class="dropdown-item" th:href="@{showaccount}">
                                     My Profile
                                     </a>
-                                    <a class="dropdown-item" th:href="@{invoice-history}">
-                                        Purchase history
-                                    </a>
                                     <a class="dropdown-item" th:href="@{logout}">
                                         Logout
                                     </a>
@@ -132,10 +124,8 @@
                 <div class="col-lg-6 col-md-6">
                     <nav class="header__menu mobile-menu">
                         <ul>
-                            <li class="active"><a href="#">Home</a></li>
+                            <li class="active"><a th:href="@{delivery-home}">Home</a></li>
                             <li><a th:href="@{delivery-process}">Orders you are delivering</a></li>
-                            <li><a th:href="@{about}">About Us</a></li>
-                            <li><a th:href="@{contact}">Contacts</a></li>
                         </ul>
                     </nav>
                 </div>

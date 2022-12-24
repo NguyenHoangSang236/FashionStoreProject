@@ -42,7 +42,6 @@
     <div class="offcanvas__option">
         <div class="offcanvas__links">
             <a th:href="@{loginpage}">Sign in</a>
-            <a href="#">FAQs</a>
         </div>
         <div class="offcanvas__top__hover">
             <span>
@@ -53,20 +52,8 @@
                 <li>
                     <a href="#">My Profile</a>
                 </li>
-                <li>
-                    <a href="#">Edit Account</a>
-                </li>
-                <li>
-                    <a href="#">Wallet</a>
-                </li>
             </ul>
         </div>
-    </div>
-    <div class="offcanvas__nav__option">
-        <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
-        <a href="#"><img src="img/icon/heart.png" alt=""></a>
-        <a th:href="@{/cart-of-customer-account-id={id} (id = session.currentuser.id)}"><img src="img/icon/newcart.png" alt=""> <span>0</span></a>
-        <div class="formattedPrice()">$0.00</div>
     </div>
     <div id="mobile-menu-wrap"></div>
     <div class="offcanvas__text">
@@ -92,7 +79,7 @@
                         </div>
                         <div class="dropdown is-right is-hoverable" th:if= "${session.currentuser != null}" >
                             <div class="dropdown-trigger">
-                              <div class="button dropdown-profile" aria-haspopup="true" aria-controls="dropdown-menu">
+                            <div class="button dropdown-profile" aria-haspopup="true" aria-controls="dropdown-menu">
                                 <span>  
                                     <img height="30" width="30"  class="has-img-is-rouned"
                                     th:src="${curentcusImage}">
@@ -101,20 +88,17 @@
                                 <span class="icon is-small has-text-white">
                                     <i class="arrow_carrot-down"></i>
                                 </span>
-                              </div>
+                            </div>
                             </div>
                             <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                              <div class="dropdown-content">
+                            <div class="dropdown-content">
                                 <a class="dropdown-item" th:href="@{showaccount}">
-                                  My Profile
+                                My Profile
                                 </a>
-                                <a class="dropdown-item" th:href="@{invoice-history}">
-                                    Purchase history
-                                  </a>
                                 <a class="dropdown-item" th:href="@{logout}">
                                     Logout
-                                  </a>
-                              </div>
+                                </a>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -134,10 +118,8 @@
             <div class="col-lg-6 col-md-6">
                 <nav class="header__menu mobile-menu">
                     <ul>
-                        <li class="active"><a href="#">Home</a></li>
-                        <li><a th:href="@{delivery-process}">Orders you are delivering</a></li>
-                        <li><a th:href="@{about}">About Us</a></li>
-                        <li><a th:href="@{contact}">Contacts</a></li>
+                        <li ><a th:href="@{delivery-home}">Home</a></li>
+                        <li class="active"><a th:href="@{delivery-process}">Orders you are delivering</a></li>
                     </ul>
                 </nav>
             </div>

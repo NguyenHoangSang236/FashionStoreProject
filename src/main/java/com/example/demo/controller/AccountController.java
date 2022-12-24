@@ -46,6 +46,8 @@ public class AccountController {
 	 		model.addAttribute("Ccustomer", accountDetail);
 	 		model.addAttribute("accObj", currentuser);
 	 		model.addAttribute("curentcusName",currentuser.getCustomer().getName());
+	 		model.addAttribute("curentcusImage",currentuser.getCustomer().convertByteImamgeToBase64String());
+	 		
 	    }
 	    else {
 	    	return "redirect:/loginpage";
@@ -89,6 +91,9 @@ public class AccountController {
 //		System.out.println("..." + ValueRender.formattedInputString(accountObj.getCustomer().getName()) + "...");
 		
 		accRepo.save(accountEdited);
+		GlobalStaticValues.message = "Edited personal information";
+    	String message = GlobalStaticValues.message;
+    	model.addAttribute("message", message);
 		
 		return showMyProfileForm(session, model, request);
 	}
