@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.demo.entity.Account;
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.Invoice;
+import com.example.demo.entity.Staff;
 import com.example.demo.entity.dto.CheckoutInfo;
 import com.example.demo.respository.AccountRepository;
 import com.example.demo.respository.CustomerRepository;
 import com.example.demo.respository.InvoiceRepository;
+import com.example.demo.respository.StaffRepository;
 import com.example.demo.util.GlobalStaticValues;
 import com.example.demo.util.ValueRender;
 
@@ -35,6 +37,9 @@ public class InvoiceController {
 	
 	@Autowired
 	InvoiceRepository invoiceRepo;
+	
+	@Autowired
+	StaffRepository staffRepo;
 	
 	String message = "";
 	List<Invoice> mngInvoiceList;
@@ -150,15 +155,24 @@ public class InvoiceController {
 		
 	    if(currentAccount != null) {
 	    	Customer currentCustomer = cusRepo.getCustomerByAccountId(currentAccount.getId());
+	    	Staff currentShipper = staffRepo.getStaffByAccountId(currentAccount.getId());
 	    	
-	    	Invoice selectedInvoice = invoiceRepo.getInvoiceById(invoiceId);
-	    	
-	    	System.out.println(selectedInvoice.getInvoicesWithProducts().get(0).formattedProductTotalPrice());
-	    	
-	    	model.addAttribute("selectedInvoice", selectedInvoice);
-	    	model.addAttribute("productsList", selectedInvoice.getInvoicesWithProducts());
-		    model.addAttribute("curentcusImage",currentCustomer.convertByteImamgeToBase64String());
-		    model.addAttribute("curentcusName",currentCustomer.getName());
+	    	if(currentCustomer != null) {
+	    		Invoice selectedInvoice = invoiceRepo.getInvoiceById(invoiceId);
+	    		
+	    		model.addAttribute("selectedInvoice", selectedInvoice);
+	    		model.addAttribute("productsList", selectedInvoice.getInvoicesWithProducts());
+	    		model.addAttribute("curentcusImage",currentCustomer.getImage());
+	    		model.addAttribute("curentcusName",currentCustomer.getName());
+	    	}
+	    	else {
+	    		Invoice selectedInvoice = invoiceRepo.getInvoiceById(invoiceId);
+	    		
+	    		model.addAttribute("selectedInvoice", selectedInvoice);
+	    		model.addAttribute("productsList", selectedInvoice.getInvoicesWithProducts());
+	    		model.addAttribute("curentcusImage", currentShipper.getImage());
+	    		model.addAttribute("curentcusName", currentShipper.getName());
+			}
 	    }
 	    else {
 			return "redirect:/loginpage";

@@ -251,11 +251,11 @@ public class ProductServiceImpl implements ProductService{
 	
 	
 	@Override
-	public ProductInfo getProductInfo(Product product, String mode) {
+	public ProductInfo getProductInfo(String productName, String color) {
 		ProductInfo productInfo = new ProductInfo();
-		List<Product> productList = productRepo.getProductListByNameAndColor(product.getName(), product.getColor());
-		int productMngSize = product.getProductManagements().size();
+		List<Product> productList = productRepo.getProductListByNameAndColor(productName, color);
 		
+		int[] productIdArr = new int[productList.size()]; 
 		int[] productAvaiQuantArr = new int[productList.size()];
 		String[] productCatalogArr = new String[productList.size()];
 		String[] productSizeArr = new String[productList.size()];
@@ -263,33 +263,26 @@ public class ProductServiceImpl implements ProductService{
 		for(int i = 0; i < productList.size(); i++) {
 			productAvaiQuantArr[i] = productList.get(i).getAvailableQuantity();
 			productSizeArr[i] = productList.get(i).getSize();
+			productIdArr[i] = productList.get(i).getId();
 		}
 		
-		for(int i = 0; i < product.getCatalogs().size(); i++) {
-			productCatalogArr[i] = product.getCatalogs().get(i).getName();
+		for(int i = 0; i < productList.get(0).getCatalogs().size(); i++) {
+			productCatalogArr[i] = productList.get(0).getCatalogs().get(i).getName();
 		}
 		
-		if(mode.equals("specific product mode")) {
-			if(productMngSize > 0) {
-				productInfo.setImportDate(product.getProductManagements().get(productMngSize - 1).getImportDate());
-			}
-			else productInfo.setImportDate(product.getProductManagements().get(productMngSize).getImportDate());
- 		}
-		
-		productInfo.setEditMode(mode);
-		productInfo.setName(product.getName());
-		productInfo.setBrand(product.getBrand());
-		productInfo.setColor(product.getColor());
-		productInfo.setSellingPrice(product.getPrice());
-		productInfo.setOriginalPrice(product.getOriginalPrice());
-		productInfo.setDescription(product.getDescription());
+		productInfo.setName(productList.get(0).getName());
+		productInfo.setBrand(productList.get(0).getBrand());
+		productInfo.setColor(productList.get(0).getColor());
+		productInfo.setSellingPrice(productList.get(0).getPrice());
+		productInfo.setOriginalPrice(productList.get(0).getOriginalPrice());
+		productInfo.setDescription(productList.get(0).getDescription());
 		productInfo.setAvailableQuantityList(productAvaiQuantArr);
 		productInfo.setSizeList(productSizeArr);
 		productInfo.setCatalogList(productCatalogArr);
-		productInfo.setImage1Url(product.getImage1());
-		productInfo.setImage2Url(product.getImage2());
-		productInfo.setImage3Url(product.getImage3());
-		productInfo.setImage4Url(product.getImage4());
+		productInfo.setImage1Url(productList.get(0).getImage1());
+		productInfo.setImage2Url(productList.get(0).getImage2());
+		productInfo.setImage3Url(productList.get(0).getImage3());
+		productInfo.setImage4Url(productList.get(0).getImage4());
 		
 		return productInfo;
 	}
@@ -308,6 +301,87 @@ public class ProductServiceImpl implements ProductService{
 		product.setDescription(productInfo.getDescription());
 		product.getProductManagements().get(product.getProductManagements().size() - 1).setImportDate(productInfo.getImportDate());
 		
-		return null;
+		return product;
+	}
+
+
+	@Override
+	public void editGeneralProduct(ProductInfo initProductInfo, ProductInfo modelProductInfo) {
+		if(initProductInfo.getSizeList().length >= modelProductInfo.getSizeList().length) {
+			for(int i = 0; i < initProductInfo.getIdList().length; i++) {
+				Product product = new Product();
+				
+				product.setId(modelProductInfo.getIdList()[i]);
+				product.setAvailableQuantity(modelProductInfo.getAvailableQuantityList()[i]);
+				product.setName(modelProductInfo.getName());
+				product.setBrand(modelProductInfo.getBrand());
+				product.setColor(modelProductInfo.getColor());
+				product.setPrice(modelProductInfo.getSellingPrice());
+				product.setOriginalPrice(modelProductInfo.getOriginalPrice());
+				product.setDescription(modelProductInfo.getDescription());
+				product.setSize(modelProductInfo.getSizeList()[i]);
+				product.setImage1(modelProductInfo.getImage1Url());
+				product.setImage2(modelProductInfo.getImage2Url());
+				product.setImage3(modelProductInfo.getImage3Url());
+				product.setImage4(modelProductInfo.getImage4Url());
+				
+				productRepo.save(product);
+			}
+			
+			productRemoveRepo.deleteProductFromCatalogWithProducts(modelProductInfo.getName());
+			
+			for(int i = 0; i < modelProductInfo.getCatalogList().length; i++) {
+				int catalogId = catalogRepo.getCatalogIdByName(modelProductInfo.getCatalogList()[i]);
+				productCustomQueryRepo.insertCatalogWithProducts(catalogId, modelProductInfo.getName());
+			}
+		}
+		else if(initProductInfo.getSizeList().length < modelProductInfo.getSizeList().length) {
+			for(int i = 0; i < initProductInfo.getSizeList().length; i++) {
+				Product product = new Product();
+				
+				product.setId(modelProductInfo.getIdList()[i]);
+				product.setAvailableQuantity(modelProductInfo.getAvailableQuantityList()[i]);
+				product.setName(modelProductInfo.getName());
+				product.setBrand(modelProductInfo.getBrand());
+				product.setColor(modelProductInfo.getColor());
+				product.setPrice(modelProductInfo.getSellingPrice());
+				product.setOriginalPrice(modelProductInfo.getOriginalPrice());
+				product.setDescription(modelProductInfo.getDescription());
+				product.setSize(modelProductInfo.getSizeList()[i]);
+				product.setImage1(modelProductInfo.getImage1Url());
+				product.setImage2(modelProductInfo.getImage2Url());
+				product.setImage3(modelProductInfo.getImage3Url());
+				product.setImage4(modelProductInfo.getImage4Url());
+				
+				productRepo.save(product);
+			}
+			
+			productRemoveRepo.deleteProductFromCatalogWithProducts(modelProductInfo.getName());
+			
+			for(int i = 0; i < modelProductInfo.getCatalogList().length; i++) {
+				int catalogId = catalogRepo.getCatalogIdByName(modelProductInfo.getCatalogList()[i]);
+				productCustomQueryRepo.insertCatalogWithProducts(catalogId, modelProductInfo.getName());
+			}
+			
+			for(int i = initProductInfo.getSizeList().length; i < modelProductInfo.getSizeList().length; i++) {
+				int id = productRepo.getLastestProductId();
+				Product product = new Product();
+				
+				product.setId(id);
+				product.setName(modelProductInfo.getName());
+				product.setBrand(modelProductInfo.getBrand());
+				product.setColor(modelProductInfo.getColor());
+				product.setPrice(modelProductInfo.getSellingPrice());
+				product.setOriginalPrice(modelProductInfo.getOriginalPrice());
+				product.setDescription(modelProductInfo.getDescription());
+				product.setSize(modelProductInfo.getSizeList()[i]);
+				product.setImage1(modelProductInfo.getImage1Url());
+				product.setImage2(modelProductInfo.getImage2Url());
+				product.setImage3(modelProductInfo.getImage3Url());
+				product.setImage4(modelProductInfo.getImage4Url());
+				
+				productRepo.save(product);
+			}
+		}
 	}
 }

@@ -24,6 +24,7 @@ public interface ProductService {
     void deleteProduct(int productId);
     void ratingProduct(int ratingPoint, String name, String color);
     void addNewProduct(ProductInfo newProductInfo);
-    ProductInfo getProductInfo(Product product, String mode);
+    void editGeneralProduct(ProductInfo initProductInfo, ProductInfo modelProductInfo);
+    ProductInfo getProductInfo(String productName, String color);
     Product getProduct(int id, ProductInfo productInfo);
 }

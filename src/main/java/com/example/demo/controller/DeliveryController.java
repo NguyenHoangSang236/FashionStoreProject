@@ -76,7 +76,9 @@ public class DeliveryController {
 				model.addAttribute("invoiceList", invoiceList);
 			    model.addAttribute("curentcusImage",currrentShipper.convertByteImamgeToBase64String());
 			    model.addAttribute("curentcusName",currrentShipper.getName());
-			    return "shipper-home";
+			    if(page.contains("delivery-process")) {
+			    	return "delivery-process";
+			    } else return "shipper-home";
 			}
 			else {
 				GlobalStaticValues.currentPage = page;
