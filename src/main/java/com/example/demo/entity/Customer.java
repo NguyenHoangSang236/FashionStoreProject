@@ -102,6 +102,10 @@ public class Customer {
     	return "data:image/jpeg;base64," + ValueRender.convertByteToString(this.image);
     }
     
+    public String getFullAddress() {
+    	return this.address + ", " + this.city + ", " + this.country;
+    }
+    
 
     public int getId() {
         return id;

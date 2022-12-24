@@ -75,7 +75,7 @@ public class EditProductController {
 			}
 		}
 		importDate = productMngRepo.getLastestProductManagementInfoByProductId(selectedProductId).getImportDate();
-		System.out.println(importDate);
+//		System.out.println(importDate);
 
 		model.addAttribute("cateCheckedArr", cateCheckedArr);
 		model.addAttribute("selectedProduct", selectedProduct);
@@ -97,6 +97,7 @@ public class EditProductController {
     		@PathVariable("id") int selectedProductId, 
     		@ModelAttribute("selectedProduct") Product modelSelectedProduct,
     		@ModelAttribute("importDate") Date modelImportDate) {
+		System.out.println(modelImportDate);
 		modelSelectedProduct.setId(selectedProductId);
 		ProductManagement pm = productMngRepo.getLastestProductManagementInfoByProductId(selectedProductId);
 		pm.setImportDate(modelImportDate);
@@ -115,7 +116,7 @@ public class EditProductController {
 //		selectedProduct = productService.getProductInfo(product, "specific product mode");
 //		
 //		model.addAttribute("selectedProduct", selectedProduct);
-		selectedProductInfo = productRepo.
+//		selectedProductInfo = productRepo.
 		
         return "edit-general-product";
     }
