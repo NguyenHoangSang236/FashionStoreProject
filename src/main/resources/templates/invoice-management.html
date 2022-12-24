@@ -118,7 +118,7 @@
                           <button th:case="true" class="fa-solid fa-xmark tm-product-delete-link" type="submit" name="action" th:value="'refuse invoice ' + ${invoice.id}" ></button>
                         </td>                        
                         <td > 
-                          <button class="fa-solid fa-magnifying-glass tm-product-delete-link" type="submit" name="action" value="'view invoice ' + ${invoice.id}" ></button>
+                          <a th:href="@{/invoice-details-id={invoiceId} (invoiceId = ${invoice.id})}" class="fa-solid fa-magnifying-glass tm-product-delete-link"></a>
                         </td>
                         <!--<td > 
                           <button class="fa-solid fa-pen-to-square tm-product-delete-link" type="submit" name="action" value="edit this invoice" ></button>

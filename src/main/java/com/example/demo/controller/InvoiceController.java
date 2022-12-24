@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.Account;
 import com.example.demo.entity.Customer;
+import com.example.demo.entity.Delivery;
 import com.example.demo.entity.Invoice;
 import com.example.demo.entity.Staff;
 import com.example.demo.entity.dto.CheckoutInfo;
@@ -155,7 +156,7 @@ public class InvoiceController {
 		
 	    if(currentAccount != null) {
 	    	Customer currentCustomer = cusRepo.getCustomerByAccountId(currentAccount.getId());
-	    	Staff currentShipper = staffRepo.getStaffByAccountId(currentAccount.getId());
+	    	Staff currentStaff = staffRepo.getStaffByAccountId(currentAccount.getId());
 	    	
 	    	if(currentCustomer != null) {
 	    		Invoice selectedInvoice = invoiceRepo.getInvoiceById(invoiceId);
@@ -164,37 +165,45 @@ public class InvoiceController {
 	    		model.addAttribute("productsList", selectedInvoice.getInvoicesWithProducts());
 	    		model.addAttribute("curentcusImage",currentCustomer.getImage());
 	    		model.addAttribute("curentcusName",currentCustomer.getName());
+	    		
+	    		return "invoice-detail";
 	    	}
 	    	else {
 	    		Invoice selectedInvoice = invoiceRepo.getInvoiceById(invoiceId);
+	    		Delivery delivery = selectedInvoice.getDelivery();
 	    		
-	    		model.addAttribute("selectedInvoice", selectedInvoice);
+	    		model.addAttribute("delivery", delivery);
 	    		model.addAttribute("productsList", selectedInvoice.getInvoicesWithProducts());
-	    		model.addAttribute("curentcusImage", currentShipper.getImage());
-	    		model.addAttribute("curentcusName", currentShipper.getName());
+	    		model.addAttribute("curentcusImage", currentStaff.getImage());
+	    		model.addAttribute("curentcusName", currentStaff.getName());
+	    		model.addAttribute("selectedInvoice", selectedInvoice);
+	    		
+	    		
+	    		return "invoice-delivery-details";
 			}
 	    }
 	    else {
 			return "redirect:/loginpage";
 		}
-	    
-        return "invoice-detail";
     }
-	@GetMapping("/invoice-details-id")
-	public String invoiceDetails(HttpSession session,Model model, HttpServletRequest request) {
-		Account currentAccount = (Account)session.getAttribute("currentuser");
-		//GlobalStaticValues.currentPage = "/invoice-details-id=" + invoiceId;
-		
-	    if(currentAccount != null) {
-	    	Customer currentCustomer = cusRepo.getCustomerByAccountId(currentAccount.getId());
-	    	
-	    	//Invoice selectedInvoice = invoiceRepo.getInvoiceById(invoiceId);
-	    	
-	    	return "invoice-delivery-details";
-	    }
-	    else {
-			return "redirect:/loginpage";
-		}
-	    
-    }
+	
+	
+	
+//	@GetMapping("/invoice-details-id={id}")
+//	public String invoiceDetailsAdmin(HttpSession session,Model model, HttpServletRequest request, @PathVariable("id") int invoiceId) {
+//		Account currentAccount = (Account)session.getAttribute("currentuser");
+//		//GlobalStaticValues.currentPage = "/invoice-details-id=" + invoiceId;
+//		
+//	    if(currentAccount != null) {
+//	    	Customer currentCustomer = cusRepo.getCustomerByAccountId(currentAccount.getId());
+//	    	
+//	    	//Invoice selectedInvoice = invoiceRepo.getInvoiceById(invoiceId);
+//	    	
+//	    	return "invoice-delivery-details";
+//	    }
+//	    else {
+//			return "redirect:/loginpage";
+//		}
+//	    
+//    }
 }

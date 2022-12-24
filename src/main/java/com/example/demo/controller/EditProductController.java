@@ -92,15 +92,6 @@ public class EditProductController {
 			GlobalStaticValues.currentPage = "/edit-product-id=" + selectedProduct.getId();
 			return "redirect:/loginpage";
 		}
-		importDate = productMngRepo.getLastestProductManagementInfoByProductId(selectedProductId).getImportDate();
-		//System.out.println(importDate);
-
-		model.addAttribute("cateCheckedArr", cateCheckedArr);
-		model.addAttribute("selectedProduct", selectedProduct);
-    	model.addAttribute("cateList", cateList);
-    	model.addAttribute("importDate", importDate);
-		
-        return "edit-specific-product";
 	}
 	
 	
