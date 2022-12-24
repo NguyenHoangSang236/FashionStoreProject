@@ -109,7 +109,7 @@ public class CheckOutController {
 	    	if(GlobalStaticValues.customerSelectedCartIdList.length > 0) {
 	    		Customer currentCustomer = customerRepo.getCustomerByAccountId(currentAccount.getId());
 	    		
-	    		model.addAttribute("curentcusImage",currentCustomer.getImage());
+	    		model.addAttribute("curentcusImage",currentCustomer.convertByteImamgeToBase64String());
 	    		model.addAttribute("curentcusName",currentCustomer.getName());
 	    		
 	    		cartList = ValueRender.getCartListFromIdList(GlobalStaticValues.customerSelectedCartIdList, cartRepo);
@@ -134,9 +134,9 @@ public class CheckOutController {
     
     
     @PostMapping("/checkout")
-    public String placeOrderSubmit(HttpSession session, Model model, HttpServletRequest request,@ModelAttribute("checkoutInfo") CheckoutInfo modelCheckoutInfo, @RequestParam(value="action") String action) {
+    public String placeOrderSubmit(HttpSession session, Model model, HttpServletRequest request,@ModelAttribute("checkoutInfo") CheckoutInfo modelCheckoutInfo, @RequestParam(required=false,value="action") String action) {
     	//if click at Place Order button --> COD payment
-    	if(action.equals("place order")) {
+    	if(action != null) {
     		checkoutInfo = new CheckoutInfo(GlobalStaticValues.currentCustomer.getName(), modelCheckoutInfo.getCountry(), modelCheckoutInfo.getAddress(), modelCheckoutInfo.getCity(), GlobalStaticValues.currentCustomer.getPhoneNumber(), GlobalStaticValues.currentCustomer.getEmail(), modelCheckoutInfo.getInvoiceNote(), modelCheckoutInfo.getPaymentIntentNote());
     		
     		Account currentAccount = (Account)session.getAttribute("currentuser");
@@ -145,7 +145,7 @@ public class CheckOutController {
     	    if(currentAccount != null) {
     		    Customer currentCustomer = customerRepo.getCustomerByAccountId(currentAccount.getId());
     		    
-    		    model.addAttribute("curentcusImage",currentCustomer.getImage());
+    		    model.addAttribute("curentcusImage",currentCustomer.convertByteImamgeToBase64String());
     		    model.addAttribute("curentcusName",currentCustomer.getName());
     	    
                 cartList = ValueRender.getCartListFromIdList(GlobalStaticValues.customerSelectedCartIdList, cartRepo);
@@ -156,8 +156,11 @@ public class CheckOutController {
                 model.addAttribute("cartList", cartList);
                 model.addAttribute("checkoutInfo", checkoutInfo);
                 model.addAttribute("currentCustomer", GlobalStaticValues.currentCustomer);
-            	
-                return "checkout";
+                
+                GlobalStaticValues.message = "Thank you for buying";
+		    	String message = GlobalStaticValues.message;
+	        	model.addAttribute("message", message);
+                return "index";
     	    }
     	    else {
     	    	GlobalStaticValues.currentPage = "/checkout";
@@ -185,8 +188,11 @@ public class CheckOutController {
 	            model.addAttribute("cartList", cartList);
 	            model.addAttribute("checkoutInfo", checkoutInfo);
 	            model.addAttribute("currentCustomer", GlobalStaticValues.currentCustomer);
-	            	
-	            return "checkout";
+	            
+	            GlobalStaticValues.message = "Thank you for buying";
+		    	String message = GlobalStaticValues.message;
+	        	model.addAttribute("message", message);
+	            return "index";
 	        }
 	        else {
     	    	GlobalStaticValues.currentPage = "/checkout";

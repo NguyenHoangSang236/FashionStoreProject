@@ -37,11 +37,10 @@
         <div class="offcanvas__option">
             <div class="offcanvas__links">
                 <a th:href="@{loginpage}">Sign in</a>
-                <a href="#">FAQs</a>
             </div>
             <div class="offcanvas__top__hover">
                 <span>
-                    <img src="img/user.png" alt="">
+                    <img src="img/user.png" alt=""> 
                     <i class="arrow_carrot-down"></i>
                 </span>
                 <ul>
@@ -58,11 +57,7 @@
             </div>
         </div>
         <div class="offcanvas__nav__option">
-            <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
-            <a href="#"><img src="img/icon/heart.png" alt=""></a>
-            <a th:href="@{/cart-of-customer-account-id={id} (id = session.currentuser.id)}"><img
-                    src="img/icon/newcart.png" alt=""> <span>0</span></a>
-            <div class="formattedPrice()">$0.00</div>
+            <a th:href="@{/cart-of-customer-account-id={id} (id = session.currentuser.id)}"><img src="img/icon/newcart.png" alt=""> <span>0</span></a>
         </div>
         <div id="mobile-menu-wrap"></div>
         <div class="offcanvas__text">
@@ -84,33 +79,33 @@
                     <div class="col-lg-6 col-md-5">
                         <div class="header__top__right is-flex is-justify-content-right">
                             <div class="header__top__links " style="margin-block: auto;">
-                                <a th:if="${session.currentuser == null}" th:href="@{loginpage}">Sign in</a>
-                                <a href="#">FAQs</a>
+                                <a th:if= "${session.currentuser == null}"  th:href="@{loginpage}">Sign in</a>
                             </div>
-                            <div class="dropdown is-right is-hoverable" th:if="${session.currentuser != null}">
+                            <div class="dropdown is-right is-hoverable" th:if= "${session.currentuser != null}" >
                                 <div class="dropdown-trigger">
-                                    <div class="button dropdown-profile" aria-haspopup="true"
-                                        aria-controls="dropdown-menu">
-                                        <span>
-                                            <img height="30" width="30" class="has-img-is-rouned"
-                                                th:src="${curentcusImage}">
-                                            <span th:if="${session.currentuser != null}" class="has-text-white"
-                                                th:text="${curentcusName}"></span>
-                                        </span>
-                                        <span class="icon is-small has-text-white">
-                                            <i class="arrow_carrot-down"></i>
-                                        </span>
-                                    </div>
+                                  <div class="button dropdown-profile" aria-haspopup="true" aria-controls="dropdown-menu">
+                                    <span>  
+                                        <img height="30" width="30"  class="has-img-is-rouned"
+                                        th:src="${curentcusImage}">
+                                        <span th:if= "${session.currentuser != null}" class="has-text-white" th:text="${curentcusName}" ></span>  
+                                    </span>
+                                    <span class="icon is-small has-text-white">
+                                        <i class="arrow_carrot-down"></i>
+                                    </span>
+                                  </div>
                                 </div>
                                 <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                                    <div class="dropdown-content">
-                                        <a class="dropdown-item" th:href="@{showaccount}">
-                                            My Profile
-                                        </a>
-                                        <a class="dropdown-item" th:href="@{logout}">
-                                            Logout
-                                        </a>
-                                    </div>
+                                  <div class="dropdown-content">
+                                    <a class="dropdown-item" th:href="@{showaccount}">
+                                      My Profile
+                                    </a>
+                                    <a class="dropdown-item" th:href="@{invoice-history}">
+                                        Purchase history
+                                      </a>
+                                    <a class="dropdown-item" th:href="@{logout}">
+                                        Logout
+                                      </a>
+                                  </div>
                                 </div>
                             </div>
                         </div>
@@ -122,40 +117,26 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo">
-                        <a th:href="@{home}">
-                            <div class="logo-shop">
+                        <a th:href="@{home}">                            <div class="logo-shop">
                                 Fool!st.
-                            </div>
-                        </a>
+                            </div></a>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <nav class="header__menu mobile-menu">
                         <ul>
-                            <li class="active"><a th:href="@{home}">Home</a></li>
-                            <li><a th:href="@{shopproduct}">Shop</a></li>
-                            <li><a href="#">Pages</a>
-                                <ul class="dropdown">
-                                    <li><a th:href="@{about}">About Us</a></li>
-                                    <li><a th:href="@{shop-details}">Shop Details</a></li>
-                                    <li><a th:href="@{cart}">Shopping Cart</a></li>
-                                    <li><a th:href="@{checkout}">Check Out</a></li>
-                                    <li><a href="./blog-details.html">Blog Details</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="./blog.html">Blog</a></li>
+                            <li><a th:href="@{home}">Home</a></li>
+                            <li class="active"><a th:href="@{shopproduct}">Shop</a></li>
+                            <li><a th:href="@{about}">About Us</a></li>
                             <li><a th:href="@{contact}">Contacts</a></li>
                         </ul>
                     </nav>
                 </div>
                 <div class="col-lg-3 col-md-3">
-                    <div class="header__nav__option">
-                        <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
-                        <a href="#"><img src="img/icon/heart.png" alt=""></a>
-                        <a th:if="${session.currentuser != null}"
-                            th:href="@{/cart-of-customer-account-id={id} (id = ${session.currentuser.id})}"><img
-                                src="img/icon/newcart.png" alt=""> <span>0</span></a>
-                        <div class="formattedPrice()">$0.00</div>
+                    <div class="header__nav__option" style="display: flex;
+                    justify-content: center;">
+                        <a th:if= "${session.currentuser != null}"
+                        th:href="@{/cart-of-customer-account-id={id} (id = ${session.currentuser.id})}"><img src="img/icon/newcart.png" alt=""> <span>0</span></a>
                     </div>
                 </div>
             </div>
@@ -172,7 +153,7 @@
                     <div class="breadcrumb__text">
                         <h4>Shop</h4>
                         <div class="breadcrumb__links">
-                            <a href="./index.html">Home</a>
+                            <a th:href="@{home}">Home</a>
                             <span>Shop</span>
                         </div>
                     </div>
@@ -292,15 +273,6 @@
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="shop__product__option__left">
                                     <p th:text="|There are ${totalResult} products|"></p>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                <div class="shop__product__option__right">
-                                    <p>Sort by Price:</p>
-                                    <select>
-                                        <option value="">Low To High</option>
-                                        <option value="">High To Low</option>
-                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -466,7 +438,6 @@
             
                 for (var i = 1; i <= 6; i++) {
                     document.getElementById("checkbox" + i).checked = false;
-                    console.log('text2',document.getElementById("checkbox" + i).checked)
                 }
                 checkbox.checked = true;
             

@@ -78,7 +78,7 @@ public class DetailsController {
                 
                 if(customer != null) {
                     String cusName = customer.getName();
-                    String cusImgUrl = new String(customer.getImage(), StandardCharsets.UTF_8);
+                    String cusImgUrl = customer.convertByteImamgeToBase64String();
                     String content = comments.get(i).getContent();
                     
                     commentList.add(new ProductComment(cusName, content, cusImgUrl));
@@ -94,7 +94,7 @@ public class DetailsController {
 	        newComment.setCustomer(currentCustomer);
 	        newComment.setProduct(productDetail);
 		    
-		    model.addAttribute("curentcusImage",currentCustomer.getImage());
+		    model.addAttribute("curentcusImage",currentCustomer.convertByteImamgeToBase64String());
 		    model.addAttribute("curentcusName",currentCustomer.getName());
 		    model.addAttribute("userid", currentCustomer.getId());
 	    }
@@ -149,6 +149,8 @@ public class DetailsController {
     	else if(action.equals("logged in - add to cart")) {
         	if(modelShopDetails.getProductSize() == null) {
             	GlobalStaticValues.message = "Please choose a size first !!";
+            	String message = GlobalStaticValues.message;
+	        	model.addAttribute("message", message);
             }
         	else {
         		int id = cartRepo.getLastestCartId() + 1;
@@ -171,9 +173,13 @@ public class DetailsController {
         			Customer customer = customerRepo.getCustomerByAccountId(currentAcount.getId());
         			Cart newCart = new Cart(id, quantity + modelShopDetails.getQuantity(), 0, 0, customer, product);
         			cartRepo.save(newCart);
+        			GlobalStaticValues.message = "Thank you for buying";
+			    	String message = GlobalStaticValues.message;
+		        	model.addAttribute("message", message);
         		} else {
         			GlobalStaticValues.message = "Oops! We are having only " + String.valueOf(availableQuantity) + " available products";
-        			System.out.println(GlobalStaticValues.message);
+        			String message = GlobalStaticValues.message;
+		        	model.addAttribute("message", message);
         		}
         	}
         }
