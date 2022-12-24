@@ -161,35 +161,31 @@
 
     <!-- Blog Section Begin -->
     <section class="blog spad">
-        <form >
+        <form method="post">
             <table class="table" style="width: 85%; margin-right: auto; margin-left: auto;">
                 <thead style="background-color: #343a40;">
                     <tr>  
                         <th scope="col" class="has-text-white">ID</th>
                         <th scope="col" class="has-text-white">Invoice Date</th>
                         <th scope="col" class="has-text-white">Payment Status</th>
-                        <th scope="col" class="has-text-white">Currency</th>
                         <th scope="col" class="has-text-white">Payment Method</th>
-                        <th scope="col" class="has-text-white">Delivery Status</th>
+                        <th scope="col" class="has-text-white">Currency</th>
                         <th scope="col" class="has-text-white">Description</th>
                         <th scope="col" class="has-text-white">Intent Content</th>
-                        <th scope="col" class="has-text-white">Acceptance Status</th>
                         <th scope="col" class="has-text-white">Total Price</th>
                         <th scope="col" class="has-text-white">&nbsp;</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr >
-                        <td > </td>
-                        <td > </td>
-                        <td > </td>
-                        <td  class="tm-product-name"> </td>
-                        <td  class="tm-product-name"> </td>
-                        <td  class="tm-product-name"> </td>
-                        <td > </td>
-                        <td > </td>
-                        <td > </td>
-                        <td class="tm-product-name"> </td>
+                    <tr th:each="invoice, invoiceListState: ${invoiceList}">
+                        <td th:text="${invoice.id}"> </td>
+                        <td th:text="${invoice.formattedInvoiceDate()}"> </td>
+                        <td th:text="(${invoice.paymentStatus} == 1)? 'Payed' : 'Not Payed'"> </td>
+                        <td th:text="${invoice.currency.toUpperCase()}" class="tm-product-name"> </td>
+                        <td th:text="${invoice.paymentMethod.toUpperCase()}" class="tm-product-name"> </td>
+                        <td th:text="(${invoice.description} != null)? ${invoice.description} : '...'"> </td>
+                        <td th:text="(${invoice.intent} != null)? ${invoice.intent} : '...'"> </td>
+                        <td th:text="${invoice.formattedTotalPrice()}" class="tm-product-name"> </td>
                         <td > 
                             <a href="#" style="height: 2rem;width: 2rem;">
                                 <i class="fa-solid fa-magnifying-glass"></i>                            

@@ -63,7 +63,7 @@ public class AccountManagement {
 				accRepo.save(selectedAccount);
 			}
 			
-			List<Customer> AllCustomers = cusRepo.getCustomerById();
+			List<Customer> AllCustomers = cusRepo.getAllCustomers();
 			List<Account> AllAcount = accRepo.getAllCustomerAccounts();
 			
 			model.addAttribute("ListCustomer", AllCustomers);

@@ -31,119 +31,119 @@
 </head>
 
 <body>
-<!-- Page Preloder -->
-<div id="preloder">
-    <div class="loader"></div>
-</div>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
 
-<!-- Offcanvas Menu Begin -->
-<div class="offcanvas-menu-overlay"></div>
-<div class="offcanvas-menu-wrapper">
-    <div class="offcanvas__option">
-        <div class="offcanvas__links">
-            <a th:href="@{loginpage}">Sign in</a>
+    <!-- Offcanvas Menu Begin -->
+    <div class="offcanvas-menu-overlay"></div>
+    <div class="offcanvas-menu-wrapper">
+        <div class="offcanvas__option">
+            <div class="offcanvas__links">
+                <a th:href="@{loginpage}">Sign in</a>
+            </div>
+            <div class="offcanvas__top__hover">
+                <span>
+                    <img src="img/user.png" alt=""> 
+                    <i class="arrow_carrot-down"></i>
+                </span>
+                <ul>
+                    <li>
+                        <a href="#">My Profile</a>
+                    </li>
+                    <li>
+                        <a href="#">Edit Account</a>
+                    </li>
+                    <li>
+                        <a href="#">Wallet</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="offcanvas__top__hover">
-            <span>
-                <img src="img/user.png" alt=""> 
-                <i class="arrow_carrot-down"></i>
-            </span>
-            <ul>
-                <li>
-                    <a href="#">My Profile</a>
-                </li>
-                <li>
-                    <a href="#">Edit Account</a>
-                </li>
-                <li>
-                    <a href="#">Wallet</a>
-                </li>
-            </ul>
+        <div class="offcanvas__nav__option">
+            <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
+            <a href="#"><img src="img/icon/heart.png" alt=""></a>
+            <a th:href="@{/cart-of-customer-account-id={id} (id = session.currentuser.id)}"><img src="img/icon/newcart.png" alt=""> <span>0</span></a>
+        </div>
+        <div id="mobile-menu-wrap"></div>
+        <div class="offcanvas__text">
+            <p></p>
         </div>
     </div>
-    <div class="offcanvas__nav__option">
-        <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
-        <a href="#"><img src="img/icon/heart.png" alt=""></a>
-        <a th:href="@{/cart-of-customer-account-id={id} (id = session.currentuser.id)}"><img src="img/icon/newcart.png" alt=""> <span>0</span></a>
-    </div>
-    <div id="mobile-menu-wrap"></div>
-    <div class="offcanvas__text">
-        <p></p>
-    </div>
-</div>
-<!-- Offcanvas Menu End -->
+    <!-- Offcanvas Menu End -->
 
-<!-- Header Section Begin -->
-<header class="header">
-    <div class="header__top">
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="header__top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-7">
+                        <div class="header__top__left">
+                            <p></p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-5">
+                        <div class="header__top__right is-flex is-justify-content-right">
+                            <div class="header__top__links " style="margin-block: auto;">
+                                <a th:if= "${session.currentuser == null}"  th:href="@{loginpage}">Sign in</a>
+                            </div>
+                            <div class="dropdown is-right is-hoverable" th:if= "${session.currentuser != null}" >
+                                <div class="dropdown-trigger">
+                                <div class="button dropdown-profile" aria-haspopup="true" aria-controls="dropdown-menu">
+                                    <span>  
+                                        <img height="30" width="30"  class="has-img-is-rouned"
+                                        th:src="${curentcusImage}">
+                                        <span th:if= "${session.currentuser != null}" class="has-text-white" th:text="${curentcusName}" ></span>  
+                                    </span>
+                                    <span class="icon is-small has-text-white">
+                                        <i class="arrow_carrot-down"></i>
+                                    </span>
+                                </div>
+                                </div>
+                                <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                <div class="dropdown-content">
+                                    <a class="dropdown-item" th:href="@{showaccount}">
+                                    My Profile
+                                    </a>
+                                    <a class="dropdown-item" th:href="@{invoice-history}">
+                                        Purchase history
+                                    </a>
+                                    <a class="dropdown-item" th:href="@{logout}">
+                                        Logout
+                                    </a>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 col-md-7">
-                    <div class="header__top__left">
-                        <p></p>
+                <div class="col-lg-3 col-md-3">
+                    <div class="header__logo">
+                        <a th:href="@{delivery-home}">                            <div class="logo-shop">
+                                Fool!st.
+                            </div></a>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-5">
-                    <div class="header__top__right is-flex is-justify-content-right">
-                        <div class="header__top__links " style="margin-block: auto;">
-                            <a th:if= "${session.currentuser == null}"  th:href="@{loginpage}">Sign in</a>
-                        </div>
-                        <div class="dropdown is-right is-hoverable" th:if= "${session.currentuser != null}" >
-                            <div class="dropdown-trigger">
-                              <div class="button dropdown-profile" aria-haspopup="true" aria-controls="dropdown-menu">
-                                <span>  
-                                    <img height="30" width="30"  class="has-img-is-rouned"
-                                    th:src="${curentcusImage}">
-                                    <span th:if= "${session.currentuser != null}" class="has-text-white" th:text="${curentcusName}" ></span>  
-                                </span>
-                                <span class="icon is-small has-text-white">
-                                    <i class="arrow_carrot-down"></i>
-                                </span>
-                              </div>
-                            </div>
-                            <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                              <div class="dropdown-content">
-                                <a class="dropdown-item" th:href="@{showaccount}">
-                                  My Profile
-                                </a>
-                                <a class="dropdown-item" th:href="@{invoice-history}">
-                                    Purchase history
-                                  </a>
-                                <a class="dropdown-item" th:href="@{logout}">
-                                    Logout
-                                  </a>
-                              </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-lg-6 col-md-6">
+                    <nav class="header__menu mobile-menu">
+                        <ul>
+                            <li class="active"><a href="#">Home</a></li>
+                            <li><a th:href="@{delivery-process}">Orders you are delivering</a></li>
+                            <li><a th:href="@{about}">About Us</a></li>
+                            <li><a th:href="@{contact}">Contacts</a></li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
+            <div class="canvas__open"><i class="fa fa-bars"></i></div>
         </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3 col-md-3">
-                <div class="header__logo">
-                    <a th:href="@{delivery-home}">                            <div class="logo-shop">
-                            Fool!st.
-                        </div></a>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6">
-                <nav class="header__menu mobile-menu">
-                    <ul>
-                        <li class="active"><a href="#">Home</a></li>
-                        <li><a th:href="@{delivery-process}">Orders you are delivering</a></li>
-                        <li><a th:href="@{about}">About Us</a></li>
-                        <li><a th:href="@{contact}">Contacts</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-        <div class="canvas__open"><i class="fa fa-bars"></i></div>
-    </div>
-</header>
-<!-- Header Section End -->
+    </header>
+    <!-- Header Section End -->
 
     <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-blog set-bg" data-setbg="img/breadcrumb-bg.jpg">
@@ -159,40 +159,39 @@
 
     <!-- Blog Section Begin -->
     <section class="blog spad">
-        <form >
+        <form method="post">
             <table class="table" style="width: 85%; margin-right: auto; margin-left: auto;">
                 <thead style="background-color: #343a40;">
                     <tr>  
                         <th scope="col" class="has-text-white">ID</th>
                         <th scope="col" class="has-text-white">Invoice Date</th>
                         <th scope="col" class="has-text-white">Payment Status</th>
-                        <th scope="col" class="has-text-white">Currency</th>
                         <th scope="col" class="has-text-white">Payment Method</th>
-                        <th scope="col" class="has-text-white">Delivery Status</th>
+                        <th scope="col" class="has-text-white">Currency</th>
                         <th scope="col" class="has-text-white">Description</th>
                         <th scope="col" class="has-text-white">Intent Content</th>
-                        <th scope="col" class="has-text-white">Acceptance Status</th>
                         <th scope="col" class="has-text-white">Total Price</th>
-                        <th scope="col" class="has-text-white">Choose order</th>
+                        <th scope="col" class="has-text-white">Choose invoice</th>
                         <th scope="col" class="has-text-white">&nbsp;</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr >
-                        <td > </td>
-                        <td > </td>
-                        <td > </td>
-                        <td  class="tm-product-name"> </td>
-                        <td  class="tm-product-name"> </td>
-                        <td  class="tm-product-name"> </td>
-                        <td > </td>
-                        <td > </td>
-                        <td > </td>
-                        <td class="tm-product-name"> </td>
+                    <tr th:each="invoice, invoiceListState: ${invoiceList}">
+                        <td th:text="${invoice.id}"> </td>
+                        <td th:text="${invoice.formattedInvoiceDate()}"> </td>
+                        <td th:text="(${invoice.paymentStatus} == 1)? 'Payed' : 'Not Payed'"> </td>
+                        <td th:text="${invoice.currency.toUpperCase()}" class="tm-product-name"> </td>
+                        <td th:text="${invoice.paymentMethod.toUpperCase()}" class="tm-product-name"> </td>
+                        <td th:text="(${invoice.description} != null)? ${invoice.description} : '...'"> </td>
+                        <td th:text="(${invoice.intent} != null)? ${invoice.intent} : '...'"> </td>
+                        <td th:text="${invoice.formattedTotalPrice()}" class="tm-product-name"> </td>
                         <td>
-                            <a href="#" style="height: 2rem;width: 2rem;margin-left: 1rem;">
-                                <i class="fa-solid fa-check"></i>                            
-                            </a>
+                            <button type="submit" name="action" th:value="${invoice.id}" 
+                                    style="border:none; background-color:transparent">
+                                <a style="height: 2rem;width: 2rem;margin-left: 1rem;">
+                                    <i class="fa-solid fa-check"></i>                            
+                                </a>
+                            </button>
                         </td>
                         <td > 
                             <a href="#" style="height: 2rem;width: 2rem;">
