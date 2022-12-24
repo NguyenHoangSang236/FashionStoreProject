@@ -101,7 +101,7 @@
               <h2 class="tm-block-title d-inline-block">Edit Product</h2>
             </div>
             <div class="col-12">
-              <a href="#" >Move to edit general products</a>
+              <a href="#">Move to edit general products</a>
             </div>
           </div>
           <form action="" method="post" th:object="${selectedProduct}" class="tm-edit-product-form">
@@ -109,7 +109,8 @@
               <div class="col-xl-6 col-lg-6 col-md-12">
                 <div class="form-group mb-3">
                   <label for="name">Product Name</label>
-                  <input id="name" name="name" type="text" th:field="*{name}" readonly class="form-control validate" required />
+                  <input id="name" name="name" type="text" th:field="*{name}" readonly class="form-control validate"
+                    required />
                 </div>
                 <div class="form-group mb-3">
                   <label for="brand">Brand</label>
@@ -125,8 +126,8 @@
                   <div class="form-group mb-3 col-xs-12 col-sm-6">
                     <label for="price">Selling Price
                     </label>
-                    <input id="price" name="price" type="text" th:field="*{price}" readonly class="form-control validate"
-                      data-large-mode="true" />
+                    <input id="price" name="price" type="text" th:field="*{price}" readonly
+                      class="form-control validate" data-large-mode="true" />
                   </div>
                   <div class="form-group mb-3 col-xs-12 col-sm-6">
                     <label for="original_price">Original Price
@@ -143,7 +144,8 @@
                   <label for="category">Category</label>
                   <ul>
                     <li th:each="category, categoriesListState: ${cateList}" style="white-space:nowrap; ">
-                      <input type="checkbox" th:value="${category.name}" th:checked="${cateCheckedArr[__categoriesListState.index__]}" disabled/>
+                      <input type="checkbox" th:value="${category.name}"
+                        th:checked="${cateCheckedArr[__categoriesListState.index__]}" disabled />
                       <label th:text="${category.name}"></label>
                     </li>
                   </ul>
@@ -151,9 +153,9 @@
                 <div class="form-group mb-3">
                   <label for="import_date">Import Date</label>
                   <input id="import_date" name="import_date" th:field="${importDate}" type="date"
-                    class="form-control validate" data-large-mode="true" th:value="${importDate}"/>
+                    class="form-control validate" data-large-mode="true" th:value="${importDate}" />
                 </div>
-                <div class="form-group mb-3" id="detailProductModifier">
+                <!-- <div class="form-group mb-3" id="detailProductModifier">
                   <div class="title-detail mb-3 is-flex is-justify-content-space-between">
                     <div class="is-flex">
                       <label style="display: none" for="stock"></label>
@@ -172,72 +174,103 @@
                       </div>
                     </div>
                   </div>
+                </div> -->
+
+                <div class="form-group mb-3" id="detailProductModifier">
+                  <div class="title-detail mb-3 is-flex is-justify-content-space-between">
+                    <div class="is-flex">
+                      <label style="display: none" for="stock"></label>
+                      <div class="has-text-white has-margin-block-auto">
+                        Product's size and available quantity
+                      </div>
+                      <div class="button ml-1 is-small is-rounded" id="getDetailProduct">Confirm</div>
+                    </div>
+                    <div class="button is-small is-rounded" id="addDetailProduct">Add new size</div>
+                  </div>
+                  <div class="data-detail">
+                    <div class="is-flex mb-2 detail-products">
+                      <input class="input product-quantity mr-2" type="number" placeholder="Quantity">
+                      <div class="select mr-2">
+                        <select class="product-size" style="width: 6rem;">
+                          <option value="S">S</option>
+                          <option value="M">M</option>
+                          <option value="L">L</option>
+                          <option value="XL">XL</option>
+                          <option value="33">33</option>
+                          <option value="34">34</option>
+                          <option value="35">35</option>
+                          <option value="40">40</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <input id="sizeList" type="text" th:field="*{sizeList}" class="form-control validate" required hidden />
-              <input id="quantityList" type="text" th:field="*{availableQuantityList}" class="form-control validate" required hidden />
-              </div>
-              <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
-                <div class="tm-product-img-dummy mx-auto" style="margin-top: 2rem; width: 25rem;
+              <input id="quantityList" type="text" th:field="*{availableQuantityList}" class="form-control validate"
+                required hidden />
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
+              <div class="tm-product-img-dummy mx-auto" style="margin-top: 2rem; width: 25rem;
                 height: 15rem; ">
-                  <img id="linkImage1_preview"
-                    src="https://ps.w.org/image-comparison/assets/icon-256x256.png?rev=2587037" style="width: 25rem;
+                <img id="linkImage1_preview" src="https://ps.w.org/image-comparison/assets/icon-256x256.png?rev=2587037"
+                  style="width: 25rem;
                   height: 15rem;
                   object-fit: contain;">
-                </div>
-                <div class="custom-file mt-3 mb-3">
-                  <input id="linkImage1" th:field="*{image1}" readonly name="name" type="text" class="form-control validate"
-                    required style="margin-bottom:1rem;" />
-                  <input id="fileInput1" type="file" style="display:none;" onclick="upload_image(this.id)" />
-                  <input type="button" class="btn btn-primary btn-block mx-auto" value="UPLOAD PRODUCT IMAGE"
-                    onclick="upload_link_image('linkImage1')" />
-                </div>
-                <div class="tm-product-img-dummy mx-auto" style="margin-top: 3rem; width: 25rem;
-                height: 15rem;">
-                  <img id="linkImage2_preview"
-                    src="https://ps.w.org/image-comparison/assets/icon-256x256.png?rev=2587037" style="width: 25rem;
-                  height: 15rem;
-                  object-fit: contain;">
-                </div>
-                <div class="custom-file mt-3 mb-3">
-                  <input id="linkImage2" th:field="*{image2}" readonly name="name" type="text" class="form-control validate"
-                    required style="margin-bottom:1rem;" />
-                  <input id="fileInput2" type="file" style="display:none;" onclick="upload_image(this.id)"/>
-                  <input type="button" class="btn btn-primary btn-block mx-auto" value="UPLOAD PRODUCT IMAGE"
-                    onclick="upload_link_image('linkImage2')" />
-                </div>
-                <div class="tm-product-img-dummy mx-auto" style="margin-top: 3rem; width: 25rem;
-                height: 15rem;">
-                  <img id="linkImage3_preview"
-                    src="https://ps.w.org/image-comparison/assets/icon-256x256.png?rev=2587037" style="width: 25rem;
-                  height: 15rem;
-                  object-fit: contain;">
-                </div>
-                <div class="custom-file mt-3 mb-3">
-                  <input id="linkImage3" th:field="*{image3}" readonly name="name" type="text" class="form-control validate"
-                    required style="margin-bottom:1rem;" />
-                  <input id="fileInput3" type="file" style="display:none;" onclick="upload_image(this.id)" />
-                  <input type="button" class="btn btn-primary btn-block mx-auto" value="UPLOAD PRODUCT IMAGE"
-                    onclick="upload_link_image('linkImage3')" />
-                </div>
-                <div class="tm-product-img-dummy mx-auto" style="margin-top: 3rem; width: 25rem;
-                height: 15rem;">
-                  <img id="linkImage4_preview"
-                    src="https://ps.w.org/image-comparison/assets/icon-256x256.png?rev=2587037" style="width: 25rem;
-                  height: 15rem;
-                  object-fit: contain;">
-                </div>
-                <div class="custom-file mt-3 mb-3">
-                  <input id="linkImage4" th:field="*{image4}" readonly name="name" type="text" class="form-control validate"
-                    required style="margin-bottom:1rem;" />
-                  <input id="fileInput4" type="file" style="display:none;" onclick="upload_image(this.id)" />
-                  <input type="button" class="btn btn-primary btn-block mx-auto" value="UPLOAD PRODUCT IMAGE"
-                    onclick="upload_link_image('linkImage4')" />
-                </div>
               </div>
-              <div class="col-12">
-                <button type="submit" class="btn btn-primary btn-block text-uppercase">Edit this Product</button>
+              <div class="custom-file mt-3 mb-3">
+                <input id="linkImage1" th:field="*{image1}" readonly name="name" type="text"
+                  class="form-control validate" required style="margin-bottom:1rem;" />
+                <input id="fileInput1" type="file" style="display:none;" onclick="upload_image(this.id)" />
+                <input type="button" class="btn btn-primary btn-block mx-auto" value="UPLOAD PRODUCT IMAGE"
+                  onclick="upload_link_image('linkImage1')" />
               </div>
+              <div class="tm-product-img-dummy mx-auto" style="margin-top: 3rem; width: 25rem;
+                height: 15rem;">
+                <img id="linkImage2_preview" src="https://ps.w.org/image-comparison/assets/icon-256x256.png?rev=2587037"
+                  style="width: 25rem;
+                  height: 15rem;
+                  object-fit: contain;">
+              </div>
+              <div class="custom-file mt-3 mb-3">
+                <input id="linkImage2" th:field="*{image2}" readonly name="name" type="text"
+                  class="form-control validate" required style="margin-bottom:1rem;" />
+                <input id="fileInput2" type="file" style="display:none;" onclick="upload_image(this.id)" />
+                <input type="button" class="btn btn-primary btn-block mx-auto" value="UPLOAD PRODUCT IMAGE"
+                  onclick="upload_link_image('linkImage2')" />
+              </div>
+              <div class="tm-product-img-dummy mx-auto" style="margin-top: 3rem; width: 25rem;
+                height: 15rem;">
+                <img id="linkImage3_preview" src="https://ps.w.org/image-comparison/assets/icon-256x256.png?rev=2587037"
+                  style="width: 25rem;
+                  height: 15rem;
+                  object-fit: contain;">
+              </div>
+              <div class="custom-file mt-3 mb-3">
+                <input id="linkImage3" th:field="*{image3}" readonly name="name" type="text"
+                  class="form-control validate" required style="margin-bottom:1rem;" />
+                <input id="fileInput3" type="file" style="display:none;" onclick="upload_image(this.id)" />
+                <input type="button" class="btn btn-primary btn-block mx-auto" value="UPLOAD PRODUCT IMAGE"
+                  onclick="upload_link_image('linkImage3')" />
+              </div>
+              <div class="tm-product-img-dummy mx-auto" style="margin-top: 3rem; width: 25rem;
+                height: 15rem;">
+                <img id="linkImage4_preview" src="https://ps.w.org/image-comparison/assets/icon-256x256.png?rev=2587037"
+                  style="width: 25rem;
+                  height: 15rem;
+                  object-fit: contain;">
+              </div>
+              <div class="custom-file mt-3 mb-3">
+                <input id="linkImage4" th:field="*{image4}" readonly name="name" type="text"
+                  class="form-control validate" required style="margin-bottom:1rem;" />
+                <input id="fileInput4" type="file" style="display:none;" onclick="upload_image(this.id)" />
+                <input type="button" class="btn btn-primary btn-block mx-auto" value="UPLOAD PRODUCT IMAGE"
+                  onclick="upload_link_image('linkImage4')" />
+              </div>
+            </div>
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary btn-block text-uppercase">Edit this Product</button>
+            </div>
           </form>
         </div>
       </div>
@@ -265,15 +298,15 @@
       $("#expire_date").datepicker();
     });
   </script>
-  <script th:inline="javascript" >
-     var date = [[${importDate}]];
-     console.log(date.slice(0,10));
-     let formatDate = date.slice(0,10);
+  <script th:inline="javascript">
+    var date = [[${ importDate }]];
+    console.log(date.slice(0, 10));
+    let formatDate = date.slice(0, 10);
     //  let setTime = new Date(date)
     //  console.log(setTime.getDay())
-     let time = document.getElementById('import_date')
-     time.value = formatDate
-     console.log(time);
+    let time = document.getElementById('import_date')
+    time.value = formatDate
+    console.log(time);
   </script>
 
   <script>

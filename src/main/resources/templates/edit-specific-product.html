@@ -173,7 +173,7 @@
                     </div>
                   </div>
                 </div>
-              </div>  
+                </div>
               <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
                 <div class="tm-product-img-dummy mx-auto" style="margin-top: 2rem; width: 25rem;
                 height: 15rem; ">
@@ -182,6 +182,8 @@
                   height: 15rem;
                   object-fit: contain;">
                 </div>
+                <input id="linkImage1" th:field="*{image1}" readonly name="name" type="text"
+                  class="form-control validate" required style="margin-bottom:1rem;" hidden/>
                 <div class="tm-product-img-dummy mx-auto" style="margin-top: 3rem; width: 25rem;
                 height: 15rem;">
                   <img id="linkImage2_preview"
@@ -189,6 +191,8 @@
                   height: 15rem;
                   object-fit: contain;">
                 </div>
+                <input id="linkImage2" th:field="*{image2}" readonly name="name" type="text"
+                  class="form-control validate" required style="margin-bottom:1rem;" hidden/>
                 <div class="tm-product-img-dummy mx-auto" style="margin-top: 3rem; width: 25rem;
                 height: 15rem;">
                   <img id="linkImage3_preview"
@@ -196,6 +200,8 @@
                   height: 15rem;
                   object-fit: contain;">
                 </div>
+                <input id="linkImage3" th:field="*{image3}" readonly name="name" type="text"
+                  class="form-control validate" required style="margin-bottom:1rem;" hidden/>
                 <div class="tm-product-img-dummy mx-auto" style="margin-top: 3rem; width: 25rem;
                 height: 15rem;">
                   <img id="linkImage4_preview"
@@ -203,6 +209,8 @@
                   height: 15rem;
                   object-fit: contain;">
                 </div>
+                <input id="linkImage4" th:field="*{image4}" readonly name="name" type="text"
+                  class="form-control validate" required style="margin-bottom:1rem;" hidden/>
               </div>
               <div class="col-12">
                 <button type="submit" class="btn btn-primary btn-block text-uppercase">Edit this Product</button>

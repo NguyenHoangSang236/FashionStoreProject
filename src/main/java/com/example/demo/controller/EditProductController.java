@@ -116,8 +116,7 @@ public class EditProductController {
 //		selectedProduct = productService.getProductInfo(product, "specific product mode");
 //		
 //		model.addAttribute("selectedProduct", selectedProduct);
-//		selectedProductInfo = productRepo.
-		
+
         return "edit-general-product";
     }
 
