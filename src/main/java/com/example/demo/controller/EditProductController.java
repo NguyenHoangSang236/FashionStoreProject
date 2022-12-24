@@ -149,16 +149,28 @@ public class EditProductController {
 		model.addAttribute("selectedProduct", selectedProductInfo);
 		model.addAttribute("cateList", cateList);
 		
-		return "edit-general-product";
-    }
-
+        return "edit-specific-product";
+	}
 	
-	@PostMapping("/edit-product-name={name}__color={color}")
-    public String editGeneralProductEvent(Model model, HttpSession session, 
-    		@ModelAttribute("selectedProduct") ProductInfo modelSelectedProductInfo,
-    		@ModelAttribute("importDate") Date modelImportDate) {
-		productService.editGeneralProduct(selectedProductInfo, modelSelectedProductInfo);
-		
-		return renderEditProduct(model, session, selectedProduct);
-    }
+	
+//	@GetMapping("/edit-product-name={name}__color={color}")
+//    public String editProduct(Model model, HttpSession session, @PathVariable("name") String selectedProductName,@PathVariable("color") String selectedProductColor ) {
+////		Product product = productRepo.getProductById(selectedProductId);
+////		selectedProduct = productService.getProductInfo(product, "specific product mode");
+////		selectedProduct = productService.getProductInfo(product, "specific product mode");
+////		
+////		model.addAttribute("selectedProduct", selectedProduct);
+//
+//        return "edit-general-product";
+//    }
+//
+//	
+//	@PostMapping("/edit-product-name={name}__color={color}")
+//    public String editGeneralProductEvent(Model model, HttpSession session, 
+//    		@ModelAttribute("selectedProduct") ProductInfo modelSelectedProductInfo,
+//    		@ModelAttribute("importDate") Date modelImportDate) {
+//		productService.editGeneralProduct(selectedProductInfo, modelSelectedProductInfo);
+//		
+//		return renderEditProduct(model, session, selectedProduct);
+//    }
 }
