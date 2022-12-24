@@ -131,7 +131,7 @@ public class InvoiceController {
 	    	
 	    	customerInvoiceHistoryList = invoiceRepo.getPaymentHistoryByCustomerId(currentCustomer.getId());
 	    	
-		    model.addAttribute("curentcusImage",currentCustomer.getImage());
+		    model.addAttribute("curentcusImage",currentCustomer.convertByteImamgeToBase64String());
 		    model.addAttribute("curentcusName",currentCustomer.getName());
 		    model.addAttribute("invoiceHistoryList",customerInvoiceHistoryList);
 	    }
@@ -157,7 +157,7 @@ public class InvoiceController {
 	    	
 	    	model.addAttribute("selectedInvoice", selectedInvoice);
 	    	model.addAttribute("productsList", selectedInvoice.getInvoicesWithProducts());
-		    model.addAttribute("curentcusImage",currentCustomer.getImage());
+		    model.addAttribute("curentcusImage",currentCustomer.convertByteImamgeToBase64String());
 		    model.addAttribute("curentcusName",currentCustomer.getName());
 	    }
 	    else {
