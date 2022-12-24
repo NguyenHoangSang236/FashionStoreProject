@@ -151,31 +151,29 @@
                 <div class="form-group mb-3">
                   <label for="import_date">Import Date</label>
                   <input id="import_date" name="import_date" th:field="${importDate}" type="date"
-                    class="form-control validate" data-large-mode="true" th:value="${importDate}"/>
+                    class="form-control validate" data-large-mode="true"/>
                 </div>
                 <div class="form-group mb-3" id="detailProductModifier">
                   <div class="title-detail mb-3 is-flex is-justify-content-space-between">
-                    <div class="is-flex">
-                      <label style="display: none" for="stock"></label>
-                      <div class="has-text-white has-margin-block-auto">
-                        Product's size and available quantity
-                      </div>
-                      <div class="button ml-1 is-small is-rounded" id="getDetailProduct">Confirm</div>
+
+                    <div class="has-text-white has-margin-block-auto">
+                      Quantity
                     </div>
-                    <div class="button is-small is-rounded" id="addDetailProduct">Add new size</div>
+                    <div class="has-text-white has-margin-block-auto" style="margin-right: 5rem;">
+                      Size
+                    </div>
                   </div>
                   <div class="data-detail">
                     <div class="is-flex mb-2 detail-products">
-                      <input class="input product-quantity mr-2" type="number" placeholder="Quantity">
-                      <div class="select mr-2">
-                        <select class="product-size" style="width: 6rem;"><option value="S">S</option><option value="M">M</option><option value="L">L</option><option value="XL">XL</option><option value="33">33</option><option value="34">34</option><option value="35">35</option><option value="40">40</option></select>
+                      <input class="input product-quantity mr-2" th:field="*{availableQuantity}" type="number"
+                        placeholder="quantity">
+                      <div class="mr-2">
+                        <input class="input product-size mr-2" th:field="*{size}" style="width: 6rem;" readonly>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <input id="sizeList" type="text" th:field="*{sizeList}" class="form-control validate" required hidden />
-              <input id="quantityList" type="text" th:field="*{availableQuantityList}" class="form-control validate" required hidden />
+              </div>  
               <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
                 <div class="tm-product-img-dummy mx-auto" style="margin-top: 2rem; width: 25rem;
                 height: 15rem; ">
@@ -236,7 +234,7 @@
       $("#expire_date").datepicker();
     });
   </script>
-  <script th:inline="javascript" >
+  <script th:inline="javascript">
      var date = [[${importDate}]];
      console.log(date.slice(0,10));
      let formatDate = date.slice(0,10);

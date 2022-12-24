@@ -165,7 +165,7 @@
 <!-- Shopping Cart Section Begin -->
 <section class="shopping-cart spad">
     <div class="container">
-        <form action="" th:object="${customerCart}" method="post">
+        <form action="" th:object="${deliveryReportInfo}" method="post">
             <div class="row">
                 <div class="col-lg-8">
                     <div class="shopping__cart__table">
@@ -179,7 +179,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="invoiceProduct, productListState: ${productsList}" id="table_row">
+                                <tr th:each="invoiceProduct, invoiceProductListState: *{invoiceProductsList}" id="table_row">
                                     <!--<th scope="row"><input type="checkbox" th:field="*{fullCartList}" th:value="${invoiceProduct}" /></th>-->
                                     <th scope="row">
                                     </th>
@@ -212,41 +212,33 @@
                         <h6 class="checkout__title">Billing Details</h6>
                         <div class="checkout__input">
                             <p>Full Name<span>*</span></p>
-                            <input type="text" readonly>
-                        </div>
-                        <div class="checkout__input">
-                            <p>Country<span>*</span></p>
-                            <input type="text" readonly>
+                            <input type="text" th:value="*{invoice.getCustomer().getName()}" readonly>
                         </div>
                         <div class="checkout__input">
                             <p>Address<span>*</span></p>
-                            <input type="text" placeholder="Street Address" class="checkout__input__add" readonly>
-                        </div>
-                        <div class="checkout__input">
-                            <p>Town/City<span>*</span></p>
-                            <input type="text" readonly>
+                            <input type="text" th:value="*{invoice.getCustomer().getFullAddress()}" class="checkout__input__add" readonly>
                         </div>
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>Phone<span>*</span></p>
-                                    <input type="text">
+                                    <input type="text" th:value="*{invoice.getCustomer().getPhoneNumber()}">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>Email<span>*</span></p>
-                                    <input type="text">
+                                    <input type="text" th:value="*{invoice.getCustomer().getEmail()}">
                                 </div>
                             </div>
                         </div>
                         <div class="checkout__input">
                             <p>Invoice notes<span>*</span></p>
-                            <input type="text">
+                            <input type="text" th:value="*{invoice.description}">
                         </div>
                         <div class="checkout__input">
                             <p>Payment Intent notes<span>*</span></p>
-                            <input type="text">
+                            <input type="text" th:value="*{invoice.intent}">
                         </div>
                     </div>
                 </div>
@@ -263,7 +255,7 @@
                         font-size: 1.5rem;
                         display: flex;
                         justify-content: center;">Deliver Info</h6>
-                        <img id="display_image" src="https://pbs.twimg.com/media/DHOeKUmVYAENpZF.jpg" alt=""/>
+                        <img id="display_image" th:src="*{delivery.getStaff().getImage()}" alt=""/>
                         <div style="    display: flex;
                         justify-content: center;
                         margin-top: 1rem;">
@@ -272,21 +264,23 @@
                         </div>
                         <div style="margin-top: 1rem;">
                             <p style="display: flex;
-                            justify-content: space-around;">Phone number:<span>0922192182</span></p>
+                            justify-content: space-around;">Phone number:<span th:text="*{delivery.getStaff().getPhoneNumber()}"></span></p>
                         </div>
                     </div>
                     <div class="cart__total" style="margin-bottom: 10%;">
                         <form action="">
-                            <h6 style="    font-weight: bold;
-                            font-size: 1.5rem;
-                            display: flex;
-                            justify-content: center;">Delivery status</h6>
+                            <h6 style="font-weight: bold;
+                                       font-size: 1.5rem;
+                                       display: flex;
+                                       justify-content: center;">
+                                Delivery status
+                            </h6>
                             <ul>
-                                <li><input type="checkbox"> successful delivery</li>
-                                <li><input type="checkbox"> failed fist time</li>
-                                <li><input type="checkbox"> failed second time</li>
-                                <li><input type="checkbox"> failed third time</li>
-                                <li><input type="checkbox"> customer does not receive the item</li>
+                                <li><input type="radio" th:field="*{delivery.additionalShipperComment}" value="successful delivery"> successful delivery</li>
+                                <li><input type="radio" th:field="*{delivery.additionalShipperComment}" value="failed once"> failed once</li>
+                                <li><input type="radio" th:field="*{delivery.additionalShipperComment}" value="failed twice"> failed twice</li>
+                                <li><input type="radio" th:field="*{delivery.additionalShipperComment}" value="failed three times"> failed three times</li>
+                                <li><input type="radio" th:field="*{delivery.additionalShipperComment}" value="customer does not receive the item"> customer does not receive the item</li>
                             </ul>
                             <button type="submit" class="site-btn" style="display: flex;
                             margin-left: auto;
@@ -297,7 +291,7 @@
                     <div class="cart__total" style="margin-bottom: 10%;">
                         <h6>Cart total</h6>
                         <ul>
-                            <li>Total <span th:text="${selectedInvoice.formattedTotalPrice()}+'VND'"></span></li>
+                            <li>Total <span th:text="*{invoice.formattedTotalPrice()}+' VND'"></span></li>
                         </ul>
                     </div>
                 </div>
