@@ -30,6 +30,7 @@ import com.example.demo.respository.CatalogRepository;
 import com.example.demo.respository.ProductManagementRepository;
 import com.example.demo.respository.ProductRepository;
 import com.example.demo.service.ProductService;
+import com.example.demo.util.GlobalStaticValues;
 import com.example.demo.util.ValueRender;
 
 @SessionAttributes("currentuser")
@@ -54,11 +55,78 @@ public class EditProductController {
 	Date importDate;
 	
 	
-	public String renderEditProduct(Model model, HttpSession session, int selectedProductId) {
-		selectedProduct = productRepo.getProductById(selectedProductId);
+	public String renderEditProduct(Model model, HttpSession session, Product selectedProduct) {
 		currentAccount = (Account)session.getAttribute("currentuser");
+		
+		if(currentAccount != null) {
+			List<Catalog> cateList = catalogRepo.getAllCatalogs();
+			List<Catalog> productCateList = catalogRepo.getCatalogsByProductName(selectedProduct.getName());
+			
+			boolean[] cateCheckedArr = new boolean[cateList.size()];
+			int count = 0;
+			
+			for(int i = 0; i < cateList.size(); i++) {
+				if(count < productCateList.size()) {
+					if(cateList.get(i).getName().equals(productCateList.get(count).getName())) {
+						cateCheckedArr[i] = true;
+						count++;
+					}
+				}
+				else {
+					cateCheckedArr[i] = false;
+				}
+			}
+			importDate = productMngRepo.getLastestProductManagementInfoByProductId(selectedProduct.getId()).getImportDate();
+			
+			model.addAttribute("cateCheckedArr", cateCheckedArr);
+			model.addAttribute("selectedProduct", selectedProduct);
+			model.addAttribute("cateList", cateList);
+			model.addAttribute("importDate", importDate);
+			
+			return "edit-specific-product";
+		}
+		else {
+			GlobalStaticValues.currentPage = "/edit-product-id=" + selectedProduct.getId();
+			return "redirect:/loginpage";
+		}
+	}
+	
+	
+	@GetMapping("/edit-product-id={id}")
+    public String editSpecificProduct(Model model, HttpSession session, @PathVariable("id") int selectedProductId) {
+		selectedProduct = productRepo.getProductById(selectedProductId);
+		
+		return renderEditProduct(model, session, selectedProduct);
+    }
+	
+	
+	@PostMapping("/edit-product-id={id}")
+    public String editSpecificProductEvent(Model model, HttpSession session, 
+    		@PathVariable("id") int selectedProductId, 
+    		@ModelAttribute("selectedProduct") Product modelSelectedProduct,
+    		@ModelAttribute("importDate") Date modelImportDate) {
+		modelSelectedProduct.setId(selectedProductId);
+		ProductManagement pm = productMngRepo.getLastestProductManagementInfoByProductId(selectedProductId);
+		pm.setImportDate(modelImportDate);
+		
+		productRepo.save(modelSelectedProduct);
+		productMngRepo.save(pm);
+		
+		return renderEditProduct(model, session, selectedProduct);
+    }
+	
+	
+	@GetMapping("/edit-product-name={name}__color={color}")
+    public String editGeneralProduct(Model model, HttpSession session, @PathVariable("name") String selectedProductName, @PathVariable("color") String selectedProductColor ) {
+		String realProductName = ValueRender.linkToString(selectedProductName);
+		selectedProductInfo = productService.getProductInfo(realProductName, selectedProductColor);
+		
+//		for(int i = 0; i < selectedProductInfo.getSizeList().length; i++) {
+//			System.out.println(selectedProductInfo.getSizeList()[i]);
+//		}
+		
 		List<Catalog> cateList = catalogRepo.getAllCatalogs();
-		List<Catalog> productCateList = catalogRepo.getCatalogsByProductName(selectedProduct.getName());
+		List<Catalog> productCateList = catalogRepo.getCatalogsByProductName(realProductName);
 		
 		boolean[] cateCheckedArr = new boolean[cateList.size()];
 		int count = 0;
@@ -73,88 +141,24 @@ public class EditProductController {
 			else {
 				cateCheckedArr[i] = false;
 			}
+			
+			System.out.println(cateCheckedArr[i]);
 		}
-		importDate = productMngRepo.getLastestProductManagementInfoByProductId(selectedProductId).getImportDate();
-//		System.out.println(importDate);
-
+		
 		model.addAttribute("cateCheckedArr", cateCheckedArr);
-		model.addAttribute("selectedProduct", selectedProduct);
-    	model.addAttribute("cateList", cateList);
-    	model.addAttribute("importDate", importDate);
+		model.addAttribute("selectedProduct", selectedProductInfo);
+		model.addAttribute("cateList", cateList);
 		
-        return "edit-specific-product";
-	}
-	
-	
-	@GetMapping("/edit-product-id={id}")
-    public String editSpecificProduct(Model model, HttpSession session, @PathVariable("id") int selectedProductId) {
-		return renderEditProduct(model, session, selectedProductId);
-    }
-	
-	
-	@PostMapping("/edit-product-id={id}")
-    public String editSpecificProductEvent(Model model, HttpSession session, 
-    		@PathVariable("id") int selectedProductId, 
-    		@ModelAttribute("selectedProduct") Product modelSelectedProduct,
-    		@ModelAttribute("importDate") Date modelImportDate) {
-		System.out.println(modelImportDate);
-		modelSelectedProduct.setId(selectedProductId);
-		ProductManagement pm = productMngRepo.getLastestProductManagementInfoByProductId(selectedProductId);
-		pm.setImportDate(modelImportDate);
-		
-		productRepo.save(modelSelectedProduct);
-		productMngRepo.save(pm);
-		
-		return renderEditProduct(model, session, selectedProductId);
-    }
-	
-	
-	@GetMapping("/edit-product-name={name}__color={color}")
-    public String editProduct(Model model, HttpSession session, @PathVariable("name") String selectedProductName,@PathVariable("color") String selectedProductColor ) {
-//		Product product = productRepo.getProductById(selectedProductId);
-//		selectedProduct = productService.getProductInfo(product, "specific product mode");
-//		selectedProduct = productService.getProductInfo(product, "specific product mode");
-//		
-//		model.addAttribute("selectedProduct", selectedProduct);
-//		selectedProductInfo = productRepo.
-		
-        return "edit-general-product";
+		return "edit-general-product";
     }
 
 	
-//	@PostMapping("/edit-product-id={id}")
-//    public String editSpecificProductEvent(Model model, HttpSession session, 
-//    		@PathVariable("id") int selectedProductId, 
-//    		@ModelAttribute("selectedProduct") Product modelSelectedProduct,
-//    		@ModelAttribute("importDate") Date modelImportDate) {
-//		System.out.println(modelSelectedProduct.getName());
-//		System.out.println(modelSelectedProduct.getBrand());
-//		System.out.println(modelSelectedProduct.getColor());
-//		System.out.println(modelSelectedProduct.getPrice());
-//		System.out.println(modelSelectedProduct.getOriginalPrice());
-//		System.out.println(modelSelectedProduct.getDescription());
-//		System.out.println(modelSelectedProduct.getAvailableQuantity());
-//		System.out.println(modelSelectedProduct.getSize());
-//		System.out.println(modelImportDate);
-//		
-//		String modelSelectedProductSize = modelSelectedProduct.getSize();
-//		String modelSelectedProductColor = modelSelectedProduct.getColor();
-//		String modelSelectedProductName = modelSelectedProduct.getName();
-//		Product testProduct = productRepo.getProductDetailsByNameAndColorAndSize(modelSelectedProductName, modelSelectedProductColor, modelSelectedProductSize);
-//		
-//		if(testProduct != null) {
-////			for(int i = 0; i < modelSelectedProduct.getCatalogs().size(); i++) {
-////				System.out.println(modelSelectedProduct.getCatalogs().get(i).getName());
-////			}
-//			modelSelectedProduct.setId(selectedProductId);
-//			ProductManagement pm = productMngRepo.getLastestProductManagementInfoByProductId(selectedProductId);
-//			pm.setImportDate(modelImportDate);
-//			
-//			productRepo.save(modelSelectedProduct);
-//			productMngRepo.save(pm);
-//			System.out.println("saved !!");
-//		}
-//		
-//		return renderEditProduct(model, session, selectedProductId);
-//    }
+	@PostMapping("/edit-product-name={name}__color={color}")
+    public String editGeneralProductEvent(Model model, HttpSession session, 
+    		@ModelAttribute("selectedProduct") ProductInfo modelSelectedProductInfo,
+    		@ModelAttribute("importDate") Date modelImportDate) {
+		productService.editGeneralProduct(selectedProductInfo, modelSelectedProductInfo);
+		
+		return renderEditProduct(model, session, selectedProduct);
+    }
 }

@@ -19,6 +19,7 @@ import com.example.demo.respository.CustomerRepository;
 import com.example.demo.util.GlobalStaticValues;
 import com.example.demo.util.ValueRender;
 
+
 @SessionAttributes("currentuser")
 @Controller
 public class AccountController {
@@ -45,7 +46,6 @@ public class AccountController {
 	 		model.addAttribute("Ccustomer", accountDetail);
 	 		model.addAttribute("accObj", currentuser);
 	 		model.addAttribute("curentcusName",currentuser.getCustomer().getName());
-	 		
 	    }
 	    else {
 	    	return "redirect:/loginpage";

@@ -4,13 +4,12 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.example.demo.entity.Product;
-import com.example.demo.respository.ProductRepository;
-
 public class ProductInfo {
+	int[] idList;
 	String name;
 	String[] sizeList;
 	int[] availableQuantityList;
+	int[] soldQuantList;
 	String brand;
 	String color;
 	double sellingPrice;
@@ -29,10 +28,11 @@ public class ProductInfo {
 	
 	public ProductInfo() {}
 
-	public ProductInfo(String name, String[] sizeList, int[] availableQuantityList, String brand, String color,
-			double sellingPrice, double originalPrice, String description, String[] catalogList, Date importDate,
-			String image1Url, String image2Url, String image3Url, String image4Url) {
+	public ProductInfo(int[] idList, String name, String[] sizeList, int[] availableQuantityList, String brand,
+			String color, double sellingPrice, double originalPrice, String description, String[] catalogList,
+			Date importDate, String image1Url, String image2Url, String image3Url, String image4Url, String editMode) {
 		super();
+		this.idList = idList;
 		this.name = name;
 		this.sizeList = sizeList;
 		this.availableQuantityList = availableQuantityList;
@@ -47,9 +47,26 @@ public class ProductInfo {
 		this.image2Url = image2Url;
 		this.image3Url = image3Url;
 		this.image4Url = image4Url;
+		this.editMode = editMode;
 	}
 
-	
+
+
+	public int[] getSoldQuantList() {
+		return soldQuantList;
+	}
+
+	public void setSoldQuantList(int[] soldQuantList) {
+		this.soldQuantList = soldQuantList;
+	}
+
+	public int[] getIdList() {
+		return idList;
+	}
+
+	public void setIdList(int[] idList) {
+		this.idList = idList;
+	}
 
 	public String getName() {
 		return name;

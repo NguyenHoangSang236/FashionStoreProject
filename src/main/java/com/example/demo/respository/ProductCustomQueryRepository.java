@@ -31,4 +31,7 @@ public class ProductCustomQueryRepository {
 	      .setParameter(2, productName)
 	      .executeUpdate();
 	}
+	
+	
+	
 }

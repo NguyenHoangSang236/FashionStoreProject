@@ -13,6 +13,10 @@ import com.example.demo.entity.Product;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> { 	
+	@Query(value = "select id from products order by id desc limit 1", nativeQuery = true)
+    int getLastestProductId();
+	
+	
 	@Query(value = "select * from products group by color, name", nativeQuery = true)
 	List<Product> getAllProducts();
 	

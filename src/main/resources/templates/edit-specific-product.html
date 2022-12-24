@@ -101,7 +101,7 @@
               <h2 class="tm-block-title d-inline-block">Edit Product</h2>
             </div>
             <div class="col-12">
-              <a href="#" >Move to edit general products</a>
+              <a th:href="@{/edit-product-name={name}__color={color} (name = ${selectedProduct.formatProductNameToLink()}, color = ${selectedProduct.color})}" >Move to edit general products</a>
             </div>
           </div>
           <form action="" method="post" th:object="${selectedProduct}" class="tm-edit-product-form">
