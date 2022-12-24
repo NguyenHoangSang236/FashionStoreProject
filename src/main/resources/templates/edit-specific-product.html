@@ -242,7 +242,7 @@
       $("#expire_date").datepicker();
     });
   </script>
-  <script th:inline="javascript" >
+  <script th:inline="javascript">
      var date = [[${importDate}]];
      console.log(date.slice(0,10));
      let formatDate = date.slice(0,10);

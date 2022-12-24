@@ -1,24 +1,21 @@
 package com.example.demo.entity;
 
-import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 
 import com.example.demo.util.ValueRender;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,33 +23,31 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "delivery")
-public class Delivery implements Serializable{
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8224872009182197032L;
-
-	@Column(name = "Delivery_Date")
+public class Delivery{
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", unique = true)
+	int id;
+	
+	@Column(name = "delivery_date")
 	Date deliveryDate;
 	
-	@Column(name = "Current_Status")
+	@Column(name = "current_status")
 	String currentStatus;
 	
-	@Column(name = "Additional_shipper_comment")
+	@Column(name = "additional_shipper_comment")
 	String additionalShipperComment;
 	
 	@Lob
-	@Column(name = "Evidence_image")
+	@Column(name = "evidence_image")
 	byte[] evidenceImage;
 	
 	@ManyToOne
 	@JoinColumn(name = "shipper_id")
 	Staff staff;
 	
-	@Id
 	@OneToOne
-	@JoinColumn(name = "Invoice_ID", referencedColumnName = "ID")
+	@JoinColumn(name = "invoice_id", referencedColumnName = "ID")
 	private Invoice invoice;
 	
 	
@@ -68,12 +63,28 @@ public class Delivery implements Serializable{
 		this.staff = staff;
 		this.invoice = invoice;
 	}
-
 	
+	public Delivery(String currentStatus, Staff staff, Invoice invoice) {
+		super();
+		this.currentStatus = currentStatus;
+		this.staff = staff;
+		this.invoice = invoice;
+	}
+	
+
 	public String convertByteImamgeToBase64String() {
     	return "data:image/jpeg;base64," + ValueRender.convertByteToString(this.evidenceImage);
     }
 
+
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public Date getDeliveryDate() {
 		return deliveryDate;

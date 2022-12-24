@@ -92,6 +92,20 @@ public class LoginPageController {
 		                GlobalStaticValues.currentPage = "/allproduct";
 		                return "redirect:" + GlobalStaticValues.currentPage;
 		            }
+		            else if(acc.getRole().equals("shipper")) {
+		            	if(acc.getStatus().equals("banned")) {
+		            		GlobalStaticValues.message = "This account has been banned !!";
+					    	message = GlobalStaticValues.message;
+				        	System.out.println(message);
+				        	model.addAttribute("message", message);
+		            	}
+		            	else {
+		            		GlobalStaticValues.currentStaff = acc.getStaff();
+		            		GlobalStaticValues.currentPage = "/delivery-home";
+		            		
+		            		return "redirect:" + GlobalStaticValues.currentPage;
+		            	}
+		            }
 		            else if(acc.getRole().equals("user")) {
 		            	if(acc.getStatus().equals("banned")) {
 		            		GlobalStaticValues.message = "This account has been banned !!";
@@ -100,7 +114,6 @@ public class LoginPageController {
 				        	model.addAttribute("message", message);
 		            	}
 		            	else {
-//		            		System.out.println(ValueRender.convertByteToString(acc.getCustomer().getImage()));
 		            		GlobalStaticValues.currentCustomer = acc.getCustomer();
 		            		GlobalStaticValues.customerFullCartIdList = cartRepo.getFullCartIdListByCustomerId(acc.getCustomer().getId());
 		            		

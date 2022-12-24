@@ -16,9 +16,9 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer>{
     
     
     @Query(value = "select * from customers", nativeQuery = true)
-    List<Customer> getCustomerById();
+    List<Customer> getAllCustomers();
     
     
-    @Query(value = "select * from customers c join login_accounts la on la.id = c.account_id where la.id = :idVal", nativeQuery = true)
+    @Query(value = "select c.* from customers c join login_accounts la on la.id = c.account_id where la.id = :idVal", nativeQuery = true)
     Customer getCustomerByAccountId(@Param("idVal") int id);
 }
