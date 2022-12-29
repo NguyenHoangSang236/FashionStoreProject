@@ -24,6 +24,7 @@ import com.example.demo.respository.AccountRepository;
 import com.example.demo.respository.CustomerRepository;
 import com.example.demo.respository.InvoiceRepository;
 import com.example.demo.respository.StaffRepository;
+import com.example.demo.service.InvoiceService;
 import com.example.demo.util.GlobalStaticValues;
 import com.example.demo.util.ValueRender;
 
@@ -41,6 +42,9 @@ public class InvoiceController {
 	
 	@Autowired
 	StaffRepository staffRepo;
+	
+	@Autowired
+	InvoiceService invoiceService;
 	
 	String message = "";
 	List<Invoice> mngInvoiceList;
@@ -111,6 +115,8 @@ public class InvoiceController {
 				selectedInvoice.setDeliveryStatus("not shipped");
 				selectedInvoice.setAdminAcceptance("refused");
 				
+				invoiceService.cancelOrder(selectedInvoiceId);
+				
 				invoiceRepo.save(selectedInvoice);
 			}
 			
@@ -163,23 +169,46 @@ public class InvoiceController {
 	    		
 	    		model.addAttribute("selectedInvoice", selectedInvoice);
 	    		model.addAttribute("productsList", selectedInvoice.getInvoicesWithProducts());
-	    		model.addAttribute("curentcusImage",currentCustomer.getImage());
+	    		model.addAttribute("curentcusImage",currentCustomer.convertByteImamgeToBase64String());
 	    		model.addAttribute("curentcusName",currentCustomer.getName());
 	    		
 	    		return "invoice-detail";
 	    	}
 	    	else {
-	    		Invoice selectedInvoice = invoiceRepo.getInvoiceById(invoiceId);
-	    		Delivery delivery = selectedInvoice.getDelivery();
-	    		
-	    		model.addAttribute("delivery", delivery);
-	    		model.addAttribute("productsList", selectedInvoice.getInvoicesWithProducts());
-	    		model.addAttribute("curentcusImage", currentStaff.getImage());
-	    		model.addAttribute("curentcusName", currentStaff.getName());
-	    		model.addAttribute("selectedInvoice", selectedInvoice);
-	    		
-	    		
-	    		return "invoice-delivery-details";
+	    		if(currentStaff.getAccount().getRole().equals("shipper")) {
+	    			Invoice selectedInvoice = invoiceRepo.getInvoiceById(invoiceId);
+		    		
+		    		model.addAttribute("selectedInvoice", selectedInvoice);
+		    		model.addAttribute("productsList", selectedInvoice.getInvoicesWithProducts());
+		    		model.addAttribute("curentcusImage",currentStaff.convertByteImamgeToBase64String());
+		    		model.addAttribute("curentcusName",currentStaff.getName());
+		    		
+		    		return "shipper-invoice-detail";
+	    		}
+	    		else {
+	    			Invoice selectedInvoice = invoiceRepo.getInvoiceById(invoiceId);
+	    			Delivery delivery = selectedInvoice.getDelivery();
+	    			String shipperPhoneNum = "...";
+	    			String shipperAdditionalCmt = "";
+	    			String shipperImage = "https://api-private.atlassian.com/users/6b5c1609134a5887d7f3ab1b73557664/avatar";
+	    			
+	    			if(delivery != null) {
+	    				shipperPhoneNum = delivery.getStaff().getPhoneNumber();
+	    				shipperAdditionalCmt = delivery.getAdditionalShipperComment();
+	    				shipperImage = delivery.getStaff().convertByteImamgeToBase64String();
+	    			}
+	    			
+	    			model.addAttribute("delivery", delivery);
+	    			model.addAttribute("productsList", selectedInvoice.getInvoicesWithProducts());
+	    			model.addAttribute("curentcusImage", currentStaff.convertByteImamgeToBase64String());
+	    			model.addAttribute("curentcusName", currentStaff.getName());
+	    			model.addAttribute("selectedInvoice", selectedInvoice);
+	    			model.addAttribute("shipperPhoneNum", shipperPhoneNum);
+	    			model.addAttribute("shipperAdditionalCmt", shipperAdditionalCmt);
+	    			model.addAttribute("shipperImage", shipperImage);
+	    			
+	    			return "invoice-delivery-details";
+	    		}
 			}
 	    }
 	    else {

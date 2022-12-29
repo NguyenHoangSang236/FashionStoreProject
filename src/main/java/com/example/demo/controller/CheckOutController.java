@@ -133,7 +133,8 @@ public class CheckOutController {
     }
     
     
-    @PostMapping("/checkout")
+    @SuppressWarnings("unused")
+	@PostMapping("/checkout")
     public String placeOrderSubmit(HttpSession session, Model model, HttpServletRequest request,@ModelAttribute("checkoutInfo") CheckoutInfo modelCheckoutInfo, @RequestParam(required=false,value="action") String action) {
     	//if click at Place Order button --> COD payment
     	if(action != null) {
@@ -192,7 +193,7 @@ public class CheckOutController {
 	            GlobalStaticValues.message = "Thank you for buying";
 		    	String message = GlobalStaticValues.message;
 	        	model.addAttribute("message", message);
-	            return "index";
+	            return "redirect:/home";
 	        }
 	        else {
     	    	GlobalStaticValues.currentPage = "/checkout";

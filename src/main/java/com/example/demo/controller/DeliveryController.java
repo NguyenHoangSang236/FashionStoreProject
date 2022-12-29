@@ -154,6 +154,7 @@ public class DeliveryController {
 		String deliveryStatus;
 		String invoiceDeliStatus;
 		System.out.println(evidenceImage);
+		
 		if(shipperComment.equals("successful delivery")){
 			deliveryStatus = "success";
 			invoiceDeliStatus = "shipped";

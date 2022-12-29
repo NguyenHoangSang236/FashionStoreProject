@@ -260,6 +260,10 @@ public class Product implements Serializable {
         return total;
     }
     
+    public void addQuantity(int quant) {
+    	this.availableQuantity += quant;
+    }
+    
     
 
     public int getId() {

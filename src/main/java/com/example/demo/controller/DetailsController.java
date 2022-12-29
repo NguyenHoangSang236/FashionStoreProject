@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -148,6 +147,7 @@ public class DetailsController {
         }
     	else if(action.equals("logged in - add to cart")) {
         	if(modelShopDetails.getProductSize() == null) {
+        		currentProduct = productRepo.getProductByNameAndColor(realProductName, color);
             	GlobalStaticValues.message = "Please choose a size first !!";
             	String message = GlobalStaticValues.message;
 	        	model.addAttribute("message", message);

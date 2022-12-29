@@ -23,7 +23,6 @@ public class ValueRender {
         DecimalFormat dfGerman = new DecimalFormat("#,###", new DecimalFormatSymbols(Locale.GERMAN));
         
         String result = dfGerman.format(number);
-                
         return result;
     }
     
@@ -62,7 +61,6 @@ public class ValueRender {
         for(int i = 0; i < charArr.length; i++) {
             charArr[i] = (char) (charArr[i] + 5);
         }
-        
         result = charArr.toString();
         
         return result;
@@ -77,7 +75,6 @@ public class ValueRender {
         for(int i = 0; i < charArr.length; i++) {
             charArr[i] = (char) (charArr[i] - 5);
         }
-        
         result = String.valueOf(charArr);
         
         return result;
@@ -94,7 +91,6 @@ public class ValueRender {
                 linkCharrArr[i] = '_';
             }
         }
-        
         result = String.valueOf(linkCharrArr);
         
         return result;
@@ -111,7 +107,6 @@ public class ValueRender {
                 linkCharrArr[i] = ' ';
             }
         }
-        
         result = String.valueOf(linkCharrArr);
         
         return result;
@@ -170,7 +165,7 @@ public class ValueRender {
     	
     	for(int i = 0; i < fullCartIdList.length; i++)
     	{
-    		result[i] = productRepo.getAvailableQuantityById(fullCartIdList[i]);
+    		result[i] = productRepo.getAvailableQuantityByCartId(fullCartIdList[i]);
     	}
     	
     	return result;

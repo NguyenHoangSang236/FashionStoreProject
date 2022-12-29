@@ -39,6 +39,26 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Integer> {
 	List<Invoice> getPackingCodInvoices();
 	
 	
-	@Query(value = "select * from invoice i join delivery d on i.id = d.invoice_id where shipper_id = :idVal", nativeQuery = true)
+	@Query(value = "select * from invoice i join delivery d on i.id = d.invoice_id where shipper_id = :idVal and current_status = 'shipping'", nativeQuery = true)
 	List<Invoice> getShipperInvoicesList(@Param("idVal") int id);
+	
+	
+	@Query(value = "select * from invoice i join delivery d on i.id = d.invoice_id where current_status = 'shipping'", nativeQuery = true)
+	List<Invoice> getShippingInvoicesList();
+	
+	
+	@Query(value = "select * from invoice i join delivery d on i.id = d.invoice_id where current_status = 'failed'", nativeQuery = true)
+	List<Invoice> getFailedInvoicesList();
+	
+	
+	@Query(value = "select * from invoice i join delivery d on i.id = d.invoice_id where current_status = 'success'", nativeQuery = true)
+	List<Invoice> getSuccessfulInvoicesList();
+	
+	
+	@Query(value = "select * from invoice where delivery_status = 'packing'", nativeQuery = true)
+	List<Invoice> getPackingInvoicesList();
+	
+	
+	@Query(value = "select * from invoice where delivery_status = 'not shipped'", nativeQuery = true)
+	List<Invoice> getCustomerCanceledInvoicesList();
 }

@@ -89,7 +89,7 @@ public class ShopController {
     		dynamicConditions += ("and c.name = '" + catalogs[i] + "' ");
     	}
     	
-    	if(price1 > 0 && price2 > 0) {
+    	if(price1 >= 0 && price2 > 0) {
     		dynamicConditions += ("and price >= " + price1 + " and price <= " + price2 );
     	}
     	
@@ -207,15 +207,23 @@ public class ShopController {
         	}
         	else return "redirect:/loginpage";
         }
-        else {
-        	filterSelections = selectedFilters;
-            filterSelections.setPriceRangeLimits();
-            
-            String filterQuery = createQueryForFilters(filterSelections.getCatalogs(), filterSelections.getBrand(), filterSelections.getPrice1(), filterSelections.getPrice2());
-            
-            Page<Product> productPage = productService.findByFilters(PageRequest.of(currentPage - 1, pageSize), filterQuery);
-
-            renderToShop(session, model, productPage, page, size, filterSelections);
+        else if(action.contains("filter")){
+        	if(selectedFilters.getBrand() == null && selectedFilters.getCatalogs().length == 0 && selectedFilters.getPriceRange() == null ) {
+        		filterSelections = new FilterSelections();
+        		Page<Product> productPage = productService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
+        		
+        		renderToShop(session, model, productPage, page, size, filterSelections);
+        	}
+        	else {
+        		filterSelections = selectedFilters;
+        		filterSelections.setPriceRangeLimits();
+        		
+        		String filterQuery = createQueryForFilters(filterSelections.getCatalogs(), filterSelections.getBrand(), filterSelections.getPrice1(), filterSelections.getPrice2());
+        		
+        		Page<Product> productPage = productService.findByFilters(PageRequest.of(currentPage - 1, pageSize), filterQuery);
+        		
+        		renderToShop(session, model, productPage, page, size, filterSelections);
+        	}
 		}
     	
     	return "shop";

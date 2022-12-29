@@ -37,7 +37,7 @@ public class AccountController {
 	Account accountEdited;
 
 	
-	public String showMyProfileForm(HttpSession session,Model model, HttpServletRequest request) {
+	public String showMyProfileForm(HttpSession session,Model model) {
 		Account currentuser = (Account)session.getAttribute("currentuser");
 		accountEdited = currentuser;
 		
@@ -69,16 +69,18 @@ public class AccountController {
 
 	
 	@GetMapping("/showaccount")
-    public String showAbout(HttpSession session, Model model, HttpServletRequest request ) {
+    public String showAbout(HttpSession session, Model model) {
 		GlobalStaticValues.currentPage = "/showaccount";
-		return showMyProfileForm(session, model, request);
+		return showMyProfileForm(session, model);
     }
 	
 	
 	@PostMapping("/showaccount")
-	public String saveEditAccount(Model model, @ModelAttribute("accObj") Account accountObj, HttpSession session, HttpServletRequest request) {
+	public String saveEditAccount(Model model, @ModelAttribute("accObj") Account accountObj, HttpSession session) {
 		customer = cusRepo.getCustomerById(accountEdited.getCustomer().getId());
 		
+//		System.out.println(accountObj.getCustomer().getName());
+//		System.out.println(accountObj.getCustomer().getEmail());
 		customer.setName(accountObj.getCustomer().getName());
 		customer.setImage(accountObj.getCustomer().getImage());
 		customer.setEmail(accountObj.getCustomer().getEmail());
@@ -95,6 +97,6 @@ public class AccountController {
     	String message = GlobalStaticValues.message;
     	model.addAttribute("message", message);
 		
-		return showMyProfileForm(session, model, request);
+		return showMyProfileForm(session, model);
 	}
 }
