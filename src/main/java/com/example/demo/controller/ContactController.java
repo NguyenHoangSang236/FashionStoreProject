@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.entity.Account;
 import com.example.demo.entity.Customer;
+import com.example.demo.respository.CartRepository;
 import com.example.demo.respository.CustomerRepository;
 
 @Controller
@@ -27,6 +28,9 @@ public class ContactController {
 	@Autowired
 	CustomerRepository cusRepo;
     Customer customer = new Customer();
+    
+    @Autowired
+    CartRepository cartRepo;
     
     @GetMapping("/contact")
     public String showContact(HttpSession session, Model model) {
@@ -37,6 +41,7 @@ public class ContactController {
 	    
 	    model.addAttribute("curentcusImage",Ccustomer.convertByteImamgeToBase64String());
 	    model.addAttribute("curentcusName",Ccustomer.getName());
+	    model.addAttribute("cartQuantity",cartRepo.getCartQuantityByCustomerId(Ccustomer.getId()));
 	    
 	    }
         return "contact";

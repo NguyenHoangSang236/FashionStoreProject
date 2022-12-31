@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.example.demo.entity.Account;
 import com.example.demo.entity.Customer;
 import com.example.demo.respository.AccountRepository;
+import com.example.demo.respository.CartRepository;
 import com.example.demo.respository.CustomerRepository;
 import com.example.demo.util.GlobalStaticValues;
 import com.example.demo.util.ValueRender;
@@ -32,6 +33,9 @@ public class AccountController {
 	@Autowired
 	LoginPageController currentUser;
 	
+	@Autowired
+    CartRepository cartRepo;
+	
 	Account account = new Account();
 	Customer customer = new Customer();
 	Account accountEdited;
@@ -47,6 +51,7 @@ public class AccountController {
 	 		model.addAttribute("accObj", currentuser);
 	 		model.addAttribute("curentcusName",currentuser.getCustomer().getName());
 	 		model.addAttribute("curentcusImage",currentuser.getCustomer().convertByteImamgeToBase64String());
+	 		model.addAttribute("cartQuantity",cartRepo.getCartQuantityByCustomerId(accountDetail.getId()));
 	 		
 	    }
 	    else {

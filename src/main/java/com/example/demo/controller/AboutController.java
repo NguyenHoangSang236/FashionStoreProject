@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.entity.Account;
 import com.example.demo.entity.Customer;
+import com.example.demo.respository.CartRepository;
 import com.example.demo.respository.CustomerRepository;
 
 
@@ -27,6 +28,9 @@ public class AboutController {
 	@Autowired
 	CustomerRepository cusRepo;
     Customer customer = new Customer();
+    
+    @Autowired
+    CartRepository cartRepo;
 	
     @GetMapping("/about")
     public String showAbout(HttpSession session, Model model) {
@@ -38,6 +42,8 @@ public class AboutController {
 	    
 	    model.addAttribute("curentcusImage",Ccustomer.convertByteImamgeToBase64String());
 	    model.addAttribute("curentcusName",Ccustomer.getName());
+	    model.addAttribute("cartQuantity",cartRepo.getCartQuantityByCustomerId(Ccustomer.getId()));
+	    
 	    
 	    }
         return "about";

@@ -21,6 +21,7 @@ import com.example.demo.entity.Invoice;
 import com.example.demo.entity.Staff;
 import com.example.demo.entity.dto.CheckoutInfo;
 import com.example.demo.respository.AccountRepository;
+import com.example.demo.respository.CartRepository;
 import com.example.demo.respository.CustomerRepository;
 import com.example.demo.respository.InvoiceRepository;
 import com.example.demo.respository.StaffRepository;
@@ -45,6 +46,9 @@ public class InvoiceController {
 	
 	@Autowired
 	InvoiceService invoiceService;
+	
+	@Autowired
+    CartRepository cartRepo;
 	
 	String message = "";
 	List<Invoice> mngInvoiceList;
@@ -132,6 +136,40 @@ public class InvoiceController {
 		}
     }
 	
+	@GetMapping("/invoice-shipping={filter}")
+	public String filterShippingInvoices(HttpSession session, Model model, HttpServletRequest request,
+			@PathVariable("filter") String filter) {
+		Account currentAccount = (Account)session.getAttribute("currentuser");
+		GlobalStaticValues.currentPage = "/invoice-cod-accept";
+		
+		if(currentAccount != null) {
+			if (filter.equals("shipping")){
+				mngInvoiceList = invoiceRepo.getShippingInvoicesList();	
+			}
+			else if (filter.equals("failed")) {
+				mngInvoiceList = invoiceRepo.getFailedInvoicesList();	
+			}
+			else if (filter.equals("success")) {
+				mngInvoiceList = invoiceRepo.getSuccessfulInvoicesList();
+			}
+			else if (filter.equals("packing")) {
+				mngInvoiceList = invoiceRepo.getPackingInvoicesList();
+			}
+			else if (filter.equals("not shipped")) {
+				mngInvoiceList = invoiceRepo.getCustomerCanceledInvoicesList();
+			}
+			
+			isInvoiceAcceptanceForm = false;
+			
+			model.addAttribute("allInvoiceList", mngInvoiceList);
+			model.addAttribute("isInvoiceAcceptanceForm", isInvoiceAcceptanceForm);
+			
+	        return "invoice-management";
+		}
+		else {
+			return "redirect:/loginpage";
+		}
+    }
 	
 	@GetMapping("/invoice-history")
 	public String invoiceHistory(HttpSession session, Model model, HttpServletRequest request ) {
@@ -146,6 +184,7 @@ public class InvoiceController {
 		    model.addAttribute("curentcusImage",currentCustomer.convertByteImamgeToBase64String());
 		    model.addAttribute("curentcusName",currentCustomer.getName());
 		    model.addAttribute("invoiceHistoryList",customerInvoiceHistoryList);
+		    model.addAttribute("cartQuantity",cartRepo.getCartQuantityByCustomerId(currentCustomer.getId()));
 	    }
 	    else {
 			return "redirect:/loginpage";
@@ -154,6 +193,26 @@ public class InvoiceController {
         return "invoice-history";
     }
 	
+	@GetMapping("/cancel-invoice-id={id}")
+	public String invoiceCancel(HttpSession session, Model model, HttpServletRequest request,@PathVariable("id") int invoiceId ) {
+		Account currentAccount = (Account)session.getAttribute("currentuser");
+	    GlobalStaticValues.currentPage = "/invoice-history";
+		
+	    if(currentAccount != null) {
+	    	Customer currentCustomer = cusRepo.getCustomerByAccountId(currentAccount.getId());
+	    	invoiceService.cancelOrder(invoiceId);
+//	    	customerInvoiceHistoryList = invoiceRepo.getPaymentHistoryByCustomerId(currentCustomer.getId());
+//	    	
+//		    model.addAttribute("curentcusImage",currentCustomer.convertByteImamgeToBase64String());
+//		    model.addAttribute("curentcusName",currentCustomer.getName());
+//		    model.addAttribute("invoiceHistoryList",customerInvoiceHistoryList);
+	    }
+	    else {
+			return "redirect:/loginpage";
+		}
+	    
+        return "redirect:/invoice-history";
+    }
 	
 	@GetMapping("/invoice-details-id={invoiceId}")
 	public String invoiceDetails(HttpSession session,Model model, HttpServletRequest request, @PathVariable("invoiceId") int invoiceId) {
