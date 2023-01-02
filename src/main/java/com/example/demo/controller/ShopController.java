@@ -141,6 +141,7 @@ public class ShopController {
 		    
 		    model.addAttribute("curentcusImage",Ccustomer.convertByteImamgeToBase64String());
 		    model.addAttribute("curentcusName",Ccustomer.getName());
+		    model.addAttribute("cartQuantity",cartRepo.getCartQuantityByCustomerId(Ccustomer.getId()));
 	    }
         
 	    model.addAttribute("filterSelections", filterSelections);

@@ -111,6 +111,7 @@ public class CheckOutController {
 	    		
 	    		model.addAttribute("curentcusImage",currentCustomer.convertByteImamgeToBase64String());
 	    		model.addAttribute("curentcusName",currentCustomer.getName());
+	    		model.addAttribute("cartQuantity",cartRepo.getCartQuantityByCustomerId(currentCustomer.getId()));
 	    		
 	    		cartList = ValueRender.getCartListFromIdList(GlobalStaticValues.customerSelectedCartIdList, cartRepo);
 	    		

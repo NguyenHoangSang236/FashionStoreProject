@@ -53,6 +53,7 @@ public class CartController {
     	    
     	    model.addAttribute("curentcusImage",currentCustomer.convertByteImamgeToBase64String());
     	    model.addAttribute("curentcusName",currentCustomer.getName());
+    	    model.addAttribute("cartQuantity",cartRepo.getCartQuantityByCustomerId(currentCustomer.getId()));
         	customerCart.setFullCartIdList(globalFullCartIdArr);
         	customerCart.setTotal(calculateTotal(fullCartList));
         	customerCart.setSubtotal(calculateTotal(ValueRender.getCartListFromIdList(globalSelectedCartIdArr, cartRepo)));

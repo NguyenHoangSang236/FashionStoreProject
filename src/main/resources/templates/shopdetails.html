@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="css/styleComment.css" type="text/css">
     <link rel="stylesheet" href="css/ratingCSS.css" type="text/css">
     <link rel="stylesheet" href="css/show-message.css" type="text/css">
+    <link rel="stylesheet" href="CSS/cartCSS.css" type="text/css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 </head>
 
@@ -143,9 +144,8 @@
                 <div class="col-lg-3 col-md-3">
                     <div class="header__nav__option" style="display: flex;
                     justify-content: center;">
-                        <a th:if="${session.currentuser != null}"
-                            th:href="@{/cart-of-customer-account-id={id} (id = ${session.currentuser.id})}"><img
-                                src="img/icon/newcart.png" alt=""> <span>0</span></a>
+                        <a th:if= "${session.currentuser != null}"
+                        th:href="@{/cart-of-customer-account-id={id} (id = ${session.currentuser.id})}"><img src="img/icon/newcart.png" alt=""> <span style="top:0rem" class='badge badge-warning' id='lblCartCount' th:text="${cartQuantity}"></span></a>
                     </div>
                 </div>
             </div>
@@ -373,7 +373,7 @@
                                 <div class="product__details__cart__option">
                                     <div class="quantity">
                                         <div class="pro-qty">
-                                            <input type="number" th:field="${shopDetails.quantity}" value="1">
+                                            <input type="text" th:field="${shopDetails.quantity}" value="1">
                                         </div>
                                     </div>
                                     <button type="submit" name="action"
@@ -403,7 +403,8 @@
                                         role="tab">Description</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#tabs-6" role="tab"> Comments</a>
+                                    <a class="nav-link" data-toggle="tab" href="#tabs-6" role="tab">Customer
+                                        Previews</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" data-toggle="tab" href="#tabs-7" role="tab">Additional

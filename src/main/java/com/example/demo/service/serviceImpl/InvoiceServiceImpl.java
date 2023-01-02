@@ -25,6 +25,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 	public void cancelOrder(int invoiceId) {
 		Invoice invoice = invoiceRepo.getInvoiceById(invoiceId);
 		List<InvoicesWithProducts> invoicesWithProductsList = invoice.getInvoicesWithProducts();
+		invoice.setDeliveryStatus("not shipped");
 		
 		for(int i = 0; i < invoicesWithProductsList.size(); i++) {
 			int quantity = invoicesWithProductsList.get(i).getQuantity();
@@ -34,6 +35,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 			
 //			System.out.println(product.getId() + ": " + beforeQuant + " + " + quantity +"->"+product.getAvailableQuantity());
 			productRepo.save(product);
+			
 		}
 	}
 }

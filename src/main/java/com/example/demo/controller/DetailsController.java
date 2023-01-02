@@ -96,6 +96,7 @@ public class DetailsController {
 		    model.addAttribute("curentcusImage",currentCustomer.convertByteImamgeToBase64String());
 		    model.addAttribute("curentcusName",currentCustomer.getName());
 		    model.addAttribute("userid", currentCustomer.getId());
+		    model.addAttribute("cartQuantity",cartRepo.getCartQuantityByCustomerId(currentCustomer.getId()));
 	    }
     	
         model.addAttribute("defaultQuantity", defaultQuantity);
