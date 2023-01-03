@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.example.demo.entity.Account;
 import com.example.demo.entity.Customer;
@@ -35,6 +36,7 @@ import com.example.demo.service.ProductService;
 import com.example.demo.util.GlobalStaticValues;
 import com.example.demo.util.ValueRender;
 
+@SessionAttributes("currentuser")
 @Controller
 public class DeliveryController {
 	 @Autowired
@@ -68,7 +70,7 @@ public class DeliveryController {
 	 
 	
 	 public String renderToShipperForms(HttpSession session, Model model, List<Invoice> invoiceList, String page) {
-		 Account currentAccount = (Account)session.getAttribute("currentAccount");
+		 Account currentAccount = (Account)session.getAttribute("currentuser");
 			
 			if(currentAccount != null && currentAccount.getRole().equals("shipper")) {
 				currrentShipper = staffRepo.getStaffByAccountId(currentAccount.getId());
@@ -76,6 +78,7 @@ public class DeliveryController {
 				model.addAttribute("invoiceList", invoiceList);
 			    model.addAttribute("curentcusImage",currrentShipper.convertByteImamgeToBase64String());
 			    model.addAttribute("curentcusName",currrentShipper.getName());
+			    
 			    if(page.contains("delivery-process")) {
 			    	return "delivery-process";
 			    } else return "shipper-home";
@@ -88,7 +91,7 @@ public class DeliveryController {
 	 
 	 
 	 public String renderToDeliveryReportForm(HttpSession session, Model model, int deliId) {
-		 Account currentAccount = (Account)session.getAttribute("currentAccount");
+		 Account currentAccount = (Account)session.getAttribute("currentuser");
 			
 			if(currentAccount != null) {
 				Staff currrentShipper = staffRepo.getStaffByAccountId(currentAccount.getId());
@@ -158,9 +161,13 @@ public class DeliveryController {
 		if(shipperComment.equals("successful delivery")){
 			deliveryStatus = "success";
 			invoiceDeliStatus = "shipped";
-		} else {
+		} else if(shipperComment.equals("customer does not receive the item")){
 			deliveryStatus = "failed";
 			invoiceDeliStatus = "cancel";
+		}
+		else {
+			deliveryStatus = "failed";
+			invoiceDeliStatus = "shipping";
 		}
 		
 		currentInvoice.setReason(shipperComment);
@@ -173,6 +180,7 @@ public class DeliveryController {
 		deliveryRepo.save(currentDelivery);
 		invoiceRepo.save(currentInvoice);
 		
-		return renderToDeliveryReportForm(session, model, deliveryId);
+//		return renderToDeliveryReportForm(session, model, deliveryId);
+		return "redirect:/delivery-process";
 	}
 }

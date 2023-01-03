@@ -36,7 +36,7 @@ public class CartController {
     @Autowired
     ProductRepository productRepo;
     
-    static CustomerCart customerCart = new CustomerCart();
+    CustomerCart customerCart = new CustomerCart();
     
     
     public String getCartInfo(HttpSession session, Model model, int customerId, boolean[] globalCheckedCartArr, CustomerCart customerCart) {

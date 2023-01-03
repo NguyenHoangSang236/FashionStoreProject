@@ -39,7 +39,7 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Integer> {
 	List<Invoice> getPackingCodInvoices();
 	
 	
-	@Query(value = "select * from invoice i join delivery d on i.id = d.invoice_id where shipper_id = :idVal and current_status = 'shipping'", nativeQuery = true)
+	@Query(value = "select * from invoice i join delivery d on i.id = d.invoice_id where shipper_id = :idVal and delivery_status = 'shipping'", nativeQuery = true)
 	List<Invoice> getShipperInvoicesList(@Param("idVal") int id);
 	
 	

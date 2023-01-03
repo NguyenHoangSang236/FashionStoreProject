@@ -115,6 +115,9 @@ public class CheckOutController {
 	    if(currentAccount != null  && currentAccount.getRole().equals("user")) {
 	    	if(GlobalStaticValues.customerSelectedCartIdList.length > 0) {
 	    		Customer currentCustomer = customerRepo.getCustomerByAccountId(currentAccount.getId());
+	    		checkoutInfo.setCity("");
+	    		checkoutInfo.setAddress("");
+	    		checkoutInfo.setCountry("");
 	    		
 	    		model.addAttribute("curentcusImage",currentCustomer.convertByteImamgeToBase64String());
 	    		model.addAttribute("curentcusName",currentCustomer.getName());
@@ -204,7 +207,7 @@ public class CheckOutController {
                 GlobalStaticValues.message = "Thank you for buying";
 		    	String message = GlobalStaticValues.message;
 	        	model.addAttribute("message", message);
-                return "index";
+	            return "redirect:/home";
     	    }
     	    else {
     	    	GlobalStaticValues.currentPage = "/checkout";

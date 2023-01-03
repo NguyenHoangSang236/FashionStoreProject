@@ -12,7 +12,7 @@ import com.example.demo.entity.Delivery;
 
 @Repository
 public interface DeliveryRepository extends JpaRepository<Delivery, Integer>{
-	@Query(value = "select * from delivery where shipper_id = :idVal and current_status = 'shipping'", nativeQuery = true)
+	@Query(value = "select * from delivery d join invoice i on d.invoice_id = i.id where shipper_id = :idVal and delivery_status = 'shipping'", nativeQuery = true)
 	List<Delivery> getShippingDeliveryListByShipperId(@Param("idVal") int id);
 	
 	

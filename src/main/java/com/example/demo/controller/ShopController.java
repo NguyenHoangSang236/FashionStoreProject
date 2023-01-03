@@ -112,18 +112,28 @@ public class ShopController {
 		if(avaiCart != null) {
 			cartQuantity += avaiCart.getQuantity();
 			cartId = avaiCart.getId();
+			
+			//if available quantity of product > selected product quantity --> save cart
+			if(availableQuantity > avaiCart.getQuantity()) {
+				avaiCart.setQuantity(cartQuantity);
+				cartRepo.save(avaiCart);
+				GlobalStaticValues.message = "Added 1 " + product.getColor() + " " + product.getName() + " with size " + product.getSize().toUpperCase() + " in your cart";
+			} else {
+				GlobalStaticValues.message = "Oops! We are having only " + String.valueOf(availableQuantity) + " available products";
+				System.out.println(GlobalStaticValues.message);
+			}
 		}
+		else {
+			if(availableQuantity > 1) {
+				Cart newCartItem = new Cart(cartId, cartQuantity, 0, 0, customer, product);
 
-		//if available quantity of product > selected product quantity --> save cart
-		if(availableQuantity > avaiCart.getQuantity()) {
-			avaiCart.setQuantity(cartQuantity);
-			cartRepo.save(avaiCart);
-			GlobalStaticValues.message = "Added 1 " + product.getColor() + " " + product.getName() + " with size " + product.getSize().toUpperCase() + " in your cart";
-		} else {
-			GlobalStaticValues.message = "Oops! We are having only " + String.valueOf(availableQuantity) + " available products";
-			System.out.println(GlobalStaticValues.message);
+				cartRepo.save(newCartItem);
+				GlobalStaticValues.message = "Added 1 " + product.getColor() + " " + product.getName() + " with size " + product.getSize().toUpperCase() + " in your cart";
+			} else {
+				GlobalStaticValues.message = "Oops! We are having only " + String.valueOf(availableQuantity) + " available products";
+				System.out.println(GlobalStaticValues.message);
+			}
 		}
-		
     }
     
     

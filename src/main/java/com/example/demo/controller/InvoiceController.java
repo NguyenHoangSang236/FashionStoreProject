@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.example.demo.entity.Account;
 import com.example.demo.entity.Customer;
@@ -29,7 +30,7 @@ import com.example.demo.service.InvoiceService;
 import com.example.demo.util.GlobalStaticValues;
 import com.example.demo.util.ValueRender;
 
-
+@SessionAttributes("currentuser")
 @Controller
 public class InvoiceController {
 	@Autowired
