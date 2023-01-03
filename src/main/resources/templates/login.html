@@ -11,15 +11,10 @@
 </head>
 
 <body th:onload="showToast()" class="has-background-transparent">
-    <div id="snackbar">Chao mung den voi cua hang</div>
+    <div id="snackbar">Welcome to Fool!sh !!</div>
     <div th:if="${message} != null" id="snackbar" th:text="${message}"></div>
     <img src="https://c8.alamy.com/comp/KRC3CA/women-clothes-in-front-with-store-background-in-paris-KRC3CA.jpg" alt=""
-        style="position: fixed;
-                            z-index: -100;
-                            top: 0;
-                            width:100%;
-                            filter: blur(8px);
-                            -webkit-filter: blur(4px);">
+        style="position: fixed; z-index: -100; top: 0; width:100%; filter: blur(8px); -webkit-filter: blur(4px);">
     <div>
         <form name="loginForm" class="sign-in" th:action="@{/loginpage}" method="post" th:object="${loginPage}" >
             <div class="cont mt-6">
