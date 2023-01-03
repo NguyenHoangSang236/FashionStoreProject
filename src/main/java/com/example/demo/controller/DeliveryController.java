@@ -68,10 +68,10 @@ public class DeliveryController {
 	 
 	
 	 public String renderToShipperForms(HttpSession session, Model model, List<Invoice> invoiceList, String page) {
-		 Account currentUser = (Account)session.getAttribute("currentuser");
+		 Account currentAccount = (Account)session.getAttribute("currentAccount");
 			
-			if(currentUser != null) {
-				currrentShipper = staffRepo.getStaffByAccountId(currentUser.getId());
+			if(currentAccount != null && currentAccount.getRole().equals("shipper")) {
+				currrentShipper = staffRepo.getStaffByAccountId(currentAccount.getId());
 			    				
 				model.addAttribute("invoiceList", invoiceList);
 			    model.addAttribute("curentcusImage",currrentShipper.convertByteImamgeToBase64String());
@@ -88,10 +88,10 @@ public class DeliveryController {
 	 
 	 
 	 public String renderToDeliveryReportForm(HttpSession session, Model model, int deliId) {
-		 Account currentUser = (Account)session.getAttribute("currentuser");
+		 Account currentAccount = (Account)session.getAttribute("currentAccount");
 			
-			if(currentUser != null) {
-				Staff currrentShipper = staffRepo.getStaffByAccountId(currentUser.getId());
+			if(currentAccount != null) {
+				Staff currrentShipper = staffRepo.getStaffByAccountId(currentAccount.getId());
 			    
 				currentDelivery = deliveryRepo.getDeiveryByIdAndShipperId(deliId, currrentShipper.getId());
 				currentInvoice = currentDelivery.getInvoice();

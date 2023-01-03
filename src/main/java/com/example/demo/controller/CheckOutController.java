@@ -97,6 +97,13 @@ public class CheckOutController {
 		}
 		
 		GlobalStaticValues.message = "Place order successfully !!";
+		System.out.println(GlobalStaticValues.message);
+		
+		customer.setAddress(checkoutInfo.getAddress());
+		customer.setCity(checkoutInfo.getCity());
+		customer.setCountry(checkoutInfo.getCountry());
+		
+		customerRepo.save(customer);
 	}
 	
 	
@@ -105,7 +112,7 @@ public class CheckOutController {
     	Account currentAccount = (Account)session.getAttribute("currentuser");
 	    
     	//check customer logged in or not
-	    if(currentAccount != null) {
+	    if(currentAccount != null  && currentAccount.getRole().equals("user")) {
 	    	if(GlobalStaticValues.customerSelectedCartIdList.length > 0) {
 	    		Customer currentCustomer = customerRepo.getCustomerByAccountId(currentAccount.getId());
 	    		
@@ -134,42 +141,10 @@ public class CheckOutController {
     }
     
     
-    @SuppressWarnings("unused")
 	@PostMapping("/checkout")
-    public String placeOrderSubmit(HttpSession session, Model model, HttpServletRequest request,@ModelAttribute("checkoutInfo") CheckoutInfo modelCheckoutInfo, @RequestParam(required=false,value="action") String action) {
-    	//if click at Place Order button --> COD payment
-    	if(action != null) {
-    		checkoutInfo = new CheckoutInfo(GlobalStaticValues.currentCustomer.getName(), modelCheckoutInfo.getCountry(), modelCheckoutInfo.getAddress(), modelCheckoutInfo.getCity(), GlobalStaticValues.currentCustomer.getPhoneNumber(), GlobalStaticValues.currentCustomer.getEmail(), modelCheckoutInfo.getInvoiceNote(), modelCheckoutInfo.getPaymentIntentNote());
-    		
-    		Account currentAccount = (Account)session.getAttribute("currentuser");
-    	    
-        	//check customer logged in or not
-    	    if(currentAccount != null) {
-    		    Customer currentCustomer = customerRepo.getCustomerByAccountId(currentAccount.getId());
-    		    
-    		    model.addAttribute("curentcusImage",currentCustomer.convertByteImamgeToBase64String());
-    		    model.addAttribute("curentcusName",currentCustomer.getName());
-    	    
-                cartList = ValueRender.getCartListFromIdList(GlobalStaticValues.customerSelectedCartIdList, cartRepo);
-                
-                createNewInvoice(checkoutInfo, currentCustomer, cartList, "cod");
-                
-                model.addAttribute("invoiceTotal", ValueRender.formatDoubleNumber(GlobalStaticValues.customerInvoiceTotalPrice));
-                model.addAttribute("cartList", cartList);
-                model.addAttribute("checkoutInfo", checkoutInfo);
-                model.addAttribute("currentCustomer", GlobalStaticValues.currentCustomer);
-                
-                GlobalStaticValues.message = "Thank you for buying";
-		    	String message = GlobalStaticValues.message;
-	        	model.addAttribute("message", message);
-                return "index";
-    	    }
-    	    else {
-    	    	GlobalStaticValues.currentPage = "/checkout";
-    	    	return "redirect:/loginpage";
-    	    }
-    	}
-    	//if click at PayPal button --> PayPal payment
+    public String placeOrderSubmit(HttpSession session, Model model, HttpServletRequest request,@ModelAttribute("checkoutInfo") CheckoutInfo modelCheckoutInfo, @RequestParam(required=false, value="action") String action) {
+    	System.out.println(action);
+		//if click at PayPal button --> PayPal payment
 	    if(action == null) {
 	    	checkoutInfo = new CheckoutInfo(GlobalStaticValues.currentCustomer.getName(), modelCheckoutInfo.getCountry(), modelCheckoutInfo.getAddress(), modelCheckoutInfo.getCity(), GlobalStaticValues.currentCustomer.getPhoneNumber(), GlobalStaticValues.currentCustomer.getEmail(), modelCheckoutInfo.getInvoiceNote(), modelCheckoutInfo.getPaymentIntentNote());
 	    		
@@ -191,6 +166,7 @@ public class CheckOutController {
 	            model.addAttribute("checkoutInfo", checkoutInfo);
 	            model.addAttribute("currentCustomer", GlobalStaticValues.currentCustomer);
 	            
+	            GlobalStaticValues.customerInvoiceTotalPrice = 0;
 	            GlobalStaticValues.message = "Thank you for buying";
 		    	String message = GlobalStaticValues.message;
 	        	model.addAttribute("message", message);
@@ -204,7 +180,7 @@ public class CheckOutController {
 	    
     	//if click at Place Order button --> COD payment
 	    else if(action.equals("place order")) {
-    		checkoutInfo = new CheckoutInfo(GlobalStaticValues.currentCustomer.getName(), modelCheckoutInfo.getCountry(), modelCheckoutInfo.getAddress(), modelCheckoutInfo.getCity(), GlobalStaticValues.currentCustomer.getPhoneNumber(), GlobalStaticValues.currentCustomer.getEmail(), modelCheckoutInfo.getInvoiceNote(), modelCheckoutInfo.getPaymentIntentNote());
+	    	checkoutInfo = new CheckoutInfo(GlobalStaticValues.currentCustomer.getName(), modelCheckoutInfo.getCountry(), modelCheckoutInfo.getAddress(), modelCheckoutInfo.getCity(), GlobalStaticValues.currentCustomer.getPhoneNumber(), GlobalStaticValues.currentCustomer.getEmail(), modelCheckoutInfo.getInvoiceNote(), modelCheckoutInfo.getPaymentIntentNote());
     		
     		Account currentAccount = (Account)session.getAttribute("currentuser");
     	    
@@ -212,7 +188,7 @@ public class CheckOutController {
     	    if(currentAccount != null) {
     		    Customer currentCustomer = customerRepo.getCustomerByAccountId(currentAccount.getId());
     		    
-    		    model.addAttribute("curentcusImage",currentCustomer.getImage());
+    		    model.addAttribute("curentcusImage",currentCustomer.convertByteImamgeToBase64String());
     		    model.addAttribute("curentcusName",currentCustomer.getName());
     	    
                 cartList = ValueRender.getCartListFromIdList(GlobalStaticValues.customerSelectedCartIdList, cartRepo);
@@ -223,8 +199,12 @@ public class CheckOutController {
                 model.addAttribute("cartList", cartList);
                 model.addAttribute("checkoutInfo", checkoutInfo);
                 model.addAttribute("currentCustomer", GlobalStaticValues.currentCustomer);
-            	
-                return "checkout";
+                
+                GlobalStaticValues.customerInvoiceTotalPrice = 0;
+                GlobalStaticValues.message = "Thank you for buying";
+		    	String message = GlobalStaticValues.message;
+	        	model.addAttribute("message", message);
+                return "index";
     	    }
     	    else {
     	    	GlobalStaticValues.currentPage = "/checkout";

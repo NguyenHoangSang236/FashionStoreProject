@@ -85,10 +85,10 @@ public class DetailsController {
             }
         }
         
-        Account currentAcount = (Account)session.getAttribute("currentuser");
+        Account currentAccount = (Account)session.getAttribute("currentuser");
 	    
-	    if(currentAcount != null) {
-		    Customer currentCustomer = customerRepo.getCustomerByAccountId(currentAcount.getId());
+	    if(currentAccount != null && currentAccount.getRole().equals("user")) {
+		    Customer currentCustomer = customerRepo.getCustomerByAccountId(currentAccount.getId());
 		    
 	        newComment.setCustomer(currentCustomer);
 	        newComment.setProduct(productDetail);
@@ -157,7 +157,7 @@ public class DetailsController {
         		int id = cartRepo.getLastestCartId() + 1;
         		int quantity = 0;
         		
-        		Account currentAcount = (Account)session.getAttribute("currentuser");
+        		Account currentAccount = (Account)session.getAttribute("currentuser");
         		Product product = productRepo.getProductDetailsByNameAndColorAndSize(realProductName, color, modelShopDetails.getProductSize());
         		int availableQuantity = productRepo.getAvailableQuantityById(product.getId());
         		
@@ -171,7 +171,7 @@ public class DetailsController {
         		
         		//if available quantity of product > selected product quantity --> save cart
         		if(availableQuantity > quantity + modelShopDetails.getQuantity()) {
-        			Customer customer = customerRepo.getCustomerByAccountId(currentAcount.getId());
+        			Customer customer = customerRepo.getCustomerByAccountId(currentAccount.getId());
         			Cart newCart = new Cart(id, quantity + modelShopDetails.getQuantity(), 0, 0, customer, product);
         			cartRepo.save(newCart);
         			GlobalStaticValues.message = "Thank you for buying";

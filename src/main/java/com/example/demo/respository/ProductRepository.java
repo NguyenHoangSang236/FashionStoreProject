@@ -67,10 +67,10 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	List<Product> getProductsByBrand(@Param("brandVal") String brandName);
 	
 	
-	@Query(value = "select p.*"
+	@Query(value = "select p.* "
 				 + "from products p join invoices_with_products iwp on p.id = iwp.Product_ID join invoice i on iwp.Invoice_ID = i.id "
 		  		 + "where Invoice_Date <= DATE(NOW()) and Invoice_Date >= DATE(NOW() - INTERVAL 30 DAY) "
-				 + "group by name "
+				 + "group by id "
 				 + "order by (select sum(Quantity) from invoices_with_products join products on products.id = invoices_with_products.Product_ID where name = p.name) "
 				 + "desc limit 8", nativeQuery = true)
 	List<Product> get8BestSellerProducts();

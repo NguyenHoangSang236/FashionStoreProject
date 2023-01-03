@@ -250,6 +250,8 @@ input {
 }
 
 .forgot-pass {
+    margin-right: auto;
+    margin-left: auto;  
     margin-top: 15px;
     text-align: center;
     font-size: 12px;
@@ -363,4 +365,13 @@ input {
 
 .has-width-20rem {
     width: 20rem;
+}
+
+.form.sign-up::-webkit-scrollbar {
+    width: 0px;
+    display: none;
+}
+
+.form.sign-up {
+    overflow: scroll;
 }

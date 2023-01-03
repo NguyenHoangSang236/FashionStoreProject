@@ -24,27 +24,24 @@ import com.example.demo.respository.CustomerRepository;
 
 @Controller
 public class AboutController {
-	
 	@Autowired
 	CustomerRepository cusRepo;
-    Customer customer = new Customer();
     
     @Autowired
     CartRepository cartRepo;
+
+    Customer customer = new Customer();
 	
     @GetMapping("/about")
     public String showAbout(HttpSession session, Model model) {
-        
-    	Account Cuser = (Account)session.getAttribute("currentuser");
+    	Account currentUser = (Account)session.getAttribute("currentuser");
 	    
-	    if(Cuser != null) {
-	    Customer Ccustomer = cusRepo.getCustomerByAccountId(Cuser.getId());
-	    
-	    model.addAttribute("curentcusImage",Ccustomer.convertByteImamgeToBase64String());
-	    model.addAttribute("curentcusName",Ccustomer.getName());
-	    model.addAttribute("cartQuantity",cartRepo.getCartQuantityByCustomerId(Ccustomer.getId()));
-	    
-	    
+	    if(currentUser != null) {
+		    Customer currentCustomer = cusRepo.getCustomerByAccountId(currentUser.getId());
+		    
+		    model.addAttribute("curentcusImage",currentCustomer.convertByteImamgeToBase64String());
+		    model.addAttribute("curentcusName",currentCustomer.getName());
+		    model.addAttribute("cartQuantity",cartRepo.getCartQuantityByCustomerId(currentCustomer.getId()));
 	    }
         return "about";
     }

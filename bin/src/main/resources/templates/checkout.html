@@ -7,11 +7,13 @@
     <meta name="keywords" content="Male_Fashion, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Fool!st Fashion Store</title>
+    <title>Checkout</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
-    rel="stylesheet">
+        rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 
     <!-- Css Styles -->
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
@@ -22,7 +24,9 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="css/toast.css" type="text/css">
+    <link rel="stylesheet" href="CSS/cartCSS.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 </head>
 
 <body>
@@ -37,22 +41,27 @@
         <div class="offcanvas__option">
             <div class="offcanvas__links">
                 <a th:href="@{loginpage}">Sign in</a>
-                <a href="#">FAQs</a>
             </div>
             <div class="offcanvas__top__hover">
-                <span>Usd <i class="arrow_carrot-down"></i></span>
+                <span>
+                    <img src="img/user.png" alt=""> 
+                    <i class="arrow_carrot-down"></i>
+                </span>
                 <ul>
-                    <li>USD</li>
-                    <li>EUR</li>
-                    <li>USD</li>
+                    <li>
+                        <a href="#">My Profile</a>
+                    </li>
+                    <li>
+                        <a href="#">Edit Account</a>
+                    </li>
+                    <li>
+                        <a href="#">Wallet</a>
+                    </li>
                 </ul>
             </div>
         </div>
         <div class="offcanvas__nav__option">
-            <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
-            <a href="#"><img src="img/icon/heart.png" alt=""></a>
-            <a href="#"><img src="img/icon/newcart.png" alt=""> <span>0</span></a>
-            <div class="price">$0.00</div>
+            <a th:href="@{/cart-of-customer-account-id={id} (id = session.currentuser.id)}"><img src="img/icon/newcart.png" alt=""> <span>0</span></a>
         </div>
         <div id="mobile-menu-wrap"></div>
         <div class="offcanvas__text">
@@ -74,16 +83,15 @@
                     <div class="col-lg-6 col-md-5">
                         <div class="header__top__right is-flex is-justify-content-right">
                             <div class="header__top__links " style="margin-block: auto;">
-                                <a th:href="@{loginpage}">Sign in</a>
-                                <a href="#">FAQs</a>
+                                <a th:if= "${session.currentuser == null}"  th:href="@{loginpage}">Sign in</a>
                             </div>
-                            <div class="dropdown is-right is-hoverable">
+                            <div class="dropdown is-right is-hoverable" th:if= "${session.currentuser != null}" >
                                 <div class="dropdown-trigger">
                                   <div class="button dropdown-profile" aria-haspopup="true" aria-controls="dropdown-menu">
                                     <span>  
                                         <img height="30" width="30"  class="has-img-is-rouned"
-                                        src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png">
-                                        <span class="has-text-white">Username</span>    
+                                        th:src="${curentcusImage}">
+                                        <span th:if= "${session.currentuser != null}" class="has-text-white" th:text="${curentcusName}" ></span>  
                                     </span>
                                     <span class="icon is-small has-text-white">
                                         <i class="arrow_carrot-down"></i>
@@ -95,7 +103,10 @@
                                     <a class="dropdown-item" th:href="@{showaccount}">
                                       My Profile
                                     </a>
-                                    <a class="dropdown-item">
+                                    <a class="dropdown-item" th:href="@{invoice-history}">
+                                        Purchase history
+                                      </a>
+                                    <a class="dropdown-item" th:href="@{logout}">
                                         Logout
                                       </a>
                                   </div>
@@ -120,26 +131,16 @@
                         <ul>
                             <li class="active"><a th:href="@{home}">Home</a></li>
                             <li><a th:href="@{shopproduct}">Shop</a></li>
-                            <li><a href="#">Pages</a>
-                                <ul class="dropdown">
-                                    <li><a th:href="@{about}">About Us</a></li>
-                                    <li><a th:href="@{details}">Shop Details</a></li>
-                                    <li><a th:href="@{cart}">Shopping Cart</a></li>
-                                    <li><a th:href="@{checkout}">Check Out</a></li>
-                                    <li><a href="./blog-details.html">Blog Details</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="./blog.html">Blog</a></li>
+                            <li><a th:href="@{about}">About Us</a></li>
                             <li><a th:href="@{contact}">Contacts</a></li>
                         </ul>
                     </nav>
                 </div>
                 <div class="col-lg-3 col-md-3">
-                    <div class="header__nav__option">
-                        <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
-                        <a href="#"><img src="img/icon/heart.png" alt=""></a>
-                        <a href="#"><img src="img/icon/newcart.png" alt=""> <span>0</span></a>
-                        <div class="price">$0.00</div>
+                    <div class="header__nav__option" style="display: flex;
+                    justify-content: center;">
+                        <a th:if= "${session.currentuser != null}"
+                        th:href="@{/cart-of-customer-account-id={id} (id = ${session.currentuser.id})}"><img src="img/icon/newcart.png" alt=""> <span style="top:0rem" class='badge badge-warning' id='lblCartCount' th:text="${cartQuantity}"></span></a>
                     </div>
                 </div>
             </div>
@@ -156,8 +157,8 @@
                     <div class="breadcrumb__text">
                         <h4>Check Out</h4>
                         <div class="breadcrumb__links">
-                            <a href="./index.html">Home</a>
-                            <a href="./shop.html">Shop</a>
+                            <a th:href="@{home}">Home</a>
+                            <a th:href="@{shopproduct}">Shop</a>
                             <span>Check Out</span>
                         </div>
                     </div>
@@ -169,133 +170,156 @@
 
     <!-- Checkout Section Begin -->
     <section class="checkout spad">
+        <div id="snackbar">Some text some message..</div>
         <div class="container">
             <div class="checkout__form">
-                <form action="#">
+                <form id="formCheckout" action="checkout" method="post" th:object="${checkoutInfo}">
                     <div class="row">
                         <div class="col-lg-8 col-md-6">
                             <h6 class="coupon__code"><span class="icon_tag_alt"></span> Have a coupon? <a href="#">Click
-                            here</a> to enter your code</h6>
+                                    here</a> to enter your code</h6>
                             <h6 class="checkout__title">Billing Details</h6>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="checkout__input">
-                                        <p>Fist Name<span>*</span></p>
-                                        <input type="text">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="checkout__input">
-                                        <p>Last Name<span>*</span></p>
-                                        <input type="text">
-                                    </div>
-                                </div>
+                            <div class="checkout__input">
+                                <p>Full Name<span>*</span></p>
+                                <input type="text" th:field="*{fullName}" th:value="${currentCustomer.name}"
+                                    th:placeholder="${currentCustomer.name}" disabled required
+                                    title="Please edit this information at your Profile !!">
                             </div>
                             <div class="checkout__input">
                                 <p>Country<span>*</span></p>
-                                <input type="text">
+                                <input onChange={handleChangeCountry(event)} type="text" th:field="*{country}" required>
                             </div>
                             <div class="checkout__input">
                                 <p>Address<span>*</span></p>
-                                <input type="text" placeholder="Street Address" class="checkout__input__add">
-                                <input type="text" placeholder="Apartment, suite, unite ect (optinal)">
+                                <input onChange={handleChangeAdress(event)} type="text" th:field="*{address}"
+                                    placeholder="Street Address" class="checkout__input__add" required>
                             </div>
                             <div class="checkout__input">
                                 <p>Town/City<span>*</span></p>
-                                <input type="text">
-                            </div>
-                            <div class="checkout__input">
-                                <p>Country/State<span>*</span></p>
-                                <input type="text">
-                            </div>
-                            <div class="checkout__input">
-                                <p>Postcode / ZIP<span>*</span></p>
-                                <input type="text">
+                                <input onChange={handleChangeCity(event)} type="text" th:field="*{city}" required>
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Phone<span>*</span></p>
-                                        <input type="text">
+                                        <input type="text" th:field="*{phone}"
+                                            th:placeholder="${currentCustomer.phoneNumber}" disabled required
+                                            title="Please edit this information at your Profile !!">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Email<span>*</span></p>
-                                        <input type="text">
+                                        <input type="text" th:field="*{email}" th:placeholder="${currentCustomer.email}"
+                                            disabled required title="Please edit this information at your Profile !!">
                                     </div>
                                 </div>
                             </div>
-                            <div class="checkout__input__checkbox">
-                                <label for="acc">
-                                    Create an account?
-                                    <input type="checkbox" id="acc">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <p>Create an account by entering the information below. If you are a returning customer
-                                please login at the top of the page</p>
+                            <div class="checkout__input">
+                                <p>Invoice notes<span>*</span></p>
+                                <input type="text" th:field="*{invoiceNote}"
+                                    placeholder="Notes about your order, e.g. special notes for delivery.">
                             </div>
                             <div class="checkout__input">
-                                <p>Account Password<span>*</span></p>
-                                <input type="text">
-                            </div>
-                            <div class="checkout__input__checkbox">
-                                <label for="diff-acc">
-                                    Note about your order, e.g, special noe for delivery
-                                    <input type="checkbox" id="diff-acc">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                            <div class="checkout__input">
-                                <p>Order notes<span>*</span></p>
-                                <input type="text"
-                                placeholder="Notes about your order, e.g. special notes for delivery.">
+                                <p>Payment Intent notes<span>*</span></p>
+                                <input type="text" th:field="*{paymentIntentNote}"
+                                    placeholder="Notes about your intent of payment, e.g. special notes for banking payment.">
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6">
                             <div class="checkout__order">
                                 <h4 class="order__title">Your order</h4>
                                 <div class="checkout__order__products">Product <span>Total</span></div>
-                                <ul class="checkout__total__products">
-                                    <li>01. Vanilla salted caramel <span>$ 300.0</span></li>
-                                    <li>02. German chocolate <span>$ 170.0</span></li>
-                                    <li>03. Sweet autumn <span>$ 170.0</span></li>
-                                    <li>04. Cluten free mini dozen <span>$ 110.0</span></li>
+                                <ul class="checkout__total__products" th:each="cartItem, cartListState: ${cartList}">
+                                    <li th:inline="text">
+                                        [[|${cartListState.index + 1}. ${cartItem.getProduct().getName()}]]
+                                        <span th:text="|${cartItem.formatedTotalPrice()} vnd|"> </span>
+                                    </li>
                                 </ul>
                                 <ul class="checkout__total__all">
-                                    <li>Subtotal <span>$750.99</span></li>
-                                    <li>Total <span>$750.99</span></li>
+                                    <li>Total <span th:text="${invoiceTotal}"></span></li>
                                 </ul>
-                                <div class="checkout__input__checkbox">
-                                    <label for="acc-or">
-                                        Create an account?
-                                        <input type="checkbox" id="acc-or">
-                                        <span class="checkmark"></span>
-                                    </label>
+                                <button type="submit" name="action" value="place order" class="site-btn" style="margin-bottom: 5%;
+                                border-radius: 3px;">COD</button>
+                                <!-- Include the PayPal JavaScript SDK; replace "test" with your own sandbox Business account app client ID -->
+                                <script
+                                    src="https://www.paypal.com/sdk/js?client-id=AbUOzHdwitRn-mCTn1eSVZITmCGk7A1zclLoIyspZfh1cf4QrfisJY5hsIc3ACd2_RUcJHKcNTsFeWqA&currency=USD"></script>
+                                <div id="paypal">
+
                                 </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adip elit, sed do eiusmod tempor incididunt
-                                ut labore et dolore magna aliqua.</p>
-                                <div class="checkout__input__checkbox">
-                                    <label for="payment">
-                                        Check Payment
-                                        <input type="checkbox" id="payment">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                                <div class="checkout__input__checkbox">
-                                    <label for="paypal">
-                                        Paypal
-                                        <input type="checkbox" id="paypal">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                                <button type="submit" class="site-btn">PLACE ORDER</button>
+                                <script th:inline="javascript">
+                                    let amountMoney = [[${ invoiceTotal }]]
+                                    let cusName = [[${ currentCustomer.name }]]
+                                    console.log(cusName)
+                                    var address1 = ""
+                                    var city = ""
+                                    var country = ""
+                                    payMoney = amountMoney.split('.').join('')
+                                    //console.log(amountMoney)
+
+                                    function usdToVND(money) {
+                                        let moneyUsd = money / 24510
+                                        moneyUsd = Math.round(moneyUsd)
+                                        return moneyUsd
+                                    }
+                                    function handleChangeAdress(event) {
+                                        address1 = event.target.value
+                                    }
+                                    function handleChangeCity(event) {
+                                        city = event.target.value
+                                    }
+                                    function handleChangeCountry(event) {
+                                        country = event.target.value
+                                        console.log(city, country)
+                                    }
+
+                                    paypal.Buttons({
+
+                                        createOrder: function (data, actions) {
+                                            return actions.order.create({
+                                                purchase_units: [{
+                                                    amount: {
+                                                        value: usdToVND(payMoney),
+                                                    },
+                                                    shipping: {
+                                                        name: {
+                                                            full_name: cusName
+                                                        },
+                                                        address: {
+                                                            address_line_1: address1,
+                                                            admin_area_2: city,
+                                                            postal_code: country,
+                                                            country_code: "VN"
+                                                        },
+                                                    }
+
+                                                }]
+                                            });
+                                        },
+
+                                        onApprove: function (data, actions) {
+                                            return actions.order.capture().then(function (orderData) {
+
+                                                document.getElementById("formCheckout").submit();
+
+                                            });
+                                        }
+                                    }).render('#paypal');
+
+                                </script>
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
+        <script th:inline="javascript">
+            function myFunction() {
+                var x = document.getElementById("snackbar");
+                x.className = "show";
+                setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+            }
+        </script>
     </section>
     <!-- Checkout Section End -->
 
@@ -356,7 +380,7 @@
                                 document.write(new Date().getFullYear());
                             </script>2020
                             All rights reserved | This template is made with <i class="fa fa-heart-o"
-                            aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                                aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
                         </p>
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                     </div>

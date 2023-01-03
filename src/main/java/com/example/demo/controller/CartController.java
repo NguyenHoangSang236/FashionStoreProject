@@ -47,7 +47,7 @@ public class CartController {
         
         Account currentAccount = (Account)session.getAttribute("currentuser");
         //check customer logged in or not
-        if(currentAccount != null)
+        if(currentAccount != null  && currentAccount.getRole().equals("user"))
         {   
         	Customer currentCustomer = customerRepo.getCustomerByAccountId(currentAccount.getId());
     	    

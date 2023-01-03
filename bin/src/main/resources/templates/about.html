@@ -21,131 +21,129 @@
     <link rel="stylesheet" href="css/nice-select.css" type="text/css">
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="CSS/cartCSS.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 </head>
 
 <body>
-    <!-- Page Preloder -->
-    <div id="preloder">
-        <div class="loader"></div>
-    </div>
+<!-- Page Preloder -->
+<div id="preloder">
+    <div class="loader"></div>
+</div>
 
-    <!-- Offcanvas Menu Begin -->
-    <div class="offcanvas-menu-overlay"></div>
-    <div class="offcanvas-menu-wrapper">
-        <div class="offcanvas__option">
-            <div class="offcanvas__links">
-                <a th:href="@{loginpage}">Sign in</a>
-                <a href="#">FAQs</a>
-            </div>
-            <div class="offcanvas__top__hover">
-                <span>Usd <i class="arrow_carrot-down"></i></span>
-                <ul>
-                    <li>USD</li>
-                    <li>EUR</li>
-                    <li>USD</li>
-                </ul>
-            </div>
+<!-- Offcanvas Menu Begin -->
+<div class="offcanvas-menu-overlay"></div>
+<div class="offcanvas-menu-wrapper">
+    <div class="offcanvas__option">
+        <div class="offcanvas__links">
+            <a th:href="@{loginpage}">Sign in</a>
         </div>
-        <div class="offcanvas__nav__option">
-            <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
-            <a href="#"><img src="img/icon/heart.png" alt=""></a>
-            <a href="#"><img src="img/icon/newcart.png" alt=""> <span>0</span></a>
-            <div class="price">$0.00</div>
-        </div>
-        <div id="mobile-menu-wrap"></div>
-        <div class="offcanvas__text">
-            <p></p>
+        <div class="offcanvas__top__hover">
+            <span>
+                <img src="img/user.png" alt=""> 
+                <i class="arrow_carrot-down"></i>
+            </span>
+            <ul>
+                <li>
+                    <a href="#">My Profile</a>
+                </li>
+                <li>
+                    <a href="#">Edit Account</a>
+                </li>
+                <li>
+                    <a href="#">Wallet</a>
+                </li>
+            </ul>
         </div>
     </div>
-    <!-- Offcanvas Menu End -->
+    <div class="offcanvas__nav__option">
+        <a th:href="@{/cart-of-customer-account-id={id} (id = session.currentuser.id)}"><img src="img/icon/newcart.png" alt=""> <span>0</span></a>
+    </div>
+    <div id="mobile-menu-wrap"></div>
+    <div class="offcanvas__text">
+        <p></p>
+    </div>
+</div>
+<!-- Offcanvas Menu End -->
 
-    <!-- Header Section Begin -->
-    <header class="header">
-        <div class="header__top">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 col-md-7">
-                        <div class="header__top__left">
-                            <p></p>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-5">
-                        <div class="header__top__right is-flex is-justify-content-right">
-                            <div class="header__top__links " style="margin-block: auto;">
-                                <a th:href="@{loginpage}">Sign in</a>
-                                <a href="#">FAQs</a>
-                            </div>
-                            <div class="dropdown is-right is-hoverable">
-                                <div class="dropdown-trigger">
-                                  <div class="button dropdown-profile" aria-haspopup="true" aria-controls="dropdown-menu">
-                                    <span>  
-                                        <img height="30" width="30"  class="has-img-is-rouned"
-                                        src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png">
-                                        <span class="has-text-white">Username</span>    
-                                    </span>
-                                    <span class="icon is-small has-text-white">
-                                        <i class="arrow_carrot-down"></i>
-                                    </span>
-                                  </div>
-                                </div>
-                                <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                                  <div class="dropdown-content">
-                                    <a class="dropdown-item" th:href="@{showaccount}">
-                                      My Profile
-                                    </a>
-                                    <a class="dropdown-item">
-                                        Logout
-                                      </a>
-                                  </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!-- Header Section Begin -->
+<header class="header">
+    <div class="header__top">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3 col-md-3">
-                    <div class="header__logo">
-                        <a th:href="@{home}">                            <div class="logo-shop">
-                                Fool!st.
-                            </div></a>
+                <div class="col-lg-6 col-md-7">
+                    <div class="header__top__left">
+                        <p></p>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6">
-                    <nav class="header__menu mobile-menu">
-                        <ul>
-                            <li class="active"><a th:href="@{home}">Home</a></li>
-                            <li><a th:href="@{shopproduct}">Shop</a></li>
-                            <li><a href="#">Pages</a>
-                                <ul class="dropdown">
-                                    <li><a th:href="@{about}">About Us</a></li>
-                                    <li><a th:href="@{details}">Shop Details</a></li>
-                                    <li><a th:href="@{cart}">Shopping Cart</a></li>
-                                    <li><a th:href="@{checkout}">Check Out</a></li>
-                                    <li><a href="./blog-details.html">Blog Details</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="./blog.html">Blog</a></li>
-                            <li><a th:href="@{contact}">Contacts</a></li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="col-lg-3 col-md-3">
-                    <div class="header__nav__option">
-                        <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
-                        <a href="#"><img src="img/icon/heart.png" alt=""></a>
-                        <a href="#"><img src="img/icon/newcart.png" alt=""> <span>0</span></a>
-                        <div class="price">$0.00</div>
+                <div class="col-lg-6 col-md-5">
+                    <div class="header__top__right is-flex is-justify-content-right">
+                        <div class="header__top__links " style="margin-block: auto;">
+                            <a th:if= "${session.currentuser == null}"  th:href="@{loginpage}">Sign in</a>
+                        </div>
+                        <div class="dropdown is-right is-hoverable" th:if= "${session.currentuser != null}" >
+                            <div class="dropdown-trigger">
+                              <div class="button dropdown-profile" aria-haspopup="true" aria-controls="dropdown-menu">
+                                <span>  
+                                    <img height="30" width="30"  class="has-img-is-rouned"
+                                    th:src="${curentcusImage}">
+                                    <span th:if= "${session.currentuser != null}" class="has-text-white" th:text="${curentcusName}" ></span>  
+                                </span>
+                                <span class="icon is-small has-text-white">
+                                    <i class="arrow_carrot-down"></i>
+                                </span>
+                              </div>
+                            </div>
+                            <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                              <div class="dropdown-content">
+                                <a class="dropdown-item" th:href="@{showaccount}">
+                                  My Profile
+                                </a>
+                                <a class="dropdown-item" th:href="@{invoice-history}">
+                                    Purchase history
+                                  </a>
+                                <a class="dropdown-item" th:href="@{logout}">
+                                    Logout
+                                  </a>
+                              </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="canvas__open"><i class="fa fa-bars"></i></div>
         </div>
-    </header>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3">
+                <div class="header__logo">
+                    <a th:href="@{home}">                            <div class="logo-shop">
+                            Fool!st.
+                        </div></a>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <nav class="header__menu mobile-menu">
+                    <ul>
+                        <li><a th:href="@{home}">Home</a></li>
+                        <li><a th:href="@{shopproduct}">Shop</a></li>
+                        <li class="active"><a th:href="@{about}">About Us</a></li>
+                        <li><a th:href="@{contact}">Contacts</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-3 col-md-3">
+                <div class="header__nav__option" style="display: flex;
+                justify-content: center;">
+                    <a th:if= "${session.currentuser != null}"
+                    th:href="@{/cart-of-customer-account-id={id} (id = ${session.currentuser.id})}"><img src="img/icon/newcart.png" alt=""> <span style="top:0rem" class='badge badge-warning' id='lblCartCount' th:text="${cartQuantity}"></span></a>
+                </div>
+            </div>
+        </div>
+        <div class="canvas__open"><i class="fa fa-bars"></i></div>
+    </div>
+</header>
     <!-- Header Section End -->
 
     <!-- Breadcrumb Section Begin -->
@@ -156,7 +154,7 @@
                     <div class="breadcrumb__text">
                         <h4>About Us</h4>
                         <div class="breadcrumb__links">
-                            <a href="./index.html">Home</a>
+                            <a th:href="@{home}">Home</a>
                             <span>About Us</span>
                         </div>
                     </div>
@@ -210,16 +208,15 @@
                 <div class="col-lg-6 p-0">
                     <div class="testimonial__text">
                         <span class="icon_quotations"></span>
-                        <p>“Going out after work? Take your butane curling iron with you to the office, heat it up,
-                            style your hair before you leave the office and you won’t have to make a trip back home.”
+                        <p>Sản phẩm của chúng tôi rất là tuyệt vời!!!
                         </p>
                         <div class="testimonial__author">
                             <div class="testimonial__author__pic">
-                                <img src="img/about/testimonial-author.jpg" alt="">
+                                <img src="img/about/team-3.jpg" alt="">
                             </div>
                             <div class="testimonial__author__text">
-                                <h5>Augusta Schultz</h5>
-                                <p>Fashion Design</p>
+                                <h5>Nguyễn Anh Đức</h5>
+                                <p>C.E.O</p>
                             </div>
                         </div>
                     </div>
@@ -285,33 +282,27 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" style="display: flex;
+            justify-content: space-around;">
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="team__item">
-                        <img src="img/about/team-1.jpg" alt="">
-                        <h4>John Smith</h4>
-                        <span>Fashion Design</span>
+                        <img style="max-width: 260px; max-height: 300px ; width: auto; height: auto;" src="img/about/team-1.jpg" alt="">
+                        <h4>Nguyễn Hoàng Sang</h4>
+                        <span>Thằng ngu số 1</span>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="team__item">
-                        <img src="img/about/team-2.jpg" alt="">
-                        <h4>Christine Wise</h4>
+                        <img style="max-width: 260px; max-height: 300px; width: auto; height: auto;" src="img/about/team-2.jpg" alt="">
+                        <h4>Phạm Hoàng Phúc</h4>
+                        <span>Thằng ngu số 2</span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="team__item">
+                        <img style="max-width: 260px; max-height: 300px; width: auto; height: auto;" src="img/about/team-3.jpg" alt="">
+                        <h4>Nguyễn Anh Đức</h4>
                         <span>C.E.O</span>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="team__item">
-                        <img src="img/about/team-3.jpg" alt="">
-                        <h4>Sean Robbins</h4>
-                        <span>Manager</span>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="team__item">
-                        <img src="img/about/team-4.jpg" alt="">
-                        <h4>Lucy Myers</h4>
-                        <span>Delivery</span>
                     </div>
                 </div>
             </div>

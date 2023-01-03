@@ -37,12 +37,11 @@ public class ContactController {
     	Account Cuser = (Account)session.getAttribute("currentuser");
 	    
 	    if(Cuser != null) {
-	    Customer Ccustomer = cusRepo.getCustomerByAccountId(Cuser.getId());
-	    
-	    model.addAttribute("curentcusImage",Ccustomer.convertByteImamgeToBase64String());
-	    model.addAttribute("curentcusName",Ccustomer.getName());
-	    model.addAttribute("cartQuantity",cartRepo.getCartQuantityByCustomerId(Ccustomer.getId()));
-	    
+		    Customer Ccustomer = cusRepo.getCustomerByAccountId(Cuser.getId());
+		    
+		    model.addAttribute("curentcusImage",Ccustomer.convertByteImamgeToBase64String());
+		    model.addAttribute("curentcusName",Ccustomer.getName());
+		    model.addAttribute("cartQuantity",cartRepo.getCartQuantityByCustomerId(Ccustomer.getId()));
 	    }
         return "contact";
 }

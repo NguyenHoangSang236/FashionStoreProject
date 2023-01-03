@@ -61,7 +61,7 @@ public class InvoiceController {
 		Account currentAccount = (Account)session.getAttribute("currentuser");
 		GlobalStaticValues.currentPage = "/invoice-control";
 		
-		if(currentAccount != null) {
+		if(currentAccount != null && currentAccount.getRole().equals("admin")) {
 			mngInvoiceList = invoiceRepo.getAllInvoices();
 			isInvoiceAcceptanceForm = false;
 			
@@ -81,7 +81,7 @@ public class InvoiceController {
 		Account currentAccount = (Account)session.getAttribute("currentuser");
 		GlobalStaticValues.currentPage = "/invoice-cod-accept";
 		
-		if(currentAccount != null) {
+		if(currentAccount != null && currentAccount.getRole().equals("admin")) {
 			mngInvoiceList = invoiceRepo.getWaitingCodInvoices();
 			isInvoiceAcceptanceForm = true;
 			
@@ -100,7 +100,7 @@ public class InvoiceController {
 	public String waitingCodInvoicesEvent(HttpSession session, Model model, HttpServletRequest request, @RequestParam(value="action") String action) {
 		Account currentAccount = (Account)session.getAttribute("currentuser");
 		
-		if(currentAccount != null) {
+		if(currentAccount != null && currentAccount.getRole().equals("admin")) {
 			isInvoiceAcceptanceForm = true;
 			
 			if(action.contains("accept invoice")) {
@@ -142,7 +142,7 @@ public class InvoiceController {
 		Account currentAccount = (Account)session.getAttribute("currentuser");
 		GlobalStaticValues.currentPage = "/invoice-cod-accept";
 		
-		if(currentAccount != null) {
+		if(currentAccount != null && currentAccount.getRole().equals("admin")) {
 			if (filter.equals("shipping")){
 				mngInvoiceList = invoiceRepo.getShippingInvoicesList();	
 			}
@@ -176,7 +176,7 @@ public class InvoiceController {
 		Account currentAccount = (Account)session.getAttribute("currentuser");
 	    GlobalStaticValues.currentPage = "/invoice-history";
 		
-	    if(currentAccount != null) {
+	    if(currentAccount != null  && currentAccount.getRole().equals("user")) {
 	    	Customer currentCustomer = cusRepo.getCustomerByAccountId(currentAccount.getId());
 	    	
 	    	customerInvoiceHistoryList = invoiceRepo.getPaymentHistoryByCustomerId(currentCustomer.getId());
@@ -274,24 +274,4 @@ public class InvoiceController {
 			return "redirect:/loginpage";
 		}
     }
-	
-	
-	
-//	@GetMapping("/invoice-details-id={id}")
-//	public String invoiceDetailsAdmin(HttpSession session,Model model, HttpServletRequest request, @PathVariable("id") int invoiceId) {
-//		Account currentAccount = (Account)session.getAttribute("currentuser");
-//		//GlobalStaticValues.currentPage = "/invoice-details-id=" + invoiceId;
-//		
-//	    if(currentAccount != null) {
-//	    	Customer currentCustomer = cusRepo.getCustomerByAccountId(currentAccount.getId());
-//	    	
-//	    	//Invoice selectedInvoice = invoiceRepo.getInvoiceById(invoiceId);
-//	    	
-//	    	return "invoice-delivery-details";
-//	    }
-//	    else {
-//			return "redirect:/loginpage";
-//		}
-//	    
-//    }
 }

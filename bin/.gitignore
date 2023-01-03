@@ -31,3 +31,13 @@ build/
 
 ### VS Code ###
 .vscode/
+/.gitignore
+/.metadata/
+/.mvn/
+/README.md
+/database/
+/fashion-store-website-d28d07cd42be.p12
+/mvnw
+/mvnw.cmd
+/pom.xml
+/src/

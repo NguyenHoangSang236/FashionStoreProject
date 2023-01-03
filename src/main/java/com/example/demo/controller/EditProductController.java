@@ -61,7 +61,7 @@ public class EditProductController {
 	public String renderEditProduct(Model model, HttpSession session, Product selectedProduct) {
 		currentAccount = (Account)session.getAttribute("currentuser");
 		
-		if(currentAccount != null) {
+		if(currentAccount != null && currentAccount.getRole().equals("admin")) {
 			List<Catalog> cateList = catalogRepo.getAllCatalogs();
 			List<Catalog> productCateList = catalogRepo.getCatalogsByProductName(selectedProduct.getName());
 			

@@ -48,7 +48,7 @@ public class AccountManagement {
 	public String renderToAccountManagement(Model model, HttpSession session, String action) {
 		Account currentAccount = (Account)session.getAttribute("currentuser");
 		
-		if(currentAccount != null) {
+		if(currentAccount != null && currentAccount.getRole() == "admin") {
 			if(action != null) {
 				int selectedAccId = Integer.valueOf(action);
 				
@@ -92,10 +92,7 @@ public class AccountManagement {
 	@GetMapping("/editcustomer-id={uID}")
 	public String showEditAccount(Model model, @PathVariable("uID") int uID ) {
 		
-		System.out.println(uID);
 		accountEdited = accRepo.findByUserID(uID);
-		System.out.println(accountEdited.getRole());
-		System.out.println(accountEdited.getId());
 		model.addAttribute("customerAccount",accountEdited);
 		model.addAttribute("accObj",accountEdited);
 		

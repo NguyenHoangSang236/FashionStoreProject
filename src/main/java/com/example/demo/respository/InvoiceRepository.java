@@ -31,7 +31,7 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Integer> {
 	List<Invoice> getOnlinePaymentInvoices();
 	
 	
-	@Query(value = "select * from invoice where Payment_Method = 'cod' and admin_acceptance = 'waiting'", nativeQuery = true)
+	@Query(value = "select * from invoice where Payment_Method = 'cod' and admin_acceptance = 'waiting' and delivery_status <> 'not shipped'", nativeQuery = true)
 	List<Invoice> getWaitingCodInvoices();
 	
 	

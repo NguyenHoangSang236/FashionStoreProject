@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,6 @@ import com.example.demo.respository.AccountRepository;
 import com.example.demo.respository.CartRepository;
 import com.example.demo.respository.CustomerRepository;
 import com.example.demo.util.GlobalStaticValues;
-import com.example.demo.util.ValueRender;
 
 
 @SessionAttributes("currentuser")
@@ -31,28 +29,25 @@ public class AccountController {
 	CustomerRepository cusRepo;
 	
 	@Autowired
-	LoginPageController currentUser;
-	
-	@Autowired
     CartRepository cartRepo;
 	
 	Account account = new Account();
 	Customer customer = new Customer();
 	Account accountEdited;
-
+	Account currentAccount;
 	
 	public String showMyProfileForm(HttpSession session,Model model) {
-		Account currentuser = (Account)session.getAttribute("currentuser");
-		accountEdited = currentuser;
+		currentAccount = (Account)session.getAttribute("currentuser");
 		
-	    if (currentuser != null) {
-	    	Customer accountDetail = cusRepo.getCustomerByAccountId(currentuser.getId());
+	    if (currentAccount != null) {
+	    	Customer accountDetail = cusRepo.getCustomerByAccountId(currentAccount.getId());
 	 		model.addAttribute("Ccustomer", accountDetail);
-	 		model.addAttribute("accObj", currentuser);
-	 		model.addAttribute("curentcusName",currentuser.getCustomer().getName());
-	 		model.addAttribute("curentcusImage",currentuser.getCustomer().convertByteImamgeToBase64String());
+	 		model.addAttribute("accObj", currentAccount);
+	 		model.addAttribute("curentcusName",currentAccount.getCustomer().getName());
+	 		model.addAttribute("curentcusImage",currentAccount.getCustomer().convertByteImamgeToBase64String());
 	 		model.addAttribute("cartQuantity",cartRepo.getCartQuantityByCustomerId(accountDetail.getId()));
-	 		
+
+	 		accountEdited = currentAccount;
 	    }
 	    else {
 	    	return "redirect:/loginpage";
@@ -61,17 +56,6 @@ public class AccountController {
         return "user-detail";
 	}
 	
-	
-//	@PostMapping("/account")
-//	public Account saveAccount(@Validated @RequestBody Account account) {
-//		return accRepo.save(account);
-//	}
-//	
-//	@GetMapping("/account")
-//	public List<Account> allAccount() {
-//		return accRepo.findAll();
-//	}
-
 	
 	@GetMapping("/showaccount")
     public String showAbout(HttpSession session, Model model) {
@@ -84,8 +68,13 @@ public class AccountController {
 	public String saveEditAccount(Model model, @ModelAttribute("accObj") Account accountObj, HttpSession session) {
 		customer = cusRepo.getCustomerById(accountEdited.getCustomer().getId());
 		
-//		System.out.println(accountObj.getCustomer().getName());
-//		System.out.println(accountObj.getCustomer().getEmail());
+		System.out.println(accountObj.getCustomer().getName());
+		System.out.println(accountObj.getCustomer().getImage());
+		System.out.println(accountObj.getCustomer().getEmail());
+		System.out.println(accountObj.getCustomer().getPhoneNumber());
+		System.out.println(accountObj.getUserName());
+		System.out.println(accountObj.getPassword());
+		
 		customer.setName(accountObj.getCustomer().getName());
 		customer.setImage(accountObj.getCustomer().getImage());
 		customer.setEmail(accountObj.getCustomer().getEmail());
@@ -94,10 +83,9 @@ public class AccountController {
 		accountEdited.setUserName(accountObj.getUserName());
 		accountEdited.setPassword(accountObj.getPassword());
 		accountEdited.setCustomer(customer);
-//		System.out.println(ValueRender.convertByteToString(accountObj.getCustomer().getImage()));
-//		System.out.println("..." + ValueRender.formattedInputString(accountObj.getCustomer().getName()) + "...");
 		
 		accRepo.save(accountEdited);
+		
 		GlobalStaticValues.message = "Edited personal information";
     	String message = GlobalStaticValues.message;
     	model.addAttribute("message", message);

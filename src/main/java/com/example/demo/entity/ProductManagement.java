@@ -61,8 +61,14 @@ public class ProductManagement {
         this.product = product;
     }
     
+    public ProductManagement(Date importDate, int importQuantity, Product product) {
+		super();
+		this.importDate = importDate;
+		this.importQuantity = importQuantity;
+		this.product = product;
+	}
 
-    public int getId() {
+	public int getId() {
         return id;
     }
 

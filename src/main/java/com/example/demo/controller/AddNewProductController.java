@@ -36,7 +36,7 @@ public class AddNewProductController {
 	public String renderToAddNewProduct(Model model, HttpSession session) {
 		currentAccount = (Account)session.getAttribute("currentuser");
 		
-		if(currentAccount != null) {
+		if(currentAccount != null && currentAccount.getRole().equals("admin")) {
 	    	List<Catalog> cateList = catalogRepo.getAllCatalogs();
 
 	    	model.addAttribute("cateList", cateList);

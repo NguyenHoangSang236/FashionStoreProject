@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -18,8 +20,10 @@ import com.example.demo.entity.Account;
 import com.example.demo.entity.Cart;
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.Product;
+import com.example.demo.entity.ProductManagement;
 import com.example.demo.respository.CartRepository;
 import com.example.demo.respository.CustomerRepository;
+import com.example.demo.respository.ProductManagementRepository;
 import com.example.demo.respository.ProductRepository;
 import com.example.demo.util.GlobalStaticValues;
 
@@ -36,6 +40,9 @@ public class IndexPageController {
     @Autowired
     CartRepository cartRepo;
     
+    @Autowired
+    ProductManagementRepository productManagementRepo;
+    
     Customer customer = new Customer();
     
     Integer[] ratingStarArr = {1,2,3,4,5};
@@ -48,12 +55,12 @@ public class IndexPageController {
 	    
 	    Account currentAccount = (Account)session.getAttribute("currentuser");
 	    
-	    if(currentAccount != null) {
-	    Customer currentCustomer = cusRepo.getCustomerByAccountId(currentAccount.getId());
-	    
-	    model.addAttribute("curentcusImage",currentCustomer.convertByteImamgeToBase64String());
-	    model.addAttribute("curentcusName",currentCustomer.getName());
-	    model.addAttribute("cartQuantity",cartRepo.getCartQuantityByCustomerId(currentCustomer.getId()));
+	    if(currentAccount != null && currentAccount.getRole().equals("user")) {
+		    Customer currentCustomer = cusRepo.getCustomerByAccountId(currentAccount.getId());
+		    
+		    model.addAttribute("curentcusImage",currentCustomer.convertByteImamgeToBase64String());
+		    model.addAttribute("curentcusName",currentCustomer.getName());
+		    model.addAttribute("cartQuantity",cartRepo.getCartQuantityByCustomerId(currentCustomer.getId()));
 	    }
 
 	    model.addAttribute("ratingStarArr", ratingStarArr);
@@ -77,16 +84,27 @@ public class IndexPageController {
 		if(avaiCart != null) {
 			cartQuantity += avaiCart.getQuantity();
 			cartId = avaiCart.getId();
+			
+			//if available quantity of product > selected product quantity --> save cart
+			if(availableQuantity > avaiCart.getQuantity()) {
+				avaiCart.setQuantity(cartQuantity);
+				cartRepo.save(avaiCart);
+				GlobalStaticValues.message = "Added 1 " + product.getColor() + " " + product.getName() + " with size " + product.getSize().toUpperCase() + " in your cart";
+			} else {
+				GlobalStaticValues.message = "Oops! We are having only " + String.valueOf(availableQuantity) + " available products";
+				System.out.println(GlobalStaticValues.message);
+			}
 		}
+		else {
+			if(availableQuantity > 1) {
+				Cart newCartItem = new Cart(cartId, cartQuantity, 0, 0, customer, product);
 
-		//if available quantity of product > selected product quantity --> save cart
-		if(availableQuantity > avaiCart.getQuantity()) {
-			avaiCart.setQuantity(cartQuantity);
-			cartRepo.save(avaiCart);
-			GlobalStaticValues.message = "Added 1 " + product.getColor() + " " + product.getName() + " with size " + product.getSize().toUpperCase() + " in your cart";
-		} else {
-			GlobalStaticValues.message = "Oops! We are having only " + String.valueOf(availableQuantity) + " available products";
-			System.out.println(GlobalStaticValues.message);
+				cartRepo.save(newCartItem);
+				GlobalStaticValues.message = "Added 1 " + product.getColor() + " " + product.getName() + " with size " + product.getSize().toUpperCase() + " in your cart";
+			} else {
+				GlobalStaticValues.message = "Oops! We are having only " + String.valueOf(availableQuantity) + " available products";
+				System.out.println(GlobalStaticValues.message);
+			}
 		}
     }
     
