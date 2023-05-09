@@ -10,7 +10,7 @@
 /*------------------------------------------------------------------
 [Table of contents]
 
-1.  Template default CSS
+1.  Template default css
 	1.1	Variables
 	1.2	Mixins
 	1.3	Flexbox
@@ -27,7 +27,7 @@
 -------------------------------------------------------------------*/
 
 /*----------------------------------------*/
-/* Template default CSS
+/* Template default css
 /*----------------------------------------*/
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,900&display=swap');
 
@@ -108,7 +108,7 @@ ol {
 }
 
 /*---------------------
-  Helper CSS
+  Helper css
 -----------------------*/
 
 .section-title {

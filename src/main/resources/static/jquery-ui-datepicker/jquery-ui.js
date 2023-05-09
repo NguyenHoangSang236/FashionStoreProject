@@ -176,7 +176,7 @@ function Datepicker() {
 		maxDate: null, // The latest selectable date, or null for no limit
 		duration: "fast", // Duration of display/closure
 		beforeShowDay: null, // Function that takes a date and returns an array with
-			// [0] = true if selectable, false if not, [1] = custom CSS class name(s) or "",
+			// [0] = true if selectable, false if not, [1] = custom css class name(s) or "",
 			// [2] = cell title (optional), e.g. $.datepicker.noWeekends
 		beforeShow: null, // Function that takes an input field and
 			// returns a set of custom settings for the date picker
@@ -1139,7 +1139,7 @@ $.extend( Datepicker.prototype, {
 
 	/* Set as beforeShowDay function to prevent selection of weekends.
 	 * @param  date  Date - the date to customise
-	 * @return [boolean, string] - is this date selectable?, what is its CSS class?
+	 * @return [boolean, string] - is this date selectable?, what is its css class?
 	 */
 	noWeekends: function( date ) {
 		var day = date.getDay();

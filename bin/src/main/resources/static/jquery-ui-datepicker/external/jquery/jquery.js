@@ -578,7 +578,7 @@ function isArrayLike( obj ) {
 }
 var Sizzle =
 /*!
- * Sizzle CSS Selector Engine v2.2.1
+ * Sizzle css Selector Engine v2.2.1
  * http://sizzlejs.com/
  *
  * Copyright jQuery Foundation and other contributors
@@ -663,7 +663,7 @@ var i,
 	attributes = "\\[" + whitespace + "*(" + identifier + ")(?:" + whitespace +
 		// Operator (capture 2)
 		"*([*^$|!~]?=)" + whitespace +
-		// "Attribute values must be CSS identifiers [capture 5] or strings [capture 3 or capture 4]"
+		// "Attribute values must be css identifiers [capture 5] or strings [capture 3 or capture 4]"
 		"*(?:'((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\"|(" + identifier + "))|)" + whitespace +
 		"*\\]",
 
@@ -716,7 +716,7 @@ var i,
 	rsibling = /[+~]/,
 	rescape = /'|\\/g,
 
-	// CSS escapes http://www.w3.org/TR/CSS21/syndata.html#escaped-characters
+	// css escapes http://www.w3.org/TR/CSS21/syndata.html#escaped-characters
 	runescape = new RegExp( "\\\\([\\da-f]{1,6}" + whitespace + "?|(" + whitespace + ")|.)", "ig" ),
 	funescape = function( _, escaped, escapedWhitespace ) {
 		var high = "0x" + escaped - 0x10000;
@@ -4275,7 +4275,7 @@ jQuery.fn.extend( {
 		// Check if elements with layout shrink-wrap their children
 		if ( typeof div.style.zoom !== "undefined" ) {
 
-			// Reset CSS: box-sizing; display; margin; border
+			// Reset css: box-sizing; display; margin; border
 			div.style.cssText =
 
 				// Support: Firefox<29, Android 2.3
@@ -6643,7 +6643,7 @@ var documentElement = document.documentElement;
 			// WebKit Bug 13343 - getComputedStyle returns wrong value for margin-right
 			contents = div.appendChild( document.createElement( "div" ) );
 
-			// Reset CSS: box-sizing; display; margin; border; padding
+			// Reset css: box-sizing; display; margin; border; padding
 			contents.style.cssText = div.style.cssText =
 
 				// Support: Android 2.3
@@ -6844,7 +6844,7 @@ var
 	// swappable if display is none or starts with table except
 	// "table", "table-cell", or "table-caption"
 	// see here for display values:
-	// https://developer.mozilla.org/en-US/docs/CSS/display
+	// https://developer.mozilla.org/en-US/docs/css/display
 	rdisplayswap = /^(none|table(?!-c[ea]).+)/,
 	rnumsplit = new RegExp( "^(" + pnum + ")(.*)$", "i" ),
 
@@ -7113,7 +7113,7 @@ jQuery.extend( {
 				return;
 			}
 
-			// If a number was passed in, add the unit (except for certain CSS properties)
+			// If a number was passed in, add the unit (except for certain css properties)
 			if ( type === "number" ) {
 				value += ret && ret[ 3 ] || ( jQuery.cssNumber[ origName ] ? "" : "px" );
 			}
@@ -7130,7 +7130,7 @@ jQuery.extend( {
 				( value = hooks.set( elem, value, extra ) ) !== undefined ) {
 
 				// Support: IE
-				// Swallow errors from 'invalid' CSS values (#5509)
+				// Swallow errors from 'invalid' css values (#5509)
 				try {
 					style[ name ] = value;
 				} catch ( e ) {}
