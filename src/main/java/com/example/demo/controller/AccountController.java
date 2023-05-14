@@ -31,7 +31,6 @@ public class AccountController {
 	@Autowired
     CartRepository cartRepo;
 	
-	Account account = new Account();
 	Customer customer = new Customer();
 	Account accountEdited;
 	Account currentAccount;
@@ -66,30 +65,34 @@ public class AccountController {
 	
 	@PostMapping("/showaccount")
 	public String saveEditAccount(Model model, @ModelAttribute("accObj") Account accountObj, HttpSession session) {
-		customer = cusRepo.getCustomerById(accountEdited.getCustomer().getId());
-		
-		System.out.println(accountObj.getCustomer().getName());
-		System.out.println(accountObj.getCustomer().getImage());
-		System.out.println(accountObj.getCustomer().getEmail());
-		System.out.println(accountObj.getCustomer().getPhoneNumber());
-		System.out.println(accountObj.getUserName());
-		System.out.println(accountObj.getPassword());
-		
-		customer.setName(accountObj.getCustomer().getName());
-		customer.setImage(accountObj.getCustomer().getImage());
-		customer.setEmail(accountObj.getCustomer().getEmail());
-		customer.setPhoneNumber(accountObj.getCustomer().getPhoneNumber());
-		
-		accountEdited.setUserName(accountObj.getUserName());
-		accountEdited.setPassword(accountObj.getPassword());
-		accountEdited.setCustomer(customer);
-		
-		accRepo.save(accountEdited);
-		
-		GlobalStaticValues.message = "Edited personal information";
-    	String message = GlobalStaticValues.message;
-    	model.addAttribute("message", message);
-		
+		try{
+			customer = cusRepo.getCustomerById(accountEdited.getCustomer().getId());
+
+			customer.setName(accountObj.getCustomer().getName());
+			customer.setImage(accountObj.getCustomer().getImage());
+			customer.setEmail(accountObj.getCustomer().getEmail());
+			customer.setPhoneNumber(accountObj.getCustomer().getPhoneNumber());
+
+			accountEdited.setUserName(accountObj.getUserName());
+			accountEdited.setPassword(accountObj.getPassword());
+			accountEdited.setCustomer(customer);
+
+			if(accountObj.getCustomer().getName().length() > 50 || accountObj.getUserName().length() > 50 ||  accountObj.getCustomer().getEmail().length() > 100 || accountObj.getCustomer().getPhoneNumber().length() > 10) {
+				System.out.println("data too long");
+				return showMyProfileForm(session, model);
+			}
+
+			accRepo.save(accountEdited);
+
+			GlobalStaticValues.message = "Edited personal information";
+			String message = GlobalStaticValues.message;
+			model.addAttribute("message", message);
+		}
+		catch (Exception e) {
+			System.out.println("data too long");
+			e.printStackTrace();
+		}
+
 		return showMyProfileForm(session, model);
 	}
 }

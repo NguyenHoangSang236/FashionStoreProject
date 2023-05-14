@@ -213,8 +213,7 @@
                                         <label>User full name</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <input class="form-input basic smooth-corner" id="name" name="name" type="text"
-                                            th:field="*{customer.name}" required />
+                                        <input class="form-input basic smooth-corner" id="name" name="name" type="text" max="1000" min="1" th:field="*{customer.name}" required />
                                     </div>
                                 </div>
                                 <div class="row">
