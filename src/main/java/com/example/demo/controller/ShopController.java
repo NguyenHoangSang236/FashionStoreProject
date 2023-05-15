@@ -1,10 +1,16 @@
 package com.example.demo.controller;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.aspectj.weaver.ast.And;
@@ -176,13 +182,28 @@ public class ShopController {
     
     
     @GetMapping("/shopproduct")
-    public String showShop(HttpSession session,Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
+    public String showShop(
+			HttpSession session,
+			Model model,
+			@RequestParam("page") Optional<Integer> page,
+			@RequestParam("size") Optional<Integer> size) {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(15);
+
         GlobalStaticValues.currentPage = "shopproduct";
-        
+		Account currentAcount = (Account)session.getAttribute("currentuser");
+        String token = getToken();
+
         model.addAttribute("pName", new Product());
-        
+        model.addAttribute("csrfToken", token);
+
+		if(currentAcount != null) {
+			System.out.println("GET");
+			System.out.println(token);
+
+			session.setAttribute("csrfToken", token);
+		}
+
         Page<Product> productPage = productService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
 
         renderToShop(session, model, productPage, page, size, filterSelections);
@@ -192,67 +213,120 @@ public class ShopController {
     
     
     @PostMapping("/shopproduct")
-    public String showFilteredShop(HttpSession session,
+    public String showFilteredShop(
+			HttpSession session,
+			HttpServletRequest request,
     		Model model, 
     		@RequestParam("page") Optional<Integer> page, 
-    		@RequestParam("size") Optional<Integer> size, 
+    		@RequestParam("size") Optional<Integer> size,
+			@ModelAttribute("pName") Product pName,
     		@ModelAttribute("filterSelections") FilterSelections selectedFilters,
     		@RequestParam(value = "action", required = false) String action) {
     	int currentPage = page.orElse(1);
         int pageSize = size.orElse(15);
-        
-        model.addAttribute("pName", new Product());
+		String tokenFromUi = (String) request.getParameter("csrfToken");
+		String tokenFromSession = (String) session.getAttribute("csrfToken");
+
+		model.addAttribute("pName", new Product());
 
         if(action.contains("add to cart product id")) {
         	Account currentAcount = (Account)session.getAttribute("currentuser");
-        	
+
         	if(currentAcount != null) {
         		int selectedId = Integer.parseInt(action.substring(action.indexOf("=") + 2));
         		Customer currentCustomer = cusRepo.getCustomerByAccountId(currentAcount.getId());
-        		
+
         		addToCartOnClick(selectedId, currentCustomer);
-        		
+
         		Page<Product> productPage = productService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
-        		
+
         		renderToShop(session, model, productPage, page, size, filterSelections);
         	}
         	else return "redirect:/loginpage";
         }
         else if(action.contains("filter")){
-        	if(selectedFilters.getBrand() == null && selectedFilters.getCatalogs().length == 0 && selectedFilters.getPriceRange() == null ) {
-        		filterSelections = new FilterSelections();
-        		Page<Product> productPage = productService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
-        		
-        		renderToShop(session, model, productPage, page, size, filterSelections);
-        	}
-        	else {
-        		filterSelections = selectedFilters;
-        		filterSelections.setPriceRangeLimits();
-        		
-        		String filterQuery = createQueryForFilters(filterSelections.getCatalogs(), filterSelections.getBrand(), filterSelections.getPrice1(), filterSelections.getPrice2());
-        		
-        		Page<Product> productPage = productService.findByFilters(PageRequest.of(currentPage - 1, pageSize), filterQuery);
-        		
-        		renderToShop(session, model, productPage, page, size, filterSelections);
-        	}
+			if(selectedFilters.getBrand() == null && selectedFilters.getCatalogs().length == 0 && selectedFilters.getPriceRange() == null ) {
+				filterSelections = new FilterSelections();
+				Page<Product> productPage = productService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
+
+				renderToShop(session, model, productPage, page, size, filterSelections);
+			}
+			else {
+				filterSelections = selectedFilters;
+				filterSelections.setPriceRangeLimits();
+
+				String filterQuery = createQueryForFilters(filterSelections.getCatalogs(), filterSelections.getBrand(), filterSelections.getPrice1(), filterSelections.getPrice2());
+
+				Page<Product> productPage = productService.findByFilters(PageRequest.of(currentPage - 1, pageSize), filterQuery);
+
+				renderToShop(session, model, productPage, page, size, filterSelections);
+			}
 		}
-    	
-    	return "shop";
+		else if (action.contains("search")) {
+			System.out.println("SEARCH");
+			System.out.println(tokenFromUi);
+			System.out.println(tokenFromSession);
+
+			Account currentAcount = (Account)session.getAttribute("currentuser");
+
+			if(currentAcount == null) {
+				return "redirect:/loginpage";
+			}
+
+			if(!Objects.equals(tokenFromUi, tokenFromSession)) {
+				return "redirect:/loginpage";
+			}
+
+			String name = pName.getName();
+			System.out.println(name);
+
+			Page<Product> productPage = productService.searchProduct(PageRequest.of(currentPage - 1, pageSize), name);
+
+			renderToShop(session,model, productPage, page, size, filterSelections);
+		}
+
+		return "shop";
     }
     
     
-    @GetMapping("/shopproductsearch")
-    public String showShopbyName(HttpSession session, Model model, @ModelAttribute("pName") Product name, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size ) {
-        int currentPage = page.orElse(1);
-        int pageSize = size.orElse(15);
-        System.out.println(name.getBrand());
-        
-        Page<Product> productPage = productService.searchProduct(PageRequest.of(currentPage - 1, pageSize),name.getName());
-        
-        renderToShop(session,model, productPage, page, size, filterSelections);
-        
-        return "shop";
-    }
+//    @GetMapping("/shopproductsearch")
+//    public String showShopbyName(
+//			HttpServletRequest httpServletRequest,
+//			HttpSession session, Model model,
+//			@ModelAttribute("pName") Product name,
+//			@ModelAttribute("csrfToken") String csrfToken,
+//			@RequestParam("page") Optional<Integer> page,
+//			@RequestParam("size") Optional<Integer> size ) {
+//        int currentPage = page.orElse(1);
+//        int pageSize = size.orElse(15);
+//
+////		String tokenFromUi = (String) httpServletRequest.getAttribute("csrfToken");
+//		String tokenFromSession = (String) session.getAttribute("csrfToken");
+//
+//		System.out.println("POST");
+//		System.out.println(csrfToken);
+//		System.out.println(tokenFromSession);
+//
+//		if(!Objects.equals(csrfToken, tokenFromSession)) {
+//			return "redirect:/loginpage";
+//		}
+//
+//        Page<Product> productPage = productService.searchProduct(PageRequest.of(currentPage - 1, pageSize),name.getName());
+//
+//        renderToShop(session,model, productPage, page, size, filterSelections);
+//
+//        return "shop";
+//    }
     
-    
+
+	public String getToken() {
+		String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZqwertyuiopasdfghjklzxcvbnm1234567890";
+		StringBuilder salt = new StringBuilder();
+		Random rnd = new Random();
+		while (salt.length() < 18) { // length of the random string.
+			int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+			salt.append(SALTCHARS.charAt(index));
+		}
+		return salt.toString();
+	}
 }
